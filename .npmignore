@@ -1,0 +1,6 @@
+.idea
+.vscode
+.DS*
+examples/output
+main.ts
+tsconfig.json
