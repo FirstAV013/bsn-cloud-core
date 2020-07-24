@@ -3,13 +3,13 @@
   "description": "BSN.cloud Core Library",
   "version": "1.0.0",
   "main": "./main.js",
-  "typings": "./index.d.ts",
+  "types": "./index.d.ts",
   "author": "BrightSign LLC",
   "repository": {
     "type": "git",
     "url": "git://github.com/brightsign/bsn-cloud-core"
   },
-  "license": "UNLICENSED",
+  "license": "SEE LICENSE IN BrightSign Software License Agreement.pdf",
   "browser": {
     "./fsconnector.js": "fsconnector-browser.js"
   },
