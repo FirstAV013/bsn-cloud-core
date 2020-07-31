@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Create Simple Presentation" type="NodeJSConfigurationType" path-to-js-file="examples/createSimplePresentation.js" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

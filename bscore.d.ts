@@ -2495,8 +2495,20 @@ export class BsUploadItemStatus {
     static Cancelled: string;
     static Failed: string;
 }
+/**
+ * Interface or result object for a file upload.
+ * @property jobIndex {number} - the index of the file item within the overall job
+ * @property sourceFileName {string} - the original name of the source file being uploaded
+ * @property sourceFilePath {string} - if the file is being sourced from a local file system, this is the local path
+ *  for the file. If the source is a File object (in a browser) or a Buffer, this is a blank string.
+ * @property assetItem {BsAssetItem} - the assetItem for the uploaded file on BSN
+ * @property status {BsUploadItemStatus}
+ * @property [error]] {Error} - the error details if the upload failed
+ */
 export interface BsUploadItemResult {
     readonly jobIndex: number;
+    readonly sourceFileName: string;
+    readonly sourceFilePath: string;
     readonly assetItem: BsAssetItem;
     readonly status: BsUploadItemStatus;
     readonly error?: Error;
@@ -2596,7 +2608,7 @@ export interface BsUploadFile {
  * Interface containing necessary data for a content file to be uploaded as part of a multi-file upload job.
  * @property file {BsUploadFileSource} - object used for accessing file data
  * @property fileSpec {FileSpec} - the original FileSpec which determines the source file location
- * @property targetName {string} - the name to be used for the file on BSN (usually the same as the given site name,
+ * @property targetName {string} - the name to be used for the file on BSN (usually the same as the given file name,
  *  but it may be changed to resolve duplicate name issue)
  * @property destinationPath {string} - destination BSN path for file
  * @property [existingAsset] {BsAssetLocator} - if specified, determines an existingAsset on BSN which will be
@@ -2615,9 +2627,26 @@ export interface BsUploadFileItemSpec {
     parentAssetType?: AssetType;
     parentAssetNames?: string[];
 }
+/**
+ * Interface containing progress information for a file being uploaded as part of a multi-file upload job.
+ * @property jobIndex {number} - the index of the file item within the overall job
+ * @property fileName {string} - the original name of the source file being uploaded
+ * @property filePath {string} - if the file is being sourced from a local file system, this is the local path for the
+ *  file. If the source is a File object (in a browser) or a Buffer, this is a blank string.
+ * @property targetName {string} - the name to be used for the file on BSN (usually the same as the given file name,
+ *  but it may be changed to resolve duplicate name issue)
+ * @property destinationPath {string} - destination BSN path for file
+ * @property fileSize {number} - the size of the file in bytes
+ * @property status {BsUploadItemStatus}
+ * @property fractionComplete {number} - fraction of the file which has been uploaded so far,
+ *  expressed as a number between 0 and 1
+ */
 export interface BsUploadFileProgress {
     readonly jobIndex: number;
     readonly fileName: string;
+    readonly filePath: string;
+    readonly targetName: string;
+    readonly destinationPath: string;
     readonly fileSize: number;
     readonly status: BsUploadItemStatus;
     readonly fractionComplete: number;

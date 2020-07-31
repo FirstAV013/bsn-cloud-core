@@ -2,5 +2,6 @@
 .vscode
 .DS*
 examples/output
+examples/credentials.json
 main.ts
 tsconfig.json

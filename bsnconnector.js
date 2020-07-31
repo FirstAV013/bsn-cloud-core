@@ -2656,13 +2656,23 @@ exports.bsnCreateRolePermission = bsnCreateRolePermission;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnFileUploadItem = exports.bsnCreateFileUploadItem = exports.getUploadMediaTypeForFile = exports.BsnUploadMediaType = exports.UploadAcceptHeader = exports.UploadChunkStatus = exports.FileUploadState = void 0;
 var bscore_1 = __webpack_require__(2);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
 var authenticator_1 = __webpack_require__(4);
-var common_2 = __webpack_require__(0);
 var testFramework_1 = __webpack_require__(40);
 var lodash_1 = __webpack_require__(3);
 var FileUploadState;
@@ -2767,8 +2777,9 @@ var BsnFileUploadItem = (function () {
         }
         this._uploadSource = fileSource;
         this._jobIndex = jobIndex;
+        this._destinationPath = virtualPath;
         this._bsnUploadParams.fileName = lodash_1.isNil(targetName) ? this._uploadSource.fileName : targetName;
-        this._bsnUploadParams.virtualPath = virtualPath ? common_2.standardPathToBsnVirtualPath(virtualPath) : '\\';
+        this._bsnUploadParams.virtualPath = virtualPath ? common_1.standardPathToBsnVirtualPath(virtualPath) : '\\';
         this._bsnUploadParams.mediaType =
             uploadMediaType ? uploadMediaType : getUploadMediaTypeForFile(this._bsnUploadParams.fileName);
         this._bsnUploadParams.fileSize = this._uploadSource.fileSize;
@@ -2779,7 +2790,7 @@ var BsnFileUploadItem = (function () {
             this._bsnUploadParams.sessionToken = sessionToken;
             this._bsnUploadParams.webPageAssetId = 0;
             this._bsnUploadParams.relativePath =
-                relativePath ? common_2.standardPathToBsnVirtualPath(relativePath) : '\\';
+                relativePath ? common_1.standardPathToBsnVirtualPath(relativePath) : '\\';
         }
         if (uploadToken) {
             this._bsnUploadParams.uploadToken = uploadToken;
@@ -2918,8 +2929,11 @@ var BsnFileUploadItem = (function () {
         get: function () {
             return {
                 jobIndex: this.jobIndex,
-                fileName: this.fileName,
+                fileName: this._uploadSource.fileName,
+                filePath: this._uploadSource.fileDirPath,
                 fileSize: this.fileSize,
+                targetName: this.fileName,
+                destinationPath: this._destinationPath,
                 status: this.status,
                 fractionComplete: this.fractionComplete,
             };
@@ -2990,6 +3004,19 @@ var BsnFileUploadItem = (function () {
                 return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'Exception in progress callback: ' + error.message));
             }
         }
+        var getUploadItemResult = function (assetItem, error) {
+            var result = {
+                jobIndex: _this._jobIndex,
+                sourceFileName: _this._uploadSource.fileName,
+                sourceFilePath: _this._uploadSource.fileDirPath,
+                assetItem: assetItem,
+                status: _this._status,
+            };
+            if (!lodash_1.isNil(error)) {
+                return __assign(__assign({}, result), { error: error });
+            }
+            return result;
+        };
         return this.startUpload()
             .then(function (startUploadStatus) {
             if (_this.uploadFileMatchesExistingFile(startUploadStatus)) {
@@ -3000,11 +3027,7 @@ var BsnFileUploadItem = (function () {
                     if (_this._progressCallback) {
                         _this._progressCallback(_this.uploadProgress);
                     }
-                    return {
-                        jobIndex: _this._jobIndex,
-                        assetItem: assetItem_1,
-                        status: _this._status,
-                    };
+                    return getUploadItemResult(assetItem_1);
                 });
             }
             testFramework_1.testHook(testFramework_1.Breakpoint.beforeProcessChunkUploads);
@@ -3027,11 +3050,7 @@ var BsnFileUploadItem = (function () {
                 if (_this._progressCallback) {
                     _this._progressCallback(_this.uploadProgress);
                 }
-                return {
-                    jobIndex: _this._jobIndex,
-                    assetItem: assetItem,
-                    status: _this._status,
-                };
+                return getUploadItemResult(assetItem);
             });
         })
             .catch(function (error) {
@@ -3039,12 +3058,7 @@ var BsnFileUploadItem = (function () {
             if (_this._progressCallback) {
                 _this._progressCallback(_this.uploadProgress);
             }
-            return {
-                jobIndex: _this._jobIndex,
-                assetItem: null,
-                status: _this._status,
-                error: common_2.processBsnRequestError(error),
-            };
+            return getUploadItemResult(null, common_1.processBsnRequestError(error));
         });
     };
     BsnFileUploadItem.prototype.cancel = function () {
@@ -3078,7 +3092,7 @@ var BsnFileUploadItem = (function () {
             return _this._bsnUploadStatus;
         })
             .catch(function (error) {
-            throw common_2.processBsnRequestError(error);
+            throw common_1.processBsnRequestError(error);
         });
     };
     BsnFileUploadItem.prototype.completeUpload = function () {
@@ -3098,7 +3112,7 @@ var BsnFileUploadItem = (function () {
             return _this._bsnUploadStatus;
         })
             .catch(function (error) {
-            throw common_2.processBsnRequestError(error);
+            throw common_1.processBsnRequestError(error);
         });
     };
     BsnFileUploadItem.prototype.cancelUpload = function () {
@@ -3115,7 +3129,7 @@ var BsnFileUploadItem = (function () {
         })
             .then(function (response) { return response.status; })
             .catch(function (error) {
-            throw common_2.processBsnRequestError(error);
+            throw common_1.processBsnRequestError(error);
         });
     };
     BsnFileUploadItem.prototype.getBsnUploadStatus = function () {
@@ -3131,7 +3145,7 @@ var BsnFileUploadItem = (function () {
             .then(function (response) { return _this._authenticator.getJsonResponse(response); })
             .then(function (statusEntity) { return BsnFileUploadItem.getBsnFileUploadStatus(statusEntity); })
             .catch(function (error) {
-            throw common_2.processBsnRequestError(error);
+            throw common_1.processBsnRequestError(error);
         });
     };
     BsnFileUploadItem.prototype.processChunkUploads = function () {
@@ -3214,7 +3228,7 @@ var BsnFileUploadItem = (function () {
             return chunkStatus;
         })
             .catch(function (error) {
-            var bsnError = common_2.processBsnRequestError(error);
+            var bsnError = common_1.processBsnRequestError(error);
             if (!_this.canRetryUpload(bsnError, chunkStatus)) {
                 chunkStatus.status = UploadChunkStatus.failed;
                 chunkStatus.error = bsnError;
@@ -3275,7 +3289,7 @@ var BsnFileUploadItem = (function () {
         var assetItem = {
             id: '0',
             name: fileName,
-            path: common_2.bsnVirtualPathToStandardPath(this._bsnUploadParams.virtualPath),
+            path: common_1.bsnVirtualPathToStandardPath(this._bsnUploadParams.virtualPath),
             networkId: contentId,
             location: bscore_1.AssetLocation.Bsn,
             locator: bscore_1.bscGetBsnAssetLocatorKey(contentId, typeInfo.assetType),
@@ -3754,17 +3768,25 @@ var BsnWebPageUploadItem = (function () {
         this._progressCallback = progressCallback;
         this._indexFileIndex = this._assetFileSpec ? this._assetFileSpec.length : 0;
         this._assetFileIndexOffset = 0;
-        var initFileProgress = function (fileIndex, fileName, fileSize) { return ({
+        var initFileProgress = function (fileIndex, fileSpec) { return ({
             jobIndex: fileIndex,
-            fileName: fileName, fileSize: fileSize,
+            fileName: fileSpec.file.fileName,
+            filePath: fileSpec.file.fileDirPath,
+            targetName: fileSpec.targetName,
+            destinationPath: fileSpec.destinationPath,
+            fileSize: fileSpec.file.fileSize,
             status: bscore_1.BsUploadItemStatus.Pending, fractionComplete: 0,
         }); };
         this._indexFileUploadProgress =
-            initFileProgress(this._indexFileIndex, this._indexFileSpec.file.fileName, this._indexFileSpec.file.fileSize);
-        var initFileResult = function (fileIndex) { return ({
-            jobIndex: fileIndex, assetItem: null, status: bscore_1.BsUploadItemStatus.Pending,
+            initFileProgress(this._indexFileIndex, this._indexFileSpec);
+        var initFileResult = function (fileIndex, fileSpec) { return ({
+            jobIndex: fileIndex,
+            sourceFileName: fileSpec.file.fileName,
+            sourceFilePath: fileSpec.file.fileDirPath,
+            assetItem: null,
+            status: bscore_1.BsUploadItemStatus.Pending,
         }); };
-        this._indexFileUploadResult = initFileResult(this._indexFileIndex);
+        this._indexFileUploadResult = initFileResult(this._indexFileIndex, this._indexFileSpec);
         this._bsnWebPageUploadParams.assets = [];
         this._assetUploadProgress = [];
         this._assetUploadResult = [];
@@ -3784,8 +3806,8 @@ var BsnWebPageUploadItem = (function () {
                     webPageAssetId: 0,
                     relativePath: common_1.standardPathToBsnRelativePath(webPageAsset.destinationPath),
                 });
-                _this._assetUploadProgress.push(initFileProgress(assetIndex + _this._assetFileIndexOffset, webPageAsset.file.fileName, webPageAsset.file.fileSize));
-                _this._assetUploadResult.push(initFileResult(assetIndex + _this._assetFileIndexOffset));
+                _this._assetUploadProgress.push(initFileProgress(assetIndex + _this._assetFileIndexOffset, webPageAsset));
+                _this._assetUploadResult.push(initFileResult(assetIndex + _this._assetFileIndexOffset, webPageAsset));
                 _this._totalBytes += webPageAsset.file.fileSize;
             });
         }
@@ -4016,6 +4038,8 @@ var BsnWebPageUploadItem = (function () {
                 }
                 return {
                     jobIndex: _this._jobIndex,
+                    sourceFileName: _this._indexFileSpec.file.fileName,
+                    sourceFilePath: _this._indexFileSpec.file.fileDirPath,
                     assetItem: assetItem,
                     status: _this._status,
                 };
@@ -4028,6 +4052,8 @@ var BsnWebPageUploadItem = (function () {
             }
             return {
                 jobIndex: _this._jobIndex,
+                sourceFileName: _this._indexFileSpec.file.fileName,
+                sourceFilePath: _this._indexFileSpec.file.fileDirPath,
                 assetItem: null,
                 status: _this._status,
                 error: common_1.processBsnRequestError(error),

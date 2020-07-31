@@ -34,6 +34,7 @@ export interface BsTaskResult {
     id: BsTaskId;
     type: BsTaskType;
     status: BsTaskStatus;
+    startTime: Date;
     hasItemFailures: boolean;
     exceptionError?: Error | null;
 }
@@ -41,6 +42,7 @@ export interface BsTaskProgress {
     id: BsTaskId;
     type: BsTaskType;
     status: BsTaskStatus;
+    startTime: Date;
     totalItems: number;
     completedItems: number;
     failedItems: number;
@@ -52,6 +54,7 @@ export interface BsTask {
     name: string;
     type: BsTaskType;
     status: BsTaskStatus;
+    startTime: Date;
     progress: BsTaskProgress;
     result: BsTaskResult;
     isDone: boolean;
@@ -76,12 +79,12 @@ export class BsTmError extends Error {
 
 export function tmGetTaskManager(): BsTaskManager;
 export class BsTaskManager {
-    readonly currentTask: BsTask;
-    readonly taskIsInProgress: boolean;
-    readonly pendingTasks: BsTaskId[];
-    readonly pendingTaskCount: number;
-    readonly completedTasks: BsTaskId[];
-    readonly completedTaskCount: number;
+    get currentTask(): BsTask;
+    get taskIsInProgress(): boolean;
+    get pendingTasks(): BsTaskId[];
+    get pendingTaskCount(): number;
+    get completedTasks(): BsTaskId[];
+    get completedTaskCount(): number;
     addTask(task: BsTask): BsTaskId;
     startNextTask(): Promise<BsTaskResult>;
     cancelCurrentTask(): void;
