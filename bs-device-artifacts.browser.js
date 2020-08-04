@@ -7,7 +7,7 @@
 		exports["bs-device-artifacts"] = factory(require("lodash"), require("axios"));
 	else
 		root["bs-device-artifacts"] = factory(root["lodash"], root["axios"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_10__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_9__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -137,12 +137,11 @@ exports.BsDeviceArtifactsError = BsDeviceArtifactsError;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bsDaGetPartnerProducts = exports.bsDaFetchPartnerProducts = exports.bsDaGetPartnerProductsAsJson = exports.bsDaGetFwManifestOptionsByPlayerFamily = exports.bsDaFetchFwManifest = exports.bsDaFetchFileAsArrayBuffer = exports.bsDaGetStaticFileAbsolutePath = exports.bsDaCopyStaticFile = exports.bsDaGetStaticFileManifest = exports.bsDaGetStaticFileSpec = exports.bsDaGetStaticFileAsObject = exports.bsDaGetStaticFileAsBlob = exports.bsDaGetStaticFileAsArrayBuffer = exports.bsDaGetStaticFileAsStream = exports.bsDaGetStaticFileAsJson = exports.bsDaSetFwManifestUrl = exports.bsDaSetDeviceArtifactPath = void 0;
-const axios_1 = __webpack_require__(10);
+exports.bsDaGetPartnerProducts = exports.bsDaFetchPartnerProducts = exports.bsDaGetPartnerProductsAsJson = exports.bsDaGetFwManifestOptionsByPlayerFamily = exports.bsDaFetchFwManifest = exports.bsDaFetchFileAsArrayBuffer = exports.bsDaGetStaticFileAbsolutePath = exports.bsDaCopyStaticFile = exports.bsDaGetStaticFileSpec = exports.bsDaGetStaticFileAsObject = exports.bsDaGetStaticFileAsBlob = exports.bsDaGetStaticFileAsArrayBuffer = exports.bsDaGetStaticFileAsStream = exports.bsDaGetStaticFileAsJson = exports.bsDaSetFwManifestUrl = exports.bsDaSetDeviceArtifactPath = void 0;
+const axios_1 = __webpack_require__(9);
 const lodash_1 = __webpack_require__(2);
 const utils_1 = __webpack_require__(8);
 const bsDeviceArtifactsError_1 = __webpack_require__(0);
-const manifest = __webpack_require__(9);
 let BS_DEVICE_ARTIFACT_PATH = '';
 function bsDaSetDeviceArtifactPath(path) {
     if (lodash_1.isString(path)) {
@@ -255,10 +254,6 @@ function bsDaGetStaticFileSpec(path, options) {
     return bsDaGetStaticFileAsObject(path, options);
 }
 exports.bsDaGetStaticFileSpec = bsDaGetStaticFileSpec;
-function bsDaGetStaticFileManifest() {
-    return Promise.resolve(manifest);
-}
-exports.bsDaGetStaticFileManifest = bsDaGetStaticFileManifest;
 function bsDaCopyStaticFile(src, dest, options) {
     return Promise.reject(new bsDeviceArtifactsError_1.BsDeviceArtifactsError(bsDeviceArtifactsError_1.BsDeviceArtifactsErrorType.methodNotAvailableError));
 }
@@ -809,12 +804,6 @@ exports.parseFwManifestJson = parseFwManifestJson;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
-
-module.exports = ["PartnerProducts.bose.json","PartnerProducts.json","_deviceWebPage.html","autoplugins.brs","autorun-setup-simple-networking.brs","autoscheduleSetup.json","autoxml.brs","autozip.brs","bsDateTimeWidget.html","featureMinRevs.json","localSetup.brs","setup.brs","setupCommon.brs","setupNetworkDiagnostics.brs","standaloneToBsnSetup.brs"]
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");

@@ -25,16 +25,18 @@ import {
   dmGetZoneMediaStateContainer,
   dmNewSign,
   dmPlaylistAppendMediaState,
-  fsGetAssetItemFromFile,
+  fsGetAssetItemFromFile, 
   PlayerModel,
   tmGetTaskManager,
   VideoMode,
   ZoneType,
 } from '../main';
 
+const credentialsPath = isomorphicPath.resolve('./examples/credentials.json');
+
 let credentials;
 try {
-  credentials = require(process.env.PWD + '/examples/credentials.json');
+  credentials = require(credentialsPath);
 } catch (error) {
   console.log('There must be a credentials.json file in the /examples directory with valid BSN credentials');
 }
@@ -47,10 +49,10 @@ process.env.FS_METADATA_PATH =
 // Presentation publish may need to access the default deviceWebPage, so it needs this path
 bsDaSetDeviceArtifactPath(isomorphicPath.resolve('./static/'));
 
-// mediaPath is the path to the root folder for content test files.
-// Here, it is set to a directory named 'bs-test-media' at in the same parent directory as the bsn-cloud-core project.
-// This can be changed here to point to a different base directory.
-const mediaPath = isomorphicPath.resolve('../bs-test-media');
+// mediaPath is the path to examples/testMedia
+// To alter this example to use additional media files, this can be changed here to point to a different base directory,
+//  or you can add additional media files to this directory.
+const mediaPath = isomorphicPath.resolve('./examples/testMedia');
 
 let presentationName = 'TestLocalBsnPresentation1';
 const bsnContentPath = '/Shared/Incoming/';

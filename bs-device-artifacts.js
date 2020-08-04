@@ -7,7 +7,7 @@
 		exports["bs-device-artifacts"] = factory(require("path"), require("fs"), require("assert"), require("lodash"), require("axios"), require("constants"), require("isomorphic-path"), require("os"), require("stream"), require("util"));
 	else
 		root["bs-device-artifacts"] = factory(root["path"], root["fs"], root["assert"], root["lodash"], root["axios"], root["constants"], root["isomorphic-path"], root["os"], root["stream"], root["util"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_50__, __WEBPACK_EXTERNAL_MODULE_51__, __WEBPACK_EXTERNAL_MODULE_52__, __WEBPACK_EXTERNAL_MODULE_53__, __WEBPACK_EXTERNAL_MODULE_54__, __WEBPACK_EXTERNAL_MODULE_55__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_49__, __WEBPACK_EXTERNAL_MODULE_50__, __WEBPACK_EXTERNAL_MODULE_51__, __WEBPACK_EXTERNAL_MODULE_52__, __WEBPACK_EXTERNAL_MODULE_53__, __WEBPACK_EXTERNAL_MODULE_54__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -85,7 +85,7 @@ var polyfills = __webpack_require__(47)
 var legacy = __webpack_require__(46)
 var clone = __webpack_require__(45)
 
-var util = __webpack_require__(55)
+var util = __webpack_require__(54)
 
 /* istanbul ignore next - node 0.x polyfill */
 var gracefulQueue
@@ -592,7 +592,7 @@ exports.BsDeviceArtifactsError = BsDeviceArtifactsError;
 
 
 const u = __webpack_require__(2).fromCallback
-const jsonFile = __webpack_require__(49)
+const jsonFile = __webpack_require__(48)
 
 module.exports = {
   // jsonfile exports
@@ -616,14 +616,13 @@ module.exports = require("fs");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bsDaGetPartnerProducts = exports.bsDaFetchPartnerProducts = exports.bsDaGetPartnerProductsAsJson = exports.bsDaGetFwManifestOptionsByPlayerFamily = exports.bsDaFetchFwManifest = exports.bsDaFetchFileAsArrayBuffer = exports.bsDaGetStaticFileAbsolutePath = exports.bsDaCopyStaticFile = exports.bsDaGetStaticFileManifest = exports.bsDaGetStaticFileSpec = exports.bsDaGetStaticFileAsObject = exports.bsDaGetStaticFileAsBlob = exports.bsDaGetStaticFileAsArrayBuffer = exports.bsDaGetStaticFileAsStream = exports.bsDaGetStaticFileAsJson = exports.bsDaSetFwManifestUrl = exports.bsDaSetDeviceArtifactPath = void 0;
+exports.bsDaGetPartnerProducts = exports.bsDaFetchPartnerProducts = exports.bsDaGetPartnerProductsAsJson = exports.bsDaGetFwManifestOptionsByPlayerFamily = exports.bsDaFetchFwManifest = exports.bsDaFetchFileAsArrayBuffer = exports.bsDaGetStaticFileAbsolutePath = exports.bsDaCopyStaticFile = exports.bsDaGetStaticFileSpec = exports.bsDaGetStaticFileAsObject = exports.bsDaGetStaticFileAsBlob = exports.bsDaGetStaticFileAsArrayBuffer = exports.bsDaGetStaticFileAsStream = exports.bsDaGetStaticFileAsJson = exports.bsDaSetFwManifestUrl = exports.bsDaSetDeviceArtifactPath = void 0;
 const fse = __webpack_require__(33);
-const axios_1 = __webpack_require__(50);
-const isomorphicPath = __webpack_require__(52);
+const axios_1 = __webpack_require__(49);
+const isomorphicPath = __webpack_require__(51);
 const lodash_1 = __webpack_require__(16);
 const utils_1 = __webpack_require__(21);
 const bsDeviceArtifactsError_1 = __webpack_require__(6);
-const manifest = __webpack_require__(48);
 let DEFAULT_BS_DEVICE_ARTIFACT_PATH = './';
 function bsDaSetDeviceArtifactPath(path) {
     if (fse.existsSync(path)) {
@@ -797,10 +796,6 @@ function bsDaGetStaticFileSpec(path, options) {
     return Promise.resolve(bsDaGetStaticFileAbsolutePath(path));
 }
 exports.bsDaGetStaticFileSpec = bsDaGetStaticFileSpec;
-function bsDaGetStaticFileManifest() {
-    return Promise.resolve(manifest);
-}
-exports.bsDaGetStaticFileManifest = bsDaGetStaticFileManifest;
 function bsDaCopyStaticFile(path, dest, options) {
     const optionErrors = validateGetStaticFileOptions(options);
     if (optionErrors.length > 0) {
@@ -3156,7 +3151,7 @@ module.exports = assign
 
 
 const fs = __webpack_require__(0)
-const os = __webpack_require__(53)
+const os = __webpack_require__(52)
 const path = __webpack_require__(1)
 
 // HFS, ext{2,3}, FAT do not, Node.js v0.10 does not
@@ -3257,7 +3252,7 @@ function clone (obj) {
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stream = __webpack_require__(54).Stream
+var Stream = __webpack_require__(53).Stream
 
 module.exports = legacy
 
@@ -3381,7 +3376,7 @@ function legacy (fs) {
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constants = __webpack_require__(51)
+var constants = __webpack_require__(50)
 
 var origCwd = process.cwd
 var cwd = null
@@ -3727,12 +3722,6 @@ function patch (fs) {
 
 /***/ }),
 /* 48 */
-/***/ (function(module, exports) {
-
-module.exports = ["PartnerProducts.bose.json","PartnerProducts.json","_deviceWebPage.html","autoplugins.brs","autorun-setup-simple-networking.brs","autoscheduleSetup.json","autoxml.brs","autozip.brs","bsDateTimeWidget.html","featureMinRevs.json","localSetup.brs","setup.brs","setupCommon.brs","setupNetworkDiagnostics.brs","standaloneToBsnSetup.brs"]
-
-/***/ }),
-/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _fs
@@ -3872,37 +3861,37 @@ module.exports = jsonfile
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports) {
 
 module.exports = require("constants");
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports) {
 
 module.exports = require("isomorphic-path");
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports) {
 
 module.exports = require("stream");
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports) {
 
 module.exports = require("util");

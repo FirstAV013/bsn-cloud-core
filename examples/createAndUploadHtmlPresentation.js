@@ -41,9 +41,10 @@ var redux_thunk_1 = require("redux-thunk");
 var util_1 = require("util");
 var isomorphicPath = require("isomorphic-path");
 var main_1 = require("../main");
+var credentialsPath = isomorphicPath.resolve('./examples/credentials.json');
 var credentials;
 try {
-    credentials = require(process.env.PWD + '/examples/credentials.json');
+    credentials = require(credentialsPath);
 }
 catch (error) {
     console.log('There must be a credentials.json file in the /examples directory with valid BSN credentials');
@@ -51,7 +52,7 @@ catch (error) {
 process.env.FS_METADATA_PATH =
     isomorphicPath.resolve('./fsmetadata.js');
 main_1.bsDaSetDeviceArtifactPath(isomorphicPath.resolve('./static/'));
-var mediaPath = isomorphicPath.resolve('../bs-test-media');
+var mediaPath = isomorphicPath.resolve('./examples/testMedia');
 var presentationName = 'TestLocalBsnPresentation1';
 var bsnContentPath = '/Shared/Incoming/';
 var htmlAssetPath = isomorphicPath.join(mediaPath, 'htmlSites/simpleWebPage/index.html');
