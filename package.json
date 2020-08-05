@@ -1,7 +1,7 @@
 {
   "name": "bsn-cloud-core",
   "description": "BSN.cloud Core Library",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./main.js",
   "types": "./index.d.ts",
   "author": "BrightSign LLC",

@@ -191,13 +191,13 @@ function getDefaultUrl() {
         return BsnDefaultUrl;
     }
 }
-exports.BsnAuthEndpoint = '/2019/03/REST/';
+exports.BsnAuthEndpoint = '/2020/07/REST/';
 exports.BsnAuthUrl = getDefaultUrl() + exports.BsnAuthEndpoint;
 function bsnGetAuthUrl() {
     return exports.BsnAuthUrl;
 }
 exports.bsnGetAuthUrl = bsnGetAuthUrl;
-exports.BsnRestApiEndpoint = '/2019/03/REST/';
+exports.BsnRestApiEndpoint = '/2020/07/REST/';
 exports.BsnUrl = getDefaultUrl() + exports.BsnRestApiEndpoint;
 function bsnGetApiUrl() {
     return exports.BsnUrl;
