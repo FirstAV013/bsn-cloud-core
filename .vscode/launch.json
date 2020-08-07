@@ -43,6 +43,36 @@
             ],
             "program": "${workspaceFolder}/examples/createAndUploadHtmlPresentation.js",
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Create and Upload Dynamic Playlist",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/createAndUploadDynamicPlaylist.js",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Enumerate BSN Directory",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/enumerateBsnDirectory.js",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Upload Content to BSN",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/examples/uploadContentToBsn.js",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
