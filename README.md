@@ -39,6 +39,8 @@ The included examples that work with BSN required a BSN network with a Content C
 
 ### Example: BSN Presentation creation and upload
 
+(Note: ffmpeg is required for examples that access files. See the requirements section. ffmpeg is used to extract thumbnail images from video files.)
+
 The example *Create and Upload Image Presentation* will create a similar non-interactive playlist as the simple presentation example, and will then upload the image files and the presentation to a BSN network. During upload, brief upload progress messages are displayed in the console window. When the upload is complete, the presentation JSON state for the BSN based presentation is displayed, followed by the JSON representation of the presentation entity on BSN.
 
 Note that, after upload, the presentation references the BSN located assets.
@@ -55,6 +57,8 @@ All examples are provided as Typescript files. The transpiled Javascript files a
 ### Requirements
 - Node.js version 10 or greater
 - Typescript version 3.8 or 3.9 (if you want to use Typescript for development.)
+- ffmpeg must be installed and accessible via the user's PATH environment variable.
+    - The easiest way to install ffmpeg, if you don't have it already, is to download a static build and directly place it in a common directory in your PATH.
 
 ### IDE Support
 - Run/debug configurations for the examples are provided for both **Visual Studio Code** and **WebStorm**.

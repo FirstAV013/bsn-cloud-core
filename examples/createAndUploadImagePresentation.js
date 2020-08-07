@@ -128,7 +128,7 @@ function doUploadExample() {
                     console.log(util_1.inspect(uploadResult.presentationStateBsn, { depth: null, colors: true }));
                     console.log('');
                     console.log('Presentation assetItem:');
-                    console.log(util_1.inspect(uploadResult.presentationAsset.rawAssetItem, { depth: null, colors: true }));
+                    console.log(util_1.inspect(uploadResult.presentationAsset.assetItem, { depth: null, colors: true }));
                     console.log('');
                     console.log('Deleting', presentationName);
                     return [4, bsnPresentationCollection.deletePresentation(presentationName)];

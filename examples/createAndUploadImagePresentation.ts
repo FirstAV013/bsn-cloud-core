@@ -12,7 +12,7 @@ import {
   bsDaSetDeviceArtifactPath,
   bsDmReducer,
   bsnGetSession,
-  BsPresentationAssetCollection,
+  CmiPresentationAssetCollection,
   BsPresentationUploadJobResult,
   BsTaskStatus,
   BsUploadJobProgress,
@@ -105,8 +105,8 @@ async function createAndUploadImagePresentation(): Promise<BsPresentationUploadJ
 async function doUploadExample() {
   try {
     await bsnGetSession().activate(credentials.user, credentials.password, credentials.network, credentials.serverUrl);
-    const bsnPresentationCollection: BsPresentationAssetCollection =
-      cmGetBsAssetCollection(AssetLocation.Bsn, AssetType.Project) as BsPresentationAssetCollection;
+    const bsnPresentationCollection: CmiPresentationAssetCollection =
+      cmGetBsAssetCollection(AssetLocation.Bsn, AssetType.Project) as CmiPresentationAssetCollection;
     const uploadResult = await createAndUploadImagePresentation();
     if (uploadResult.status === BsTaskStatus.Failed) {
       console.error(uploadResult.exceptionError);
@@ -116,7 +116,7 @@ async function doUploadExample() {
       console.log(inspect(uploadResult.presentationStateBsn, {depth: null, colors: true}));
       console.log('');
       console.log('Presentation assetItem:');
-      console.log(inspect(uploadResult.presentationAsset.rawAssetItem, {depth: null, colors: true}));
+      console.log(inspect(uploadResult.presentationAsset.assetItem, {depth: null, colors: true}));
       console.log('');
 
       // Delete the presentation

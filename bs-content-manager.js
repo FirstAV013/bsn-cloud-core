@@ -7,7 +7,7 @@
 		exports["bs-content-manager"] = factory(require("lodash"), require("./bsnconnector"), require("./bscore"), require("./fsconnector"), require("isomorphic-path"), require("./bs-task-manager"), require("uuid"), require("./bsdatamodel"), require("./bs-playlist-dm"), require("./bs-device-artifacts"), require("redux"), require("redux-thunk"), require("./bs-autoplay-generator"), require("./bs-data-feed-dm"), require("./bs-tagged-playlist-dm"), require("dexie"));
 	else
 		root["bs-content-manager"] = factory(root["lodash"], root["./bsnconnector"], root["./bscore"], root["./fsconnector"], root["isomorphic-path"], root["./bs-task-manager"], root["uuid"], root["./bsdatamodel"], root["./bs-playlist-dm"], root["./bs-device-artifacts"], root["redux"], root["redux-thunk"], root["./bs-autoplay-generator"], root["./bs-data-feed-dm"], root["./bs-tagged-playlist-dm"], root["dexie"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_21__, __WEBPACK_EXTERNAL_MODULE_26__, __WEBPACK_EXTERNAL_MODULE_40__, __WEBPACK_EXTERNAL_MODULE_41__, __WEBPACK_EXTERNAL_MODULE_42__, __WEBPACK_EXTERNAL_MODULE_92__, __WEBPACK_EXTERNAL_MODULE_93__, __WEBPACK_EXTERNAL_MODULE_94__, __WEBPACK_EXTERNAL_MODULE_95__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_10__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_15__, __WEBPACK_EXTERNAL_MODULE_21__, __WEBPACK_EXTERNAL_MODULE_26__, __WEBPACK_EXTERNAL_MODULE_40__, __WEBPACK_EXTERNAL_MODULE_41__, __WEBPACK_EXTERNAL_MODULE_42__, __WEBPACK_EXTERNAL_MODULE_92__, __WEBPACK_EXTERNAL_MODULE_93__, __WEBPACK_EXTERNAL_MODULE_94__, __WEBPACK_EXTERNAL_MODULE_95__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -289,10 +289,10 @@ module.exports = require("./fsconnector");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getObjectPropertyForSort = exports.objectPropertyComparison = exports.compareStringDescending = exports.compareStringAscending = exports.cmNormalizeBsnHashString = exports.testLocalFileExists = exports.getDirnameFromFileSpec = exports.getExtensionFromFileSpec = exports.getFileDirPathFromFileSpec = exports.getFilenameFromFileSpec = exports.getFileContentFromFileSpec = exports.cmIsMultipleAssetTypeArray = exports.cmCreateHashFromAssetLocator = exports.cmNormalizeLocalPathString = exports.cmNormalizeBsnPathString = exports.cmAreBsnAssetLocatorsEqual = exports.cmGetDataFeedReferenceFromAssetLocator = exports.cmGetPresentationReferenceFromAssetLocator = exports.cmIsPresentationAssetType = void 0;
+exports.getObjectPropertyForSort = exports.objectPropertyComparison = exports.compareStringDescending = exports.compareStringAscending = exports.cmNormalizeBsnHashString = exports.testLocalFileExists = exports.getDirnameFromFileSpec = exports.getExtensionFromFileSpec = exports.getFileDirPathFromFileSpec = exports.getFilenameFromFileSpec = exports.getFileContentFromFileSpec = exports.cmValidateFilterOptions = exports.cmAreFilterOptionsValid = exports.cmDoesAssetItemMatchFilterOptions = exports.cmIsMultipleAssetTypeArray = exports.cmCreateHashFromAssetLocator = exports.cmNormalizeLocalPathString = exports.cmNormalizeBsnPathString = exports.cmAreBsnAssetLocatorsEqual = exports.cmGetDataFeedReferenceFromAssetLocator = exports.cmGetPresentationReferenceFromAssetLocator = exports.cmIsPresentationAssetType = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
-var isomorphic_path_1 = __webpack_require__(11);
+var isomorphic_path_1 = __webpack_require__(10);
 var lodash_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(2);
 exports.cmIsPresentationAssetType = function (assetType) {
@@ -323,7 +323,9 @@ exports.cmNormalizeBsnPathString = function (pathStr) {
     return pathStr;
 };
 exports.cmNormalizeLocalPathString = function (pathStr) {
-    if (pathStr.length > 0 && pathStr !== isomorphic_path_1.default.posix.sep && pathStr.charAt(pathStr.length - 1) !== isomorphic_path_1.default.sep) {
+    if (pathStr.length > 0
+        && pathStr !== isomorphic_path_1.default.posix.sep
+        && pathStr.charAt(pathStr.length - 1) !== isomorphic_path_1.default.sep) {
         return pathStr + isomorphic_path_1.default.sep;
     }
     return pathStr;
@@ -334,6 +336,9 @@ exports.cmCreateHashFromAssetLocator = function (locator) {
     if (locator.location === bscore_1.AssetLocation.Bsn) {
         if (locator.networkId > 0) {
             locatorHash = "" + locatorHash + locator.assetType + isomorphic_path_1.default.posix.sep + locator.networkId;
+        }
+        else if (lodash_1.isString(locator.childAssetType)) {
+            locatorHash = "" + locatorHash + locator.path + isomorphic_path_1.default.posix.sep + locator.childAssetType;
         }
     }
     else if (locator.location === bscore_1.AssetLocation.Local) {
@@ -352,6 +357,63 @@ exports.cmIsMultipleAssetTypeArray = function (assetTypes) {
         }
     }
     return false;
+};
+exports.cmDoesAssetItemMatchFilterOptions = function (assetItem, filterOptions) {
+    if (!lodash_1.isNil(filterOptions.assetLocation) && assetItem.location !== filterOptions.assetLocation) {
+        return false;
+    }
+    if (lodash_1.isArray(filterOptions.assetTypes) && filterOptions.assetTypes.indexOf(assetItem.assetType) < 0) {
+        return false;
+    }
+    if (lodash_1.isArray(filterOptions.mediaTypes)
+        && !lodash_1.isNil(assetItem.mediaType)
+        && filterOptions.mediaTypes.indexOf(assetItem.mediaType) < 0) {
+        return false;
+    }
+    if (!lodash_1.isEmpty(filterOptions.searchString)) {
+        var searchString_1 = filterOptions.searchString.toLowerCase();
+        return lodash_1.values(assetItem).some(function (val) {
+            if (lodash_1.isString(val)) {
+                return val.toLowerCase().includes(searchString_1);
+            }
+            return false;
+        });
+    }
+    return true;
+};
+var csDmIsValidAssetType = function (assetType) {
+    return lodash_1.values(bscore_1.AssetType).indexOf(assetType) > -1;
+};
+var csDmIsValidMediaType = function (mediaType) {
+    return lodash_1.values(bscore_1.MediaType).indexOf(mediaType) > -1;
+};
+var csDmIsValidAssetLocation = function (assetLocation) {
+    return lodash_1.values(bscore_1.AssetLocation).indexOf(assetLocation) > -1;
+};
+exports.cmAreFilterOptionsValid = function (filterOptions) {
+    if (!lodash_1.isNil(filterOptions.assetLocation) && !csDmIsValidAssetLocation(filterOptions.assetLocation)) {
+        return false;
+    }
+    if (lodash_1.isArray(filterOptions.assetTypes) && filterOptions.assetTypes.some(function (val) { return !csDmIsValidAssetType(val); })) {
+        return false;
+    }
+    return !(lodash_1.isArray(filterOptions.mediaTypes) && filterOptions.mediaTypes.some(function (val) { return !csDmIsValidMediaType(val); }));
+};
+exports.cmValidateFilterOptions = function (filterOptions) {
+    var result = {};
+    if (lodash_1.isArray(filterOptions.assetTypes)) {
+        result.assetTypes = filterOptions.assetTypes.filter(csDmIsValidAssetType);
+    }
+    if (lodash_1.isArray(filterOptions.mediaTypes)) {
+        result.mediaTypes = filterOptions.mediaTypes.filter(csDmIsValidMediaType);
+    }
+    if (!lodash_1.isNil(filterOptions.assetLocation) && csDmIsValidAssetLocation(filterOptions.assetLocation)) {
+        result.assetLocation = filterOptions.assetLocation;
+    }
+    if (lodash_1.isString(filterOptions.searchString)) {
+        result.searchString = filterOptions.searchString;
+    }
+    return result;
 };
 exports.getFileContentFromFileSpec = function (file) {
     if (bscore_1.bscIsLocalFileBuffer(file)) {
@@ -564,18 +626,18 @@ exports.getObjectPropertyForSort = function (obj, propertyPath) {
 
 var _a, _b, _c, _d, _e, _f;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsAssetCollection = exports.BrightScriptBsnSortFieldMap = exports.HtmlSiteSortFieldMap = exports.DataFeedBsnSortFieldMap = exports.PresentationBsnSortFieldMap = exports.FolderBsnSortFieldMap = exports.ContentBsnSortFieldMap = void 0;
+exports.CmcAssetCollection = exports.BrightScriptBsnSortFieldMap = exports.HtmlSiteSortFieldMap = exports.DataFeedBsnSortFieldMap = exports.PresentationBsnSortFieldMap = exports.FolderBsnSortFieldMap = exports.ContentBsnSortFieldMap = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var assetItemCache_1 = __webpack_require__(20);
-var assetManager_1 = __webpack_require__(10);
+var assetManager_1 = __webpack_require__(11);
 var interfaces_1 = __webpack_require__(12);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var isomorphic_path_1 = __webpack_require__(11);
+var isomorphic_path_1 = __webpack_require__(10);
 exports.ContentBsnSortFieldMap = (_a = {},
     _a[interfaces_1.AssetSortField.name] = bsnconnector_1.BsnContentSortField.name,
     _a[interfaces_1.AssetSortField.mediaType] = bsnconnector_1.BsnContentSortField.mediaType,
@@ -619,8 +681,8 @@ exports.BrightScriptBsnSortFieldMap = (_f = {},
     _f[interfaces_1.AssetSortField.creationDate] = bsnconnector_1.BsnPluginSortField.creationDate,
     _f);
 var AssetTypesWithVirtualPathSupport = new Set([bscore_1.AssetType.Content, bscore_1.AssetType.Folder]);
-var BsAssetCollection = (function () {
-    function BsAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcAssetCollection = (function () {
+    function CmcAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         this._currentAssetScope = '';
         this._currentDirectory = '';
         this._bsnEnumerator = null;
@@ -645,7 +707,7 @@ var BsAssetCollection = (function () {
             this._currentAssetLocation = fsconnector_1.fsIsLocalFileSystemAvailable() ?
                 bscore_1.AssetLocation.Local : bscore_1.AssetLocation.Bsn;
         }
-        this._enumerationOptions = Object.assign({}, BsAssetCollection.DefaultEnumerationOptions, enumerationOptions);
+        this._enumerationOptions = Object.assign({}, CmcAssetCollection.DefaultEnumerationOptions, enumerationOptions);
         if (this._enumerationOptions.mediaFilters) {
             if (Array.isArray(this._enumerationOptions.mediaFilters)) {
                 this._enumerationOptions.mediaFilters = lodash_1.uniq(this._enumerationOptions.mediaFilters);
@@ -674,10 +736,10 @@ var BsAssetCollection = (function () {
         else if (fsconnector_1.fsIsLocalFileSystemAvailable()) {
             this._currentAssetScope = fsconnector_1.fsGetLocalSystemScopeId();
         }
-        this._functionalLocator = this.createFunctionalLocator();
+        this._locatorHash = this.createLocatorHash();
         this._sortFieldSet = new Set(this.sortFieldList);
     }
-    Object.defineProperty(BsAssetCollection.prototype, "currentAssetLocation", {
+    Object.defineProperty(CmcAssetCollection.prototype, "currentAssetLocation", {
         get: function () { return this._currentAssetLocation; },
         set: function (location) {
             if (location === bscore_1.AssetLocation.Local && !fsconnector_1.fsIsLocalFileSystemAvailable()) {
@@ -691,37 +753,37 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "currentAssetScope", {
+    Object.defineProperty(CmcAssetCollection.prototype, "currentAssetScope", {
         get: function () { return this._currentAssetScope; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "enumerationOptions", {
+    Object.defineProperty(CmcAssetCollection.prototype, "enumerationOptions", {
         get: function () { return this._enumerationOptions; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "isComplete", {
+    Object.defineProperty(CmcAssetCollection.prototype, "isComplete", {
         get: function () { return this._isComplete; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "currentDirectory", {
+    Object.defineProperty(CmcAssetCollection.prototype, "currentDirectory", {
         get: function () { return this._currentDirectory; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "assetType", {
+    Object.defineProperty(CmcAssetCollection.prototype, "assetType", {
         get: function () { return this._assetTypes[0]; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "assetTypes", {
+    Object.defineProperty(CmcAssetCollection.prototype, "assetTypes", {
         get: function () { return this._assetTypes; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "sortField", {
+    Object.defineProperty(CmcAssetCollection.prototype, "sortField", {
         get: function () {
             var sortField = this._enumerationOptions.sortField;
             return sortField ? sortField : interfaces_1.AssetSortField.name;
@@ -729,14 +791,29 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "sortDescending", {
+    Object.defineProperty(CmcAssetCollection.prototype, "sortDescending", {
         get: function () {
             return this._enumerationOptions.sortDescending;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "assetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "sortFieldSet", {
+        get: function () { return this._sortFieldSet; },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(CmcAssetCollection.prototype, "sortOptions", {
+        get: function () {
+            return lodash_1.pick(this._enumerationOptions, ['sortField', 'sortDescending']);
+        },
+        set: function (value) {
+            this.setSortOptions(value.sortField, value.sortDescending);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(CmcAssetCollection.prototype, "assetNames", {
         get: function () {
             if (this._assetNames.length === 0) {
                 this._assetNames = this.sortNames(Array.from(this._assetMap.keys()));
@@ -746,42 +823,42 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "newAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "newAssetNames", {
         get: function () {
             return this.sortNames(Array.from(this._newAssetNames));
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "addedAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "addedAssetNames", {
         get: function () {
             return this._addedAssetNames;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "updatedAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "updatedAssetNames", {
         get: function () {
             return this._updatedAssetNames;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "removedAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "removedAssetNames", {
         get: function () {
             return Array.from(this._removedAssetMap.keys());
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "pinnedAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "pinnedAssetNames", {
         get: function () {
             return Array.from(this._pinnedAssetMap.keys());
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "folderAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "folderAssetNames", {
         get: function () {
             var _this = this;
             return this.assetNames.filter(function (name) {
@@ -791,7 +868,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "fileAssetNames", {
+    Object.defineProperty(CmcAssetCollection.prototype, "fileAssetNames", {
         get: function () {
             var _this = this;
             return this.assetNames.filter(function (name) { return _this.getAssetTypeForName(name) !== bscore_1.AssetType.Folder; });
@@ -799,7 +876,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "folderAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "folderAssets", {
         get: function () {
             var _this = this;
             return this.folderAssetNames.map(function (name) { return _this.getAsset(name); });
@@ -807,7 +884,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "fileAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "fileAssets", {
         get: function () {
             var _this = this;
             return this.fileAssetNames.map(function (name) { return _this.getAsset(name); });
@@ -815,7 +892,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "addedAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "addedAssets", {
         get: function () {
             var _this = this;
             return this.addedAssetNames.map(function (name) { return _this.getAsset(name); });
@@ -823,7 +900,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "updatedAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "updatedAssets", {
         get: function () {
             var _this = this;
             return this.updatedAssetNames.map(function (name) { return _this.getAsset(name); });
@@ -831,11 +908,11 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "removedAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "removedAssets", {
         get: function () {
             return Array.from(this._removedAssetMap.values())
-                .map(function (locatorHash) {
-                var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemReference(locatorHash);
+                .map(function (assetLocatorHash) {
+                var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(assetLocatorHash);
                 return lodash_1.isNil(ref) ? null : assetManager_1.cmGetBsAsset(ref.assetItem);
             })
                 .filter(function (value) { return value !== null; });
@@ -843,7 +920,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "allAssets", {
+    Object.defineProperty(CmcAssetCollection.prototype, "allAssets", {
         get: function () {
             var _this = this;
             return this.assetNames.map(function (name) { return _this.getAsset(name); });
@@ -851,7 +928,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "pinnedAssetItems", {
+    Object.defineProperty(CmcAssetCollection.prototype, "pinnedAssetItems", {
         get: function () {
             var _this = this;
             return this.pinnedAssetNames.map(function (name) { return _this.getAssetItem(name); });
@@ -859,12 +936,7 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "sortFieldSet", {
-        get: function () { return this._sortFieldSet; },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(BsAssetCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcAssetCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -874,12 +946,17 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "functionalLocator", {
-        get: function () { return this._functionalLocator; },
+    Object.defineProperty(CmcAssetCollection.prototype, "locatorHash", {
+        get: function () { return this._locatorHash; },
         enumerable: false,
         configurable: true
     });
-    BsAssetCollection.prototype.update = function () {
+    Object.defineProperty(CmcAssetCollection.prototype, "functionalLocator", {
+        get: function () { return this._locatorHash; },
+        enumerable: false,
+        configurable: true
+    });
+    CmcAssetCollection.prototype.update = function () {
         var _this = this;
         this.clearUnpinnedAssets();
         return new Promise(function (resolve, reject) {
@@ -907,15 +984,15 @@ var BsAssetCollection = (function () {
                 .catch(function (error) { return reject(error); });
         });
     };
-    BsAssetCollection.prototype.startUpdate = function () {
+    CmcAssetCollection.prototype.startUpdate = function () {
         var _this = this;
         return this.enumerateStart().then(function () { return _this; });
     };
-    BsAssetCollection.prototype.updateNext = function () {
+    CmcAssetCollection.prototype.updateNext = function () {
         var _this = this;
         return this.enumerateNext().then(function () { return _this; });
     };
-    BsAssetCollection.prototype.updatePinnedAssetItems = function () {
+    CmcAssetCollection.prototype.updatePinnedAssetItems = function () {
         var _this = this;
         this.clearUnpinnedAssets();
         this.resetPinnedAssetVerification();
@@ -973,7 +1050,7 @@ var BsAssetCollection = (function () {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
         }
     };
-    BsAssetCollection.prototype.getBackendCount = function () {
+    CmcAssetCollection.prototype.getBackendCount = function () {
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             if (!fsconnector_1.fsIsLocalFileSystemAvailable()) {
                 return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.fsNotAvailableError));
@@ -985,7 +1062,7 @@ var BsAssetCollection = (function () {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsAssetCollection.prototype.getDuplicateNames = function (matchList) {
+    CmcAssetCollection.prototype.getDuplicateNames = function (matchList) {
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             if (!fsconnector_1.fsIsLocalFileSystemAvailable()) {
                 return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.fsNotAvailableError));
@@ -997,31 +1074,44 @@ var BsAssetCollection = (function () {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsAssetCollection.prototype.setSortOptions = function (sortField, sortDescending) {
+    CmcAssetCollection.prototype.getFilteredAssets = function (filterOptions) {
+        var _this = this;
+        if (utils_1.cmAreFilterOptionsValid(filterOptions)) {
+            return this.assetNames.reduce(function (assetList, name) {
+                var assetItem = _this.getAssetItem(name);
+                if (utils_1.cmDoesAssetItemMatchFilterOptions(assetItem, filterOptions)) {
+                    assetList.push(assetManager_1.cmGetBsAsset(assetItem));
+                }
+                return assetList;
+            }, []);
+        }
+        return this.allAssets;
+    };
+    CmcAssetCollection.prototype.setSortOptions = function (sortField, sortDescending) {
         if (sortDescending === void 0) { sortDescending = false; }
         this._assetNames = [];
         this._enumerationOptions.sortField = lodash_1.isNil(sortField) ? interfaces_1.AssetSortField.name : sortField;
         this._enumerationOptions.sortDescending = sortDescending;
     };
-    BsAssetCollection.prototype.hasAssetName = function (name) {
+    CmcAssetCollection.prototype.hasAssetName = function (name) {
         return this._assetMap.has(name);
     };
-    BsAssetCollection.prototype.getAssetTypeForName = function (name) {
+    CmcAssetCollection.prototype.getAssetTypeForName = function (name) {
         var assetItem = this.getAssetItem(name);
         return lodash_1.isNil(assetItem) ? null : assetItem.assetType;
     };
-    BsAssetCollection.prototype.getAssetNamesForType = function (assetType) {
+    CmcAssetCollection.prototype.getAssetNamesForType = function (assetType) {
         var _this = this;
         return this.assetNames.filter(function (name) {
             var type = _this.getAssetTypeForName(name);
             return !lodash_1.isNull(type) && type === assetType;
         });
     };
-    BsAssetCollection.prototype.getAssetsForType = function (assetType) {
+    CmcAssetCollection.prototype.getAssetsForType = function (assetType) {
         var _this = this;
         return this.getAssetNamesForType(assetType).map(function (name) { return assetManager_1.cmGetBsAsset(_this.getAssetItem(name)); });
     };
-    BsAssetCollection.prototype.getAssetNamesForMediaType = function (mediaType) {
+    CmcAssetCollection.prototype.getAssetNamesForMediaType = function (mediaType) {
         var _this = this;
         return this.assetNames.filter(function (name) {
             var assetItem = _this.getAssetItem(name);
@@ -1029,34 +1119,76 @@ var BsAssetCollection = (function () {
                 && assetItem.mediaType && assetItem.mediaType === mediaType;
         });
     };
-    BsAssetCollection.prototype.getAssetsForMediaType = function (mediaType) {
+    CmcAssetCollection.prototype.getAssetsForMediaType = function (mediaType) {
         var _this = this;
         return this.getAssetNamesForMediaType(mediaType).map(function (name) { return assetManager_1.cmGetBsAsset(_this.getAssetItem(name)); });
     };
-    BsAssetCollection.prototype.getAsset = function (name) {
+    CmcAssetCollection.prototype.getAsset = function (name) {
         return assetManager_1.cmGetBsAsset(this.getAssetItem(name));
     };
-    BsAssetCollection.prototype.getRemovedAsset = function (name) {
+    CmcAssetCollection.prototype.getRemovedAsset = function (name) {
         return assetManager_1.cmGetBsAsset(this.getRemovedAssetItem(name));
     };
-    BsAssetCollection.prototype.isAssetTypeIncluded = function (assetType) {
+    CmcAssetCollection.prototype.isAssetTypeIncluded = function (assetType) {
         return this.assetTypes.indexOf(assetType) >= 0;
     };
-    BsAssetCollection.prototype.notify = function (notification) {
+    CmcAssetCollection.prototype.clearAddedAssets = function () {
+        this._addedAssetNames = [];
+    };
+    CmcAssetCollection.prototype.clearUpdatedAssets = function () {
+        this._updatedAssetNames = [];
+    };
+    CmcAssetCollection.prototype.clearRemovedAssets = function () {
+        this._removedAssetMap.clear();
+    };
+    CmcAssetCollection.prototype.unpinAllPinnedAssetItems = function () {
+        this._pinnedAssetMap.clear();
+    };
+    CmcAssetCollection.prototype.createFolder = function (name) {
         var _this = this;
-        if (notify_1.cmIsAssetItemNotification(notification)) {
+        if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Local) {
+            return this.createLocalFolder(name)
+                .then(function (assetItem) {
+                _this.addAssetItem(assetItem);
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                return assetItem;
+            });
+        }
+        return Promise.resolve(null);
+    };
+    CmcAssetCollection.prototype.removeFolder = function (name) {
+        var _this = this;
+        if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Local) {
+            var dirPath = isomorphic_path_1.default.join(this.currentDirectory, name);
+            var assetItem_1 = fsconnector_1.fsGetAssetItemFromFile(dirPath);
+            return fsconnector_1.fsDeleteDirectory(dirPath)
+                .then(function () {
+                _this.markAssetItemAsDeleted(name);
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+            })
+                .then(function () { return assetManager_1.cmUpdateAssetItemParentFolder(assetItem_1); })
+                .then(function () { return null; })
+                .catch(function (error) {
+                throw new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, error.message);
+            });
+        }
+        return Promise.resolve();
+    };
+    CmcAssetCollection.prototype.notify = function (notification) {
+        var _this = this;
+        if (notifyInternal_1.cmIsAssetItemNotification(notification)) {
             notification.assetItems.forEach(function (assetItem) {
                 if (_this.assetMatchesCollection(assetItem)) {
                     switch (notification.kind) {
-                        case notify_1.AssetCollectionNotificationType.addedAssets:
+                        case notifyInternal_1.AssetCollectionNotificationType.addedAssets:
                             _this._assetMap.set(assetItem.name, utils_1.cmCreateHashFromAssetLocator(assetItem));
                             _this._addedAssetNames.push(assetItem.name);
                             _this._assetNames = [];
                             break;
-                        case notify_1.AssetCollectionNotificationType.updatedAssets:
+                        case notifyInternal_1.AssetCollectionNotificationType.updatedAssets:
                             _this._updatedAssetNames.push(assetItem.name);
                             break;
-                        case notify_1.AssetCollectionNotificationType.removedAssets:
+                        case notifyInternal_1.AssetCollectionNotificationType.removedAssets:
                             _this._removedAssetMap.set(assetItem.name, utils_1.cmCreateHashFromAssetLocator(assetItem));
                             _this._assetMap.delete(assetItem.name);
                             _this._pinnedAssetMap.delete(assetItem.name);
@@ -1065,20 +1197,20 @@ var BsAssetCollection = (function () {
                             _this._updatedAssetNames = lodash_1.without(_this._updatedAssetNames, assetItem.name);
                             _this._assetNames = [];
                             break;
-                        case notify_1.AssetCollectionNotificationType.pinAssets:
+                        case notifyInternal_1.AssetCollectionNotificationType.pinAssets:
                             _this.addPinnedAssetItem(assetItem);
                             break;
-                        case notify_1.AssetCollectionNotificationType.unpinAssets:
+                        case notifyInternal_1.AssetCollectionNotificationType.unpinAssets:
                             _this._pinnedAssetMap.delete(assetItem.name);
                             break;
-                        case notify_1.AssetCollectionNotificationType.updatedAssetPermissions:
+                        case notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions:
                             _this._assetMap.set(assetItem.name, utils_1.cmCreateHashFromAssetLocator(assetItem));
                             break;
                     }
                 }
             });
         }
-        else if (notify_1.cmIsAssetContainerNotification(notification)
+        else if (notifyInternal_1.cmIsAssetContainerNotification(notification)
             && this.assetHasUsageData(notification.containerAssetLocator.assetType)) {
             notification.assetLocators.forEach(function (assetLocator) {
                 var assetItem = _this.getAssetItem(assetLocator.name);
@@ -1090,7 +1222,7 @@ var BsAssetCollection = (function () {
             });
         }
     };
-    BsAssetCollection.prototype.assetMatchesCollection = function (assetItem) {
+    CmcAssetCollection.prototype.assetMatchesCollection = function (assetItem) {
         if (this.currentAssetLocation === assetItem.location) {
             if ((this.currentAssetLocation === bscore_1.AssetLocation.Local
                 || this.isAssetTypeIncluded(bscore_1.AssetType.Content)
@@ -1104,16 +1236,7 @@ var BsAssetCollection = (function () {
         }
         return false;
     };
-    BsAssetCollection.prototype.clearAddedAssets = function () {
-        this._addedAssetNames = [];
-    };
-    BsAssetCollection.prototype.clearUpdatedAssets = function () {
-        this._updatedAssetNames = [];
-    };
-    BsAssetCollection.prototype.clearRemovedAssets = function () {
-        this._removedAssetMap.clear();
-    };
-    BsAssetCollection.prototype.addPinnedAssetItems = function (assetItems) {
+    CmcAssetCollection.prototype.addPinnedAssetItems = function (assetItems) {
         var _this = this;
         if (Array.isArray(assetItems)) {
             assetItems.forEach(function (assetLocator) {
@@ -1124,10 +1247,7 @@ var BsAssetCollection = (function () {
             });
         }
     };
-    BsAssetCollection.prototype.unpinAllPinnedAssetItems = function () {
-        this._pinnedAssetMap.clear();
-    };
-    BsAssetCollection.prototype.sortNames = function (assetNames) {
+    CmcAssetCollection.prototype.sortNames = function (assetNames) {
         switch (this._enumerationOptions.sortField) {
             case interfaces_1.AssetSortField.fileSize:
             case interfaces_1.AssetSortField.mediaType:
@@ -1141,40 +1261,10 @@ var BsAssetCollection = (function () {
         }
         return assetNames;
     };
-    BsAssetCollection.prototype.createFolder = function (name) {
-        var _this = this;
-        if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Local) {
-            return this.createLocalFolder(name)
-                .then(function (assetItem) {
-                _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
-                return assetItem;
-            });
-        }
-        return Promise.resolve(null);
-    };
-    BsAssetCollection.prototype.removeFolder = function (name) {
-        var _this = this;
-        if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Local) {
-            var dirPath = isomorphic_path_1.default.join(this.currentDirectory, name);
-            var assetItem_1 = fsconnector_1.fsGetAssetItemFromFile(dirPath);
-            return fsconnector_1.fsDeleteDirectory(dirPath)
-                .then(function () {
-                _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
-            })
-                .then(function () { return assetManager_1.cmUpdateAssetItemParentFolder(assetItem_1); })
-                .then(function () { return null; })
-                .catch(function (error) {
-                throw new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, error.message);
-            });
-        }
-        return Promise.resolve();
-    };
-    BsAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return false;
     };
-    BsAssetCollection.prototype.clear = function () {
+    CmcAssetCollection.prototype.clear = function () {
         this._assetMap.clear();
         this._assetNames = [];
         this._newAssetNames.clear();
@@ -1185,7 +1275,7 @@ var BsAssetCollection = (function () {
         this._bsnEnumerator = null;
         this._isComplete = false;
     };
-    BsAssetCollection.prototype.enumerateStart = function () {
+    CmcAssetCollection.prototype.enumerateStart = function () {
         var _this = this;
         this.clearUnpinnedAssets();
         this.resetPinnedAssetVerification();
@@ -1212,7 +1302,7 @@ var BsAssetCollection = (function () {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
         }
     };
-    BsAssetCollection.prototype.enumerateNext = function () {
+    CmcAssetCollection.prototype.enumerateNext = function () {
         var _this = this;
         if (this._isComplete) {
             return Promise.resolve();
@@ -1232,27 +1322,27 @@ var BsAssetCollection = (function () {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
         }
     };
-    BsAssetCollection.prototype.getAssetItem = function (name) {
-        var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemReference(this._assetMap.get(name));
+    CmcAssetCollection.prototype.getAssetItem = function (name) {
+        var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(this._assetMap.get(name));
         return lodash_1.isNil(ref) ? null : ref.assetItem;
     };
-    BsAssetCollection.prototype.addAssetItem = function (assetItem) {
+    CmcAssetCollection.prototype.addAssetItem = function (assetItem) {
         var locatorHash = utils_1.cmCreateHashFromAssetLocator(assetItem);
         assetItemCache_1.cmGetBsAssetItemCache().setAssetItem(locatorHash, assetItem);
         this._assetMap.set(assetItem.name, locatorHash);
     };
-    BsAssetCollection.prototype.markAssetItemAsDeleted = function (name) {
+    CmcAssetCollection.prototype.markAssetItemAsDeleted = function (name) {
         var assetItem = this.getAssetItem(name);
         if (!lodash_1.isNil(assetItem)) {
             var locatorHash = utils_1.cmCreateHashFromAssetLocator(assetItem);
             assetItemCache_1.cmGetBsAssetItemCache().markDeletedFromSource(locatorHash);
         }
     };
-    BsAssetCollection.prototype.getRemovedAssetItem = function (name) {
-        var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemReference(this._removedAssetMap.get(name));
+    CmcAssetCollection.prototype.getRemovedAssetItem = function (name) {
+        var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(this._removedAssetMap.get(name));
         return lodash_1.isNil(ref) ? null : ref.assetItem;
     };
-    BsAssetCollection.prototype.addPinnedAssetItem = function (assetItem) {
+    CmcAssetCollection.prototype.addPinnedAssetItem = function (assetItem) {
         delete assetItem.refCount;
         assetItem.id = bscore_1.BsAssetIdNone;
         if (!this._assetMap.has(assetItem.name)) {
@@ -1264,7 +1354,7 @@ var BsAssetCollection = (function () {
             this._pinnedAssetMap.set(assetItem.name, { verified: false });
         }
     };
-    BsAssetCollection.prototype.clearUnpinnedAssets = function () {
+    CmcAssetCollection.prototype.clearUnpinnedAssets = function () {
         var _this = this;
         var pinnedAssetMap = new Map();
         this._assetMap.forEach(function (locatorHash, name) {
@@ -1281,7 +1371,7 @@ var BsAssetCollection = (function () {
         this._bsnEnumerator = null;
         this._isComplete = false;
     };
-    BsAssetCollection.prototype.resolveDirectoryPath = function (directoryPath) {
+    CmcAssetCollection.prototype.resolveDirectoryPath = function (directoryPath) {
         var sep = this.currentAssetLocation === bscore_1.AssetLocation.Bsn ? '/' : isomorphic_path_1.default.sep;
         if (!directoryPath) {
             return sep;
@@ -1291,7 +1381,7 @@ var BsAssetCollection = (function () {
         }
         return directoryPath;
     };
-    BsAssetCollection.prototype.enumerateLocalAssets = function (assetTypes) {
+    CmcAssetCollection.prototype.enumerateLocalAssets = function (assetTypes) {
         var _this = this;
         var folderEnumerator = new fsconnector_1.FsFolderEnumerator();
         var mediaTypeFilters = this._enumerationOptions.mediaFilters;
@@ -1311,7 +1401,7 @@ var BsAssetCollection = (function () {
             _this._isComplete = true;
         });
     };
-    BsAssetCollection.prototype.createLocalFolder = function (name) {
+    CmcAssetCollection.prototype.createLocalFolder = function (name) {
         var dirPath = isomorphic_path_1.default.join(this.currentDirectory, name);
         if (fsconnector_1.fsLocalFileExists(dirPath)) {
             return fsconnector_1.fsLocalFileIsDirectory(dirPath)
@@ -1327,11 +1417,11 @@ var BsAssetCollection = (function () {
                 .then(function () { return fsconnector_1.fsGetAssetItemFromFileWithSubFolderCheck(dirPath); });
         }
     };
-    BsAssetCollection.prototype.getLocalAssetBackendCount = function (assetTypes) {
+    CmcAssetCollection.prototype.getLocalAssetBackendCount = function (assetTypes) {
         var folderEnumerator = new fsconnector_1.FsFolderEnumerator();
         return folderEnumerator.getCount(this.currentDirectory, assetTypes, this._enumerationOptions.mediaFilters);
     };
-    BsAssetCollection.prototype.enumerateLocalPinnedAssets = function (assetTypes) {
+    CmcAssetCollection.prototype.enumerateLocalPinnedAssets = function (assetTypes) {
         var _this = this;
         var folderEnumerator = new fsconnector_1.FsFolderEnumerator();
         var mediaTypeFilters = this._enumerationOptions.mediaFilters;
@@ -1349,7 +1439,7 @@ var BsAssetCollection = (function () {
             _this._isComplete = true;
         });
     };
-    Object.defineProperty(BsAssetCollection.prototype, "bsnEnumerationOptions", {
+    Object.defineProperty(CmcAssetCollection.prototype, "bsnEnumerationOptions", {
         get: function () {
             var enumOptions = {};
             if (this._currentDirectory && AssetTypesWithVirtualPathSupport.has(this.assetTypes[0])) {
@@ -1383,22 +1473,22 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "nameProperty", {
+    Object.defineProperty(CmcAssetCollection.prototype, "nameProperty", {
         get: function () { return 'name'; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "filterExpression", {
+    Object.defineProperty(CmcAssetCollection.prototype, "filterExpression", {
         get: function () { return ''; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcAssetCollection.prototype, "bsnSortField", {
         get: function () { return null; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetCollection.prototype, "localAssetTypeArray", {
+    Object.defineProperty(CmcAssetCollection.prototype, "localAssetTypeArray", {
         get: function () {
             var assetTypes = this.assetTypes.slice();
             if (this.enumerationOptions.folders && assetTypes.indexOf(bscore_1.AssetType.Folder) < 0) {
@@ -1409,10 +1499,10 @@ var BsAssetCollection = (function () {
         enumerable: false,
         configurable: true
     });
-    BsAssetCollection.prototype.getFilterExpressionFromNetworkIdList = function (networkIdList) {
+    CmcAssetCollection.prototype.getFilterExpressionFromNetworkIdList = function (networkIdList) {
         return '[Id] IS IN (' + networkIdList.join() + ')';
     };
-    BsAssetCollection.prototype.checkBsnPageSize = function () {
+    CmcAssetCollection.prototype.checkBsnPageSize = function () {
         if (this._bsnEnumerator && this._enumerationOptions) {
             var maxItems = this._enumerationOptions.maxItems;
             var currentPageSize = this._bsnEnumerator.pageSize ?
@@ -1422,19 +1512,19 @@ var BsAssetCollection = (function () {
             }
         }
     };
-    BsAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest));
     };
-    BsAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest));
     };
-    BsAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         return;
     };
-    BsAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return Promise.resolve(0);
     };
-    BsAssetCollection.prototype.getBsnDuplicateNames = function (matchList) {
+    CmcAssetCollection.prototype.getBsnDuplicateNames = function (matchList) {
         var _this = this;
         var queryLimit = 2000;
         var queryOverhead = 37;
@@ -1498,21 +1588,21 @@ var BsAssetCollection = (function () {
         return Promise.all(matchListSegments.map(getNextSegment))
             .then(function (assetItemArrays) { return [].concat.apply([], assetItemArrays); });
     };
-    BsAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
+    CmcAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
         return [];
     };
-    BsAssetCollection.prototype.setPinnedAssetVerification = function (name) {
+    CmcAssetCollection.prototype.setPinnedAssetVerification = function (name) {
         if (this._pinnedAssetMap.has(name)) {
             var assetStatus = this._pinnedAssetMap.get(name);
             assetStatus.verified = true;
         }
     };
-    BsAssetCollection.prototype.sortAssetItemNames = function (assetNames, sortFunction) {
+    CmcAssetCollection.prototype.sortAssetItemNames = function (assetNames, sortFunction) {
         var _this = this;
         var assetItems = assetNames.map(function (name) { return _this.getAssetItem(name); }).sort(sortFunction);
         return assetItems.map(function (item) { return item.name; });
     };
-    BsAssetCollection.prototype.processBsnAssetListSegment = function (assetListSegment) {
+    CmcAssetCollection.prototype.processBsnAssetListSegment = function (assetListSegment) {
         this.processBsnAssetListSegmentItems(assetListSegment);
         var maxItems = this._enumerationOptions.maxItems;
         this._isComplete = assetListSegment.enumerator.isComplete
@@ -1525,12 +1615,12 @@ var BsAssetCollection = (function () {
             this.checkBsnPageSize();
         }
     };
-    BsAssetCollection.prototype.resetPinnedAssetVerification = function () {
+    CmcAssetCollection.prototype.resetPinnedAssetVerification = function () {
         this._pinnedAssetMap.forEach(function (status) {
             status.verified = false;
         });
     };
-    BsAssetCollection.prototype.processPinnedAssetVerification = function () {
+    CmcAssetCollection.prototype.processPinnedAssetVerification = function () {
         var _this = this;
         var unverifiedAssetNames = [];
         this._pinnedAssetMap.forEach(function (status, name) {
@@ -1545,7 +1635,7 @@ var BsAssetCollection = (function () {
         });
         unverifiedAssetNames.forEach(function (name) { return _this._pinnedAssetMap.delete(name); });
     };
-    BsAssetCollection.prototype.createFunctionalLocator = function () {
+    CmcAssetCollection.prototype.createLocatorHash = function () {
         var loc = '';
         if (this._currentAssetLocation === bscore_1.AssetLocation.Bsn && this._currentAssetScope.length > 0) {
             loc = this._currentAssetScope + '@' + loc;
@@ -1582,7 +1672,7 @@ var BsAssetCollection = (function () {
         }
         return loc;
     };
-    BsAssetCollection.DefaultEnumerationOptions = {
+    CmcAssetCollection.DefaultEnumerationOptions = {
         folders: false,
         includeLegacyAssets: false,
         mediaFilters: null,
@@ -1591,9 +1681,9 @@ var BsAssetCollection = (function () {
         maxItems: 0,
         pageSize: 100,
     };
-    return BsAssetCollection;
+    return CmcAssetCollection;
 }());
-exports.BsAssetCollection = BsAssetCollection;
+exports.CmcAssetCollection = CmcAssetCollection;
 
 
 /***/ }),
@@ -1624,7 +1714,7 @@ var htmlSiteAsset_1 = __webpack_require__(17);
 var user_1 = __webpack_require__(25);
 var role_1 = __webpack_require__(24);
 var assetItemCache_1 = __webpack_require__(20);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
 exports.DefaultPresentationWebPageName = 'Default_PresentationWebPage';
@@ -1634,7 +1724,7 @@ function cmGetDefaultPresentationWebPageAsset() {
         .then(function (deviceWebPageExists) {
         if (deviceWebPageExists) {
             return bsnconnector_1.bsnGetSession().getDeviceWebPageEntity(exports.DefaultPresentationWebPageName)
-                .then(deviceWebPageAsset_1.BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn);
+                .then(deviceWebPageAsset_1.CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn);
         }
         else {
             var indexFileName_1 = '_deviceWebPage.html';
@@ -1665,7 +1755,7 @@ function cmGetDefaultClockZoneWebPageAsset() {
         .then(function (clockWebPageExists) {
         if (clockWebPageExists) {
             return bsnconnector_1.bsnGetSession().getHtmlSiteEntity(exports.DefaultClockZoneWebPageName)
-                .then(htmlSiteAsset_1.BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn);
+                .then(htmlSiteAsset_1.CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn);
         }
         else {
             var indexFileName_2 = 'bsDateTimeWidget.html';
@@ -1698,9 +1788,9 @@ function cmUploadDefaultWebPage(spec, description) {
         return bsnconnector_1.bsnGetSession().getDeviceWebPageEntity(spec.siteName);
     })
         .then(function (entity) {
-        var assetItem = deviceWebPageAsset_1.BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity);
+        var assetItem = deviceWebPageAsset_1.CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity);
         assetItemCache_1.cmPutAssetItemToCache(assetItem);
-        notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+        notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
         return assetItem;
     });
 }
@@ -1815,7 +1905,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsAssetBase = exports.BsTempScope = void 0;
+exports.CmcAsset = exports.BsTempScope = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var assetItemCache_1 = __webpack_require__(20);
@@ -1825,8 +1915,8 @@ var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
 exports.BsTempScope = '__temp__';
-var BsAssetBase = (function () {
-    function BsAssetBase(assetItem) {
+var CmcAsset = (function () {
+    function CmcAsset(assetItem) {
         this._locatorHash = utils_1.cmCreateHashFromAssetLocator(assetItem);
         this._name = assetItem.name;
         if (assetItem.scope === exports.BsTempScope) {
@@ -1834,17 +1924,17 @@ var BsAssetBase = (function () {
         }
         else {
             var cache = assetItemCache_1.cmGetBsAssetItemCache();
-            if (!cache.hasAssetItemReference(this._locatorHash)) {
+            if (!cache.hasAssetItemCacheItem(this._locatorHash)) {
                 cache.setAssetItem(this._locatorHash, assetItem);
             }
         }
     }
-    Object.defineProperty(BsAssetBase.prototype, "name", {
+    Object.defineProperty(CmcAsset.prototype, "name", {
         get: function () { return this._name; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetItem", {
+    Object.defineProperty(CmcAsset.prototype, "assetItem", {
         get: function () {
             return lodash_1.pick(this.internalAssetItem, [
                 'id', 'name', 'path', 'networkId', 'location', 'assetType', 'scope', 'locator', 'mediaType',
@@ -1855,66 +1945,66 @@ var BsAssetBase = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "rawAssetItem", {
+    Object.defineProperty(CmcAsset.prototype, "rawAssetItem", {
         get: function () { return lodash_1.cloneDeep(this.internalAssetItem); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetLocator", {
+    Object.defineProperty(CmcAsset.prototype, "assetLocator", {
         get: function () {
-            return lodash_1.pick(this.internalAssetItem, ['name', 'path', 'networkId', 'location', 'assetType', 'scope']);
+            return lodash_1.pick(this.internalAssetItem, ['name', 'path', 'networkId', 'location', 'assetType', 'childAssetType', 'scope']);
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetData", {
+    Object.defineProperty(CmcAsset.prototype, "assetData", {
         get: function () { return this.getAssetItemProperty('assetData'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "dirPath", {
+    Object.defineProperty(CmcAsset.prototype, "dirPath", {
         get: function () { return this.getAssetItemProperty('path'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "fullPath", {
+    Object.defineProperty(CmcAsset.prototype, "fullPath", {
         get: function () {
             return bscore_1.bscGetAssetFullPath(this.internalAssetItem);
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "locatorKey", {
+    Object.defineProperty(CmcAsset.prototype, "locatorKey", {
         get: function () { return this.getAssetItemProperty('locator'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "locator", {
+    Object.defineProperty(CmcAsset.prototype, "locator", {
         get: function () { return this.getAssetItemProperty('locator'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "locatorHash", {
+    Object.defineProperty(CmcAsset.prototype, "locatorHash", {
         get: function () { return this._locatorHash; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetType", {
+    Object.defineProperty(CmcAsset.prototype, "assetType", {
         get: function () { return this.getAssetItemProperty('assetType'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetLocation", {
+    Object.defineProperty(CmcAsset.prototype, "assetLocation", {
         get: function () { return this.getAssetItemProperty('location'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetScope", {
+    Object.defineProperty(CmcAsset.prototype, "assetScope", {
         get: function () { return this.getAssetItemProperty('scope'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "mediaType", {
+    Object.defineProperty(CmcAsset.prototype, "mediaType", {
         get: function () {
             var mediaType = this.getAssetItemProperty('mediaType');
             return lodash_1.isNil(mediaType) ? bscore_1.MediaType.Auxiliary : mediaType;
@@ -1922,53 +2012,46 @@ var BsAssetBase = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "fileSize", {
+    Object.defineProperty(CmcAsset.prototype, "fileSize", {
         get: function () { return this.getAssetItemProperty('fileSize'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "uploadDate", {
+    Object.defineProperty(CmcAsset.prototype, "uploadDate", {
         get: function () { return this.getAssetItemProperty('uploadDate'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "creationDate", {
+    Object.defineProperty(CmcAsset.prototype, "creationDate", {
         get: function () { return this.getAssetItemProperty('creationDate'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "lastModifiedDate", {
+    Object.defineProperty(CmcAsset.prototype, "lastModifiedDate", {
         get: function () { return this.getAssetItemProperty('lastModifiedDate'); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "isTemporaryAsset", {
+    Object.defineProperty(CmcAsset.prototype, "isTemporaryAsset", {
         get: function () { return !lodash_1.isNil(this._tempAssetItem); },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "internalAssetItem", {
+    Object.defineProperty(CmcAsset.prototype, "internalAssetItem", {
         get: function () {
             if (this.isTemporaryAsset) {
                 return this._tempAssetItem;
             }
-            var ref = this.assetItemReference;
+            var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(this._locatorHash);
             if (!lodash_1.isNil(ref)) {
                 return ref.assetItem;
             }
-            throw new error_1.BsCmError(error_1.BsCmErrorType.unexpectedError, "BsAsset for " + this._name + " does not have corresponding cache item");
+            throw new error_1.BsCmError(error_1.BsCmErrorType.unexpectedError, "CmiAsset for " + this._name + " does not have corresponding cache item");
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "assetItemReference", {
-        get: function () {
-            return assetItemCache_1.cmGetBsAssetItemCache().getAssetItemReference(this._locatorHash);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(BsAssetBase.prototype, "networkId", {
+    Object.defineProperty(CmcAsset.prototype, "networkId", {
         get: function () {
             var networkId = this.getAssetItemProperty('networkId');
             return lodash_1.isNil(networkId) ? 0 : networkId;
@@ -1976,7 +2059,7 @@ var BsAssetBase = (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsAssetBase.prototype, "networkIdOrName", {
+    Object.defineProperty(CmcAsset.prototype, "networkIdOrName", {
         get: function () {
             var networkId = this.getAssetItemProperty('networkId');
             return lodash_1.isNil(networkId) || networkId === 0 ? this._name : networkId;
@@ -1984,7 +2067,7 @@ var BsAssetBase = (function () {
         enumerable: false,
         configurable: true
     });
-    BsAssetBase.prototype.getAssetThumbnail = function () {
+    CmcAsset.prototype.getAssetThumbnail = function () {
         var _this = this;
         var assetItem = this.internalAssetItem;
         if (assetItem.location === bscore_1.AssetLocation.Bsn) {
@@ -2030,7 +2113,7 @@ var BsAssetBase = (function () {
             return fsconnector_1.fsGetThumbnail(assetItem);
         }
     };
-    BsAssetBase.prototype.getThumbnail = function () {
+    CmcAsset.prototype.getThumbnail = function () {
         var _this = this;
         var thumbnail = assetMetadataCache_1.cmGetBsAssetMetadataCache().getAssetThumbnail(this._locatorHash);
         if (!lodash_1.isNil(thumbnail)) {
@@ -2065,10 +2148,10 @@ var BsAssetBase = (function () {
             return thumbnail;
         });
     };
-    BsAssetBase.prototype.getFileHash = function () {
+    CmcAsset.prototype.getFileHash = function () {
         return Promise.resolve(this.getAssetItemProperty('fileHash'));
     };
-    BsAssetBase.prototype.fetchAssetItemData = function () {
+    CmcAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsGetAssetItemFromFileWithSubFolderCheck(this.fullPath)
@@ -2081,53 +2164,59 @@ var BsAssetBase = (function () {
         }
         return Promise.resolve(this);
     };
-    BsAssetBase.prototype.testAssetExists = function () {
+    CmcAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return utils_1.testLocalFileExists(this.fullPath, this.assetType);
         }
         return Promise.resolve(false);
     };
-    BsAssetBase.prototype.replacePermissions = function (objectPermissions) {
+    CmcAsset.prototype.replacePermissions = function (objectPermissions) {
         if (this.assetLocation !== bscore_1.AssetLocation.Bsn) {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Permissions not supported for local assets'));
         }
         return Promise.resolve(this);
     };
-    BsAssetBase.prototype.setTags = function (tags) {
+    CmcAsset.prototype.setTags = function (tags) {
         var message = this.assetLocation !== bscore_1.AssetLocation.Bsn ?
             'Tags not supported for local assets' : 'Tags not supported for this BSN asset type';
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, message));
     };
-    BsAssetBase.prototype.deleteTags = function (tagKeys) {
+    CmcAsset.prototype.deleteTags = function (tagKeys) {
         var message = this.assetLocation !== bscore_1.AssetLocation.Bsn ?
             'Tags not supported for local assets' : 'Tags not supported for this BSN asset type';
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, message));
     };
-    BsAssetBase.prototype.updateCachedAssetItem = function (assetItem) {
+    CmcAsset.prototype.updateCachedAssetItem = function (assetItem) {
         if (this.isTemporaryAsset) {
             this._locatorHash = utils_1.cmCreateHashFromAssetLocator(assetItem);
             this._tempAssetItem = undefined;
         }
         assetItemCache_1.cmGetBsAssetItemCache().setAssetItem(this._locatorHash, assetItem);
     };
-    BsAssetBase.prototype.markCachedAssetItemAsDeleted = function () {
+    CmcAsset.prototype.markCachedAssetItemAsDeleted = function () {
         assetItemCache_1.cmGetBsAssetItemCache().markDeletedFromSource(this._locatorHash);
     };
-    BsAssetBase.prototype.updateCachedAssetItemAssetData = function (assetData) {
+    CmcAsset.prototype.updateCachedAssetItemAssetData = function (assetData) {
         var updatedAssetItem = __assign(__assign({}, this.internalAssetItem), { assetData: assetData });
         assetItemCache_1.cmGetBsAssetItemCache().setAssetItem(this._locatorHash, updatedAssetItem);
     };
-    BsAssetBase.prototype.getAssetItemProperty = function (propName) {
+    CmcAsset.prototype.getAssetItemProperty = function (propName) {
         var prop = this.internalAssetItem[propName];
         return lodash_1.isNil(prop) ? null : prop;
     };
-    return BsAssetBase;
+    return CmcAsset;
 }());
-exports.BsAssetBase = BsAssetBase;
+exports.CmcAsset = CmcAsset;
 
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+module.exports = require("isomorphic-path");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2144,11 +2233,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cmUpdateAssetItemForAssetSpecification = exports.cmUpdateAssetItemParentFolder = exports.cmGetParentFolderAssetSpecification = exports.cmGetBsAssetForLocalFile = exports.cmGetBsAssetForBsnAsset = exports.cmGetBsAssetForAssetSpecification = exports.cmBsAssetExists = exports.cmGetBsAssetForAssetLocator = exports.cmGetTemporaryAsset = exports.cmGetBsAsset = void 0;
+exports.cmUpdateAssetItemForAssetSpecification = exports.cmUpdateAssetItemParentFolder = exports.cmGetParentFolderAssetSpecification = exports.cmGetBsAssetForLocalFile = exports.cmGetBsAssetForBsnAsset = exports.cmGetBsAssetForAssetSpecification = exports.cmBsAssetExists = exports.cmGetBsAssetForAssetLocator = exports.cmGetTemporaryAsset = exports.cmGetBsAsset = exports.cmGetAssetUpdateTime = exports.cmGetBsAssetForLocatorHash = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
-var assetItemCache_1 = __webpack_require__(20);
 var bsnconnector_1 = __webpack_require__(1);
+var assetItemCache_1 = __webpack_require__(20);
 var folderAsset_1 = __webpack_require__(16);
 var mediaAsset_1 = __webpack_require__(29);
 var presentationAsset_1 = __webpack_require__(23);
@@ -2163,9 +2252,19 @@ var scheduleAsset_1 = __webpack_require__(43);
 var asset_1 = __webpack_require__(9);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
-var isomorphic_path_1 = __webpack_require__(11);
+var isomorphic_path_1 = __webpack_require__(10);
 var lodash_1 = __webpack_require__(0);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
+function cmGetBsAssetForLocatorHash(locatorHash) {
+    var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(this._locatorHash);
+    return lodash_1.isNil(ref) ? null : cmCreateAsset(ref.assetItem);
+}
+exports.cmGetBsAssetForLocatorHash = cmGetBsAssetForLocatorHash;
+function cmGetAssetUpdateTime(locatorHash) {
+    var ref = assetItemCache_1.cmGetBsAssetItemCache().getAssetItemCacheItem(this._locatorHash);
+    return lodash_1.isNil(ref) ? null : ref.updateTime;
+}
+exports.cmGetAssetUpdateTime = cmGetAssetUpdateTime;
 function cmGetBsAsset(assetItem) {
     return cmCreateAsset(assetItem);
 }
@@ -2279,7 +2378,7 @@ function cmUpdateAssetItemForAssetSpecification(assetSpec) {
     return cmGetBsAssetForAssetSpecification(assetSpec)
         .then(function (asset) {
         if (!lodash_1.isNil(asset)) {
-            notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [asset.assetItem] });
+            notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [asset.assetItem] });
         }
     });
 }
@@ -2288,39 +2387,33 @@ function cmCreateAsset(assetItem) {
     if (assetItem) {
         switch (assetItem.assetType) {
             case bscore_1.AssetType.Folder:
-                return new folderAsset_1.BsFolderAsset(assetItem);
+                return new folderAsset_1.CmcFolderAsset(assetItem);
             case bscore_1.AssetType.Content:
-                return new mediaAsset_1.BsMediaAsset(assetItem);
+                return new mediaAsset_1.CmcMediaAsset(assetItem);
             case bscore_1.AssetType.Project:
             case bscore_1.AssetType.ProjectBpf:
-                return new presentationAsset_1.BsPresentationAsset(lodash_1.cloneDeep(assetItem));
+                return new presentationAsset_1.CmcPresentationAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.BSNDataFeed:
-                return new textFeedAsset_1.BsTextFeedAsset(lodash_1.cloneDeep(assetItem));
+                return new textFeedAsset_1.CmcTextFeedAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.BSNMediaFeed:
-                return new mediaFeedAsset_1.BsMediaFeedAsset(lodash_1.cloneDeep(assetItem));
+                return new mediaFeedAsset_1.CmcMediaFeedAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.BSNDynamicPlaylist:
-                return new dynamicPlaylistAsset_1.BsDynamicPlaylistAsset(lodash_1.cloneDeep(assetItem));
+                return new dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.BSNTaggedPlaylist:
-                return new taggedPlaylistAsset_1.BsTaggedPlaylistAsset(lodash_1.cloneDeep(assetItem));
+                return new taggedPlaylistAsset_1.CmcTaggedPlaylistAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.HtmlSite:
-                return new htmlSiteAsset_1.BsHtmlSiteAsset(lodash_1.cloneDeep(assetItem));
+                return new htmlSiteAsset_1.CmcHtmlSiteAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.DeviceHtmlSite:
-                return new deviceWebPageAsset_1.BsDeviceWebPageAsset(lodash_1.cloneDeep(assetItem));
+                return new deviceWebPageAsset_1.CmcDeviceWebPageAsset(lodash_1.cloneDeep(assetItem));
             case bscore_1.AssetType.BrightScript:
-                return new brightScriptAsset_1.BsBrightScriptAsset(assetItem);
+                return new brightScriptAsset_1.CmcBrightScriptAsset(assetItem);
             case bscore_1.AssetType.Schedule:
-                return new scheduleAsset_1.BsScheduleAsset(lodash_1.cloneDeep(assetItem));
+                return new scheduleAsset_1.CmcScheduleAsset(lodash_1.cloneDeep(assetItem));
         }
     }
     return null;
 }
 
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = require("isomorphic-path");
 
 /***/ }),
 /* 12 */
@@ -2349,7 +2442,7 @@ var AssetSortField;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cmRemoveAssetCollectionsForLocationAndScope = exports.cmGetBsAssetCollectionByLocator = exports.cmUnpinAssets = exports.cmPinAssets = exports.cmGetBsAssetCollection = void 0;
+exports.cmRemoveAssetCollectionsForLocationAndScope = exports.cmGetBsAssetCollectionByLocator = exports.cmHasBsAssetCollectionForLocator = exports.cmUnpinAssets = exports.cmPinAssets = exports.cmGetBsAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var assetCollection_1 = __webpack_require__(7);
@@ -2367,7 +2460,7 @@ var multiAssetTypeCollection_1 = __webpack_require__(51);
 var folderAssetCollection_1 = __webpack_require__(47);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var assetCollectionCache_1 = __webpack_require__(87);
 var assetItemCache_1 = __webpack_require__(20);
 var lodash_1 = __webpack_require__(0);
@@ -2378,50 +2471,50 @@ function cmGetBsAssetCollection(location, assetType, directoryPath, enumerationO
     var cache = assetCollectionCache_1.cmGetBsAssetCollectionCache();
     var newCollection;
     if (Array.isArray(assetType) && utils_1.cmIsMultipleAssetTypeArray(assetType)) {
-        newCollection = new multiAssetTypeCollection_1.BsMultiAssetTypeCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+        newCollection = new multiAssetTypeCollection_1.CmcMultiAssetTypeCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
     }
     else {
         var primaryAssetType = Array.isArray(assetType) ? assetType[0] : assetType;
         switch (primaryAssetType) {
             case bscore_1.AssetType.Content:
-                newCollection = new mediaAssetCollection_1.BsMediaAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new mediaAssetCollection_1.CmcMediaAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.Folder:
-                newCollection = new folderAssetCollection_1.BsFolderAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new folderAssetCollection_1.CmcFolderAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.Project:
             case bscore_1.AssetType.ProjectBpf:
-                newCollection = new presentationAssetCollection_1.BsPresentationAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new presentationAssetCollection_1.CmcPresentationAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.BSNDataFeed:
-                newCollection = new textFeedAssetCollection_1.BsTextFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new textFeedAssetCollection_1.CmcTextFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.BSNMediaFeed:
-                newCollection = new mediaFeedAssetCollection_1.BsMediaFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new mediaFeedAssetCollection_1.CmcMediaFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.BSNDynamicPlaylist:
-                newCollection = new dynamicPlaylistAssetCollection_1.BsDynamicPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new dynamicPlaylistAssetCollection_1.CmcDynamicPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.BSNTaggedPlaylist:
-                newCollection = new taggedPlaylistAssetCollection_1.BsTaggedPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new taggedPlaylistAssetCollection_1.CmcTaggedPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.HtmlSite:
-                newCollection = new htmlSiteAssetCollection_1.BsHtmlSiteAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new htmlSiteAssetCollection_1.CmcHtmlSiteAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.DeviceHtmlSite:
-                newCollection = new deviceWebPageAssetCollection_1.BsDeviceWebPageAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new deviceWebPageAssetCollection_1.CmcDeviceWebPageAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.BrightScript:
-                newCollection = new brightScriptAssetCollection_1.BsBrightScriptAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new brightScriptAssetCollection_1.CmcBrightScriptAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             case bscore_1.AssetType.Schedule:
-                newCollection = new scheduleAssetCollection_1.BsScheduleAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new scheduleAssetCollection_1.CmcScheduleAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
                 break;
             default:
-                newCollection = new assetCollection_1.BsAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
+                newCollection = new assetCollection_1.CmcAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions);
         }
     }
-    var cachedCollection = cache.getCollection(newCollection.functionalLocator);
+    var cachedCollection = cache.getCollection(newCollection.locatorHash);
     if (cachedCollection) {
         if (enumerationOptions && !lodash_1.isNil(enumerationOptions.sortField)) {
             var sortDescending = lodash_1.isNil(enumerationOptions.sortDescending) ? false : enumerationOptions.sortDescending;
@@ -2443,7 +2536,7 @@ function cmPinAssets(assetLocators) {
         }
         assetItems.push(assetItem);
     });
-    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.pinAssets, { assetItems: assetItems });
+    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.pinAssets, { assetItems: assetItems });
 }
 exports.cmPinAssets = cmPinAssets;
 function cmUnpinAssets(assetLocators) {
@@ -2452,9 +2545,13 @@ function cmUnpinAssets(assetLocators) {
         var assetItem = bscore_1.bscIsAssetItem(assetLocator) ? assetLocator : bscore_1.bscAssetItemFromAssetLocator(assetLocator);
         assetItems.push(assetItem);
     });
-    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.unpinAssets, { assetItems: assetItems });
+    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.unpinAssets, { assetItems: assetItems });
 }
 exports.cmUnpinAssets = cmUnpinAssets;
+function cmHasBsAssetCollectionForLocator(locator) {
+    return assetCollectionCache_1.cmGetBsAssetCollectionCache().hasCollection(locator);
+}
+exports.cmHasBsAssetCollectionForLocator = cmHasBsAssetCollectionForLocator;
 function cmGetBsAssetCollectionByLocator(locator) {
     var cachedCollection = assetCollectionCache_1.cmGetBsAssetCollectionCache().getCollection(locator);
     return cachedCollection ? cachedCollection : null;
@@ -2510,24 +2607,24 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsFolderAsset = void 0;
+exports.CmcFolderAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var contentAsset_1 = __webpack_require__(66);
 var bsnOperations_1 = __webpack_require__(8);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsFolderAsset = (function (_super) {
-    __extends(BsFolderAsset, _super);
-    function BsFolderAsset(assetItem) {
+var CmcFolderAsset = (function (_super) {
+    __extends(CmcFolderAsset, _super);
+    function CmcFolderAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.Folder) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsFolderAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcFolderAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsFolderAsset.getBsAssetFolderItemFromBsn = function (item) {
+    CmcFolderAsset.getBsAssetFolderItemFromBsn = function (item) {
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -2536,6 +2633,7 @@ var BsFolderAsset = (function (_super) {
             location: bscore_1.AssetLocation.Bsn,
             assetType: bscore_1.AssetType.Folder,
             scope: bsnconnector_1.bsnGetSession().networkName,
+            childAssetType: bscore_1.BseChildAssetType.Content,
             hasSubFolders: item.hasSubFolders,
             hasFiles: item.hasFiles,
             locator: '',
@@ -2547,7 +2645,7 @@ var BsFolderAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    Object.defineProperty(BsFolderAsset.prototype, "hasSubFolders", {
+    Object.defineProperty(CmcFolderAsset.prototype, "hasSubFolders", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return lodash_1.isNil(assetItem.hasSubFolders) ? null : assetItem.hasSubFolders;
@@ -2555,7 +2653,7 @@ var BsFolderAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsFolderAsset.prototype, "hasFiles", {
+    Object.defineProperty(CmcFolderAsset.prototype, "hasFiles", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return lodash_1.isNil(assetItem.hasFiles) ? null : assetItem.hasFiles;
@@ -2563,11 +2661,11 @@ var BsFolderAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsFolderAsset.prototype.fetchAssetItemData = function () {
+    CmcFolderAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         var processBsnFolderItem = function (bsnContentItem) {
             if (bsnconnector_1.bsnIsFolderContentEntity(bsnContentItem)) {
-                _this.updateCachedAssetItem(BsFolderAsset.getBsAssetFolderItemFromBsn(bsnContentItem));
+                _this.updateCachedAssetItem(CmcFolderAsset.getBsAssetFolderItemFromBsn(bsnContentItem));
             }
             return _this;
         };
@@ -2589,13 +2687,13 @@ var BsFolderAsset = (function (_super) {
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsFolderAsset.prototype.testAssetExists = function () {
+    CmcFolderAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsContentItem(this._name, this.internalAssetItem.path, true);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    BsFolderAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcFolderAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.replaceBsnContentPermissions(objectPermissions)
@@ -2603,9 +2701,9 @@ var BsFolderAsset = (function (_super) {
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    return BsFolderAsset;
-}(contentAsset_1.BsContentAssetBase));
-exports.BsFolderAsset = BsFolderAsset;
+    return CmcFolderAsset;
+}(contentAsset_1.CmcContentAsset));
+exports.CmcFolderAsset = CmcFolderAsset;
 
 
 /***/ }),
@@ -2628,26 +2726,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsHtmlSiteAsset = void 0;
+exports.CmcHtmlSiteAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
-var BsHtmlSiteAsset = (function (_super) {
-    __extends(BsHtmlSiteAsset, _super);
-    function BsHtmlSiteAsset(assetItem) {
+var CmcHtmlSiteAsset = (function (_super) {
+    __extends(CmcHtmlSiteAsset, _super);
+    function CmcHtmlSiteAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.HtmlSite) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsHtmlSiteAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcHtmlSiteAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn = function (siteAssetItem) {
+    CmcHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn = function (siteAssetItem) {
         var fileName = siteAssetItem.fileName, physicalPath = siteAssetItem.physicalPath, relativePath = siteAssetItem.relativePath, fileSize = siteAssetItem.fileSize, fileHash = siteAssetItem.fileHash;
         return {
             name: fileName,
@@ -2657,28 +2755,28 @@ var BsHtmlSiteAsset = (function (_super) {
             fileHash: utils_1.cmNormalizeBsnHashString(fileHash),
         };
     };
-    BsHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn = function (item) {
+    CmcHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn = function (item) {
         if (item) {
             var id = item.id, name_1 = item.name, indexFile = item.indexFile, uploadDate = item.uploadDate;
             var htmlSite_1 = {
                 location: bscore_1.AssetLocation.Bsn,
                 id: id, name: name_1, uploadDate: uploadDate,
-                indexFile: BsHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn(indexFile),
+                indexFile: CmcHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn(indexFile),
                 assets: null,
                 permissions: lodash_1.isNil(item.permissions) ? [] : item.permissions.map(bsnOperations_1.cmGetBsnObjectPermissionFromBsnEntity),
             };
             if (item.assets) {
                 htmlSite_1.assets = [];
                 item.assets.forEach(function (siteAssetItem) {
-                    htmlSite_1.assets.push(BsHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn(siteAssetItem));
+                    htmlSite_1.assets.push(CmcHtmlSiteAsset.getBsHtmlSiteAssetItemPropertiesFromBsn(siteAssetItem));
                 });
             }
             return htmlSite_1;
         }
         return null;
     };
-    BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn = function (item) {
-        var assetData = BsHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn(item);
+    CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn = function (item) {
+        var assetData = CmcHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn(item);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -2698,14 +2796,14 @@ var BsHtmlSiteAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    Object.defineProperty(BsHtmlSiteAsset.prototype, "htmlSiteInfo", {
+    Object.defineProperty(CmcHtmlSiteAsset.prototype, "htmlSiteInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsHtmlSiteAsset.prototype, "indexFile", {
+    Object.defineProperty(CmcHtmlSiteAsset.prototype, "indexFile", {
         get: function () {
             var siteProperties = this.htmlSiteInfo;
             return lodash_1.isNull(siteProperties) ? null : siteProperties.indexFile;
@@ -2713,7 +2811,7 @@ var BsHtmlSiteAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsHtmlSiteAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcHtmlSiteAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -2722,7 +2820,7 @@ var BsHtmlSiteAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsHtmlSiteAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcHtmlSiteAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -2731,14 +2829,14 @@ var BsHtmlSiteAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsHtmlSiteAsset.prototype, "permissions", {
+    Object.defineProperty(CmcHtmlSiteAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsHtmlSiteAsset.prototype.getHtmlSiteAssetList = function () {
+    CmcHtmlSiteAsset.prototype.getHtmlSiteAssetList = function () {
         var _this = this;
         if (this.assetLocation !== bscore_1.AssetLocation.Bsn) {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'HtmlSite asset list can only be returned for BSN based HTML sites.'));
@@ -2749,29 +2847,29 @@ var BsHtmlSiteAsset = (function (_super) {
         }
         return bsnconnector_1.bsnGetSession().getHtmlSiteEntity(this.name)
             .then(function (entity) {
-            _this.updateCachedAssetItemAssetData(BsHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn(entity));
+            _this.updateCachedAssetItemAssetData(CmcHtmlSiteAsset.getBsHtmlSitePropertiesFromBsn(entity));
             siteProperties = _this.htmlSiteInfo;
             return lodash_1.isNil(siteProperties) ? null : siteProperties.assets;
         });
     };
-    BsHtmlSiteAsset.prototype.fetchAssetItemData = function () {
+    CmcHtmlSiteAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getHtmlSiteEntity(this.networkIdOrName)
                 .then(function (entity) {
-                _this.updateCachedAssetItem(BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(entity));
+                _this.updateCachedAssetItem(CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(entity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsHtmlSiteAsset.prototype.testAssetExists = function () {
+    CmcHtmlSiteAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsHtmlSite(this._name);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    BsHtmlSiteAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcHtmlSiteAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -2780,15 +2878,15 @@ var BsHtmlSiteAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    return BsHtmlSiteAsset;
-}(asset_1.BsAssetBase));
-exports.BsHtmlSiteAsset = BsHtmlSiteAsset;
+    return CmcHtmlSiteAsset;
+}(asset_1.CmcAsset));
+exports.CmcHtmlSiteAsset = CmcHtmlSiteAsset;
 
 
 /***/ }),
@@ -2934,14 +3032,14 @@ var bs_task_manager_1 = __webpack_require__(14);
 var bsnconnector_1 = __webpack_require__(1);
 var fsconnector_1 = __webpack_require__(5);
 var fileBlobCache_1 = __webpack_require__(18);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
-var assetManager_1 = __webpack_require__(10);
+var assetManager_1 = __webpack_require__(11);
 var assetCollectionManager_1 = __webpack_require__(13);
 var uuid_1 = __webpack_require__(15);
 var lodash_1 = __webpack_require__(0);
-var isomorphicPath = __webpack_require__(11);
+var isomorphicPath = __webpack_require__(10);
 function cmCreateBsnUploadJob(name, uploadFileSpecs, uploadWebPageSpecs, onProgress, onSuccess, onError) {
     return new BsAssetUploadJob(name, uploadFileSpecs, uploadWebPageSpecs, onProgress, onSuccess, onError);
 }
@@ -3270,7 +3368,7 @@ var BsAssetUploadJob = (function () {
                 }
             });
             if (uploadedAssetItems && uploadedAssetItems.length > 0) {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: uploadedAssetItems });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: uploadedAssetItems });
             }
             if (uploadedContentParentFolderSpecs.length > 0) {
                 return Promise.all(uploadedContentParentFolderSpecs.map(assetManager_1.cmUpdateAssetItemForAssetSpecification));
@@ -3785,7 +3883,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsAssetItemCache = exports.cmRemoveCachedAssetItems = exports.cmGetCachedAssetItemForAssetSpecification = exports.cmRemoveCachedAssetItemsForLocationAndScope = exports.cmPutAssetItemToCache = exports.cmGetBsAssetItemCache = void 0;
 var bscore_1 = __webpack_require__(3);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
 var util_1 = __webpack_require__(86);
@@ -3823,7 +3921,7 @@ exports.cmRemoveCachedAssetItems = cmRemoveCachedAssetItems;
 var BsAssetItemCache = (function () {
     function BsAssetItemCache() {
         this._assetItemCacheMap = new Map();
-        notify_1.getBsAssetCollectionNotifier().subscribe(this);
+        notifyInternal_1.getBsAssetCollectionNotifier().subscribe(this);
     }
     Object.defineProperty(BsAssetItemCache.prototype, "size", {
         get: function () {
@@ -3835,10 +3933,10 @@ var BsAssetItemCache = (function () {
     BsAssetItemCache.prototype.clear = function () {
         this._assetItemCacheMap.clear();
     };
-    BsAssetItemCache.prototype.hasAssetItemReference = function (locatorHash) {
+    BsAssetItemCache.prototype.hasAssetItemCacheItem = function (locatorHash) {
         return this._assetItemCacheMap.has(locatorHash);
     };
-    BsAssetItemCache.prototype.getAssetItemReference = function (locatorHash) {
+    BsAssetItemCache.prototype.getAssetItemCacheItem = function (locatorHash) {
         return this._assetItemCacheMap.get(locatorHash);
     };
     BsAssetItemCache.prototype.setAssetItem = function (locatorHash, assetItem) {
@@ -3862,7 +3960,7 @@ var BsAssetItemCache = (function () {
     BsAssetItemCache.prototype.getAssetItemReferenceForAssetSpecification = function (assetSpec) {
         var _this = this;
         var assetItemMatches = function (key) {
-            var assetItem = _this.getAssetItemReference(key).assetItem;
+            var assetItem = _this.getAssetItemCacheItem(key).assetItem;
             return assetItem.assetType === assetSpec.assetType
                 && assetItem.location === assetSpec.location
                 && assetItem.path === utils_1.cmNormalizeBsnPathString(assetSpec.path)
@@ -3870,7 +3968,7 @@ var BsAssetItemCache = (function () {
         };
         var locatorHashList = Array.from(this._assetItemCacheMap.keys());
         var locatorHash = lodash_1.find(locatorHashList, assetItemMatches);
-        return lodash_1.isNil(locatorHash) ? null : this.getAssetItemReference(locatorHash);
+        return lodash_1.isNil(locatorHash) ? null : this.getAssetItemCacheItem(locatorHash);
     };
     BsAssetItemCache.prototype.assetItemHasCompleteAssetData = function (locatorHash) {
         var ref = this._assetItemCacheMap.get(locatorHash);
@@ -3897,16 +3995,16 @@ var BsAssetItemCache = (function () {
         return false;
     };
     BsAssetItemCache.prototype.isDeletedFromSource = function (locatorHash) {
-        var ref = this.getAssetItemReference(locatorHash);
+        var ref = this.getAssetItemCacheItem(locatorHash);
         return !lodash_1.isNil(ref) && ref.deletedFromSource;
     };
     BsAssetItemCache.prototype.markDeletedFromSource = function (locatorHash) {
-        var ref = this.getAssetItemReference(locatorHash);
+        var ref = this.getAssetItemCacheItem(locatorHash);
         ref.deletedFromSource = true;
     };
     BsAssetItemCache.prototype.notify = function (notification) {
         var _this = this;
-        if (notify_1.cmIsAssetContainerNotification(notification)) {
+        if (notifyInternal_1.cmIsAssetContainerNotification(notification)) {
             var usageDataObject_1 = notification.containerAssetLocator.assetType === bscore_1.AssetType.Project ?
                 utils_1.cmGetPresentationReferenceFromAssetLocator(notification.containerAssetLocator) :
                 utils_1.cmGetDataFeedReferenceFromAssetLocator(notification.containerAssetLocator);
@@ -3925,10 +4023,10 @@ var BsAssetItemCache = (function () {
             notification.assetLocators.forEach(function (assetLocator) {
                 var _a;
                 var locatorHash = utils_1.cmCreateHashFromAssetLocator(assetLocator);
-                var assetItemRef = _this.getAssetItemReference(locatorHash);
+                var assetItemRef = _this.getAssetItemCacheItem(locatorHash);
                 if (!lodash_1.isNil(assetItemRef)) {
                     var assetItem = assetItemRef.assetItem;
-                    if (notification.kind === notify_1.AssetCollectionNotificationType.addAssetContainer) {
+                    if (notification.kind === notifyInternal_1.AssetCollectionNotificationType.addAssetContainer) {
                         if (lodash_1.isNil(assetItem.assetUsage)) {
                             assetItemRef.assetItem = __assign(__assign({}, assetItem), { assetUsage: (_a = {}, _a[usageDataName_1] = [usageDataObject_1], _a) });
                         }
@@ -3986,38 +4084,38 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsDeviceWebPageAsset = void 0;
+exports.CmcDeviceWebPageAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var asset_1 = __webpack_require__(9);
 var htmlSiteAsset_1 = __webpack_require__(17);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsDeviceWebPageAsset = (function (_super) {
-    __extends(BsDeviceWebPageAsset, _super);
-    function BsDeviceWebPageAsset(assetItem) {
+var CmcDeviceWebPageAsset = (function (_super) {
+    __extends(CmcDeviceWebPageAsset, _super);
+    function CmcDeviceWebPageAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.DeviceHtmlSite) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsDeviceWebPageAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcDeviceWebPageAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn = function (item) {
-        var assetItem = htmlSiteAsset_1.BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(item);
+    CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn = function (item) {
+        var assetItem = htmlSiteAsset_1.CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(item);
         assetItem.assetType = bscore_1.AssetType.DeviceHtmlSite;
         return assetItem;
     };
-    Object.defineProperty(BsDeviceWebPageAsset.prototype, "deviceWebPageInfo", {
+    Object.defineProperty(CmcDeviceWebPageAsset.prototype, "deviceWebPageInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDeviceWebPageAsset.prototype, "indexFile", {
+    Object.defineProperty(CmcDeviceWebPageAsset.prototype, "indexFile", {
         get: function () {
             var siteProperties = this.deviceWebPageInfo;
             return lodash_1.isNull(siteProperties) ? null : siteProperties.indexFile;
@@ -4025,7 +4123,7 @@ var BsDeviceWebPageAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDeviceWebPageAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcDeviceWebPageAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -4034,7 +4132,7 @@ var BsDeviceWebPageAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDeviceWebPageAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcDeviceWebPageAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -4043,7 +4141,7 @@ var BsDeviceWebPageAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDeviceWebPageAsset.prototype, "permissions", {
+    Object.defineProperty(CmcDeviceWebPageAsset.prototype, "permissions", {
         get: function () {
             var deviceWebPageInfo = this.deviceWebPageInfo;
             return lodash_1.isNil(deviceWebPageInfo) || lodash_1.isNil(deviceWebPageInfo.permissions) ? [] : deviceWebPageInfo.permissions;
@@ -4051,7 +4149,7 @@ var BsDeviceWebPageAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsDeviceWebPageAsset.prototype.getDeviceWebPageAssetList = function () {
+    CmcDeviceWebPageAsset.prototype.getDeviceWebPageAssetList = function () {
         var _this = this;
         if (this.assetLocation !== bscore_1.AssetLocation.Bsn) {
             return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'DeviceWebPage asset list can only be returned for BSN based DeviceWebPages.'));
@@ -4062,29 +4160,29 @@ var BsDeviceWebPageAsset = (function (_super) {
         }
         return bsnconnector_1.bsnGetSession().getDeviceWebPageEntity(this.name)
             .then(function (entity) {
-            _this.updateCachedAssetItem(BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity));
+            _this.updateCachedAssetItem(CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity));
             siteProperties = _this.deviceWebPageInfo;
             return lodash_1.isNil(siteProperties) ? null : siteProperties.assets;
         });
     };
-    BsDeviceWebPageAsset.prototype.fetchAssetItemData = function () {
+    CmcDeviceWebPageAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getDeviceWebPageEntity(this.networkIdOrName)
                 .then(function (entity) {
-                _this.updateCachedAssetItem(BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity));
+                _this.updateCachedAssetItem(CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(entity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsDeviceWebPageAsset.prototype.testAssetExists = function () {
+    CmcDeviceWebPageAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsDeviceWebPage(this._name);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    BsDeviceWebPageAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcDeviceWebPageAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -4093,15 +4191,15 @@ var BsDeviceWebPageAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    return BsDeviceWebPageAsset;
-}(asset_1.BsAssetBase));
-exports.BsDeviceWebPageAsset = BsDeviceWebPageAsset;
+    return CmcDeviceWebPageAsset;
+}(asset_1.CmcAsset));
+exports.CmcDeviceWebPageAsset = CmcDeviceWebPageAsset;
 
 
 /***/ }),
@@ -4142,33 +4240,33 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsPresentationAsset = void 0;
+exports.CmcPresentationAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var bsdatamodel_1 = __webpack_require__(21);
 var bs_device_artifacts_1 = __webpack_require__(40);
 var bs_autoplay_generator_1 = __webpack_require__(92);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var asset_1 = __webpack_require__(9);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
-var assetManager_1 = __webpack_require__(10);
+var assetManager_1 = __webpack_require__(11);
 var bsnOperations_1 = __webpack_require__(8);
 var lodash_1 = __webpack_require__(0);
-var BsPresentationAsset = (function (_super) {
-    __extends(BsPresentationAsset, _super);
-    function BsPresentationAsset(assetItem) {
+var CmcPresentationAsset = (function (_super) {
+    __extends(CmcPresentationAsset, _super);
+    function CmcPresentationAsset(assetItem) {
         var _this = _super.call(this, assetItem) || this;
         _this._autorunVersion = bs_device_artifacts_1.bsDaGetRegisteredAutorunVersion();
         if (!(assetItem.assetType === bscore_1.AssetType.Project || assetItem.assetType === bscore_1.AssetType.ProjectBpf)) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsPresentationAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcPresentationAsset object with AssetType.' + assetItem.assetType));
         }
         return _this;
     }
-    BsPresentationAsset.getBsAssetPresentationItemFromBsn = function (item) {
+    CmcPresentationAsset.getBsAssetPresentationItemFromBsn = function (item) {
         var typeInfo = bscore_1.bscGetBscFileTypeInfo(item.projectFile.name);
-        var assetData = BsPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(item);
+        var assetData = CmcPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(item);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -4191,7 +4289,7 @@ var BsPresentationAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsPresentationAsset.getBsnPresentationSaveData = function (name, state, autorunVersion, id, thumbnailFileId, thumbnailData, thumbnailExt) {
+    CmcPresentationAsset.getBsnPresentationSaveData = function (name, state, autorunVersion, id, thumbnailFileId, thumbnailData, thumbnailExt) {
         if (id === void 0) { id = 0; }
         var dmState = bsdatamodel_1.dmFilterDmState(state);
         var error = bsdatamodel_1.dmCheckForInvalidDmSignState(dmState);
@@ -4223,55 +4321,55 @@ var BsPresentationAsset = (function (_super) {
         }
         return data;
     };
-    BsPresentationAsset.getBsnPresentationAssetFileData = function (state) {
+    CmcPresentationAsset.getBsnPresentationAssetFileData = function (state) {
         var dmState = bsdatamodel_1.dmFilterDmState(state);
         var presentationAssetSpec = bsdatamodel_1.dmGetBsnPresentationAssetItemSpecification(dmState);
         var assetFileData = {};
         if (!lodash_1.isNil(presentationAssetSpec.mediaFiles)) {
             assetFileData.mediaFiles =
-                presentationAssetSpec.mediaFiles.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.mediaFiles.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.webPages)) {
             assetFileData.webPages =
-                presentationAssetSpec.webPages.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.webPages.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.liveTextFeeds)) {
             assetFileData.liveTextFeeds =
-                presentationAssetSpec.liveTextFeeds.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.liveTextFeeds.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.liveMediaFeeds)) {
             assetFileData.liveMediaFeeds =
-                presentationAssetSpec.liveMediaFeeds.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.liveMediaFeeds.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.dynamicPlaylists)) {
             assetFileData.dynamicPlaylists =
-                presentationAssetSpec.dynamicPlaylists.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.dynamicPlaylists.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.taggedPlaylists)) {
             assetFileData.taggedPlaylists =
-                presentationAssetSpec.taggedPlaylists.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.taggedPlaylists.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         if (!lodash_1.isNil(presentationAssetSpec.autorunPlugins)) {
             assetFileData.autorunPlugins =
-                presentationAssetSpec.autorunPlugins.map(BsPresentationAsset.getPresentationFileFromAssetItem);
+                presentationAssetSpec.autorunPlugins.map(CmcPresentationAsset.getPresentationFileFromAssetItem);
         }
         var defaultWebPagePromises = [];
         if (presentationAssetSpec.useStandardDeviceWebPage) {
             var standardDeviceWebPagePromise = bsnOperations_1.cmGetDefaultPresentationWebPageAsset()
                 .then(function (standardWebPageAssetItem) {
                 assetFileData.deviceWebPage =
-                    BsPresentationAsset.getPresentationFileFromAssetItem(standardWebPageAssetItem);
+                    CmcPresentationAsset.getPresentationFileFromAssetItem(standardWebPageAssetItem);
             });
             defaultWebPagePromises.push(standardDeviceWebPagePromise);
         }
         else if (!lodash_1.isNil(presentationAssetSpec.deviceWebPage)) {
             assetFileData.deviceWebPage =
-                BsPresentationAsset.getPresentationFileFromAssetItem(presentationAssetSpec.deviceWebPage);
+                CmcPresentationAsset.getPresentationFileFromAssetItem(presentationAssetSpec.deviceWebPage);
         }
         if (presentationAssetSpec.useClockZoneWebPage) {
             var clockWidgetWebPagePromise = bsnOperations_1.cmGetDefaultClockZoneWebPageAsset()
                 .then(function (clockWidgetWebPageAssetItem) {
-                var presentationFile = BsPresentationAsset.getPresentationFileFromAssetItem(clockWidgetWebPageAssetItem);
+                var presentationFile = CmcPresentationAsset.getPresentationFileFromAssetItem(clockWidgetWebPageAssetItem);
                 if (lodash_1.isNil(assetFileData.webPages)) {
                     assetFileData.webPages = [presentationFile];
                 }
@@ -4287,14 +4385,14 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.resolve(assetFileData);
     };
-    BsPresentationAsset.getBsnPresentationDependentPresentationData = function (state, assetFileData, sizeLimit) {
+    CmcPresentationAsset.getBsnPresentationDependentPresentationData = function (state, assetFileData, sizeLimit) {
         if (sizeLimit === void 0) { sizeLimit = 20; }
         var assetLocatorToRefEntity = function (locator) { return ({
             id: locator.networkId,
             name: locator.name,
             type: bsnconnector_1.BsnPresentationReferenceTypeField.Presentation,
         }); };
-        return BsPresentationAsset.getDependentPresentationAssetLocators(state, bscore_1.AssetLocation.Bsn, sizeLimit)
+        return CmcPresentationAsset.getDependentPresentationAssetLocators(state, bscore_1.AssetLocation.Bsn, sizeLimit)
             .then(function (assetLocators) {
             if (assetLocators.length > 0) {
                 assetFileData.presentationDependencies = assetLocators.map(assetLocatorToRefEntity);
@@ -4302,7 +4400,7 @@ var BsPresentationAsset = (function (_super) {
             return assetFileData;
         });
     };
-    BsPresentationAsset.getDependentPresentationAssetLocators = function (state, location, sizeLimit) {
+    CmcPresentationAsset.getDependentPresentationAssetLocators = function (state, location, sizeLimit) {
         if (sizeLimit === void 0) { sizeLimit = 20; }
         var rootPresentationName = bsdatamodel_1.dmGetSignName(bsdatamodel_1.dmFilterDmState(state));
         var assetLocators = [];
@@ -4342,7 +4440,7 @@ var BsPresentationAsset = (function (_super) {
         };
         return getDependencies(state);
     };
-    BsPresentationAsset.getCurrentBsnPresentationAssetLocatorList = function (presentationProperties) {
+    CmcPresentationAsset.getCurrentBsnPresentationAssetLocatorList = function (presentationProperties) {
         var locators = __spreadArrays(presentationProperties.files
             .map(bscore_1.bscAssetLocatorFromAssetItem)
             .filter(function (locator) { return locator.name !== 'autoplugins.brs'; }), presentationProperties.autorunPlugins.map(bscore_1.bscAssetLocatorFromAssetItem));
@@ -4352,8 +4450,8 @@ var BsPresentationAsset = (function (_super) {
         }
         return locators;
     };
-    BsPresentationAsset.getBsnPresentationPublishData = function (state, options) {
-        return BsPresentationAsset.getBsnPresentationAssetFileData(state)
+    CmcPresentationAsset.getBsnPresentationPublishData = function (state, options) {
+        return CmcPresentationAsset.getBsnPresentationAssetFileData(state)
             .then(function (assetFileData) {
             var publishData = __assign({ autoplayFileData: options.autoplayFileData }, assetFileData);
             if (!lodash_1.isNil(options.resourcesFileData)) {
@@ -4371,7 +4469,7 @@ var BsPresentationAsset = (function (_super) {
             return publishData;
         });
     };
-    BsPresentationAsset.getBsnPresentationPropertiesFromBsnEntity = function (item) {
+    CmcPresentationAsset.getBsnPresentationPropertiesFromBsnEntity = function (item) {
         var presentationProperties = {
             id: item.id,
             name: item.name,
@@ -4383,21 +4481,21 @@ var BsPresentationAsset = (function (_super) {
             deviceModel: item.deviceModel,
             screenSettings: item.screenSettings,
             language: item.language,
-            autoplayFile: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.autoplayFile),
-            projectFile: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.projectFile, bscore_1.AssetType.Project),
-            resourcesFile: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.resourcesFile),
-            userDefinedEventsFile: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.userDefinedEventsFile),
-            deviceWebPage: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.deviceWebPage, bscore_1.AssetType.DeviceHtmlSite),
-            thumbnailFile: BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.thumbnailFile),
-            autorunPlugins: !lodash_1.isNil(item.autorunPlugins) ? item.autorunPlugins.map(function (file) { return BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(file, bscore_1.AssetType.BrightScript); }) : null,
-            files: !lodash_1.isNil(item.files) ? item.files.map(function (file) { return BsPresentationAsset.getBsAssetPresentationFileItemFromBsn(file); }) : null,
+            autoplayFile: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.autoplayFile),
+            projectFile: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.projectFile, bscore_1.AssetType.Project),
+            resourcesFile: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.resourcesFile),
+            userDefinedEventsFile: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.userDefinedEventsFile),
+            deviceWebPage: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.deviceWebPage, bscore_1.AssetType.DeviceHtmlSite),
+            thumbnailFile: CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(item.thumbnailFile),
+            autorunPlugins: !lodash_1.isNil(item.autorunPlugins) ? item.autorunPlugins.map(function (file) { return CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(file, bscore_1.AssetType.BrightScript); }) : null,
+            files: !lodash_1.isNil(item.files) ? item.files.map(function (file) { return CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn(file); }) : null,
             dependencies: item.dependencies,
             groups: item.groups,
             permissions: lodash_1.isNil(item.permissions) ? [] : item.permissions.map(bsnOperations_1.cmGetBsnObjectPermissionFromBsnEntity),
         };
         return presentationProperties;
     };
-    BsPresentationAsset.getBsAssetPresentationFileItemFromBsn = function (item, type) {
+    CmcPresentationAsset.getBsAssetPresentationFileItemFromBsn = function (item, type) {
         if (!item) {
             return null;
         }
@@ -4436,7 +4534,7 @@ var BsPresentationAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsPresentationAsset.getPresentationFileFromAssetItem = function (assetItem) {
+    CmcPresentationAsset.getPresentationFileFromAssetItem = function (assetItem) {
         var presentationFileItem = {
             id: assetItem.networkId,
             path: null,
@@ -4452,14 +4550,14 @@ var BsPresentationAsset = (function (_super) {
         }
         return presentationFileItem;
     };
-    Object.defineProperty(BsPresentationAsset.prototype, "presentationProperties", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "presentationProperties", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAsset.prototype, "presentationBsnStatus", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "presentationBsnStatus", {
         get: function () {
             var presentationProps = this.presentationProperties;
             return lodash_1.isNil(presentationProps) ? bscore_1.BsnPresentationStatus.Draft : presentationProps.status;
@@ -4467,7 +4565,7 @@ var BsPresentationAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAsset.prototype, "isScheduledOnBsn", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "isScheduledOnBsn", {
         get: function () {
             var properties = this.presentationProperties;
             return !lodash_1.isNil(properties)
@@ -4478,7 +4576,7 @@ var BsPresentationAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAsset.prototype, "bsnGroups", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "bsnGroups", {
         get: function () {
             var properties = this.presentationProperties;
             return !lodash_1.isNil(properties) && !lodash_1.isNil(properties.groups) ? properties.groups : null;
@@ -4486,7 +4584,7 @@ var BsPresentationAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAsset.prototype, "dependentPresentationNames", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "dependentPresentationNames", {
         get: function () {
             var properties = this.presentationProperties;
             return !lodash_1.isNil(properties) && !lodash_1.isNil(properties.dependencies) ? properties.dependencies.map(function (ref) { return ref.name; }) : [];
@@ -4494,25 +4592,25 @@ var BsPresentationAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAsset.prototype, "permissions", {
+    Object.defineProperty(CmcPresentationAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsPresentationAsset.prototype.fetchAssetItemData = function () {
+    CmcPresentationAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getPresentationEntity(this.networkIdOrName)
                 .then(function (entity) {
-                _this.updateCachedAssetItem(BsPresentationAsset.getBsAssetPresentationItemFromBsn(entity));
+                _this.updateCachedAssetItem(CmcPresentationAsset.getBsAssetPresentationItemFromBsn(entity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsPresentationAsset.prototype.getPresentationProperties = function () {
+    CmcPresentationAsset.prototype.getPresentationProperties = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn
             && (lodash_1.isNil(this.presentationProperties) || lodash_1.isNil(this.presentationProperties.files))) {
@@ -4521,13 +4619,13 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.resolve(this.presentationProperties);
     };
-    BsPresentationAsset.prototype.testAssetExists = function () {
+    CmcPresentationAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsPresentation(this._name);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    BsPresentationAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcPresentationAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -4536,13 +4634,13 @@ var BsPresentationAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsPresentationAsset.prototype.getProjectState = function () {
+    CmcPresentationAsset.prototype.getProjectState = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsGetLocalJsonFileAsObject(this.fullPath)
                 .then(function (object) { return object; });
@@ -4553,14 +4651,14 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsPresentationAsset.prototype.getLinkedPresentationAssetLocators = function () {
+    CmcPresentationAsset.prototype.getLinkedPresentationAssetLocators = function () {
         var _this = this;
         return this.getProjectState()
             .then(function (projectState) {
-            return BsPresentationAsset.getDependentPresentationAssetLocators(projectState, _this.assetLocation);
+            return CmcPresentationAsset.getDependentPresentationAssetLocators(projectState, _this.assetLocation);
         });
     };
-    BsPresentationAsset.prototype.saveProjectState = function (state, options) {
+    CmcPresentationAsset.prototype.saveProjectState = function (state, options) {
         var _this = this;
         if (options === void 0) { options = {}; }
         if (!lodash_1.isNil(options.autorunVersion)) {
@@ -4571,7 +4669,7 @@ var BsPresentationAsset = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(_this.fullPath);
                 _this.updateCachedAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 return assetItem;
             });
         }
@@ -4585,22 +4683,22 @@ var BsPresentationAsset = (function (_super) {
                 return this.getPresentationAssetDelta(state)
                     .then(function (delta) {
                     assetFileDelta_1 = delta;
-                    return BsPresentationAsset.getBsnPresentationAssetFileData(state);
+                    return CmcPresentationAsset.getBsnPresentationAssetFileData(state);
                 })
                     .then(function (assetFileData) {
-                    return BsPresentationAsset.getBsnPresentationDependentPresentationData(state, assetFileData);
+                    return CmcPresentationAsset.getBsnPresentationDependentPresentationData(state, assetFileData);
                 })
                     .then(function (assetFileData) { return bsnconnector_1.bsnGetSession().updatePresentation(saveData_1, assetFileData); })
                     .then(function () { return bsnconnector_1.bsnGetSession().getPresentationEntity(_this.networkId); })
                     .then(function (entity) {
-                    var updatedAssetItem = __assign(__assign({}, _this.internalAssetItem), { assetData: BsPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(entity), fileSize: entity.projectFile.size, lastModifiedDate: entity.projectFile.lastModifiedDate, thumbUrl: lodash_1.isNil(entity.thumbnailFile) ? null : entity.thumbnailFile.path });
+                    var updatedAssetItem = __assign(__assign({}, _this.internalAssetItem), { assetData: CmcPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(entity), fileSize: entity.projectFile.size, lastModifiedDate: entity.projectFile.lastModifiedDate, thumbUrl: lodash_1.isNil(entity.thumbnailFile) ? null : entity.thumbnailFile.path });
                     _this.updateCachedAssetItem(updatedAssetItem);
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                     if (assetFileDelta_1.addedAssets.length > 0) {
-                        notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
+                        notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
                     }
                     if (assetFileDelta_1.removedAssets.length > 0) {
-                        notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
+                        notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
                     }
                     return _this.assetItem;
                 });
@@ -4608,7 +4706,7 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsPresentationAsset.prototype.getAssetThumbnail = function () {
+    CmcPresentationAsset.prototype.getAssetThumbnail = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.getPresentationProperties()
                 .then(function (presentationProperties) {
@@ -4630,7 +4728,7 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.resolve(null);
     };
-    BsPresentationAsset.prototype.publish = function (state, options) {
+    CmcPresentationAsset.prototype.publish = function (state, options) {
         var _this = this;
         if (options === void 0) { options = {}; }
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
@@ -4664,31 +4762,31 @@ var BsPresentationAsset = (function (_super) {
                 else if (!lodash_1.isNil(_this.presentationProperties) && !lodash_1.isNil(_this.presentationProperties.userDefinedEventsFile)) {
                     publishOptions.userDefinedEventsId = _this.presentationProperties.userDefinedEventsFile.networkId;
                 }
-                return BsPresentationAsset.getBsnPresentationPublishData(state, publishOptions);
+                return CmcPresentationAsset.getBsnPresentationPublishData(state, publishOptions);
             })
                 .then(function (publishData) {
-                return BsPresentationAsset.getBsnPresentationDependentPresentationData(state, publishData);
+                return CmcPresentationAsset.getBsnPresentationDependentPresentationData(state, publishData);
             })
                 .then(function (publishData) {
                 return bsnconnector_1.bsnGetSession().publishPresentation(saveData_2, publishData);
             })
                 .then(function () { return bsnconnector_1.bsnGetSession().getPresentationEntity(_this.networkId); })
                 .then(function (entity) {
-                var updatedAssetItem = __assign(__assign({}, _this.internalAssetItem), { assetData: BsPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(entity), fileSize: entity.projectFile.size, lastModifiedDate: entity.projectFile.lastModifiedDate, thumbUrl: lodash_1.isNil(entity.thumbnailFile) ? null : entity.thumbnailFile.path });
+                var updatedAssetItem = __assign(__assign({}, _this.internalAssetItem), { assetData: CmcPresentationAsset.getBsnPresentationPropertiesFromBsnEntity(entity), fileSize: entity.projectFile.size, lastModifiedDate: entity.projectFile.lastModifiedDate, thumbUrl: lodash_1.isNil(entity.thumbnailFile) ? null : entity.thumbnailFile.path });
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 if (assetFileDelta_2.addedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_2.addedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_2.addedAssets, containerAssetLocator: _this.assetLocator });
                 }
                 if (assetFileDelta_2.removedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_2.removedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_2.removedAssets, containerAssetLocator: _this.assetLocator });
                 }
                 return _this.assetItem;
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsPresentationAsset.prototype.getSaveData = function (state) {
+    CmcPresentationAsset.prototype.getSaveData = function (state) {
         var presentationId = this.networkId;
         var dmThumbnail = bsdatamodel_1.dmGetThumbnail(bsdatamodel_1.dmFilterDmState(state));
         var thumbnailId = null;
@@ -4700,16 +4798,16 @@ var BsPresentationAsset = (function (_super) {
             }
         }
         if (dmThumbnail && !(dmThumbnail.hash && thumbnailHash && dmThumbnail.hash === thumbnailHash)) {
-            return BsPresentationAsset.getBsnPresentationSaveData(this.name, state, this._autorunVersion, presentationId, null, dmThumbnail.data, bscore_1.bscGetFileExtensionForMimeType(dmThumbnail.type));
+            return CmcPresentationAsset.getBsnPresentationSaveData(this.name, state, this._autorunVersion, presentationId, null, dmThumbnail.data, bscore_1.bscGetFileExtensionForMimeType(dmThumbnail.type));
         }
-        return BsPresentationAsset.getBsnPresentationSaveData(this.name, state, this._autorunVersion, presentationId, thumbnailId);
+        return CmcPresentationAsset.getBsnPresentationSaveData(this.name, state, this._autorunVersion, presentationId, thumbnailId);
     };
-    BsPresentationAsset.prototype.getPresentationAssetDelta = function (state) {
+    CmcPresentationAsset.prototype.getPresentationAssetDelta = function (state) {
         var assetDelta = { addedAssets: null, removedAssets: null };
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.getPresentationProperties()
                 .then(function (props) {
-                var currentAssetLocators = BsPresentationAsset.getCurrentBsnPresentationAssetLocatorList(props);
+                var currentAssetLocators = CmcPresentationAsset.getCurrentBsnPresentationAssetLocatorList(props);
                 var projectStateAssetLocators = bsdatamodel_1.dmGetBsnAssetLocatorList(bsdatamodel_1.dmFilterDmState(state));
                 assetDelta.addedAssets =
                     lodash_1.differenceWith(projectStateAssetLocators, currentAssetLocators, utils_1.cmAreBsnAssetLocatorsEqual);
@@ -4720,9 +4818,9 @@ var BsPresentationAsset = (function (_super) {
         }
         return Promise.resolve(assetDelta);
     };
-    return BsPresentationAsset;
-}(asset_1.BsAssetBase));
-exports.BsPresentationAsset = BsPresentationAsset;
+    return CmcPresentationAsset;
+}(asset_1.CmcAsset));
+exports.CmcPresentationAsset = CmcPresentationAsset;
 
 
 /***/ }),
@@ -5212,18 +5310,18 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsBrightScriptAsset = void 0;
+exports.CmcBrightScriptAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var fsconnector_1 = __webpack_require__(5);
 var asset_1 = __webpack_require__(9);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
-var isomorphic_path_1 = __webpack_require__(11);
-var BsBrightScriptAsset = (function (_super) {
-    __extends(BsBrightScriptAsset, _super);
-    function BsBrightScriptAsset(assetItem) {
+var isomorphic_path_1 = __webpack_require__(10);
+var CmcBrightScriptAsset = (function (_super) {
+    __extends(CmcBrightScriptAsset, _super);
+    function CmcBrightScriptAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.BrightScript) {
             throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BrightScript object with AssetType.' + assetItem.assetType));
@@ -5231,7 +5329,7 @@ var BsBrightScriptAsset = (function (_super) {
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsBrightScriptAsset.getBsAssetPluginItemFromBsn = function (item) {
+    CmcBrightScriptAsset.getBsAssetPluginItemFromBsn = function (item) {
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.fileInfo.name,
@@ -5250,7 +5348,7 @@ var BsBrightScriptAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsBrightScriptAsset.getBsnPluginSaveData = function (fileName, pluginData, id) {
+    CmcBrightScriptAsset.getBsnPluginSaveData = function (fileName, pluginData, id) {
         if (id === void 0) { id = 0; }
         var data = {
             name: isomorphic_path_1.default.parse(fileName).name,
@@ -5262,7 +5360,7 @@ var BsBrightScriptAsset = (function (_super) {
         }
         return data;
     };
-    BsBrightScriptAsset.prototype.savePlugin = function (file) {
+    CmcBrightScriptAsset.prototype.savePlugin = function (file) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return fsconnector_1.fsGetFileSha1(file)
@@ -5274,13 +5372,13 @@ var BsBrightScriptAsset = (function (_super) {
                     return utils_1.getFileContentFromFileSpec(file)
                         .then(function (data) {
                         var pluginId = assetItem.networkId;
-                        var saveData = BsBrightScriptAsset.getBsnPluginSaveData(sourceFileName, data, pluginId);
+                        var saveData = CmcBrightScriptAsset.getBsnPluginSaveData(sourceFileName, data, pluginId);
                         return bsnconnector_1.bsnGetSession().updatePlugin(saveData)
                             .then(function () { return bsnconnector_1.bsnGetSession().getPluginEntity(pluginId); })
                             .then(function (entity) {
-                            assetItem = BsBrightScriptAsset.getBsAssetPluginItemFromBsn(entity);
+                            assetItem = CmcBrightScriptAsset.getBsAssetPluginItemFromBsn(entity);
                             _this.updateCachedAssetItem(assetItem);
-                            notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [assetItem] });
+                            notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [assetItem] });
                             return {
                                 jobIndex: 0,
                                 sourceFileName: sourceFileName, sourceFilePath: sourceFilePath,
@@ -5308,19 +5406,19 @@ var BsBrightScriptAsset = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsBrightScriptAsset.prototype.fetchAssetItemData = function () {
+    CmcBrightScriptAsset.prototype.fetchAssetItemData = function () {
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsBrightScriptAsset.prototype.testAssetExists = function () {
+    CmcBrightScriptAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var scriptEntityName = isomorphic_path_1.default.basename(this._name, '.brs');
             return bsnconnector_1.bsnGetSession().existsPlugin(scriptEntityName);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    return BsBrightScriptAsset;
-}(asset_1.BsAssetBase));
-exports.BsBrightScriptAsset = BsBrightScriptAsset;
+    return CmcBrightScriptAsset;
+}(asset_1.CmcAsset));
+exports.CmcBrightScriptAsset = CmcBrightScriptAsset;
 
 
 /***/ }),
@@ -5343,28 +5441,28 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsDynamicPlaylistAsset = void 0;
+exports.CmcDynamicPlaylistAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var bs_playlist_dm_1 = __webpack_require__(26);
 var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsDynamicPlaylistAsset = (function (_super) {
-    __extends(BsDynamicPlaylistAsset, _super);
-    function BsDynamicPlaylistAsset(assetItem) {
+var CmcDynamicPlaylistAsset = (function (_super) {
+    __extends(CmcDynamicPlaylistAsset, _super);
+    function CmcDynamicPlaylistAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.BSNDynamicPlaylist) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsDynamicPlaylistAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcDynamicPlaylistAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsDynamicPlaylistAsset.getBsAssetItemFromDynamicPlaylistEntity = function (feedItem) {
+    CmcDynamicPlaylistAsset.getBsAssetItemFromDynamicPlaylistEntity = function (feedItem) {
         var contentId = feedItem.contentId, fileName = feedItem.fileName, displayDuration = feedItem.displayDuration, validityStartDate = feedItem.validityStartDate, validityEndDate = feedItem.validityEndDate;
         var contentItemData = {
             displayDuration: bscore_1.bscTimeSpanStringToSeconds(displayDuration),
@@ -5385,7 +5483,7 @@ var BsDynamicPlaylistAsset = (function (_super) {
         contentAssetItem.locator = bscore_1.bscGenerateAssetLocatorKey(contentAssetItem);
         return contentAssetItem;
     };
-    BsDynamicPlaylistAsset.getBsDynamicPlaylistPropertiesFromBsn = function (item) {
+    CmcDynamicPlaylistAsset.getBsDynamicPlaylistPropertiesFromBsn = function (item) {
         var id = item.id, name = item.name, physicalPath = item.physicalPath, fileSize = item.fileSize, fileHash = item.fileHash, creationDate = item.creationDate, lastModifiedDate = item.lastModifiedDate, supportsAudio = item.supportsAudio, supportsVideo = item.supportsVideo, supportsImages = item.supportsImages, permissions = item.permissions;
         var dynamicPlaylist = {
             type: 'BSNDynamicPlaylist',
@@ -5396,12 +5494,12 @@ var BsDynamicPlaylistAsset = (function (_super) {
             permissions: lodash_1.isNil(permissions) ? [] : permissions.map(bsnOperations_1.cmGetBsnObjectPermissionFromBsnEntity),
         };
         if (!lodash_1.isNil(item.content)) {
-            dynamicPlaylist.content = item.content.map(BsDynamicPlaylistAsset.getBsAssetItemFromDynamicPlaylistEntity);
+            dynamicPlaylist.content = item.content.map(CmcDynamicPlaylistAsset.getBsAssetItemFromDynamicPlaylistEntity);
         }
         return dynamicPlaylist;
     };
-    BsDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn = function (item) {
-        var assetData = BsDynamicPlaylistAsset.getBsDynamicPlaylistPropertiesFromBsn(item);
+    CmcDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn = function (item) {
+        var assetData = CmcDynamicPlaylistAsset.getBsDynamicPlaylistPropertiesFromBsn(item);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -5423,7 +5521,7 @@ var BsDynamicPlaylistAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData = function (state, dynamicPlaylistId) {
+    CmcDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData = function (state, dynamicPlaylistId) {
         var plDmState = bs_playlist_dm_1.plDmFilterPlDmState(state);
         var supports = bs_playlist_dm_1.plDmGetPlaylistSupports(plDmState);
         var error = bs_playlist_dm_1.plDmCheckForInvalidPlDmPlaylistState(plDmState);
@@ -5453,17 +5551,17 @@ var BsDynamicPlaylistAsset = (function (_super) {
         }
         return saveData;
     };
-    BsDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList = function (playlistProperties) {
+    CmcDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList = function (playlistProperties) {
         return lodash_1.isNil(playlistProperties) ? [] : playlistProperties.content.map(bscore_1.bscAssetLocatorFromAssetItem);
     };
-    BsDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList = function (state) {
+    CmcDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList = function (state) {
         var plDmState = bs_playlist_dm_1.plDmFilterPlDmState(state);
         return bs_playlist_dm_1.plDmGetContentItemsArrayInOrder(plDmState).map(function (id) {
             var item = bs_playlist_dm_1.plDmGetDynamicPlaylistContentItemById(plDmState, { id: id });
             return bscore_1.bscAssetLocatorFromAssetItem(item.mediaAssetItem);
         });
     };
-    Object.defineProperty(BsDynamicPlaylistAsset.prototype, "isContentDataValid", {
+    Object.defineProperty(CmcDynamicPlaylistAsset.prototype, "isContentDataValid", {
         get: function () {
             var feedInfo = this.feedInfo;
             return !lodash_1.isNil(feedInfo) && !lodash_1.isNil(feedInfo.content);
@@ -5471,14 +5569,14 @@ var BsDynamicPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDynamicPlaylistAsset.prototype, "feedInfo", {
+    Object.defineProperty(CmcDynamicPlaylistAsset.prototype, "feedInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDynamicPlaylistAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcDynamicPlaylistAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -5487,7 +5585,7 @@ var BsDynamicPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDynamicPlaylistAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcDynamicPlaylistAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -5496,14 +5594,14 @@ var BsDynamicPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsDynamicPlaylistAsset.prototype, "permissions", {
+    Object.defineProperty(CmcDynamicPlaylistAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsDynamicPlaylistAsset.prototype.getFeedInfoWithContent = function () {
+    CmcDynamicPlaylistAsset.prototype.getFeedInfoWithContent = function () {
         var _this = this;
         var feedInfo = this.feedInfo;
         if (feedInfo && !lodash_1.isNil(feedInfo.content)) {
@@ -5512,24 +5610,24 @@ var BsDynamicPlaylistAsset = (function (_super) {
         return this.fetchAssetItemData()
             .then(function () { return _this.feedInfo; });
     };
-    BsDynamicPlaylistAsset.prototype.fetchAssetItemData = function () {
+    CmcDynamicPlaylistAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getDynamicPlaylistEntity(this.networkIdOrName)
                 .then(function (feedEntity) {
-                _this.updateCachedAssetItem(BsDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feedEntity));
+                _this.updateCachedAssetItem(CmcDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feedEntity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsDynamicPlaylistAsset.prototype.testAssetExists = function () {
+    CmcDynamicPlaylistAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsDynamicPlaylist(this._name);
         }
         return Promise.resolve(false);
     };
-    BsDynamicPlaylistAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcDynamicPlaylistAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -5538,20 +5636,20 @@ var BsDynamicPlaylistAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsDynamicPlaylistAsset.prototype.updateDynamicPlaylist = function (state) {
+    CmcDynamicPlaylistAsset.prototype.updateDynamicPlaylist = function (state) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsSaveObjectAsLocalJsonFile(state, this.fullPath);
         }
         else if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var dynamicPlaylistId_1 = this.networkId;
-            var saveData_1 = BsDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData(state, dynamicPlaylistId_1);
+            var saveData_1 = CmcDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData(state, dynamicPlaylistId_1);
             var assetFileDelta_1;
             return this.getPlaylistAssetDelta(state)
                 .then(function (delta) {
@@ -5560,26 +5658,26 @@ var BsDynamicPlaylistAsset = (function (_super) {
             })
                 .then(function () { return bsnconnector_1.bsnGetSession().getDynamicPlaylistEntity(dynamicPlaylistId_1); })
                 .then(function (feedEntity) {
-                var updatedAssetItem = BsDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feedEntity);
+                var updatedAssetItem = CmcDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feedEntity);
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 if (assetFileDelta_1.addedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
                 }
                 if (assetFileDelta_1.removedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
                 }
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsDynamicPlaylistAsset.prototype.getPlaylistAssetDelta = function (state) {
+    CmcDynamicPlaylistAsset.prototype.getPlaylistAssetDelta = function (state) {
         var assetDelta = { addedAssets: null, removedAssets: null };
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.getFeedInfoWithContent()
                 .then(function (props) {
-                var currentAssetLocators = BsDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList(props);
-                var playlistStateAssetLocators = BsDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList(state);
+                var currentAssetLocators = CmcDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList(props);
+                var playlistStateAssetLocators = CmcDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList(state);
                 assetDelta.addedAssets =
                     lodash_1.differenceWith(playlistStateAssetLocators, currentAssetLocators, utils_1.cmAreBsnAssetLocatorsEqual);
                 assetDelta.removedAssets =
@@ -5589,9 +5687,9 @@ var BsDynamicPlaylistAsset = (function (_super) {
         }
         return Promise.resolve(assetDelta);
     };
-    return BsDynamicPlaylistAsset;
-}(asset_1.BsAssetBase));
-exports.BsDynamicPlaylistAsset = BsDynamicPlaylistAsset;
+    return CmcDynamicPlaylistAsset;
+}(asset_1.CmcAsset));
+exports.CmcDynamicPlaylistAsset = CmcDynamicPlaylistAsset;
 
 
 /***/ }),
@@ -5625,7 +5723,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMediaAsset = void 0;
+exports.CmcMediaAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsdatamodel_1 = __webpack_require__(21);
 var bsnconnector_1 = __webpack_require__(1);
@@ -5635,18 +5733,18 @@ var bsnOperations_1 = __webpack_require__(8);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
-var notify_1 = __webpack_require__(4);
-var BsMediaAsset = (function (_super) {
-    __extends(BsMediaAsset, _super);
-    function BsMediaAsset(assetItem) {
+var notifyInternal_1 = __webpack_require__(4);
+var CmcMediaAsset = (function (_super) {
+    __extends(CmcMediaAsset, _super);
+    function CmcMediaAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.Content) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsMediaAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcMediaAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsMediaAsset.getBsAssetMediaFileItemFromBsn = function (item) {
+    CmcMediaAsset.getBsAssetMediaFileItemFromBsn = function (item) {
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.fileName,
@@ -5665,7 +5763,7 @@ var BsMediaAsset = (function (_super) {
             uploadDate: item.uploadDate,
             thumbUrl: item.thumbPath,
             probeData: item.probeData,
-            assetData: BsMediaAsset.getBsMediaFileDataFromBsn(item.metadata, item.mediaType),
+            assetData: CmcMediaAsset.getBsMediaFileDataFromBsn(item.metadata, item.mediaType),
             assetUsage: {
                 presentations: item.presentations,
                 dynamicPlaylists: item.dynamicPlaylists,
@@ -5678,7 +5776,7 @@ var BsMediaAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsMediaAsset.getBsMediaFileDataFromBsn = function (metadata, mediaType) {
+    CmcMediaAsset.getBsMediaFileDataFromBsn = function (metadata, mediaType) {
         var avBaseData = function (data) {
             var baseData = __assign({}, lodash_1.pick(data, ['transport', 'packetLen', 'indexed', 'audioCodec',
                 'audioPid', 'audioChannelCount', 'audioSampleRate', 'audioBitrate']));
@@ -5712,7 +5810,7 @@ var BsMediaAsset = (function (_super) {
         }
         return null;
     };
-    Object.defineProperty(BsMediaAsset.prototype, "assetItem", {
+    Object.defineProperty(CmcMediaAsset.prototype, "assetItem", {
         get: function () {
             return lodash_1.pick(this.internalAssetItem, [
                 'id', 'name', 'path', 'networkId', 'location', 'assetType', 'scope', 'locator', 'mediaType',
@@ -5723,7 +5821,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcMediaAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -5732,7 +5830,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcMediaAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -5741,7 +5839,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "dynamicPlaylistList", {
+    Object.defineProperty(CmcMediaAsset.prototype, "dynamicPlaylistList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.dynamicPlaylists) ?
@@ -5750,7 +5848,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "dynamicPlaylistCount", {
+    Object.defineProperty(CmcMediaAsset.prototype, "dynamicPlaylistCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.dynamicPlaylists) ?
@@ -5759,7 +5857,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "liveMediaFeedList", {
+    Object.defineProperty(CmcMediaAsset.prototype, "liveMediaFeedList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.liveMediaFeeds) ?
@@ -5768,7 +5866,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "liveMediaFeedCount", {
+    Object.defineProperty(CmcMediaAsset.prototype, "liveMediaFeedCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.liveMediaFeeds) ?
@@ -5777,7 +5875,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "taggedPlaylistList", {
+    Object.defineProperty(CmcMediaAsset.prototype, "taggedPlaylistList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.taggedPlaylists) ?
@@ -5786,7 +5884,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "taggedPlaylistCount", {
+    Object.defineProperty(CmcMediaAsset.prototype, "taggedPlaylistCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.taggedPlaylists) ?
@@ -5795,7 +5893,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAsset.prototype, "tags", {
+    Object.defineProperty(CmcMediaAsset.prototype, "tags", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.tags) ? assetItem.tags : [];
@@ -5803,7 +5901,7 @@ var BsMediaAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsMediaAsset.prototype.getVideoData = function () {
+    CmcMediaAsset.prototype.getVideoData = function () {
         var _this = this;
         var mediaData = this.getAssetItemProperty('assetData');
         if (bscore_1.bscIsVideoData(mediaData)) {
@@ -5821,7 +5919,7 @@ var BsMediaAsset = (function (_super) {
         }
         return Promise.resolve(null);
     };
-    BsMediaAsset.prototype.getAudioData = function () {
+    CmcMediaAsset.prototype.getAudioData = function () {
         var _this = this;
         var mediaData = this.getAssetItemProperty('assetData');
         if (bscore_1.bscIsAudioData(mediaData)) {
@@ -5839,7 +5937,7 @@ var BsMediaAsset = (function (_super) {
         }
         return Promise.resolve(null);
     };
-    BsMediaAsset.prototype.getImageData = function () {
+    CmcMediaAsset.prototype.getImageData = function () {
         var _this = this;
         var mediaData = this.getAssetItemProperty('assetData');
         if (bscore_1.bscIsImageData(mediaData)) {
@@ -5856,7 +5954,7 @@ var BsMediaAsset = (function (_super) {
         }
         return Promise.resolve(null);
     };
-    BsMediaAsset.prototype.getMediaFileData = function () {
+    CmcMediaAsset.prototype.getMediaFileData = function () {
         switch (this.mediaType) {
             case bscore_1.MediaType.Video:
                 return this.getVideoData();
@@ -5867,7 +5965,7 @@ var BsMediaAsset = (function (_super) {
         }
         return Promise.resolve(null);
     };
-    BsMediaAsset.prototype.isMediaFileLegalForProject = function (state) {
+    CmcMediaAsset.prototype.isMediaFileLegalForProject = function (state) {
         var signMetadata = bsdatamodel_1.dmGetSignMetaData(bsdatamodel_1.dmFilterDmState(state));
         if (this.mediaType === bscore_1.MediaType.Image) {
             return fsconnector_1.fsGetIsMediaLegal({
@@ -5883,7 +5981,7 @@ var BsMediaAsset = (function (_super) {
             });
         }
     };
-    BsMediaAsset.prototype.getFileHash = function () {
+    CmcMediaAsset.prototype.getFileHash = function () {
         var _this = this;
         if (this.internalAssetItem.fileHash) {
             return Promise.resolve(this.internalAssetItem.fileHash);
@@ -5904,11 +6002,11 @@ var BsMediaAsset = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaAsset.prototype.fetchAssetItemData = function () {
+    CmcMediaAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         var processBsnContentItem = function (bsnContentItem) {
             if (bsnconnector_1.bsnIsFileContentEntity(bsnContentItem)) {
-                _this.updateCachedAssetItem(BsMediaAsset.getBsAssetMediaFileItemFromBsn(bsnContentItem));
+                _this.updateCachedAssetItem(CmcMediaAsset.getBsAssetMediaFileItemFromBsn(bsnContentItem));
             }
             return _this;
         };
@@ -5930,13 +6028,13 @@ var BsMediaAsset = (function (_super) {
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsMediaAsset.prototype.testAssetExists = function () {
+    CmcMediaAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsContentItem(this._name, this.internalAssetItem.path);
         }
         return _super.prototype.testAssetExists.call(this);
     };
-    BsMediaAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcMediaAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.replaceBsnContentPermissions(objectPermissions)
@@ -5944,41 +6042,41 @@ var BsMediaAsset = (function (_super) {
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsMediaAsset.prototype.setTags = function (tags) {
+    CmcMediaAsset.prototype.setTags = function (tags) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.checkBsnAssetItemData()
                 .then(function () { return bsnconnector_1.bsnGetSession().setContentItemTags(_this.networkId, tags); })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 return null;
             });
         }
         return _super.prototype.setTags.call(this, tags);
     };
-    BsMediaAsset.prototype.deleteTags = function (tagKeys) {
+    CmcMediaAsset.prototype.deleteTags = function (tagKeys) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.checkBsnAssetItemData()
                 .then(function () { return bsnconnector_1.bsnGetSession().deleteContentItemTags(_this.networkId, tagKeys); })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 return null;
             });
         }
         return _super.prototype.deleteTags.call(this, tagKeys);
     };
-    BsMediaAsset.prototype.checkBsnAssetItemData = function () {
+    CmcMediaAsset.prototype.checkBsnAssetItemData = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn && !this.networkId) {
             return this.fetchAssetItemData().then(function () { return null; });
         }
         return Promise.resolve();
     };
-    return BsMediaAsset;
-}(contentAsset_1.BsContentAssetBase));
-exports.BsMediaAsset = BsMediaAsset;
+    return CmcMediaAsset;
+}(contentAsset_1.CmcContentAsset));
+exports.CmcMediaAsset = CmcMediaAsset;
 
 
 /***/ }),
@@ -6001,28 +6099,28 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMediaFeedAsset = void 0;
+exports.CmcMediaFeedAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var bs_playlist_dm_1 = __webpack_require__(26);
 var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsMediaFeedAsset = (function (_super) {
-    __extends(BsMediaFeedAsset, _super);
-    function BsMediaFeedAsset(assetItem) {
+var CmcMediaFeedAsset = (function (_super) {
+    __extends(CmcMediaFeedAsset, _super);
+    function CmcMediaFeedAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.BSNMediaFeed) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsMediaFeedAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcMediaFeedAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsMediaFeedAsset.getBsAssetItemFromMediaFeedEntity = function (feedItem) {
+    CmcMediaFeedAsset.getBsAssetItemFromMediaFeedEntity = function (feedItem) {
         var contentId = feedItem.contentId, fileName = feedItem.fileName, title = feedItem.title, description = feedItem.description, displayDuration = feedItem.displayDuration, validityStartDate = feedItem.validityStartDate, validityEndDate = feedItem.validityEndDate, customFields = feedItem.customFields;
         var contentItemData = {
             title: title, description: description, customFields: customFields,
@@ -6044,7 +6142,7 @@ var BsMediaFeedAsset = (function (_super) {
         contentAssetItem.locator = bscore_1.bscGenerateAssetLocatorKey(contentAssetItem);
         return contentAssetItem;
     };
-    BsMediaFeedAsset.getBsMediaFeedPropertiesFromBsn = function (item) {
+    CmcMediaFeedAsset.getBsMediaFeedPropertiesFromBsn = function (item) {
         var id = item.id, name = item.name, ttl = item.ttl, physicalPath = item.physicalPath, fileSize = item.fileSize, fileHash = item.fileHash, creationDate = item.creationDate, lastModifiedDate = item.lastModifiedDate, permissions = item.permissions;
         var mediaFeed = {
             type: 'BSNMediaFeed',
@@ -6058,12 +6156,12 @@ var BsMediaFeedAsset = (function (_super) {
             permissions: lodash_1.isNil(permissions) ? [] : permissions.map(bsnOperations_1.cmGetBsnObjectPermissionFromBsnEntity),
         };
         if (!lodash_1.isNil(item.content)) {
-            mediaFeed.content = item.content.map(BsMediaFeedAsset.getBsAssetItemFromMediaFeedEntity);
+            mediaFeed.content = item.content.map(CmcMediaFeedAsset.getBsAssetItemFromMediaFeedEntity);
         }
         return mediaFeed;
     };
-    BsMediaFeedAsset.getBsAssetMediaFeedItemFromBsn = function (item) {
-        var assetData = BsMediaFeedAsset.getBsMediaFeedPropertiesFromBsn(item);
+    CmcMediaFeedAsset.getBsAssetMediaFeedItemFromBsn = function (item) {
+        var assetData = CmcMediaFeedAsset.getBsMediaFeedPropertiesFromBsn(item);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -6085,7 +6183,7 @@ var BsMediaFeedAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsMediaFeedAsset.getBsnMediaFeedSaveData = function (state, mediaFeedId) {
+    CmcMediaFeedAsset.getBsnMediaFeedSaveData = function (state, mediaFeedId) {
         var plDmState = bs_playlist_dm_1.plDmFilterPlDmState(state);
         var error = bs_playlist_dm_1.plDmCheckForInvalidPlDmPlaylistState(plDmState);
         if (error) {
@@ -6118,17 +6216,17 @@ var BsMediaFeedAsset = (function (_super) {
         }
         return saveData;
     };
-    BsMediaFeedAsset.getCurrentMediaFeedAssetLocatorList = function (mediaFeedProperties) {
+    CmcMediaFeedAsset.getCurrentMediaFeedAssetLocatorList = function (mediaFeedProperties) {
         return lodash_1.isNil(mediaFeedProperties) ? [] : mediaFeedProperties.content.map(bscore_1.bscAssetLocatorFromAssetItem);
     };
-    BsMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList = function (state) {
+    CmcMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList = function (state) {
         var plDmState = bs_playlist_dm_1.plDmFilterPlDmState(state);
         return bs_playlist_dm_1.plDmGetContentItemsArrayInOrder(plDmState).map(function (id) {
             var item = bs_playlist_dm_1.plDmGetLiveMediaContentItemById(plDmState, { id: id });
             return bscore_1.bscAssetLocatorFromAssetItem(item.mediaAssetItem);
         });
     };
-    Object.defineProperty(BsMediaFeedAsset.prototype, "isContentDataValid", {
+    Object.defineProperty(CmcMediaFeedAsset.prototype, "isContentDataValid", {
         get: function () {
             var feedInfo = this.feedInfo;
             return !lodash_1.isNil(feedInfo) && !lodash_1.isNil(feedInfo.content);
@@ -6136,14 +6234,14 @@ var BsMediaFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaFeedAsset.prototype, "feedInfo", {
+    Object.defineProperty(CmcMediaFeedAsset.prototype, "feedInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaFeedAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcMediaFeedAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6152,7 +6250,7 @@ var BsMediaFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaFeedAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcMediaFeedAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6161,14 +6259,14 @@ var BsMediaFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaFeedAsset.prototype, "permissions", {
+    Object.defineProperty(CmcMediaFeedAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsMediaFeedAsset.prototype.getFeedInfoWithContent = function () {
+    CmcMediaFeedAsset.prototype.getFeedInfoWithContent = function () {
         var _this = this;
         var feedInfo = this.feedInfo;
         if (feedInfo && !lodash_1.isNil(feedInfo.content)) {
@@ -6177,7 +6275,7 @@ var BsMediaFeedAsset = (function (_super) {
         return this.fetchAssetItemData()
             .then(function () { return _this.feedInfo; });
     };
-    BsMediaFeedAsset.prototype.getCustomFieldNames = function () {
+    CmcMediaFeedAsset.prototype.getCustomFieldNames = function () {
         var getCustomFieldNames = function (feedAssetData) {
             var names = [];
             var contentArray = feedAssetData.content;
@@ -6195,24 +6293,24 @@ var BsMediaFeedAsset = (function (_super) {
             return getCustomFieldNames(feedInfo);
         });
     };
-    BsMediaFeedAsset.prototype.fetchAssetItemData = function () {
+    CmcMediaFeedAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getMediaFeedEntity(this.networkIdOrName)
                 .then(function (feedEntity) {
-                _this.updateCachedAssetItem(BsMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feedEntity));
+                _this.updateCachedAssetItem(CmcMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feedEntity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsMediaFeedAsset.prototype.testAssetExists = function () {
+    CmcMediaFeedAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsMediaFeed(this._name);
         }
         return Promise.resolve(false);
     };
-    BsMediaFeedAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcMediaFeedAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -6221,20 +6319,20 @@ var BsMediaFeedAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsMediaFeedAsset.prototype.updateMediaFeed = function (state) {
+    CmcMediaFeedAsset.prototype.updateMediaFeed = function (state) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsSaveObjectAsLocalJsonFile(state, this.fullPath);
         }
         else if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var mediaFeedId_1 = this.networkId;
-            var saveData_1 = BsMediaFeedAsset.getBsnMediaFeedSaveData(state, mediaFeedId_1);
+            var saveData_1 = CmcMediaFeedAsset.getBsnMediaFeedSaveData(state, mediaFeedId_1);
             var assetFileDelta_1;
             return this.getMediaFeedAssetDelta(state)
                 .then(function (delta) {
@@ -6243,26 +6341,26 @@ var BsMediaFeedAsset = (function (_super) {
             })
                 .then(function () { return bsnconnector_1.bsnGetSession().getMediaFeedEntity(mediaFeedId_1); })
                 .then(function (feedEntity) {
-                var updatedAssetItem = BsMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feedEntity);
+                var updatedAssetItem = CmcMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feedEntity);
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 if (assetFileDelta_1.addedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
                 }
                 if (assetFileDelta_1.removedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
                 }
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaFeedAsset.prototype.getMediaFeedAssetDelta = function (state) {
+    CmcMediaFeedAsset.prototype.getMediaFeedAssetDelta = function (state) {
         var assetDelta = { addedAssets: null, removedAssets: null };
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.getFeedInfoWithContent()
                 .then(function (props) {
-                var currentAssetLocators = BsMediaFeedAsset.getCurrentMediaFeedAssetLocatorList(props);
-                var mediaFeedStateAssetLocators = BsMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList(state);
+                var currentAssetLocators = CmcMediaFeedAsset.getCurrentMediaFeedAssetLocatorList(props);
+                var mediaFeedStateAssetLocators = CmcMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList(state);
                 assetDelta.addedAssets =
                     lodash_1.differenceWith(mediaFeedStateAssetLocators, currentAssetLocators, utils_1.cmAreBsnAssetLocatorsEqual);
                 assetDelta.removedAssets =
@@ -6272,9 +6370,9 @@ var BsMediaFeedAsset = (function (_super) {
         }
         return Promise.resolve(assetDelta);
     };
-    return BsMediaFeedAsset;
-}(asset_1.BsAssetBase));
-exports.BsMediaFeedAsset = BsMediaFeedAsset;
+    return CmcMediaFeedAsset;
+}(asset_1.CmcAsset));
+exports.CmcMediaFeedAsset = CmcMediaFeedAsset;
 
 
 /***/ }),
@@ -6308,28 +6406,28 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsTaggedPlaylistAsset = void 0;
+exports.CmcTaggedPlaylistAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var bs_tagged_playlist_dm_1 = __webpack_require__(94);
 var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
 var fsconnector_1 = __webpack_require__(5);
 var utils_1 = __webpack_require__(6);
-var BsTaggedPlaylistAsset = (function (_super) {
-    __extends(BsTaggedPlaylistAsset, _super);
-    function BsTaggedPlaylistAsset(assetItem) {
+var CmcTaggedPlaylistAsset = (function (_super) {
+    __extends(CmcTaggedPlaylistAsset, _super);
+    function CmcTaggedPlaylistAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.BSNTaggedPlaylist) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsTaggedPlaylistAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcTaggedPlaylistAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsTaggedPlaylistAsset.getBsAssetItemFromTaggedPlaylistEntity = function (feedItem) {
+    CmcTaggedPlaylistAsset.getBsAssetItemFromTaggedPlaylistEntity = function (feedItem) {
         var contentId = feedItem.contentId, fileName = feedItem.fileName, displayDuration = feedItem.displayDuration, validityStartDate = feedItem.validityStartDate, validityEndDate = feedItem.validityEndDate, state = feedItem.state;
         var contentItemData = {
             displayDuration: bscore_1.bscTimeSpanStringToSeconds(displayDuration),
@@ -6350,7 +6448,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         contentAssetItem.locator = bscore_1.bscGenerateAssetLocatorKey(contentAssetItem);
         return contentAssetItem;
     };
-    BsTaggedPlaylistAsset.getBsTaggedPlaylistPropertiesFromBsn = function (item, tagKeySpecs) {
+    CmcTaggedPlaylistAsset.getBsTaggedPlaylistPropertiesFromBsn = function (item, tagKeySpecs) {
         var id = item.id, name = item.name, physicalPath = item.physicalPath, contentsVirtualPath = item.contentsVirtualPath, rule = item.rule, orderTag = item.orderTag, ttl = item.ttl, waitingForApprove = item.waitingForApprove, creationDate = item.creationDate, lastModifiedDate = item.lastModifiedDate, permissions = item.permissions;
         var filterSpec = bsnOperations_1.cmResolveBsnTagFilterSpecification(bsnconnector_1.bsnParseTagRuleExpression(rule), tagKeySpecs);
         var tagSortSpec = bsnconnector_1.bsnParseTagOrderExpression(orderTag);
@@ -6367,13 +6465,13 @@ var BsTaggedPlaylistAsset = (function (_super) {
         };
         if (!lodash_1.isNil(item.content)) {
             taggedPlaylist.content = item.content.map(function (feedItem) {
-                return BsTaggedPlaylistAsset.getBsAssetItemFromTaggedPlaylistEntity(feedItem);
+                return CmcTaggedPlaylistAsset.getBsAssetItemFromTaggedPlaylistEntity(feedItem);
             });
         }
         return taggedPlaylist;
     };
-    BsTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn = function (item, tagKeySpecs) {
-        var assetData = BsTaggedPlaylistAsset.getBsTaggedPlaylistPropertiesFromBsn(item, tagKeySpecs);
+    CmcTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn = function (item, tagKeySpecs) {
+        var assetData = CmcTaggedPlaylistAsset.getBsTaggedPlaylistPropertiesFromBsn(item, tagKeySpecs);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -6393,7 +6491,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData = function (state, taggedPlaylistId) {
+    CmcTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData = function (state, taggedPlaylistId) {
         var tplDmState = bs_tagged_playlist_dm_1.tplDmFilterTplDmState(state);
         var error = bs_tagged_playlist_dm_1.tplDmCheckForInvalidTplDmPlaylistState(tplDmState);
         if (error) {
@@ -6419,15 +6517,15 @@ var BsTaggedPlaylistAsset = (function (_super) {
         }
         return saveData;
     };
-    BsTaggedPlaylistAsset.getCurrentTaggedPlaylistAssetLocatorList = function (playlistProperties) {
+    CmcTaggedPlaylistAsset.getCurrentTaggedPlaylistAssetLocatorList = function (playlistProperties) {
         return lodash_1.isNil(playlistProperties) ? [] : playlistProperties.content.map(bscore_1.bscAssetLocatorFromAssetItem);
     };
-    BsTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList = function (state) {
+    CmcTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList = function (state) {
         var tplDmState = bs_tagged_playlist_dm_1.tplDmFilterTplDmState(state);
         return bs_tagged_playlist_dm_1.tplDmGetContentItemListWithAssetItem(tplDmState)
             .map(function (item) { return bscore_1.bscAssetLocatorFromAssetItem(item.asset); });
     };
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "isContentDataValid", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "isContentDataValid", {
         get: function () {
             var feedInfo = this.feedInfo;
             return !lodash_1.isNil(feedInfo) && !lodash_1.isNil(feedInfo.content);
@@ -6435,14 +6533,14 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "feedInfo", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "feedInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "contentsVirtualPath", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "contentsVirtualPath", {
         get: function () {
             var feedInfo = this.feedInfo;
             return lodash_1.isNil(feedInfo) ? null : feedInfo.contentsVirtualPath;
@@ -6450,7 +6548,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "tagRuleFilterSpecification", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "tagRuleFilterSpecification", {
         get: function () {
             var feedInfo = this.feedInfo;
             return lodash_1.isNil(feedInfo) ? null : feedInfo.taggedListSpec.filterSpec;
@@ -6458,7 +6556,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "tagSortSpecification", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "tagSortSpecification", {
         get: function () {
             var feedInfo = this.feedInfo;
             return lodash_1.isNil(feedInfo) ? null : lodash_1.pick(feedInfo.taggedListSpec, ['sortTagName', 'sortDescending']);
@@ -6466,7 +6564,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "taggedPlaylistSpecification", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "taggedPlaylistSpecification", {
         get: function () {
             var feedInfo = this.feedInfo;
             return lodash_1.isNil(feedInfo) ? null : feedInfo.taggedListSpec;
@@ -6474,7 +6572,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6483,7 +6581,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6492,14 +6590,14 @@ var BsTaggedPlaylistAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTaggedPlaylistAsset.prototype, "permissions", {
+    Object.defineProperty(CmcTaggedPlaylistAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsTaggedPlaylistAsset.prototype.getFeedInfoWithContent = function () {
+    CmcTaggedPlaylistAsset.prototype.getFeedInfoWithContent = function () {
         var _this = this;
         var feedInfo = this.feedInfo;
         if (feedInfo && !lodash_1.isNil(feedInfo.content)) {
@@ -6508,7 +6606,7 @@ var BsTaggedPlaylistAsset = (function (_super) {
         return this.fetchAssetItemData()
             .then(function () { return _this.feedInfo; });
     };
-    BsTaggedPlaylistAsset.prototype.fetchAssetItemData = function () {
+    CmcTaggedPlaylistAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var getTagKeysForRuleValidation_1 = function (feedEntity) {
@@ -6518,20 +6616,20 @@ var BsTaggedPlaylistAsset = (function (_super) {
                 .then(function (feedEntity) {
                 return getTagKeysForRuleValidation_1(feedEntity)
                     .then(function (tagKeySpecs) {
-                    _this.updateCachedAssetItem(BsTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feedEntity, tagKeySpecs));
+                    _this.updateCachedAssetItem(CmcTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feedEntity, tagKeySpecs));
                     return _this;
                 });
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsTaggedPlaylistAsset.prototype.testAssetExists = function () {
+    CmcTaggedPlaylistAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsTaggedPlaylist(this._name);
         }
         return Promise.resolve(false);
     };
-    BsTaggedPlaylistAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcTaggedPlaylistAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -6540,20 +6638,20 @@ var BsTaggedPlaylistAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsTaggedPlaylistAsset.prototype.updateTaggedPlaylist = function (state) {
+    CmcTaggedPlaylistAsset.prototype.updateTaggedPlaylist = function (state) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsSaveObjectAsLocalJsonFile(state, this.fullPath);
         }
         else if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var taggedPlaylistId_1 = this.networkId;
-            var saveData_1 = BsTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData(state, taggedPlaylistId_1);
+            var saveData_1 = CmcTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData(state, taggedPlaylistId_1);
             var assetFileDelta_1;
             var tagKeySpecs_1;
             return bsnOperations_1.cmGetContentTagKeySpecification()
@@ -6567,26 +6665,26 @@ var BsTaggedPlaylistAsset = (function (_super) {
             })
                 .then(function () { return bsnconnector_1.bsnGetSession().getTaggedPlaylistEntity(taggedPlaylistId_1); })
                 .then(function (feedEntity) {
-                var updatedAssetItem = BsTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feedEntity, tagKeySpecs_1);
+                var updatedAssetItem = CmcTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feedEntity, tagKeySpecs_1);
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
                 if (assetFileDelta_1.addedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, { assetLocators: assetFileDelta_1.addedAssets, containerAssetLocator: _this.assetLocator });
                 }
                 if (assetFileDelta_1.removedAssets.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, { assetLocators: assetFileDelta_1.removedAssets, containerAssetLocator: _this.assetLocator });
                 }
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsTaggedPlaylistAsset.prototype.getPlaylistAssetDelta = function (state) {
+    CmcTaggedPlaylistAsset.prototype.getPlaylistAssetDelta = function (state) {
         var assetDelta = { addedAssets: null, removedAssets: null };
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return this.getFeedInfoWithContent()
                 .then(function (props) {
-                var currentAssetLocators = BsTaggedPlaylistAsset.getCurrentTaggedPlaylistAssetLocatorList(props);
-                var playlistStateAssetLocators = BsTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList(state);
+                var currentAssetLocators = CmcTaggedPlaylistAsset.getCurrentTaggedPlaylistAssetLocatorList(props);
+                var playlistStateAssetLocators = CmcTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList(state);
                 assetDelta.addedAssets =
                     lodash_1.differenceWith(playlistStateAssetLocators, currentAssetLocators, utils_1.cmAreBsnAssetLocatorsEqual);
                 assetDelta.removedAssets =
@@ -6596,9 +6694,9 @@ var BsTaggedPlaylistAsset = (function (_super) {
         }
         return Promise.resolve(assetDelta);
     };
-    return BsTaggedPlaylistAsset;
-}(asset_1.BsAssetBase));
-exports.BsTaggedPlaylistAsset = BsTaggedPlaylistAsset;
+    return CmcTaggedPlaylistAsset;
+}(asset_1.CmcAsset));
+exports.CmcTaggedPlaylistAsset = CmcTaggedPlaylistAsset;
 
 
 /***/ }),
@@ -6621,7 +6719,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsTextFeedAsset = void 0;
+exports.CmcTextFeedAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
@@ -6630,19 +6728,19 @@ var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var lodash_1 = __webpack_require__(0);
-var BsTextFeedAsset = (function (_super) {
-    __extends(BsTextFeedAsset, _super);
-    function BsTextFeedAsset(assetItem) {
+var CmcTextFeedAsset = (function (_super) {
+    __extends(CmcTextFeedAsset, _super);
+    function CmcTextFeedAsset(assetItem) {
         var _this = this;
         if (assetItem.assetType !== bscore_1.AssetType.BSNDataFeed) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsTextFeedAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcTextFeedAsset object with AssetType.' + assetItem.assetType));
         }
         _this = _super.call(this, assetItem) || this;
         return _this;
     }
-    BsTextFeedAsset.getBsTextFeedPropertiesFromBsn = function (item) {
+    CmcTextFeedAsset.getBsTextFeedPropertiesFromBsn = function (item) {
         if (item) {
             var id = item.id, name_1 = item.name, physicalPath = item.physicalPath, fileSize = item.fileSize, fileHash = item.fileHash, creationDate = item.creationDate, lastModifiedDate = item.lastModifiedDate, items = item.items, permissions = item.permissions;
             return {
@@ -6654,8 +6752,8 @@ var BsTextFeedAsset = (function (_super) {
         }
         return null;
     };
-    BsTextFeedAsset.getBsAssetTextFeedItemFromBsn = function (item) {
-        var assetData = BsTextFeedAsset.getBsTextFeedPropertiesFromBsn(item);
+    CmcTextFeedAsset.getBsAssetTextFeedItemFromBsn = function (item) {
+        var assetData = CmcTextFeedAsset.getBsTextFeedPropertiesFromBsn(item);
         var assetItem = {
             id: bscore_1.BsAssetIdNone,
             name: item.name,
@@ -6677,7 +6775,7 @@ var BsTextFeedAsset = (function (_super) {
         assetItem.locator = bscore_1.bscGenerateAssetLocatorKey(assetItem);
         return assetItem;
     };
-    BsTextFeedAsset.getBsnTextFeedSaveData = function (state, textFeedId) {
+    CmcTextFeedAsset.getBsnTextFeedSaveData = function (state, textFeedId) {
         var dfDmState = bs_data_feed_dm_1.dfDmFilterBaseState(state);
         var error = bs_data_feed_dm_1.dfDmCheckForInvalidDfDmState(dfDmState);
         if (error) {
@@ -6705,7 +6803,7 @@ var BsTextFeedAsset = (function (_super) {
         }
         return saveData;
     };
-    Object.defineProperty(BsTextFeedAsset.prototype, "isContentDataValid", {
+    Object.defineProperty(CmcTextFeedAsset.prototype, "isContentDataValid", {
         get: function () {
             var feedInfo = this.feedInfo;
             return !lodash_1.isNil(feedInfo) && !lodash_1.isNil(feedInfo.items);
@@ -6713,14 +6811,14 @@ var BsTextFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTextFeedAsset.prototype, "feedInfo", {
+    Object.defineProperty(CmcTextFeedAsset.prototype, "feedInfo", {
         get: function () {
             return this.getAssetItemProperty('assetData');
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTextFeedAsset.prototype, "presentationList", {
+    Object.defineProperty(CmcTextFeedAsset.prototype, "presentationList", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6729,7 +6827,7 @@ var BsTextFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTextFeedAsset.prototype, "presentationCount", {
+    Object.defineProperty(CmcTextFeedAsset.prototype, "presentationCount", {
         get: function () {
             var assetItem = this.internalAssetItem;
             return !lodash_1.isNil(assetItem.assetUsage) && !lodash_1.isNil(assetItem.assetUsage.presentations) ?
@@ -6738,14 +6836,14 @@ var BsTextFeedAsset = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsTextFeedAsset.prototype, "permissions", {
+    Object.defineProperty(CmcTextFeedAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsTextFeedAsset.prototype.getFeedInfoWithContent = function () {
+    CmcTextFeedAsset.prototype.getFeedInfoWithContent = function () {
         var _this = this;
         var feedInfo = this.feedInfo;
         if (feedInfo && !lodash_1.isNil(feedInfo.items)) {
@@ -6754,24 +6852,24 @@ var BsTextFeedAsset = (function (_super) {
         return this.fetchAssetItemData()
             .then(function () { return _this.feedInfo; });
     };
-    BsTextFeedAsset.prototype.fetchAssetItemData = function () {
+    CmcTextFeedAsset.prototype.fetchAssetItemData = function () {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().getTextFeedEntity(this.networkIdOrName)
                 .then(function (feedEntity) {
-                _this.updateCachedAssetItem(BsTextFeedAsset.getBsAssetTextFeedItemFromBsn(feedEntity));
+                _this.updateCachedAssetItem(CmcTextFeedAsset.getBsAssetTextFeedItemFromBsn(feedEntity));
                 return _this;
             });
         }
         return _super.prototype.fetchAssetItemData.call(this);
     };
-    BsTextFeedAsset.prototype.testAssetExists = function () {
+    CmcTextFeedAsset.prototype.testAssetExists = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnconnector_1.bsnGetSession().existsTextFeed(this._name);
         }
         return Promise.resolve(false);
     };
-    BsTextFeedAsset.prototype.replacePermissions = function (objectPermissions) {
+    CmcTextFeedAsset.prototype.replacePermissions = function (objectPermissions) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
@@ -6780,32 +6878,32 @@ var BsTextFeedAsset = (function (_super) {
             })
                 .then(function () { return _this.fetchAssetItemData(); })
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
                 return _this;
             });
         }
         return _super.prototype.replacePermissions.call(this, objectPermissions);
     };
-    BsTextFeedAsset.prototype.updateTextFeed = function (state) {
+    CmcTextFeedAsset.prototype.updateTextFeed = function (state) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsSaveObjectAsLocalJsonFile(state, this.fullPath);
         }
         else if (this.assetLocation === bscore_1.AssetLocation.Bsn) {
             var textFeedId_1 = this.networkId;
-            var saveData = BsTextFeedAsset.getBsnTextFeedSaveData(state, textFeedId_1);
+            var saveData = CmcTextFeedAsset.getBsnTextFeedSaveData(state, textFeedId_1);
             bsnconnector_1.bsnGetSession().updateTextFeed(saveData)
                 .then(function () { return bsnconnector_1.bsnGetSession().getTextFeedEntity(textFeedId_1); })
                 .then(function (feedEntity) {
-                var updatedAssetItem = BsTextFeedAsset.getBsAssetTextFeedItemFromBsn(feedEntity);
+                var updatedAssetItem = CmcTextFeedAsset.getBsAssetTextFeedItemFromBsn(feedEntity);
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssets, { assetItems: [_this.internalAssetItem] });
             });
         }
     };
-    return BsTextFeedAsset;
-}(asset_1.BsAssetBase));
-exports.BsTextFeedAsset = BsTextFeedAsset;
+    return CmcTextFeedAsset;
+}(asset_1.CmcAsset));
+exports.CmcTextFeedAsset = CmcTextFeedAsset;
 
 
 /***/ }),
@@ -6828,21 +6926,21 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMediaAssetBaseCollection = void 0;
+exports.CmcMediaAssetBaseCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var folderAsset_1 = __webpack_require__(16);
 var assetCollection_1 = __webpack_require__(7);
-var assetManager_1 = __webpack_require__(10);
-var notify_1 = __webpack_require__(4);
+var assetManager_1 = __webpack_require__(11);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsMediaAssetBaseCollection = (function (_super) {
-    __extends(BsMediaAssetBaseCollection, _super);
-    function BsMediaAssetBaseCollection() {
+var CmcMediaAssetBaseCollection = (function (_super) {
+    __extends(CmcMediaAssetBaseCollection, _super);
+    function CmcMediaAssetBaseCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    BsMediaAssetBaseCollection.prototype.createFolder = function (name) {
+    CmcMediaAssetBaseCollection.prototype.createFolder = function (name) {
         var _this = this;
         if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
             var session_1 = bsnconnector_1.bsnGetSession();
@@ -6853,14 +6951,14 @@ var BsMediaAssetBaseCollection = (function (_super) {
                     if (!item) {
                         throw new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Requested folder name is in use by a file');
                     }
-                    return folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item);
+                    return folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item);
                 }
                 else {
                     return session_1.createFolder(name, _this.currentDirectory)
                         .then(function (item) {
-                        var assetItem = folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item);
+                        var assetItem = folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item);
                         _this.addAssetItem(assetItem);
-                        notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                        notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                         return assetItem;
                     })
                         .then(assetManager_1.cmUpdateAssetItemParentFolder);
@@ -6869,7 +6967,7 @@ var BsMediaAssetBaseCollection = (function (_super) {
         }
         return _super.prototype.createFolder.call(this, name);
     };
-    BsMediaAssetBaseCollection.prototype.removeFolder = function (name) {
+    CmcMediaAssetBaseCollection.prototype.removeFolder = function (name) {
         var _this = this;
         if (this.currentDirectory && this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
             var session_2 = bsnconnector_1.bsnGetSession();
@@ -6877,11 +6975,11 @@ var BsMediaAssetBaseCollection = (function (_super) {
                 .then(function (items) {
                 var item = lodash_1.find(items, bsnconnector_1.bsnIsFolderContentEntity);
                 if (!lodash_1.isNil(item)) {
-                    var assetItem_1 = folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item);
+                    var assetItem_1 = folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item);
                     return session_2.deleteContentItem(item.id)
                         .then(function () {
                         _this.markAssetItemAsDeleted(name);
-                        return notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                        return notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
                     })
                         .then(function () { return assetManager_1.cmUpdateAssetItemParentFolder(assetItem_1); })
                         .then(function () { return null; });
@@ -6890,18 +6988,18 @@ var BsMediaAssetBaseCollection = (function (_super) {
         }
         return _super.prototype.removeFolder.call(this, name);
     };
-    BsMediaAssetBaseCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcMediaAssetBaseCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getContentBySegment(enumerationOptions);
     };
-    BsMediaAssetBaseCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcMediaAssetBaseCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextContentSegment(enumerator);
     };
-    BsMediaAssetBaseCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcMediaAssetBaseCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getContentItemCount(enumerationOptions);
     };
-    return BsMediaAssetBaseCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsMediaAssetBaseCollection = BsMediaAssetBaseCollection;
+    return CmcMediaAssetBaseCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcMediaAssetBaseCollection = CmcMediaAssetBaseCollection;
 
 
 /***/ }),
@@ -7385,43 +7483,43 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsScheduleAsset = void 0;
+exports.CmcScheduleAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var error_1 = __webpack_require__(2);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var asset_1 = __webpack_require__(9);
-var BsScheduleAsset = (function (_super) {
-    __extends(BsScheduleAsset, _super);
-    function BsScheduleAsset(assetItem) {
+var CmcScheduleAsset = (function (_super) {
+    __extends(CmcScheduleAsset, _super);
+    function CmcScheduleAsset(assetItem) {
         var _this = _super.call(this, assetItem) || this;
         if (assetItem.assetType !== bscore_1.AssetType.Schedule) {
-            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create BsScheduleAsset object with AssetType.' + assetItem.assetType));
+            throw (new error_1.BsCmError(error_1.BsCmErrorType.invalidOperationRequest, 'Attempt to create CmcScheduleAsset object with AssetType.' + assetItem.assetType));
         }
         return _this;
     }
-    BsScheduleAsset.prototype.saveSchedule = function (state) {
+    CmcScheduleAsset.prototype.saveSchedule = function (state) {
         var _this = this;
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsSaveObjectAsLocalJsonFile(state, this.fullPath)
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(_this.fullPath);
                 _this.updateCachedAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 return assetItem;
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsScheduleAsset.prototype.getScheduleState = function () {
+    CmcScheduleAsset.prototype.getScheduleState = function () {
         if (this.assetLocation === bscore_1.AssetLocation.Local) {
             return fsconnector_1.fsGetLocalJsonFileAsObject(this.fullPath);
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    return BsScheduleAsset;
-}(asset_1.BsAssetBase));
-exports.BsScheduleAsset = BsScheduleAsset;
+    return CmcScheduleAsset;
+}(asset_1.CmcAsset));
+exports.CmcScheduleAsset = CmcScheduleAsset;
 
 
 /***/ }),
@@ -7444,23 +7542,23 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsBrightScriptAssetCollection = void 0;
+exports.CmcBrightScriptAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var brightScriptAsset_1 = __webpack_require__(27);
 var assetCollection_1 = __webpack_require__(7);
 var interfaces_1 = __webpack_require__(12);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
-var BsBrightScriptAssetCollection = (function (_super) {
-    __extends(BsBrightScriptAssetCollection, _super);
-    function BsBrightScriptAssetCollection() {
+var CmcBrightScriptAssetCollection = (function (_super) {
+    __extends(CmcBrightScriptAssetCollection, _super);
+    function CmcBrightScriptAssetCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Object.defineProperty(BsBrightScriptAssetCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcBrightScriptAssetCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -7472,7 +7570,7 @@ var BsBrightScriptAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsBrightScriptAssetCollection.prototype.uploadNewPlugin = function (file, targetName) {
+    CmcBrightScriptAssetCollection.prototype.uploadNewPlugin = function (file, targetName) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
             if (this.hasAssetName(lodash_1.isNil(targetName) ? utils_1.getFilenameFromFileSpec(file) : targetName)) {
@@ -7482,12 +7580,12 @@ var BsBrightScriptAssetCollection = (function (_super) {
             var sourceFilePath_1 = utils_1.getFileDirPathFromFileSpec(file);
             return utils_1.getFileContentFromFileSpec(file)
                 .then(function (data) {
-                var saveData = brightScriptAsset_1.BsBrightScriptAsset.getBsnPluginSaveData(lodash_1.isNil(targetName) ? sourceFileName_1 : targetName, data);
+                var saveData = brightScriptAsset_1.CmcBrightScriptAsset.getBsnPluginSaveData(lodash_1.isNil(targetName) ? sourceFileName_1 : targetName, data);
                 return bsnconnector_1.bsnGetSession().createPlugin(saveData)
                     .then(function (entity) {
-                    var assetItem = brightScriptAsset_1.BsBrightScriptAsset.getBsAssetPluginItemFromBsn(entity);
+                    var assetItem = brightScriptAsset_1.CmcBrightScriptAsset.getBsAssetPluginItemFromBsn(entity);
                     _this.addAssetItem(assetItem);
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                     return {
                         jobIndex: 0,
                         sourceFileName: sourceFileName_1, sourceFilePath: sourceFilePath_1,
@@ -7507,7 +7605,7 @@ var BsBrightScriptAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsBrightScriptAssetCollection.prototype.deletePlugin = function (filename) {
+    CmcBrightScriptAssetCollection.prototype.deletePlugin = function (filename) {
         var _this = this;
         var assetType = this.getAssetTypeForName(filename);
         if (lodash_1.isNil(assetType)) {
@@ -7520,7 +7618,7 @@ var BsBrightScriptAssetCollection = (function (_super) {
             var asset_1 = this.getAsset(filename);
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -7528,17 +7626,17 @@ var BsBrightScriptAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deletePlugin(assetItem_1.networkId)
                 .then(function () {
                 _this.markAssetItemAsDeleted(filename);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    Object.defineProperty(BsBrightScriptAssetCollection.prototype, "nameProperty", {
+    Object.defineProperty(CmcBrightScriptAssetCollection.prototype, "nameProperty", {
         get: function () { return 'fileInfo.name'; },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsBrightScriptAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcBrightScriptAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -7549,16 +7647,16 @@ var BsBrightScriptAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsBrightScriptAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcBrightScriptAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getPluginListBySegment(enumerationOptions);
     };
-    BsBrightScriptAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcBrightScriptAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextPluginListSegment(enumerator);
     };
-    BsBrightScriptAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcBrightScriptAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (pluginEntity) {
-            var assetItem = brightScriptAsset_1.BsBrightScriptAsset.getBsAssetPluginItemFromBsn(pluginEntity);
+            var assetItem = brightScriptAsset_1.CmcBrightScriptAsset.getBsAssetPluginItemFromBsn(pluginEntity);
             if (!_this._assetMap.has(assetItem.name)) {
                 _this._newAssetNames.add(assetItem.name);
             }
@@ -7566,23 +7664,23 @@ var BsBrightScriptAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsBrightScriptAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcBrightScriptAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getPluginCount(enumerationOptions);
     };
-    BsBrightScriptAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
+    CmcBrightScriptAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
         return segmentItems.reduce(function (items, item) {
             var matchProps = lodash_1.find(matchList, { name: item.fileInfo.name });
             if (lodash_1.isNil(matchProps)
                 || lodash_1.isEmpty(matchProps.fileHash)
                 || utils_1.cmNormalizeBsnHashString(matchProps.fileHash) !== utils_1.cmNormalizeBsnHashString(item.fileInfo.hash)) {
-                items.push(brightScriptAsset_1.BsBrightScriptAsset.getBsAssetPluginItemFromBsn(item));
+                items.push(brightScriptAsset_1.CmcBrightScriptAsset.getBsAssetPluginItemFromBsn(item));
             }
             return items;
         }, []);
     };
-    return BsBrightScriptAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsBrightScriptAssetCollection = BsBrightScriptAssetCollection;
+    return CmcBrightScriptAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcBrightScriptAssetCollection = CmcBrightScriptAssetCollection;
 
 
 /***/ }),
@@ -7605,16 +7703,16 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsDeviceWebPageAssetCollection = void 0;
+exports.CmcDeviceWebPageAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var deviceWebPageAsset_1 = __webpack_require__(22);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsDeviceWebPageAssetCollection = (function (_super) {
-    __extends(BsDeviceWebPageAssetCollection, _super);
-    function BsDeviceWebPageAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcDeviceWebPageAssetCollection = (function (_super) {
+    __extends(CmcDeviceWebPageAssetCollection, _super);
+    function CmcDeviceWebPageAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Local) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation, 'Device HTML Sites cannot currently be stored in the local file system.');
@@ -7622,7 +7720,7 @@ var BsDeviceWebPageAssetCollection = (function (_super) {
         _this = _super.call(this, location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    BsDeviceWebPageAssetCollection.prototype.deleteDeviceWebPageAsset = function (name) {
+    CmcDeviceWebPageAssetCollection.prototype.deleteDeviceWebPageAsset = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -7632,12 +7730,12 @@ var BsDeviceWebPageAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deleteDeviceWebPage(assetItem_1.networkId)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    Object.defineProperty(BsDeviceWebPageAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcDeviceWebPageAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -7648,34 +7746,34 @@ var BsDeviceWebPageAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsDeviceWebPageAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcDeviceWebPageAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getDeviceWebPageListBySegment(enumerationOptions);
     };
-    BsDeviceWebPageAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcDeviceWebPageAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextDeviceWebPageListSegment(enumerator);
     };
-    BsDeviceWebPageAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcDeviceWebPageAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (htmlSite) {
             if (!_this._assetMap.has(htmlSite.name)) {
                 _this._newAssetNames.add(htmlSite.name);
             }
             _this.setPinnedAssetVerification(htmlSite.name);
-            _this.addAssetItem(deviceWebPageAsset_1.BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(htmlSite));
+            _this.addAssetItem(deviceWebPageAsset_1.CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(htmlSite));
         });
     };
-    BsDeviceWebPageAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcDeviceWebPageAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getDeviceWebPageCount(enumerationOptions);
     };
-    BsDeviceWebPageAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
+    CmcDeviceWebPageAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
         return segmentItems.reduce(function (items, item) {
-            items.push(deviceWebPageAsset_1.BsDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(item));
+            items.push(deviceWebPageAsset_1.CmcDeviceWebPageAsset.getBsAssetDeviceWebPageItemFromBsn(item));
             return items;
         }, []);
     };
-    return BsDeviceWebPageAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsDeviceWebPageAssetCollection = BsDeviceWebPageAssetCollection;
+    return CmcDeviceWebPageAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcDeviceWebPageAssetCollection = CmcDeviceWebPageAssetCollection;
 
 
 /***/ }),
@@ -7698,17 +7796,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsDynamicPlaylistAssetCollection = void 0;
+exports.CmcDynamicPlaylistAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var dynamicPlaylistAsset_1 = __webpack_require__(28);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsDynamicPlaylistAssetCollection = (function (_super) {
-    __extends(BsDynamicPlaylistAssetCollection, _super);
-    function BsDynamicPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcDynamicPlaylistAssetCollection = (function (_super) {
+    __extends(CmcDynamicPlaylistAssetCollection, _super);
+    function CmcDynamicPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Local) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation, 'Dynamic Playlists cannot currently be stored in the local file system.');
@@ -7716,7 +7814,7 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
         _this = _super.call(this, location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    BsDynamicPlaylistAssetCollection.prototype.createNewDynamicPlaylist = function (name, state) {
+    CmcDynamicPlaylistAssetCollection.prototype.createNewDynamicPlaylist = function (name, state) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bpdpl';
@@ -7730,19 +7828,19 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
-            var saveData = dynamicPlaylistAsset_1.BsDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData(state);
-            var playlistAssetLocators_1 = dynamicPlaylistAsset_1.BsDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList(state);
+            var saveData = dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset.getBsnDynamicPlaylistSaveData(state);
+            var playlistAssetLocators_1 = dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset.getPlaylistStateDynamicPlaylistAssetLocatorList(state);
             return bsnconnector_1.bsnGetSession().createDynamicPlaylist(saveData)
                 .then(function (dynamicPlaylistEntity) {
-                var assetItem = dynamicPlaylistAsset_1.BsDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(dynamicPlaylistEntity);
+                var assetItem = dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(dynamicPlaylistEntity);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 if (playlistAssetLocators_1.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, {
                         assetLocators: playlistAssetLocators_1,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem)
                     });
@@ -7751,7 +7849,7 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsDynamicPlaylistAssetCollection.prototype.deleteDynamicPlaylist = function (name) {
+    CmcDynamicPlaylistAssetCollection.prototype.deleteDynamicPlaylist = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -7761,7 +7859,7 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -7770,14 +7868,14 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
             var playlistAssetLocators_2;
             return playlistAsset.getFeedInfoWithContent()
                 .then(function (props) {
-                playlistAssetLocators_2 = dynamicPlaylistAsset_1.BsDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList(props);
+                playlistAssetLocators_2 = dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset.getCurrentDynamicPlaylistAssetLocatorList(props);
                 return bsnconnector_1.bsnGetSession().deleteDynamicPlaylist(name);
             })
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
                 if (playlistAssetLocators_2.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, {
                         assetLocators: playlistAssetLocators_2,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem_1)
                     });
@@ -7786,10 +7884,10 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsDynamicPlaylistAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcDynamicPlaylistAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return this.currentAssetLocation === bscore_1.AssetLocation.Bsn && containerAssetType === bscore_1.AssetType.Project;
     };
-    Object.defineProperty(BsDynamicPlaylistAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcDynamicPlaylistAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -7800,16 +7898,16 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsDynamicPlaylistAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcDynamicPlaylistAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getDynamicPlaylistListBySegment(enumerationOptions);
     };
-    BsDynamicPlaylistAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcDynamicPlaylistAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextDynamicPlaylistListSegment(enumerator);
     };
-    BsDynamicPlaylistAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcDynamicPlaylistAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (feed) {
-            var assetItem = dynamicPlaylistAsset_1.BsDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feed);
+            var assetItem = dynamicPlaylistAsset_1.CmcDynamicPlaylistAsset.getBsAssetDynamicPlaylistItemFromBsn(feed);
             if (!_this._assetMap.has(feed.name)) {
                 _this._newAssetNames.add(feed.name);
             }
@@ -7817,12 +7915,12 @@ var BsDynamicPlaylistAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsDynamicPlaylistAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcDynamicPlaylistAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getDynamicPlaylistCount(enumerationOptions);
     };
-    return BsDynamicPlaylistAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsDynamicPlaylistAssetCollection = BsDynamicPlaylistAssetCollection;
+    return CmcDynamicPlaylistAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcDynamicPlaylistAssetCollection = CmcDynamicPlaylistAssetCollection;
 
 
 /***/ }),
@@ -7845,19 +7943,19 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsFolderAssetCollection = void 0;
+exports.CmcFolderAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var folderAsset_1 = __webpack_require__(16);
 var assetCollection_1 = __webpack_require__(7);
 var mediaAssetBaseCollection_1 = __webpack_require__(33);
 var interfaces_1 = __webpack_require__(12);
-var BsFolderAssetCollection = (function (_super) {
-    __extends(BsFolderAssetCollection, _super);
-    function BsFolderAssetCollection() {
+var CmcFolderAssetCollection = (function (_super) {
+    __extends(CmcFolderAssetCollection, _super);
+    function CmcFolderAssetCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Object.defineProperty(BsFolderAssetCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcFolderAssetCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -7868,14 +7966,14 @@ var BsFolderAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsFolderAssetCollection.prototype, "filterExpression", {
+    Object.defineProperty(CmcFolderAssetCollection.prototype, "filterExpression", {
         get: function () {
             return '[MediaType] IS IN (\'Folder\')';
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsFolderAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcFolderAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -7886,14 +7984,14 @@ var BsFolderAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsFolderAssetCollection.prototype, "localAssetTypeArray", {
+    Object.defineProperty(CmcFolderAssetCollection.prototype, "localAssetTypeArray", {
         get: function () {
             return [bscore_1.AssetType.Folder];
         },
         enumerable: false,
         configurable: true
     });
-    BsFolderAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcFolderAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (item) {
             if (bsnconnector_1.bsnIsFolderContentEntity(item)) {
@@ -7901,13 +7999,13 @@ var BsFolderAssetCollection = (function (_super) {
                     _this._newAssetNames.add(item.name);
                 }
                 _this.setPinnedAssetVerification(item.name);
-                _this.addAssetItem(folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item));
+                _this.addAssetItem(folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item));
             }
         });
     };
-    return BsFolderAssetCollection;
-}(mediaAssetBaseCollection_1.BsMediaAssetBaseCollection));
-exports.BsFolderAssetCollection = BsFolderAssetCollection;
+    return CmcFolderAssetCollection;
+}(mediaAssetBaseCollection_1.CmcMediaAssetBaseCollection));
+exports.CmcFolderAssetCollection = CmcFolderAssetCollection;
 
 
 /***/ }),
@@ -7930,20 +8028,20 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsHtmlSiteAssetCollection = void 0;
+exports.CmcHtmlSiteAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var htmlSiteAsset_1 = __webpack_require__(17);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsHtmlSiteAssetCollection = (function (_super) {
-    __extends(BsHtmlSiteAssetCollection, _super);
-    function BsHtmlSiteAssetCollection() {
+var CmcHtmlSiteAssetCollection = (function (_super) {
+    __extends(CmcHtmlSiteAssetCollection, _super);
+    function CmcHtmlSiteAssetCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    BsHtmlSiteAssetCollection.prototype.deleteHtmlSiteAsset = function (name) {
+    CmcHtmlSiteAssetCollection.prototype.deleteHtmlSiteAsset = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -7953,7 +8051,7 @@ var BsHtmlSiteAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -7961,15 +8059,15 @@ var BsHtmlSiteAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deleteHtmlSite(assetItem_1.networkId)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsHtmlSiteAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcHtmlSiteAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return this.currentAssetLocation === bscore_1.AssetLocation.Bsn && containerAssetType === bscore_1.AssetType.Project;
     };
-    Object.defineProperty(BsHtmlSiteAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcHtmlSiteAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -7980,34 +8078,34 @@ var BsHtmlSiteAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsHtmlSiteAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcHtmlSiteAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getHtmlSiteListBySegment(enumerationOptions);
     };
-    BsHtmlSiteAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcHtmlSiteAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextHtmlSiteListSegment(enumerator);
     };
-    BsHtmlSiteAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcHtmlSiteAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (htmlSite) {
             if (!_this._assetMap.has(htmlSite.name)) {
                 _this._newAssetNames.add(htmlSite.name);
             }
             _this.setPinnedAssetVerification(htmlSite.name);
-            _this.addAssetItem(htmlSiteAsset_1.BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(htmlSite));
+            _this.addAssetItem(htmlSiteAsset_1.CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(htmlSite));
         });
     };
-    BsHtmlSiteAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcHtmlSiteAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getHtmlSiteCount(enumerationOptions);
     };
-    BsHtmlSiteAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
+    CmcHtmlSiteAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
         return segmentItems.reduce(function (items, item) {
-            items.push(htmlSiteAsset_1.BsHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(item));
+            items.push(htmlSiteAsset_1.CmcHtmlSiteAsset.getBsAssetHtmlSiteItemFromBsn(item));
             return items;
         }, []);
     };
-    return BsHtmlSiteAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsHtmlSiteAssetCollection = BsHtmlSiteAssetCollection;
+    return CmcHtmlSiteAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcHtmlSiteAssetCollection = CmcHtmlSiteAssetCollection;
 
 
 /***/ }),
@@ -8041,7 +8139,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMediaAssetCollection = void 0;
+exports.CmcMediaAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
@@ -8050,14 +8148,14 @@ var folderAsset_1 = __webpack_require__(16);
 var assetCollection_1 = __webpack_require__(7);
 var mediaAssetBaseCollection_1 = __webpack_require__(33);
 var interfaces_1 = __webpack_require__(12);
-var assetManager_1 = __webpack_require__(10);
-var notify_1 = __webpack_require__(4);
+var assetManager_1 = __webpack_require__(11);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsMediaAssetCollection = (function (_super) {
-    __extends(BsMediaAssetCollection, _super);
-    function BsMediaAssetCollection() {
+var CmcMediaAssetCollection = (function (_super) {
+    __extends(CmcMediaAssetCollection, _super);
+    function CmcMediaAssetCollection() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this._tagFilteredAssetNames = [];
         _this._tagFilterEnumerationIsComplete = false;
@@ -8066,28 +8164,28 @@ var BsMediaAssetCollection = (function (_super) {
         _this._tagEnumerator = null;
         return _this;
     }
-    Object.defineProperty(BsMediaAssetCollection.prototype, "tagFilteredAssetNames", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "tagFilteredAssetNames", {
         get: function () {
             return this._tagFilteredAssetNames;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAssetCollection.prototype, "tagFilterEnumerationIsComplete", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "tagFilterEnumerationIsComplete", {
         get: function () {
             return this._tagFilterEnumerationIsComplete;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAssetCollection.prototype, "tagFilterSpecification", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "tagFilterSpecification", {
         get: function () {
             return this._tagFilterSpecification;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAssetCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -8099,7 +8197,7 @@ var BsMediaAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsMediaAssetCollection.prototype.deleteMediaAsset = function (name) {
+    CmcMediaAssetCollection.prototype.deleteMediaAsset = function (name) {
         var _this = this;
         var assetType = this.getAssetTypeForName(name);
         if (lodash_1.isNil(assetType)) {
@@ -8113,7 +8211,7 @@ var BsMediaAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             })
                 .then(function () { return assetManager_1.cmUpdateAssetItemParentFolder(asset_1.assetItem); })
                 .then(function () { return null; });
@@ -8123,14 +8221,14 @@ var BsMediaAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deleteContentItem(assetItem_1.networkId)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             })
                 .then(function () { return assetManager_1.cmUpdateAssetItemParentFolder(assetItem_1); })
                 .then(function () { return null; });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaAssetCollection.prototype.retrieveBsnAssetListForTagFilter = function (enumOps) {
+    CmcMediaAssetCollection.prototype.retrieveBsnAssetListForTagFilter = function (enumOps) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             var getNext = function () {
@@ -8157,7 +8255,7 @@ var BsMediaAssetCollection = (function (_super) {
                 .catch(function (error) { return reject(error); });
         });
     };
-    BsMediaAssetCollection.prototype.startRetrieveBsnAssetListForTagFilter = function (enumOps) {
+    CmcMediaAssetCollection.prototype.startRetrieveBsnAssetListForTagFilter = function (enumOps) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
             this._tagFilteredAssetNames = [];
@@ -8175,7 +8273,7 @@ var BsMediaAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaAssetCollection.prototype.nextRetrieveBsnAssetListForTagFilter = function () {
+    CmcMediaAssetCollection.prototype.nextRetrieveBsnAssetListForTagFilter = function () {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
             if (this._tagFilterEnumerationIsComplete) {
@@ -8189,20 +8287,20 @@ var BsMediaAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaAssetCollection.prototype.clearTagFilteredAssetList = function () {
+    CmcMediaAssetCollection.prototype.clearTagFilteredAssetList = function () {
         this._tagFilteredAssetNames = [];
         this._tagFilterEnumerationIsComplete = false;
         this._tagFilterSpecification = null;
         this._tagEnumerationOptions = null;
         this._tagEnumerator = null;
     };
-    BsMediaAssetCollection.prototype.assetMatchesCollection = function (assetItem) {
+    CmcMediaAssetCollection.prototype.assetMatchesCollection = function (assetItem) {
         var matches = _super.prototype.assetMatchesCollection.call(this, assetItem)
             && (!this._enumerationOptions.mediaFilters
                 || this._enumerationOptions.mediaFilters.indexOf(assetItem.mediaType) >= 0);
         return matches;
     };
-    BsMediaAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcMediaAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         if (this.currentAssetLocation !== bscore_1.AssetLocation.Bsn) {
             return false;
         }
@@ -8211,16 +8309,16 @@ var BsMediaAssetCollection = (function (_super) {
         ]);
         return typeSet.has(containerAssetType);
     };
-    Object.defineProperty(BsMediaAssetCollection.prototype, "nameProperty", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "nameProperty", {
         get: function () { return 'fileName'; },
         enumerable: false,
         configurable: true
     });
-    BsMediaAssetCollection.prototype.clearUnpinnedAssets = function () {
+    CmcMediaAssetCollection.prototype.clearUnpinnedAssets = function () {
         _super.prototype.clearUnpinnedAssets.call(this);
         this.clearTagFilteredAssetList();
     };
-    Object.defineProperty(BsMediaAssetCollection.prototype, "filterExpression", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "filterExpression", {
         get: function () {
             var filterExpression = '';
             var mediaTypeFilters = this._enumerationOptions.mediaFilters;
@@ -8244,7 +8342,7 @@ var BsMediaAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMediaAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcMediaAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -8255,7 +8353,7 @@ var BsMediaAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsMediaAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcMediaAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         var mediaTypeFilters = this._enumerationOptions.mediaFilters;
         assetListSegment.listItems.forEach(function (item) {
@@ -8265,11 +8363,11 @@ var BsMediaAssetCollection = (function (_super) {
                         _this._newAssetNames.add(item.name);
                     }
                     _this.setPinnedAssetVerification(item.name);
-                    _this.addAssetItem(folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item));
+                    _this.addAssetItem(folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item));
                 }
             }
             else {
-                var assetItem = mediaAsset_1.BsMediaAsset.getBsAssetMediaFileItemFromBsn(item);
+                var assetItem = mediaAsset_1.CmcMediaAsset.getBsAssetMediaFileItemFromBsn(item);
                 if (mediaTypeFilters === null || mediaTypeFilters.indexOf(assetItem.mediaType) >= 0) {
                     if (!_this._assetMap.has(assetItem.name)) {
                         _this._newAssetNames.add(assetItem.name);
@@ -8280,28 +8378,28 @@ var BsMediaAssetCollection = (function (_super) {
             }
         });
     };
-    BsMediaAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
+    CmcMediaAssetCollection.prototype.processBsnAssetListSegmentDuplicateNameCheck = function (segmentItems, matchList) {
         return segmentItems.reduce(function (items, item) {
             var name = bsnconnector_1.bsnIsFolderContentEntity(item) ? item.name : item.fileName;
             var matchProps = lodash_1.find(matchList, { name: name });
             if (lodash_1.isNil(matchProps.destinationPath) || item.virtualPath === matchProps.destinationPath) {
                 if (bsnconnector_1.bsnIsFolderContentEntity(item)) {
-                    items.push(folderAsset_1.BsFolderAsset.getBsAssetFolderItemFromBsn(item));
+                    items.push(folderAsset_1.CmcFolderAsset.getBsAssetFolderItemFromBsn(item));
                 }
                 else if (lodash_1.isNil(matchProps)
                     || lodash_1.isEmpty(matchProps.fileHash)
                     || utils_1.cmNormalizeBsnHashString(matchProps.fileHash) !== utils_1.cmNormalizeBsnHashString(item.fileHash)) {
-                    items.push(mediaAsset_1.BsMediaAsset.getBsAssetMediaFileItemFromBsn(item));
+                    items.push(mediaAsset_1.CmcMediaAsset.getBsAssetMediaFileItemFromBsn(item));
                 }
             }
             return items;
         }, []);
     };
-    BsMediaAssetCollection.prototype.processTagAssetListSegment = function (assetListSegment) {
+    CmcMediaAssetCollection.prototype.processTagAssetListSegment = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (item) {
             if (bsnconnector_1.bsnIsFileContentEntity(item)) {
-                var assetItem = mediaAsset_1.BsMediaAsset.getBsAssetMediaFileItemFromBsn(item);
+                var assetItem = mediaAsset_1.CmcMediaAsset.getBsAssetMediaFileItemFromBsn(item);
                 _this.addAssetItem(assetItem);
                 _this._tagFilteredAssetNames.push(assetItem.name);
             }
@@ -8314,9 +8412,9 @@ var BsMediaAssetCollection = (function (_super) {
             this._tagEnumerator = assetListSegment.enumerator;
         }
     };
-    return BsMediaAssetCollection;
-}(mediaAssetBaseCollection_1.BsMediaAssetBaseCollection));
-exports.BsMediaAssetCollection = BsMediaAssetCollection;
+    return CmcMediaAssetCollection;
+}(mediaAssetBaseCollection_1.CmcMediaAssetBaseCollection));
+exports.CmcMediaAssetCollection = CmcMediaAssetCollection;
 
 
 /***/ }),
@@ -8339,17 +8437,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMediaFeedAssetCollection = void 0;
+exports.CmcMediaFeedAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var mediaFeedAsset_1 = __webpack_require__(30);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsMediaFeedAssetCollection = (function (_super) {
-    __extends(BsMediaFeedAssetCollection, _super);
-    function BsMediaFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcMediaFeedAssetCollection = (function (_super) {
+    __extends(CmcMediaFeedAssetCollection, _super);
+    function CmcMediaFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Local) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation, 'Media Feeds cannot currently be stored in the local file system.');
@@ -8357,7 +8455,7 @@ var BsMediaFeedAssetCollection = (function (_super) {
         _this = _super.call(this, location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    BsMediaFeedAssetCollection.prototype.createNewMediaFeed = function (name, state) {
+    CmcMediaFeedAssetCollection.prototype.createNewMediaFeed = function (name, state) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bpmdfd';
@@ -8371,19 +8469,19 @@ var BsMediaFeedAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
-            var saveData = mediaFeedAsset_1.BsMediaFeedAsset.getBsnMediaFeedSaveData(state);
-            var mediaFeedAssetLocators_1 = mediaFeedAsset_1.BsMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList(state);
+            var saveData = mediaFeedAsset_1.CmcMediaFeedAsset.getBsnMediaFeedSaveData(state);
+            var mediaFeedAssetLocators_1 = mediaFeedAsset_1.CmcMediaFeedAsset.getMediaFeedStateMediaFeedAssetLocatorList(state);
             return bsnconnector_1.bsnGetSession().createMediaFeed(saveData)
                 .then(function (mediaFeedEntity) {
-                var assetItem = mediaFeedAsset_1.BsMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(mediaFeedEntity);
+                var assetItem = mediaFeedAsset_1.CmcMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(mediaFeedEntity);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 if (mediaFeedAssetLocators_1.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, {
                         assetLocators: mediaFeedAssetLocators_1,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem)
                     });
@@ -8392,7 +8490,7 @@ var BsMediaFeedAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaFeedAssetCollection.prototype.deleteMediaFeed = function (name) {
+    CmcMediaFeedAssetCollection.prototype.deleteMediaFeed = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -8402,7 +8500,7 @@ var BsMediaFeedAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -8411,14 +8509,14 @@ var BsMediaFeedAssetCollection = (function (_super) {
             var mediaFeedAssetLocators_2;
             return mediaFeedAsset.getFeedInfoWithContent()
                 .then(function (props) {
-                mediaFeedAssetLocators_2 = mediaFeedAsset_1.BsMediaFeedAsset.getCurrentMediaFeedAssetLocatorList(props);
+                mediaFeedAssetLocators_2 = mediaFeedAsset_1.CmcMediaFeedAsset.getCurrentMediaFeedAssetLocatorList(props);
                 return bsnconnector_1.bsnGetSession().deleteMediaFeed(name);
             })
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
                 if (mediaFeedAssetLocators_2.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, {
                         assetLocators: mediaFeedAssetLocators_2,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem_1)
                     });
@@ -8427,10 +8525,10 @@ var BsMediaFeedAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsMediaFeedAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcMediaFeedAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return this.currentAssetLocation === bscore_1.AssetLocation.Bsn && containerAssetType === bscore_1.AssetType.Project;
     };
-    Object.defineProperty(BsMediaFeedAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcMediaFeedAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -8441,16 +8539,16 @@ var BsMediaFeedAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsMediaFeedAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcMediaFeedAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getMediaFeedListBySegment(enumerationOptions);
     };
-    BsMediaFeedAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcMediaFeedAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextMediaFeedListSegment(enumerator);
     };
-    BsMediaFeedAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcMediaFeedAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (feed) {
-            var assetItem = mediaFeedAsset_1.BsMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feed);
+            var assetItem = mediaFeedAsset_1.CmcMediaFeedAsset.getBsAssetMediaFeedItemFromBsn(feed);
             if (!_this._assetMap.has(feed.name)) {
                 _this._newAssetNames.add(feed.name);
             }
@@ -8458,12 +8556,12 @@ var BsMediaFeedAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsMediaFeedAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcMediaFeedAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getMediaFeedCount(enumerationOptions);
     };
-    return BsMediaFeedAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsMediaFeedAssetCollection = BsMediaFeedAssetCollection;
+    return CmcMediaFeedAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcMediaFeedAssetCollection = CmcMediaFeedAssetCollection;
 
 
 /***/ }),
@@ -8486,15 +8584,15 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsMultiAssetTypeCollection = void 0;
+exports.CmcMultiAssetTypeCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var assetCollection_1 = __webpack_require__(7);
 var interfaces_1 = __webpack_require__(12);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsMultiAssetTypeCollection = (function (_super) {
-    __extends(BsMultiAssetTypeCollection, _super);
-    function BsMultiAssetTypeCollection(location, assetTypes, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcMultiAssetTypeCollection = (function (_super) {
+    __extends(CmcMultiAssetTypeCollection, _super);
+    function CmcMultiAssetTypeCollection(location, assetTypes, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Bsn) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedMultipleAssetTypes);
@@ -8510,7 +8608,7 @@ var BsMultiAssetTypeCollection = (function (_super) {
         _this = _super.call(this, location, lodash_1.uniq(assetTypeArray), directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    Object.defineProperty(BsMultiAssetTypeCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcMultiAssetTypeCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -8521,16 +8619,16 @@ var BsMultiAssetTypeCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsMultiAssetTypeCollection.prototype, "localAssetTypeArray", {
+    Object.defineProperty(CmcMultiAssetTypeCollection.prototype, "localAssetTypeArray", {
         get: function () {
             return this.assetTypes;
         },
         enumerable: false,
         configurable: true
     });
-    return BsMultiAssetTypeCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsMultiAssetTypeCollection = BsMultiAssetTypeCollection;
+    return CmcMultiAssetTypeCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcMultiAssetTypeCollection = CmcMultiAssetTypeCollection;
 
 
 /***/ }),
@@ -8564,7 +8662,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsPresentationAssetCollection = void 0;
+exports.CmcPresentationAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsdatamodel_1 = __webpack_require__(21);
 var fsconnector_1 = __webpack_require__(5);
@@ -8573,13 +8671,13 @@ var bs_device_artifacts_1 = __webpack_require__(40);
 var presentationAsset_1 = __webpack_require__(23);
 var assetCollection_1 = __webpack_require__(7);
 var interfaces_1 = __webpack_require__(12);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsPresentationAssetCollection = (function (_super) {
-    __extends(BsPresentationAssetCollection, _super);
-    function BsPresentationAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcPresentationAssetCollection = (function (_super) {
+    __extends(CmcPresentationAssetCollection, _super);
+    function CmcPresentationAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         var typeArray = (Array.isArray(assetType) ? assetType : [assetType]).filter(function (type) {
             return utils_1.cmIsPresentationAssetType(type) || (location !== bscore_1.AssetLocation.Bsn && type === bscore_1.AssetType.Folder);
@@ -8592,7 +8690,7 @@ var BsPresentationAssetCollection = (function (_super) {
         _this = _super.call(this, location, typeArray.length ? typeArray : [bscore_1.AssetType.Project], directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    Object.defineProperty(BsPresentationAssetCollection.prototype, "sortFieldList", {
+    Object.defineProperty(CmcPresentationAssetCollection.prototype, "sortFieldList", {
         get: function () {
             return [
                 interfaces_1.AssetSortField.name,
@@ -8604,7 +8702,7 @@ var BsPresentationAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsPresentationAssetCollection.prototype.createNewPresentation = function (name, state, autorunVersion) {
+    CmcPresentationAssetCollection.prototype.createNewPresentation = function (name, state, autorunVersion) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bpfx';
@@ -8618,7 +8716,7 @@ var BsPresentationAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 return assetItem;
             });
         }
@@ -8628,16 +8726,16 @@ var BsPresentationAssetCollection = (function (_super) {
             var dmThumbnail = bsdatamodel_1.dmGetThumbnail(dmState);
             var thumbnailData = dmThumbnail ? dmThumbnail.data : null;
             var thumbnailExt = dmThumbnail ? bscore_1.bscGetFileExtensionForMimeType(dmThumbnail.type) : null;
-            var saveData_1 = presentationAsset_1.BsPresentationAsset.getBsnPresentationSaveData(name, state, autorun, 0, null, thumbnailData, thumbnailExt);
+            var saveData_1 = presentationAsset_1.CmcPresentationAsset.getBsnPresentationSaveData(name, state, autorun, 0, null, thumbnailData, thumbnailExt);
             var presentationAssetLocators_1 = bsdatamodel_1.dmGetBsnAssetLocatorList(dmState);
-            return presentationAsset_1.BsPresentationAsset.getBsnPresentationAssetFileData(state)
+            return presentationAsset_1.CmcPresentationAsset.getBsnPresentationAssetFileData(state)
                 .then(function (assetFileData) { return bsnconnector_1.bsnGetSession().createPresentation(saveData_1, assetFileData); })
                 .then(function (presentationEntity) {
-                var assetItem = presentationAsset_1.BsPresentationAsset.getBsAssetPresentationItemFromBsn(presentationEntity);
+                var assetItem = presentationAsset_1.CmcPresentationAsset.getBsAssetPresentationItemFromBsn(presentationEntity);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 if (presentationAssetLocators_1.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, {
                         assetLocators: presentationAssetLocators_1,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem)
                     });
@@ -8647,7 +8745,7 @@ var BsPresentationAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsPresentationAssetCollection.prototype.deletePresentation = function (name) {
+    CmcPresentationAssetCollection.prototype.deletePresentation = function (name) {
         var _this = this;
         var assetType = this.getAssetTypeForName(name);
         if (lodash_1.isNil(assetType)) {
@@ -8661,7 +8759,7 @@ var BsPresentationAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -8670,14 +8768,14 @@ var BsPresentationAssetCollection = (function (_super) {
             var presentationAssetLocators_2;
             return presentationAsset.getPresentationProperties()
                 .then(function (props) {
-                presentationAssetLocators_2 = presentationAsset_1.BsPresentationAsset.getCurrentBsnPresentationAssetLocatorList(props);
+                presentationAssetLocators_2 = presentationAsset_1.CmcPresentationAsset.getCurrentBsnPresentationAssetLocatorList(props);
                 return bsnconnector_1.bsnGetSession().deletePresentation(name);
             })
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
                 if (presentationAssetLocators_2.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removeAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removeAssetContainer, {
                         assetLocators: presentationAssetLocators_2,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem_1)
                     });
@@ -8686,9 +8784,9 @@ var BsPresentationAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsPresentationAssetCollection.prototype.notify = function (notification) {
+    CmcPresentationAssetCollection.prototype.notify = function (notification) {
         var _this = this;
-        if (notify_1.cmIsPresentationScheduleNotification(notification)) {
+        if (notifyInternal_1.cmIsPresentationScheduleNotification(notification)) {
             notification.presentationLocators.forEach(function (locator) {
                 var presentationAssetItem = _this.getAssetItem(locator.name);
                 if (!lodash_1.isNil(presentationAssetItem)) {
@@ -8697,13 +8795,13 @@ var BsPresentationAssetCollection = (function (_super) {
                         var groupList = assetData.groups;
                         if (!lodash_1.isNil(groupList)) {
                             var presentationAssetUpdated = false;
-                            if (notification.kind === notify_1.AssetCollectionNotificationType.scheduledPresentations) {
+                            if (notification.kind === notifyInternal_1.AssetCollectionNotificationType.scheduledPresentations) {
                                 if (lodash_1.isNil(lodash_1.find(groupList, ['id', notification.group.id]))) {
                                     groupList.push(__assign({}, notification.group));
                                     presentationAssetUpdated = true;
                                 }
                             }
-                            else if (notification.kind === notify_1.AssetCollectionNotificationType.unscheduledPresentations) {
+                            else if (notification.kind === notifyInternal_1.AssetCollectionNotificationType.unscheduledPresentations) {
                                 var origLength = groupList.length;
                                 lodash_1.remove(groupList, function (groupItem) { return groupItem.id === notification.group.id; });
                                 presentationAssetUpdated = groupList.length !== origLength;
@@ -8721,7 +8819,7 @@ var BsPresentationAssetCollection = (function (_super) {
             _super.prototype.notify.call(this, notification);
         }
     };
-    Object.defineProperty(BsPresentationAssetCollection.prototype, "filterExpression", {
+    Object.defineProperty(CmcPresentationAssetCollection.prototype, "filterExpression", {
         get: function () {
             var includeBpfx = this.isAssetTypeIncluded(bscore_1.AssetType.Project);
             var includeBpf = this.isAssetTypeIncluded(bscore_1.AssetType.ProjectBpf);
@@ -8738,7 +8836,7 @@ var BsPresentationAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAssetCollection.prototype, "localAssetTypeArray", {
+    Object.defineProperty(CmcPresentationAssetCollection.prototype, "localAssetTypeArray", {
         get: function () {
             var assetTypes = this.assetTypes.slice();
             if (this.enumerationOptions.folders && assetTypes.indexOf(bscore_1.AssetType.Folder) < 0) {
@@ -8752,7 +8850,7 @@ var BsPresentationAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(BsPresentationAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcPresentationAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -8763,16 +8861,16 @@ var BsPresentationAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsPresentationAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcPresentationAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getPresentationListBySegment(enumerationOptions);
     };
-    BsPresentationAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcPresentationAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextPresentationListSegment(enumerator);
     };
-    BsPresentationAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcPresentationAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (presentationEntity) {
-            var assetItem = presentationAsset_1.BsPresentationAsset.getBsAssetPresentationItemFromBsn(presentationEntity);
+            var assetItem = presentationAsset_1.CmcPresentationAsset.getBsAssetPresentationItemFromBsn(presentationEntity);
             if (!_this._assetMap.has(assetItem.name)) {
                 _this._newAssetNames.add(assetItem.name);
             }
@@ -8780,12 +8878,12 @@ var BsPresentationAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsPresentationAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcPresentationAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getPresentationCount(enumerationOptions);
     };
-    return BsPresentationAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsPresentationAssetCollection = BsPresentationAssetCollection;
+    return CmcPresentationAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcPresentationAssetCollection = CmcPresentationAssetCollection;
 
 
 /***/ }),
@@ -8808,19 +8906,19 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsScheduleAssetCollection = void 0;
+exports.CmcScheduleAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-var BsScheduleAssetCollection = (function (_super) {
-    __extends(BsScheduleAssetCollection, _super);
-    function BsScheduleAssetCollection() {
+var CmcScheduleAssetCollection = (function (_super) {
+    __extends(CmcScheduleAssetCollection, _super);
+    function CmcScheduleAssetCollection() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    BsScheduleAssetCollection.prototype.createNewSchedule = function (name, state) {
+    CmcScheduleAssetCollection.prototype.createNewSchedule = function (name, state) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bpsx';
@@ -8834,13 +8932,13 @@ var BsScheduleAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 return assetItem;
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsScheduleAssetCollection.prototype.deleteSchedule = function (name) {
+    CmcScheduleAssetCollection.prototype.deleteSchedule = function (name) {
         var _this = this;
         var assetType = this.getAssetTypeForName(name);
         if (lodash_1.isNil(assetType)) {
@@ -8854,14 +8952,14 @@ var BsScheduleAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    return BsScheduleAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsScheduleAssetCollection = BsScheduleAssetCollection;
+    return CmcScheduleAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcScheduleAssetCollection = CmcScheduleAssetCollection;
 
 
 /***/ }),
@@ -8884,18 +8982,18 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsTaggedPlaylistAssetCollection = void 0;
+exports.CmcTaggedPlaylistAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var taggedPlaylistAsset_1 = __webpack_require__(31);
 var assetCollection_1 = __webpack_require__(7);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsTaggedPlaylistAssetCollection = (function (_super) {
-    __extends(BsTaggedPlaylistAssetCollection, _super);
-    function BsTaggedPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcTaggedPlaylistAssetCollection = (function (_super) {
+    __extends(CmcTaggedPlaylistAssetCollection, _super);
+    function CmcTaggedPlaylistAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Local) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation, 'Tagged Playlists cannot currently be stored in the local file system.');
@@ -8903,21 +9001,21 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
         _this = _super.call(this, location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    Object.defineProperty(BsTaggedPlaylistAssetCollection, "tagKeySpecification", {
+    Object.defineProperty(CmcTaggedPlaylistAssetCollection, "tagKeySpecification", {
         get: function () {
-            return BsTaggedPlaylistAssetCollection._tagKeySpecification;
+            return CmcTaggedPlaylistAssetCollection._tagKeySpecification;
         },
         enumerable: false,
         configurable: true
     });
-    BsTaggedPlaylistAssetCollection.updateTagKeySpecification = function () {
+    CmcTaggedPlaylistAssetCollection.updateTagKeySpecification = function () {
         return bsnOperations_1.cmGetContentTagKeySpecification()
             .then(function (tagKeySpecs) {
-            BsTaggedPlaylistAssetCollection._tagKeySpecification = tagKeySpecs;
+            CmcTaggedPlaylistAssetCollection._tagKeySpecification = tagKeySpecs;
             return tagKeySpecs;
         });
     };
-    BsTaggedPlaylistAssetCollection.prototype.createNewTaggedPlaylist = function (name, state) {
+    CmcTaggedPlaylistAssetCollection.prototype.createNewTaggedPlaylist = function (name, state) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bptpl';
@@ -8931,20 +9029,20 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
-            var saveData_1 = taggedPlaylistAsset_1.BsTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData(state);
-            var playlistAssetLocators_1 = taggedPlaylistAsset_1.BsTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList(state);
-            return BsTaggedPlaylistAssetCollection.updateTagKeySpecification()
+            var saveData_1 = taggedPlaylistAsset_1.CmcTaggedPlaylistAsset.getBsnTaggedPlaylistSaveData(state);
+            var playlistAssetLocators_1 = taggedPlaylistAsset_1.CmcTaggedPlaylistAsset.getPlaylistStateTaggedPlaylistAssetLocatorList(state);
+            return CmcTaggedPlaylistAssetCollection.updateTagKeySpecification()
                 .then(function () { return bsnconnector_1.bsnGetSession().createTaggedPlaylist(saveData_1); })
                 .then(function (taggedPlaylistEntity) {
-                var assetItem = taggedPlaylistAsset_1.BsTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(taggedPlaylistEntity, BsTaggedPlaylistAssetCollection.tagKeySpecification);
+                var assetItem = taggedPlaylistAsset_1.CmcTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(taggedPlaylistEntity, CmcTaggedPlaylistAssetCollection.tagKeySpecification);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
                 if (playlistAssetLocators_1.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addAssetContainer, {
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addAssetContainer, {
                         assetLocators: playlistAssetLocators_1,
                         containerAssetLocator: bscore_1.bscAssetLocatorFromAssetItem(assetItem)
                     });
@@ -8953,7 +9051,7 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsTaggedPlaylistAssetCollection.prototype.deleteTaggedPlaylist = function (name) {
+    CmcTaggedPlaylistAssetCollection.prototype.deleteTaggedPlaylist = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -8963,7 +9061,7 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -8971,15 +9069,15 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deleteTaggedPlaylist(name)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsTaggedPlaylistAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcTaggedPlaylistAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return this.currentAssetLocation === bscore_1.AssetLocation.Bsn && containerAssetType === bscore_1.AssetType.Project;
     };
-    Object.defineProperty(BsTaggedPlaylistAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcTaggedPlaylistAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -8990,17 +9088,17 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsTaggedPlaylistAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
-        return BsTaggedPlaylistAssetCollection.updateTagKeySpecification()
+    CmcTaggedPlaylistAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+        return CmcTaggedPlaylistAssetCollection.updateTagKeySpecification()
             .then(function () { return bsnconnector_1.bsnGetSession().getTaggedPlaylistListBySegment(enumerationOptions); });
     };
-    BsTaggedPlaylistAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcTaggedPlaylistAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextTaggedPlaylistListSegment(enumerator);
     };
-    BsTaggedPlaylistAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcTaggedPlaylistAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (feed) {
-            var assetItem = taggedPlaylistAsset_1.BsTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feed, BsTaggedPlaylistAssetCollection.tagKeySpecification);
+            var assetItem = taggedPlaylistAsset_1.CmcTaggedPlaylistAsset.getBsAssetTaggedPlaylistItemFromBsn(feed, CmcTaggedPlaylistAssetCollection.tagKeySpecification);
             if (!_this._assetMap.has(feed.name)) {
                 _this._newAssetNames.add(feed.name);
             }
@@ -9008,13 +9106,13 @@ var BsTaggedPlaylistAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsTaggedPlaylistAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcTaggedPlaylistAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getTaggedPlaylistCount(enumerationOptions);
     };
-    BsTaggedPlaylistAssetCollection._tagKeySpecification = [];
-    return BsTaggedPlaylistAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsTaggedPlaylistAssetCollection = BsTaggedPlaylistAssetCollection;
+    CmcTaggedPlaylistAssetCollection._tagKeySpecification = [];
+    return CmcTaggedPlaylistAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcTaggedPlaylistAssetCollection = CmcTaggedPlaylistAssetCollection;
 
 
 /***/ }),
@@ -9037,17 +9135,17 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsTextFeedAssetCollection = void 0;
+exports.CmcTextFeedAssetCollection = void 0;
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
 var textFeedAsset_1 = __webpack_require__(32);
 var assetCollection_1 = __webpack_require__(7);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var BsTextFeedAssetCollection = (function (_super) {
-    __extends(BsTextFeedAssetCollection, _super);
-    function BsTextFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
+var CmcTextFeedAssetCollection = (function (_super) {
+    __extends(CmcTextFeedAssetCollection, _super);
+    function CmcTextFeedAssetCollection(location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) {
         var _this = this;
         if (location === bscore_1.AssetLocation.Local) {
             throw new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation, 'Text feeds cannot currently be stored in the local file system.');
@@ -9055,7 +9153,7 @@ var BsTextFeedAssetCollection = (function (_super) {
         _this = _super.call(this, location, assetType, directoryPath, pinnedAssetItems, enumerationOptions) || this;
         return _this;
     }
-    BsTextFeedAssetCollection.prototype.createNewTextFeed = function (name, state) {
+    CmcTextFeedAssetCollection.prototype.createNewTextFeed = function (name, state) {
         var _this = this;
         if (this.currentAssetLocation === bscore_1.AssetLocation.Local) {
             name = name + '.bptxfd';
@@ -9069,20 +9167,20 @@ var BsTextFeedAssetCollection = (function (_super) {
                 .then(function () {
                 var assetItem = fsconnector_1.fsGetAssetItemFromFile(fullPath_1);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
             });
         }
         else {
-            var saveData = textFeedAsset_1.BsTextFeedAsset.getBsnTextFeedSaveData(state);
+            var saveData = textFeedAsset_1.CmcTextFeedAsset.getBsnTextFeedSaveData(state);
             return bsnconnector_1.bsnGetSession().createTextFeed(saveData)
                 .then(function (mediaFeedEntity) {
-                var assetItem = textFeedAsset_1.BsTextFeedAsset.getBsAssetTextFeedItemFromBsn(mediaFeedEntity);
+                var assetItem = textFeedAsset_1.CmcTextFeedAsset.getBsAssetTextFeedItemFromBsn(mediaFeedEntity);
                 _this.addAssetItem(assetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [assetItem] });
             });
         }
     };
-    BsTextFeedAssetCollection.prototype.deleteTextFeed = function (name) {
+    CmcTextFeedAssetCollection.prototype.deleteTextFeed = function (name) {
         var _this = this;
         if (!this.hasAssetName(name)) {
             return Promise.resolve();
@@ -9092,7 +9190,7 @@ var BsTextFeedAssetCollection = (function (_super) {
             return fsconnector_1.fsDeleteFile(asset_1.fullPath)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [asset_1.assetItem] });
             });
         }
         else if (this.currentAssetLocation === bscore_1.AssetLocation.Bsn) {
@@ -9100,15 +9198,15 @@ var BsTextFeedAssetCollection = (function (_super) {
             return bsnconnector_1.bsnGetSession().deleteTextFeed(name)
                 .then(function () {
                 _this.markAssetItemAsDeleted(name);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [assetItem_1] });
             });
         }
         return Promise.reject(new error_1.BsCmError(error_1.BsCmErrorType.unsupportedAssetLocation));
     };
-    BsTextFeedAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
+    CmcTextFeedAssetCollection.prototype.assetHasUsageData = function (containerAssetType) {
         return this.currentAssetLocation === bscore_1.AssetLocation.Bsn && containerAssetType === bscore_1.AssetType.Project;
     };
-    Object.defineProperty(BsTextFeedAssetCollection.prototype, "bsnSortField", {
+    Object.defineProperty(CmcTextFeedAssetCollection.prototype, "bsnSortField", {
         get: function () {
             var sortField;
             if (this._enumerationOptions.sortField) {
@@ -9119,16 +9217,16 @@ var BsTextFeedAssetCollection = (function (_super) {
         enumerable: false,
         configurable: true
     });
-    BsTextFeedAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
+    CmcTextFeedAssetCollection.prototype.getInitialBsnAssetListSegment = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getTextFeedListBySegment(enumerationOptions);
     };
-    BsTextFeedAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
+    CmcTextFeedAssetCollection.prototype.getNextBsnAssetListSegment = function (enumerator) {
         return bsnconnector_1.bsnGetSession().getNextTextFeedListSegment(enumerator);
     };
-    BsTextFeedAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
+    CmcTextFeedAssetCollection.prototype.processBsnAssetListSegmentItems = function (assetListSegment) {
         var _this = this;
         assetListSegment.listItems.forEach(function (feed) {
-            var assetItem = textFeedAsset_1.BsTextFeedAsset.getBsAssetTextFeedItemFromBsn(feed);
+            var assetItem = textFeedAsset_1.CmcTextFeedAsset.getBsAssetTextFeedItemFromBsn(feed);
             if (!_this._assetMap.has(feed.name)) {
                 _this._newAssetNames.add(feed.name);
             }
@@ -9136,12 +9234,12 @@ var BsTextFeedAssetCollection = (function (_super) {
             _this.addAssetItem(assetItem);
         });
     };
-    BsTextFeedAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
+    CmcTextFeedAssetCollection.prototype.getBsnAssetBackendCount = function (enumerationOptions) {
         return bsnconnector_1.bsnGetSession().getTextFeedCount(enumerationOptions);
     };
-    return BsTextFeedAssetCollection;
-}(assetCollection_1.BsAssetCollection));
-exports.BsTextFeedAssetCollection = BsTextFeedAssetCollection;
+    return CmcTextFeedAssetCollection;
+}(assetCollection_1.CmcAssetCollection));
+exports.CmcTextFeedAssetCollection = CmcTextFeedAssetCollection;
 
 
 /***/ }),
@@ -9962,7 +10060,7 @@ var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var bsnOperations_1 = __webpack_require__(8);
 var playerGroupCache_1 = __webpack_require__(68);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
 function cmGetBsPlayerGroup(name) {
@@ -10246,10 +10344,10 @@ var BsPlayerGroupObject = (function () {
             var groupItem = _this.groupItem;
             if (!lodash_1.isNil(scheduleChanges) && !lodash_1.isNil(groupItem)) {
                 if (scheduleChanges.addedPresentations.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.scheduledPresentations, { presentationLocators: scheduleChanges.addedPresentations, group: groupItem });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.scheduledPresentations, { presentationLocators: scheduleChanges.addedPresentations, group: groupItem });
                 }
                 if (scheduleChanges.removedPresentations.length > 0) {
-                    notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.unscheduledPresentations, { presentationLocators: scheduleChanges.removedPresentations, group: groupItem });
+                    notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.unscheduledPresentations, { presentationLocators: scheduleChanges.removedPresentations, group: groupItem });
                 }
             }
             return _this.fetchGroupData();
@@ -10449,7 +10547,7 @@ var assetCollectionManager_1 = __webpack_require__(13);
 var assetUploadJob_1 = __webpack_require__(19);
 var utils_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
-var isomorphicPath = __webpack_require__(11);
+var isomorphicPath = __webpack_require__(10);
 var uuid_1 = __webpack_require__(15);
 var reNameParts = /^(.+?)(?:_(\d+))?$/i;
 function cmGetUniquePluginNameForNameMap(nameMap, proposedName, proposedExt) {
@@ -11266,28 +11364,28 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsContentAssetBase = void 0;
+exports.CmcContentAsset = void 0;
 var bscore_1 = __webpack_require__(3);
 var bsnconnector_1 = __webpack_require__(1);
 var fsconnector_1 = __webpack_require__(5);
 var asset_1 = __webpack_require__(9);
 var bsnOperations_1 = __webpack_require__(8);
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(6);
-var isomorphic_path_1 = __webpack_require__(11);
-var BsContentAssetBase = (function (_super) {
-    __extends(BsContentAssetBase, _super);
-    function BsContentAssetBase() {
+var isomorphic_path_1 = __webpack_require__(10);
+var CmcContentAsset = (function (_super) {
+    __extends(CmcContentAsset, _super);
+    function CmcContentAsset() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Object.defineProperty(BsContentAssetBase.prototype, "permissions", {
+    Object.defineProperty(CmcContentAsset.prototype, "permissions", {
         get: function () {
             return this.internalAssetItem.permissions;
         },
         enumerable: false,
         configurable: true
     });
-    BsContentAssetBase.prototype.moveAsset = function (destinationPath) {
+    CmcContentAsset.prototype.moveAsset = function (destinationPath) {
         var _this = this;
         var isBsnAsset = this.assetLocation === bscore_1.AssetLocation.Bsn;
         var newPath = isBsnAsset ?
@@ -11299,17 +11397,17 @@ var BsContentAssetBase = (function (_super) {
             return movePromise
                 .then(function () {
                 _this.markCachedAssetItemAsDeleted();
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.removedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.removedAssets, { assetItems: [_this.internalAssetItem] });
                 var updatedAssetItem = __assign(__assign({}, _this.internalAssetItem), { path: newPath });
                 updatedAssetItem.locator = bscore_1.bscGenerateAssetLocatorKey(updatedAssetItem);
                 _this._locatorHash = utils_1.cmCreateHashFromAssetLocator(updatedAssetItem);
                 _this.updateCachedAssetItem(updatedAssetItem);
-                notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: [_this.internalAssetItem] });
+                notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: [_this.internalAssetItem] });
             });
         }
         return Promise.resolve();
     };
-    BsContentAssetBase.prototype.replaceBsnContentPermissions = function (objectPermissions) {
+    CmcContentAsset.prototype.replaceBsnContentPermissions = function (objectPermissions) {
         var _this = this;
         return bsnOperations_1.cmGetBsnPermissionEntityList(objectPermissions, this.networkId)
             .then(function (permissionEntityList) {
@@ -11317,12 +11415,12 @@ var BsContentAssetBase = (function (_super) {
         })
             .then(function () { return _this.fetchAssetItemData(); })
             .then(function () {
-            notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
+            notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.updatedAssetPermissions, { assetItems: [_this.internalAssetItem] });
         });
     };
-    return BsContentAssetBase;
-}(asset_1.BsAssetBase));
-exports.BsContentAssetBase = BsContentAssetBase;
+    return CmcContentAsset;
+}(asset_1.CmcAsset));
+exports.CmcContentAsset = CmcContentAsset;
 
 
 /***/ }),
@@ -11440,10 +11538,10 @@ exports.cmGetResizedImageName = exports.cmGetBsnDownsampleResult = exports.cmCon
 var bscore_1 = __webpack_require__(3);
 var fsconnector_1 = __webpack_require__(5);
 var bsnconnector_1 = __webpack_require__(1);
-var isomorphic_path_1 = __webpack_require__(11);
-var notify_1 = __webpack_require__(4);
+var isomorphic_path_1 = __webpack_require__(10);
+var notifyInternal_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var assetManager_1 = __webpack_require__(10);
+var assetManager_1 = __webpack_require__(11);
 var lodash_1 = __webpack_require__(0);
 var BsCmMediaProcessFailureType;
 (function (BsCmMediaProcessFailureType) {
@@ -11552,7 +11650,7 @@ function cmNotifyAssetCollectionsOfDownsampledAssets(downsampledAssets) {
                 bsAssetItems.push(bsAsset.assetItem);
             }
         });
-        notify_1.getBsAssetCollectionNotifier().notify(notify_1.AssetCollectionNotificationType.addedAssets, { assetItems: bsAssetItems });
+        notifyInternal_1.getBsAssetCollectionNotifier().notify(notifyInternal_1.AssetCollectionNotificationType.addedAssets, { assetItems: bsAssetItems });
         return downsampledAssets;
     });
 }
@@ -13432,12 +13530,11 @@ exports.CmcBsnMediaFeedUploadJob = CmcBsnMediaFeedUploadJob;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PresentationExportJob = exports.cmCreatePresentationExportJob = exports.BsExportItemStatus = void 0;
-var isomorphic_path_1 = __webpack_require__(11);
+var isomorphic_path_1 = __webpack_require__(10);
 var bscore_1 = __webpack_require__(3);
 var bsdatamodel_1 = __webpack_require__(21);
 var bs_task_manager_1 = __webpack_require__(14);
 var fsconnector_1 = __webpack_require__(5);
-var assetManager_1 = __webpack_require__(10);
 var error_1 = __webpack_require__(2);
 var uuid_1 = __webpack_require__(15);
 var lodash_1 = __webpack_require__(0);
@@ -13770,16 +13867,11 @@ var PresentationExportJob = (function () {
         };
         return processNextFileCopy(0);
     };
-    PresentationExportJob.prototype.getBsAssetItemPath = function (bsAssetItem) {
-        var bsAsset = assetManager_1.cmGetBsAsset(bsAssetItem);
-        return bsAsset.fullPath;
-    };
     PresentationExportJob.prototype.getHtmlAssetsToExport = function (htmlSite, bsdm) {
-        var _this = this;
         return new Promise(function (resolve) {
             var htmlAssets = [];
             var htmlSiteIndexFileAssetItem = bsdatamodel_1.dmGetAssetItemById(bsdm, { id: (htmlSite.indexFileAssetItem).id });
-            var htmlSiteIndexFilePath = _this.getBsAssetItemPath(htmlSiteIndexFileAssetItem);
+            var htmlSiteIndexFilePath = bscore_1.bscGetAssetFullPath(htmlSiteIndexFileAssetItem);
             var htmlSiteIndexFile = {
                 fileName: htmlSiteIndexFileAssetItem.name,
                 filePath: htmlSiteIndexFilePath,
@@ -13948,7 +14040,7 @@ var bs_task_manager_1 = __webpack_require__(14);
 var fsconnector_1 = __webpack_require__(5);
 var presentationAsset_1 = __webpack_require__(23);
 var assetCollectionManager_1 = __webpack_require__(13);
-var assetManager_1 = __webpack_require__(10);
+var assetManager_1 = __webpack_require__(11);
 var fileBlobCache_1 = __webpack_require__(18);
 var assetUploadJob_1 = __webpack_require__(19);
 var pluginUploadJob_1 = __webpack_require__(63);
@@ -14185,7 +14277,7 @@ var CmcBsnPresentationUploadJob = (function () {
             .then(function () {
             result.presentationCheckResult =
                 _this.updatePresentationCheckResult(result.presentationCheckResult, presentationCollection);
-            return presentationAsset_1.BsPresentationAsset.getDependentPresentationAssetLocators(_this._presentationState, bscore_1.AssetLocation.Local);
+            return presentationAsset_1.CmcPresentationAsset.getDependentPresentationAssetLocators(_this._presentationState, bscore_1.AssetLocation.Local);
         })
             .then(function (dependentPresentationLocators) {
             if (dependentPresentationLocators.length > 0) {
@@ -14664,7 +14756,7 @@ var CmcBsnPresentationUploadJob = (function () {
             var projectState = _this.getPresentationProjectStateForName(presentationName);
             if (!lodash_1.isNil(presentationAsset) && !lodash_1.isNil(projectState)) {
                 var presentationAssetDependencies_1 = presentationAsset.dependentPresentationNames;
-                return presentationAsset_1.BsPresentationAsset.getDependentPresentationAssetLocators(projectState, bscore_1.AssetLocation.Bsn)
+                return presentationAsset_1.CmcPresentationAsset.getDependentPresentationAssetLocators(projectState, bscore_1.AssetLocation.Bsn)
                     .then(function (assetLocators) {
                     var assetNeedsUpdate = assetLocators.some(function (locator) {
                         return lodash_1.isNil(lodash_1.find(presentationAssetDependencies_1, ['name', locator.name]));
@@ -15651,7 +15743,7 @@ exports.callbackify = callbackify;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsAssetCollectionCache = exports.cmGetBsAssetCollectionCache = void 0;
-var notify_1 = __webpack_require__(4);
+var notifyInternal_1 = __webpack_require__(4);
 var collectionCache;
 function cmGetBsAssetCollectionCache() {
     if (!collectionCache) {
@@ -15663,18 +15755,21 @@ exports.cmGetBsAssetCollectionCache = cmGetBsAssetCollectionCache;
 var BsAssetCollectionCache = (function () {
     function BsAssetCollectionCache() {
         this._collectionMap = new Map();
-        notify_1.getBsAssetCollectionNotifier().subscribe(this);
+        notifyInternal_1.getBsAssetCollectionNotifier().subscribe(this);
     }
     Object.defineProperty(BsAssetCollectionCache.prototype, "size", {
         get: function () { return this._collectionMap.size; },
         enumerable: false,
         configurable: true
     });
+    BsAssetCollectionCache.prototype.hasCollection = function (locator) {
+        return this._collectionMap.has(locator);
+    };
     BsAssetCollectionCache.prototype.getCollection = function (locator) {
         return this._collectionMap.get(locator);
     };
     BsAssetCollectionCache.prototype.putCollection = function (collection) {
-        this._collectionMap.set(collection.functionalLocator, collection);
+        this._collectionMap.set(collection.locatorHash, collection);
     };
     BsAssetCollectionCache.prototype.removeCollection = function (locator) {
         this._collectionMap.delete(locator);
@@ -15805,7 +15900,7 @@ __exportStar(__webpack_require__(53), exports);
 __exportStar(__webpack_require__(54), exports);
 __exportStar(__webpack_require__(55), exports);
 __exportStar(__webpack_require__(13), exports);
-__exportStar(__webpack_require__(10), exports);
+__exportStar(__webpack_require__(11), exports);
 __exportStar(__webpack_require__(9), exports);
 __exportStar(__webpack_require__(27), exports);
 __exportStar(__webpack_require__(22), exports);
