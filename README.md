@@ -4,14 +4,15 @@ BSN.cloud Core Library is a set of Javascript modules that can be used to create
 
 The library can be used by both desktop or server applications running on node.js, or by browser based applications.
 
-The library includes a number of Typescript examples, in the examples directory, showing how several basic workflows can be implemented using the library. All examples are intended to be run using node.js in a desktop console.
+The library includes a number of Typescript examples, in the "examples" directory, showing how several basic workflows can be implemented using the library. The "examples" directory also includes, for each example, the transpiled Javascript file for the corresponding Typescript example. The Javascript examples can be run using node.js in a desktop console.
 
 ### Setup and Run Examples
 
 To setup the library to run the examples and experiment with other operations:
 1. Install node.js on your machine. Node.js version 10 or greater is recommended.
-2. Clone the bsn-cloud-core repository to a working directory.
-3. Install dependencies
+2. Install Git on your machine if you do not have it already.
+3. Clone the bsn-cloud-core repository to a working directory.
+4. Install dependencies (a Git installation is required)
     > npm install
 
 ### Example: Simple presentation creation
