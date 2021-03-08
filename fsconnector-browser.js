@@ -3105,7 +3105,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -8577,7 +8577,7 @@ module.exports = require("./bscore");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fsDecryptRsa = exports.fsEncryptRsa = exports.fsGetDataSha1 = exports.fsGetObjectFileSha1 = exports.fsGetLocalFileSha1 = exports.fsGetFileSha1 = void 0;
+exports.fsDecryptRsa = exports.fsEncryptRsa = exports.fsGetDataSha1 = exports.fsGetObjectFileSha1 = exports.fsGetDataSha1AsArray = exports.fsGetLocalFileSha1 = exports.fsGetFileSha1 = void 0;
 var bscore_1 = __webpack_require__(12);
 var lodash_1 = __webpack_require__(24);
 var Rusha = __webpack_require__(71);
@@ -8598,6 +8598,10 @@ function fsGetLocalFileSha1(file) {
     return Promise.reject(new error_1.FsError(error_1.FsErrorType.fsNotAvailableError));
 }
 exports.fsGetLocalFileSha1 = fsGetLocalFileSha1;
+function fsGetDataSha1AsArray(data) {
+    throw new error_1.FsError(error_1.FsErrorType.fsNotAvailableError);
+}
+exports.fsGetDataSha1AsArray = fsGetDataSha1AsArray;
 function fsGetObjectFileSha1(file) {
     return new Promise(function (resolve, reject) {
         var shaChunkSize = 256 * 1024 * 1024;
@@ -16949,6 +16953,7 @@ function fsCloseConnectorPool() {
             connectorPool = null;
         });
     }
+    return Promise.resolve();
 }
 exports.fsCloseConnectorPool = fsCloseConnectorPool;
 
@@ -27686,12 +27691,16 @@ exports.fsGetExifData = fsGetExifData;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fsGetLocalAssetThumbnailFromFile = exports.fsCheckFolderForSubFolders = exports.fsGetAssetItemFromFileWithSubFolderCheck = exports.fsGetAssetItemForFileBlob = exports.fsGetAssetItemFromFile = exports.fsDeleteDirectory = exports.fsRemoveDirectory = exports.fsCreateNestedDirectory = exports.fsCreateDirectory = exports.fsJoinPath = exports.fsDeleteFile = exports.fsFilesMatch = exports.fsGetFileSpecSize = exports.fsLocalFolderExists = exports.fsLocalFileExists = exports.fsCopyLocalFile = exports.fsMoveLocalFile = exports.fsSaveStreamAsLocalFile = exports.fsSaveBufferAsLocalFile = exports.fsSaveStringAsLocalFile = exports.fsSaveObjectAsLocalJsonFile = exports.fsLocalFileIsDirectory = exports.fsGetLocalFileSize = exports.fsGetLocalFileAsArrayBuffer = exports.fsGetLocalJsonFileAsObject = void 0;
+exports.fsGetLocalAssetThumbnailFromFile = exports.fsCheckFolderForSubFolders = exports.fsGetAssetItemFromFileWithSubFolderCheck = exports.fsGetAssetItemFromFileWithFileAndFolderCheck = exports.fsGetAssetItemForFileBlob = exports.fsGetAssetItemFromFile = exports.fsDeleteDirectory = exports.fsRemoveDirectory = exports.fsCreateNestedDirectory = exports.fsCreateDirectory = exports.fsJoinPath = exports.fsDeleteFile = exports.fsFilesMatch = exports.fsGetFileSpecSize = exports.fsLocalFolderExists = exports.fsLocalFileExists = exports.fsCopyLocalFile = exports.fsMoveLocalFile = exports.fsSaveStreamAsLocalFile = exports.fsSaveBufferAsLocalFile = exports.fsSaveStringAsLocalFile = exports.fsSaveObjectAsLocalJsonFile = exports.fsLocalFileIsDirectory = exports.fsGetLocalFileSize = exports.fsGetLocalFileAsArrayBuffer = exports.fsGetLocalJsonFileAsObject = exports.fsGetLocalFileAsString = void 0;
 var bscore_1 = __webpack_require__(12);
 var cryptoOperations_1 = __webpack_require__(13);
 var error_1 = __webpack_require__(2);
 var browserImageSize = __webpack_require__(75);
 var lodash_1 = __webpack_require__(24);
+function fsGetLocalFileAsString(fullPath) {
+    return Promise.reject(new error_1.FsError(error_1.FsErrorType.fsNotAvailableError));
+}
+exports.fsGetLocalFileAsString = fsGetLocalFileAsString;
 function fsGetLocalJsonFileAsObject(fullPath) {
     return Promise.reject(new error_1.FsError(error_1.FsErrorType.fsNotAvailableError));
 }
@@ -27814,10 +27823,11 @@ function fsGetAssetItemForFileBlob(file, scope, origin) {
     return assetItem;
 }
 exports.fsGetAssetItemForFileBlob = fsGetAssetItemForFileBlob;
-function fsGetAssetItemFromFileWithSubFolderCheck(fullPath) {
+function fsGetAssetItemFromFileWithFileAndFolderCheck(fullPath) {
     return Promise.resolve(null);
 }
-exports.fsGetAssetItemFromFileWithSubFolderCheck = fsGetAssetItemFromFileWithSubFolderCheck;
+exports.fsGetAssetItemFromFileWithFileAndFolderCheck = fsGetAssetItemFromFileWithFileAndFolderCheck;
+exports.fsGetAssetItemFromFileWithSubFolderCheck = fsGetAssetItemFromFileWithFileAndFolderCheck;
 function fsCheckFolderForSubFolders(dirPath) {
     return Promise.resolve(false);
 }
@@ -27948,7 +27958,7 @@ var lodash_1 = __webpack_require__(24);
 var bscore_1 = __webpack_require__(12);
 var probeOperations_1 = __webpack_require__(26);
 function fsGetIsMediaLegal(legalityCheckEntity) {
-    if (!bscore_1.bscIsAssetItem(legalityCheckEntity.file)) {
+    if (!bscore_1.bscIsAssetItem(legalityCheckEntity.file) || lodash_1.isNil(legalityCheckEntity.file.mediaType)) {
         return Promise.resolve({
             mediaPlayable: false,
             playableStatus: bscore_1.ProbePlayableStatus.cpNoMedia,
@@ -28014,6 +28024,11 @@ function getFileProbeData(file) {
     return Promise.resolve('');
 }
 function getIsVideoLegal(model, file) {
+    if (lodash_1.isNil(model)) {
+        return Promise.resolve({
+            mediaPlayable: false,
+        });
+    }
     return getFileProbeData(file)
         .then(function (probeData) {
         if (probeData === '') {
@@ -28047,6 +28062,11 @@ function getIsVideoLegal(model, file) {
     });
 }
 function getIsAudioLegal(model, file) {
+    if (lodash_1.isNil(model)) {
+        return Promise.resolve({
+            mediaPlayable: false,
+        });
+    }
     return getFileProbeData(file)
         .then(function (probeData) {
         if (probeData === '') {
@@ -28343,7 +28363,7 @@ function fsZipLocalFiles(src, dest) {
     return Promise.reject(new error_1.FsError(error_1.FsErrorType.fsNotAvailableError));
 }
 exports.fsZipLocalFiles = fsZipLocalFiles;
-exports.fsUnzipFileObjects = function (src) {
+var fsUnzipFileObjects = function (src) {
     return new Promise(function (resolve, reject) {
         zip.createReader(new zip.BlobReader(src), function (zipReader) {
             zipReader.getEntries(function (entries) {
@@ -28369,7 +28389,8 @@ exports.fsUnzipFileObjects = function (src) {
         });
     });
 };
-exports.fsZipFileObjects = function (src) {
+exports.fsUnzipFileObjects = fsUnzipFileObjects;
+var fsZipFileObjects = function (src) {
     return new Promise(function (resolve, reject) {
         var index = 0;
         zip.createWriter(new zip.BlobWriter('application/zip'), function (zipWriter) {
@@ -28395,6 +28416,7 @@ exports.fsZipFileObjects = function (src) {
         });
     });
 };
+exports.fsZipFileObjects = fsZipFileObjects;
 function unzipFile(entry) {
     return new Promise(function (resolve) {
         var fileMimeType = mimeType.getMimeType(entry.filename);
@@ -29004,7 +29026,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(13), exports);

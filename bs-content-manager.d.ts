@@ -1,7 +1,7 @@
 /* tslint:disable:quotemark max-line-length trailing-comma */
-import {AssetLocation, AssetType, BsAssetData, BsAssetItem, BsAssetLocator, BsAssetThumbnail, BsnObjectPermission, BsnTagKeySpecification, BsnTagSpecification, BsSize, MediaType, BsAudioData, BsImageData, BsMediaFileData, BsnDataFeedReference, BsnPresentationReference, BsVideoData, MediaLegalityResults, BsnTextFeedProperties, BsnMediaFeedProperties, BsnDynamicPlaylistProperties, BsnFilterSpecification, BsnTaggedListSpecification, BsnTaggedPlaylistProperties, BsnTagSortSpecification, BsnHtmlSiteAssetItem, BsnHtmlSiteProperties, BsnGroupItem, BsnPresentationProperties, BsnPresentationStatus, BsUploadItemResult, FileSpec, PublishData, PresentationScheduleItem, BsnAutorunProperties, PlayerModel, BsDsSetupParams, DeviceNetworkingConfiguration, BDeployDevice, BsUploadFileItemSpec, BsUploadFileProgress, BsUploadWebPageProgress, BsUploadWebPageSessionSpec, BsUploadItemStatus, BsRoleOperationPermission, BsAssetSpecification, BseChildAssetType, BsnTagKeyPatternSpecification, BsnTagValuePatternSpecification} from './bscore';
+import {AssetLocation, AssetType, BsAssetData, BsAssetItem, BsAssetLocator, BsAssetThumbnail, BsnObjectPermission, BsnTagKeySpecification, BsnTagSpecification, BsSize, MediaType, BsAssetContainerLocator, BsAudioData, BsImageData, BsMediaFileData, BsnDataFeedReference, BsnPresentationReference, BsVideoData, MediaLegalityResults, BsnTextFeedProperties, BsnMediaFeedProperties, BsnDynamicPlaylistProperties, BsnFilterSpecification, BsnTaggedListSpecification, BsnTaggedPlaylistProperties, BsnTagSortSpecification, BsnHtmlSiteAssetItem, BsnHtmlSiteProperties, BsnGroupItem, BsnPresentationProperties, BsnPresentationStatus, BsUploadItemResult, FileSpec, BsAssetSpecification, PublishData, PresentationScheduleItem, BsnAutorunProperties, PlayerModel, BsDsSetupParams, DeviceNetworkingConfiguration, BDeployDevice, BsUploadFileItemSpec, BsUploadFileProgress, BsUploadWebPageProgress, BsUploadWebPageSessionSpec, BsUploadItemStatus, BsRoleOperationPermission, BseChildAssetType, BsnTagKeyPatternSpecification, BsnTagValuePatternSpecification} from './bscore';
 import {DmBsProjectState, DmState, BsDmId} from './bsdatamodel';
-import {BsnRegularGroupEntity, BsnDeviceHealthStatus, BsnDeviceField, BsnFilter, BsnDeviceDownloadEntity, BsnDeviceEntity, BsnDeviceErrorEntity, BsnDeviceUpdateData, BsniDeviceLogFilter, BsniDeviceLogSortElement, BsniDeviceLogRecord, BsnDeviceSubscriptionEntity, BsnRoleEntity, BsnPermissionEntity, BsnPermissionPrincipalUserInfoEntity, BsnPermissionPrincipalRoleInfoEntity, BsnUserEntity, BsnBusinessOperationType, BsnOperationAction, BsnBusinessOperationEntity} from './bsnconnector';
+import {BsnRegularGroupEntity, BsnDeviceHealthStatus, BsnDeviceField, BsnFilter, BsnDeviceDownloadEntity, BsnDeviceEntity, BsnDeviceErrorEntity, BsnDeviceUpdateData, BsniDeviceLogFilter, BsniDeviceLogSortElement, BsniDeviceLogRecord, BsnDeviceSubscriptionEntity, BsnPermissionEntity, BsnPermissionPrincipalRoleInfoEntity, BsnPermissionPrincipalUserInfoEntity, BsnRoleEntity, BsnUserEntity, BsnBusinessOperationEntity, BsnBusinessOperationType, BsnOperationAction, BsnSession} from './bsnconnector';
 import {BsTask, BsTaskId, BsTaskManager, BsTaskProgress, BsTaskResult, BsTaskStatus, BsTaskType} from './bs-task-manager';
 import {PlDmState} from './bs-playlist-dm';
 export interface CmThumbnail {
@@ -10,30 +10,72 @@ export interface CmThumbnail {
     hash: string | null;
 }
 /**
- * CmiAsset and its extended 'sub-classes' encapsulate file/folder information contained in the BsAssetItem object,
- *  plus additional derived data and functionality specific to the each asset type.
+ * Base for both CmiAsset and CmiAssetContainer
+ * This interfaces holds properties that are common to both of these fundamental objects.
  */
-export interface CmiAsset {
+export interface CmiAssetBase {
     /**
-     * @property name {string} - assetItem name
+     * Asset or Container  name
      */
     readonly name: string;
     /**
-     * AssetItem type
+     * AssetItem type (always Folder for a container)
      */
     readonly assetType: AssetType;
     /**
-     * AssetItem location (Local or BSN)
+     * AssetItem/Container location (Local or BSN)
      */
     readonly assetLocation: AssetLocation;
     /**
-     * AssetItem scope (BSN network name or local machine ID)
+     * AssetItem/Container scope (BSN network name or local machine ID)
      */
     readonly assetScope: string;
+    /**
+     * AssetItem/Folder creation date
+     * Null if not a network based asset or a system container.
+     */
+    readonly creationDate: Date | null;
+    /**
+     * AssetItem/Folder last modified date
+     */
+    readonly lastModifiedDate: Date | null;
+    /**
+     * AssetItem/Container parent path (without base name)
+     */
+    readonly dirPath: string;
+    /**
+     * AssetItem/Container full path (including base name/extension)
+     */
+    readonly fullPath: string;
+    /**
+     * Return locatorHash for the asset - the locatorHash
+     *  is used in asset management operations, and also depends on asset scope.
+     */
+    readonly locatorHash: string;
+    /**
+     * Simple cloned BsAssetLocator object containing the data necessary to locate the asset or container.
+     */
+    readonly assetLocator: BsAssetLocator;
     /**
      * AssetItem media type - this applies only to AssetType.Content assets.
      */
     readonly mediaType: MediaType;
+    /**
+     * Simple cloned BsAssetItem object for use with bsDataModel, etc.
+     * This returned item does not include assetData, assetUsage, or local asset permissions.
+     * AssetData contents can be accessed by accessors in derived CmiAsset classes.
+     * AssetUsage contents can be accessed by accessors in derived CmiAsset classes
+     *   for AssetTypes that maintain usage data.
+     * For AssetContainers, this returns a simplified AssetItem structure to allow the containers to be handled
+     *  by the same code that handles regular assets.
+     */
+    readonly assetItem: BsAssetItem;
+}
+/**
+ * CmiAsset and its extended 'sub-classes' encapsulate file/folder information contained in the BsAssetItem object,
+ *  plus additional derived data and functionality specific to the each asset type.
+ */
+export interface CmiAsset extends CmiAssetBase {
     /**
      * AssetItem size (in bytes)
      */
@@ -44,23 +86,6 @@ export interface CmiAsset {
      */
     readonly uploadDate: Date | null;
     /**
-     * AssetItem creation date
-     * Null if not a network based asset.
-     */
-    readonly creationDate: Date | null;
-    /**
-     * AssetItem last modified date
-     */
-    readonly lastModifiedDate: Date | null;
-    /**
-     * AssetItem directory path (without base name)
-     */
-    readonly dirPath: string;
-    /**
-     * AssetItem full path (including base name and extension)
-     */
-    readonly fullPath: string;
-    /**
      * AssetItem locatorKey - this is a unique key string for each asset based on its actual location within its
      *  scope. This value is typically used to determine asset uniqueness within a data model, and can be used
      *  to key a map of assets used within the data model. If an asset has a locator key value equivalent to an asset
@@ -69,23 +94,6 @@ export interface CmiAsset {
      */
     readonly locatorKey: string;
     /**
-     * Return locatorHash for the asset - this differs slightly from the assetItem locatorKey. The locatorHash
-     *  is used in asset management operations, and also depends on asset scope.
-     */
-    readonly locatorHash: string;
-    /**
-     * Simple cloned BsAssetLocator object containing the data necessary to locate the asset.
-     */
-    readonly assetLocator: BsAssetLocator;
-    /**
-     * Simple cloned BsAssetItem object for use with bsDataModel, etc.
-     * This returned item does not include assetData, assetUsage, or local asset permissions.
-     * AssetData contents can be accessed by accessors in derived CmiAsset classes.
-     * AssetUsage contents can be accessed by accessors in derived CmiAsset classes
-     *   for AssetTypes that maintain usage data.
-     */
-    readonly assetItem: BsAssetItem;
-    /**
      * Get assetData associated with this asset. Some assets that are parts
      *  of other compound assets such as a DynamicPlaylist or a MediaFeed will have assetData objects
      *  such as BsnDynamicPlaylistItemProperties or BsnMediaFeedItemProperties.
@@ -93,9 +101,9 @@ export interface CmiAsset {
     readonly assetData: BsAssetData | null;
     /** True if this is a temporary asset (i.e., it is not backed by a cached assetItem) */
     readonly isTemporaryAsset: boolean;
-    /** @deprecated - use property 'locatorKey' */
+    /** @deprecated use property 'locatorKey' */
     readonly locator: string;
-    /** @deprecated - this will go away when content-manager-store is refactored. */
+    /** @deprecated this will go away when content-manager-store is refactored. */
     readonly rawAssetItem: BsAssetItem;
     /**
      * Get thumbnail for asset file, if asset is a video or an image file.
@@ -140,7 +148,7 @@ export interface CmiAsset {
     setTags(tags: BsnTagSpecification[]): Promise<void>;
     deleteTags(tagKeys: BsnTagKeySpecification[]): Promise<void>;
 }
-/** @deprecated - use CmiAsset */
+/** @deprecated renamed to CmiAsset */
 export type BsAssetBase = CmiAsset;
 
 export interface CmiContentAsset extends CmiAsset {
@@ -165,6 +173,11 @@ export interface CmiFolderAsset extends CmiContentAsset {
      */
     readonly hasFiles: boolean | null;
     /**
+     * Simple cloned BsAssetContainerLocator object containing the data necessary to locate the folder.
+     * Returns BsAssetContainerLocator since a folder is a container of other assets.
+     */
+    readonly assetLocator: BsAssetContainerLocator;
+    /**
      * Retrieve the asset data for this asset. This is useful in cases where the asset was constructed from
      *  an assetItem that may have been incomplete. This function refreshes the assetItem data from the file source.
      */
@@ -176,7 +189,7 @@ export interface CmiFolderAsset extends CmiContentAsset {
      */
     replacePermissions(objectPermissions: BsnObjectPermission[]): Promise<CmiFolderAsset>;
 }
-/** @deprecated - use CmiFolderAsset */
+/** @deprecated use CmiFolderAsset */
 export type BsFolderAsset = CmiFolderAsset;
 
 export interface CmiMediaAsset extends CmiContentAsset {
@@ -249,7 +262,7 @@ export interface CmiMediaAsset extends CmiContentAsset {
      */
     replacePermissions(objectPermissions: BsnObjectPermission[]): Promise<CmiMediaAsset>;
 }
-/** @deprecated - use CmiMediaAsset */
+/** @deprecated use CmiMediaAsset */
 export type BsMediaAsset = CmiMediaAsset;
 
 /**
@@ -308,7 +321,7 @@ export interface CmiTextFeedAsset extends CmiAsset {
      */
     updateTextFeed(state: object): Promise<void>;
 }
-/** @deprecated - use CmiTextFeedAsset */
+/** @deprecated use CmiTextFeedAsset */
 export type BsTextFeedAsset = CmiTextFeedAsset;
 
 /**
@@ -367,7 +380,7 @@ export interface CmiMediaFeedAsset extends CmiAsset {
      */
     updateMediaFeed(state: object): Promise<void>;
 }
-/** @deprecated - use CmiMediaFeedAsset */
+/** @deprecated use CmiMediaFeedAsset */
 export type BsMediaFeedAsset = CmiMediaFeedAsset;
 
 /**
@@ -383,7 +396,7 @@ export interface CmiDynamicPlaylistAsset extends CmiAsset {
      * Basic DynamicPlaylist properties.
      * The object returned from this is guaranteed only to contain basic properties. This object contains the entire
      *  object as returned from BSN, and some of the basic values in this object are copied to the base BsAssetItem.
-     *  Tis object can be used to retrieve data feed specific information.
+     *  This object can be used to retrieve data feed specific information.
      * The 'items' or 'content' list may be null, as that is not retrieved in a basic enumeration.
      * To get DynamicPlaylist properties with a guaranteed complete items or content list,
      *  call {@link getFeedInfoWithContent}
@@ -423,7 +436,7 @@ export interface CmiDynamicPlaylistAsset extends CmiAsset {
      */
     updateDynamicPlaylist(state: object): Promise<void>;
 }
-/** @deprecated - use CmiDynamicPlaylistAsset */
+/** @deprecated use CmiDynamicPlaylistAsset */
 export type BsDynamicPlaylistAsset = CmiDynamicPlaylistAsset;
 
 /**
@@ -498,7 +511,7 @@ export interface CmiTaggedPlaylistAsset extends CmiAsset {
      */
     updateTaggedPlaylist(state: object): Promise<void>;
 }
-/** @deprecated - use CmiTaggedPlaylistAsset */
+/** @deprecated use CmiTaggedPlaylistAsset */
 export type BsTaggedPlaylistAsset = CmiTaggedPlaylistAsset;
 
 /**
@@ -541,7 +554,7 @@ export interface CmiHtmlSiteAsset extends CmiAsset {
      */
     replacePermissions(objectPermissions: BsnObjectPermission[]): Promise<CmiHtmlSiteAsset>;
 }
-/** @deprecated - use CmiHtmlSiteAsset */
+/** @deprecated use CmiHtmlSiteAsset */
 export type BsHtmlSiteAsset = CmiHtmlSiteAsset;
 
 /**
@@ -586,7 +599,7 @@ export interface CmiDeviceWebPageAsset extends CmiAsset {
      */
     replacePermissions(objectPermissions: BsnObjectPermission[]): Promise<CmiDeviceWebPageAsset>;
 }
-/** @deprecated - use CmiDeviceWebPageAsset */
+/** @deprecated use CmiDeviceWebPageAsset */
 export type BsDeviceWebPageAsset = CmiDeviceWebPageAsset;
 
 export interface CmiPresentationSaveOptions {
@@ -657,7 +670,7 @@ export interface CmiPresentationAsset extends CmiAsset {
      */
     publish(state: DmBsProjectState | DmState, options?: CmiPresentationPublishOptions): Promise<BsAssetItem>;
 }
-/** @deprecated - use CmiPresentationAsset */
+/** @deprecated use CmiPresentationAsset */
 export type BsPresentationAsset = CmiPresentationAsset;
 
 /**
@@ -670,7 +683,7 @@ export interface CmiBrightScriptAsset extends CmiAsset {
      */
     fetchAssetItemData(): Promise<CmiBrightScriptAsset>;
 }
-/** @deprecated - use CmiBrightScriptAsset */
+/** @deprecated use CmiBrightScriptAsset */
 export type BsBrightScriptAsset = CmiBrightScriptAsset;
 
 export interface CmiScheduleAsset extends CmiAsset {
@@ -685,7 +698,7 @@ export interface CmiScheduleAsset extends CmiAsset {
      */
     getScheduleState(): Promise<object>;
 }
-/** @deprecated - use CmiScheduleAsset */
+/** @deprecated use CmiScheduleAsset */
 export type BsScheduleAsset = CmiScheduleAsset;
 
 export interface BsAssetItemMatchProperties {
@@ -795,6 +808,30 @@ export interface CmiAssetCollection {
      */
     readonly fileAssetNames: string[];
     /**
+     * Array of AssetLocator objects for all enumerated asset items, in current sort order.
+     */
+    readonly assetLocators: BsAssetLocator[];
+    /**
+     * Array of AssetLocator objects for all enumerated folder (subdirectory) asset items, in current sort order.
+     */
+    readonly folderAssetLocators: BsAssetLocator[];
+    /**
+     * Array of AssetLocator objects for enumerated file asset items, in current sort order.
+     */
+    readonly fileAssetLocators: BsAssetLocator[];
+    /**
+     * Array of locatorHash strings for all enumerated asset items, in current sort order.
+     */
+    readonly assetLocatorHashes: string[];
+    /**
+     * Array of locatorHash strings for all enumerated folder (subdirectory) asset items, in current sort order.
+     */
+    readonly folderLocatorHashes: string[];
+    /**
+     * Array of locatorHash strings for enumerated file asset items, in current sort order.
+     */
+    readonly fileLocatorHashes: string[];
+    /**
      * Array of CmiFolderAsset objects for all enumerated folder (subdirectory) asset items.
      */
     readonly folderAssets: CmiFolderAsset[];
@@ -831,8 +868,7 @@ export interface CmiAssetCollection {
      * In order to get resolution for each set of assets  returned in a segmented enumeration (as from BSN,)
      *  use {@link startUpdate} and {@link updateNext}.
      * This method restarts enumeration on each call.
-     *
-     * @returns {Promise<string[]>} - Promise that resolves with an array of asset names
+     * The promise resolves with an array of sorted asset names.
      */
     update(): Promise<string[]>;
     /**
@@ -841,14 +877,14 @@ export interface CmiAssetCollection {
      *  returned from this method will resolve with the first segment of results. The caller should check the
      *  {@link isComplete} property to determine if updating is complete. If not, {@link updateNext} can be called
      *  to get the next segment.
-     * @returns {Promise<CmiAssetCollection>} - Promise that resolves with the original, but updated, collection object
+     * The collection object returned by the promise is the original, but updated, collection object
      */
     startUpdate(): Promise<CmiAssetCollection>;
     /**
      * Continue updating asset directory from local file system or BSN
      * This method should be called after an initial call to {@link startUpdate} or a subsequent call to this method
      *  when the {@link isComplete} property is false.
-     * @returns {Promise<CmiAssetCollection>} - Promise that resolves with the original, but updated, collection object
+     * The collection object returned by the promise is the original, but updated, collection object
      */
     updateNext(): Promise<CmiAssetCollection>;
     /**
@@ -869,15 +905,18 @@ export interface CmiAssetCollection {
      *  have to be enumerated.)
      * @param matchList {BsAssetItemMatchProperties[]} - Object list where each object contains name and hash of
      *  each entity to be matched. Note: some entities don't have a hash.
-     * @returns {Promise<BsAssetItem[]>} BsAssetItem for each entity that matches an entry in the matchList.
      */
     getDuplicateNames(matchList: BsAssetItemMatchProperties[]): Promise<BsAssetItem[]>;
     /**
-     * Return list of assets that match the given filter options.
+     * Return list of assets that match the given filter options, in current sort order.
      * @param filterOptions {CmiAssetFilterOptions}
-     * @returns {CmiAsset[]}
      */
     getFilteredAssets(filterOptions: CmiAssetFilterOptions): CmiAsset[];
+    /**
+     * Return list of assetLocators for assets that match the given filter options, in current sort order.
+     * @param filterOptions {CmiAssetFilterOptions}
+     */
+    getFilteredAssetLocators(filterOptions: CmiAssetFilterOptions): BsAssetLocator[];
     /**
      * Set sort parameters for the collection.
      */
@@ -964,7 +1003,11 @@ export interface CmiAssetCollection {
      */
     removeFolder(name: string): Promise<void>;
 }
-/** @deprecated - use CmiAssetCollection */
+/**
+ * A CmiFolderAssetCollection currently has the same shape as CmiAssetCollection.
+ */
+export type CmiFolderAssetCollection = CmiAssetCollection;
+/** @deprecated renamed to CmiAssetCollection */
 export type BsAssetCollection = CmiAssetCollection;
 
 export interface CmiMediaAssetCollection extends CmiAssetCollection {
@@ -1026,7 +1069,7 @@ export interface CmiMediaAssetCollection extends CmiAssetCollection {
      */
     clearTagFilteredAssetList(): void;
 }
-/** @deprecated - use CmiMediaAssetCollection */
+/** @deprecated use CmiMediaAssetCollection */
 export type BsMediaAssetCollection = CmiMediaAssetCollection;
 
 export interface CmiPresentationAssetCollection extends CmiAssetCollection {
@@ -1040,9 +1083,27 @@ export interface CmiPresentationAssetCollection extends CmiAssetCollection {
      * @param [autorunVersion=CurrentAutorunVersion]
      */
     createNewPresentation(name: string, state: DmBsProjectState | DmState, autorunVersion?: string): Promise<BsAssetItem>;
+    /**
+     * Delete a presentation.
+     * @param name - presentation name (include extension, if on local system)
+     */
     deletePresentation(name: string): Promise<void>;
+    /**
+     * Given a list of asset specifications representing presentations, return an array of boolean values.
+     *  Each boolean value in the returned array indicates whether the associated presentation exists.
+     *  (i.e., the presentation in the input spec list at the same index.)
+     * Requirements:
+     *  The AssetType of each asset specification must be AssetType.Project.
+     *  The AssetLocation can be either Local or Bsn, but the asset locations of all assetSpecs in the list
+     *  must be the same.
+     * If these requirements are not met, an exception will be thrown.
+     * BsAssetSpecification objects are used for input to allow a set of BsAssetLocators to be easily checked.
+     * The collection does not need to be enumerated to use this function.
+     * @param assetSpecs
+     */
+    testPresentationListExists(assetSpecs: BsAssetSpecification[]): Promise<boolean[]>;
 }
-/** @deprecated - use CmiPresentationAssetCollection */
+/** @deprecated use CmiPresentationAssetCollection */
 export type BsPresentationAssetCollection = CmiPresentationAssetCollection;
 
 export interface CmiTextFeedAssetCollection extends CmiAssetCollection {
@@ -1057,7 +1118,7 @@ export interface CmiTextFeedAssetCollection extends CmiAssetCollection {
     createNewTextFeed(name: string, state: object): Promise<void>;
     deleteTextFeed(name: string): Promise<void>;
 }
-/** @deprecated - use CmiTextFeedAssetCollection */
+/** @deprecated use CmiTextFeedAssetCollection */
 export type BsTextFeedAssetCollection = CmiTextFeedAssetCollection;
 
 export interface CmiMediaFeedAssetCollection extends CmiAssetCollection {
@@ -1072,7 +1133,7 @@ export interface CmiMediaFeedAssetCollection extends CmiAssetCollection {
     createNewMediaFeed(name: string, state: object): Promise<void>;
     deleteMediaFeed(name: string): Promise<void>;
 }
-/** @deprecated - use CmiMediaFeedAssetCollection */
+/** @deprecated use CmiMediaFeedAssetCollection */
 export type BsMediaFeedAssetCollection = CmiMediaFeedAssetCollection;
 
 export interface CmiDynamicPlaylistAssetCollection extends CmiAssetCollection {
@@ -1086,7 +1147,7 @@ export interface CmiDynamicPlaylistAssetCollection extends CmiAssetCollection {
     createNewDynamicPlaylist(name: string, state: object): Promise<void>;
     deleteDynamicPlaylist(name: string): Promise<void>;
 }
-/** @deprecated - use CmiDynamicPlaylistAssetCollection */
+/** @deprecated use CmiDynamicPlaylistAssetCollection */
 export type BsDynamicPlaylistAssetCollection = CmiDynamicPlaylistAssetCollection;
 
 export interface CmiTaggedPlaylistAssetCollection extends CmiAssetCollection {
@@ -1100,7 +1161,7 @@ export interface CmiTaggedPlaylistAssetCollection extends CmiAssetCollection {
     createNewTaggedPlaylist(name: string, state: object): Promise<void>;
     deleteTaggedPlaylist(name: string): Promise<void>;
 }
-/** @deprecated - use CmiTaggedPlaylistAssetCollection */
+/** @deprecated use CmiTaggedPlaylistAssetCollection */
 export type BsTaggedPlaylistAssetCollection = CmiTaggedPlaylistAssetCollection;
 
 export interface CmiHtmlSiteAssetCollection extends CmiAssetCollection {
@@ -1114,14 +1175,14 @@ export interface CmiHtmlSiteAssetCollection extends CmiAssetCollection {
      */
     deleteHtmlSiteAsset(name: string): Promise<void>;
 }
-/** @deprecated - use CmiHtmlSiteAssetCollection */
+/** @deprecated use CmiHtmlSiteAssetCollection */
 export type BsHtmlSiteAssetCollection = CmiHtmlSiteAssetCollection;
 
 export interface CmiBrightScriptAssetCollection extends CmiAssetCollection {
     uploadNewPlugin(file: FileSpec, targetName?: string): Promise<BsUploadItemResult>;
     deletePlugin(filename: string): Promise<void>;
 }
-/** @deprecated - use CmiBrightScriptAssetCollection */
+/** @deprecated use CmiBrightScriptAssetCollection */
 export type BsBrightScriptAssetCollection = CmiBrightScriptAssetCollection;
 
 export interface CmiDeviceWebPageAssetCollection extends CmiAssetCollection {
@@ -1132,14 +1193,14 @@ export interface CmiDeviceWebPageAssetCollection extends CmiAssetCollection {
      */
     deleteDeviceWebPageAsset(name: string): Promise<void>;
 }
-/** @deprecated - use CmiDeviceWebPageAssetCollection */
+/** @deprecated use CmiDeviceWebPageAssetCollection */
 export type BsDeviceWebPageAssetCollection = CmiDeviceWebPageAssetCollection;
 
 export interface CmiScheduleAssetCollection extends CmiAssetCollection {
     createNewSchedule(name: string, state: object): Promise<BsAssetItem>;
     deleteSchedule(name: string): Promise<void>;
 }
-/** @deprecated - use CmiScheduleAssetCollection */
+/** @deprecated use CmiScheduleAssetCollection */
 export type BsScheduleAssetCollection = CmiScheduleAssetCollection;
 
 export function cmGetBsnPlayerGroupCollection(): BsPlayerGroupCollection;
@@ -1218,15 +1279,15 @@ export interface BsPlayerGroup {
     name: string;
     isGroupDataValid: boolean;
     lastGroupDataUpdateTime: Date | null;
-    publishData: Readonly<PublishData>;
-    schedule: Array<Readonly<PresentationScheduleItem>>;
+    publishData: Readonly<PublishData> | null;
+    schedule: Array<Readonly<PresentationScheduleItem>> | null;
     playerDeviceCount: number;
-    playerDevices: string[];
+    playerDevices: string[] | null;
     playerDeviceListIsValid: boolean;
-    aggregateHealthStatus: BsnDeviceHealthStatus[];
-    autorunProperties: BsnAutorunProperties;
+    aggregateHealthStatus: BsnDeviceHealthStatus[] | null;
+    autorunProperties: BsnAutorunProperties | null;
     permissions: BsnObjectPermission[];
-    groupData: BsnRegularGroupEntity;
+    groupData: BsnRegularGroupEntity | null;
     groupItem: BsnGroupItem | null;
     /**
      * Update the Regular Group entity on BSN. The group can be updated with new PublishData, a new schedule, or both.
@@ -1268,7 +1329,6 @@ export function cmGetBsPlayerGroup(name: string): BsPlayerGroup;
 export interface DeviceEnumerationOptions {
     sortField: BsnDeviceField | null;
     sortDescending: boolean;
-    maxItems: number;
     pageSize: number;
 }
 export class BsPlayerDeviceCollection {
@@ -1485,7 +1545,7 @@ export class BsPlayerDevice {
      * @property deviceUpdateData {BsnDeviceUpdateData} - device updateData object which can
      *  be modified and then passed to updateDevice method.
      */
-    get deviceUpdateData(): BsnDeviceUpdateData;
+    get deviceUpdateData(): BsnDeviceUpdateData | null;
     get bsnId(): number;
     constructor(serial: string);
     /**
@@ -1635,7 +1695,7 @@ export class BsDeviceSetupCollection {
      * @returns {Promise<void>}
      */
     deleteDeviceSetup(name: string): Promise<void>;
-    updateDeviceSetup(name: string, setupJson: BsDsSetupParams): Promise<BsDeviceSetup>;
+    updateDeviceSetup(name: string, setupJson: BsDsSetupParams): Promise<BsDeviceSetup | null>;
     addDeviceSetup(name: string, setupJson: BsDsSetupParams): Promise<BsDeviceSetup>;
 }
 /**
@@ -1646,16 +1706,16 @@ export function cmGetBDeployDeviceSetupExists(name: string): Promise<boolean>;
 export interface BsDeviceSetup {
     bsnGroupName: string;
     client: string;
-    createdAt: Date;
+    createdAt: Date | null;
     networkName: string;
     packageName: string;
     setupType: DeviceNetworkingConfiguration;
-    updatedAt: Date;
+    updatedAt: Date | null;
     username: string;
     version: string;
     deviceDescription: string;
     deviceName: string;
-    setupJson: BsDsSetupParams;
+    setupJson: BsDsSetupParams | null;
     isDataValid: boolean;
     getSetupUseCount: () => Promise<number>;
 }
@@ -1880,8 +1940,8 @@ export class BsProvisionalDeviceCollection {
      * @returns {Promise<void>}
      */
     deleteProvisionalDevice(serial: string): Promise<void>;
-    updateDevice(serial: string, updateData: Partial<BDeployDevice>): Promise<BsProvisionalDevice>;
-    updateDeviceSetupFile(serial: string, packageName: string): Promise<BsProvisionalDevice>;
+    updateDevice(serial: string, updateData: Partial<BDeployDevice>): Promise<BsProvisionalDevice | null>;
+    updateDeviceSetupFile(serial: string, packageName: string): Promise<BsProvisionalDevice | null>;
 }
 /**
  * Test to see if specified device serial exists in bDeploy and has been provisioned.
@@ -1905,7 +1965,7 @@ export interface BsProvisionalDevice {
  * If the provisional device data has not yet been retrieved, this object can still be created,
  *  and the data will be retrieved by the setup is enumerated as part of any provisional device collection.
  * The {@link isDataValid} property will be true if the data has been retrieved.
- * @param name {string} name for the desired provisional device
+ * @param serial {string} serial number for the desired provisional device
  * @returns {BsProvisionalDevice | null}
  */
 export function cmGetBsProvisionalDevice(serial: string): BsProvisionalDevice;
@@ -1938,6 +1998,8 @@ export class BsDeviceApplicationCollection {
 export interface BsDeviceApplication {
     url: string;
     name: string;
+    partnerLogoUrl: string;
+    sortOrder: number;
     isDataValid: boolean;
 }
 /**
@@ -1953,34 +2015,35 @@ export function cmGetBsDeviceApplication(url: string): BsDeviceApplication;
 /**
  * Interface to specify a single file upload item
  * @property file - the file to be uploaded
- * @property destinationPath - the destination path for the file. For BSN uploads, this is usually yhe virtual
+ * @property destinationPath - the destination path for the file. For BSN uploads, this is usually the virtual
  *  path on BSN to which the file is assigned. However, when this interface is used with WebPage assets,
  *  destinationPath refers to the path of the webPage asset relative to the index file.
- * @property [targetName] - if supplied, an alternate name to be used for the asset on BSN
- * @property [parentAssetType] - if file is being uploaded for a composite asset, such as a presentation,
+ *  Can be null if destinationPath is the same as the index file path.
+ * @property targetName - if supplied, an alternate name to be used for the asset on BSN
+ * @property parentAssetType - if file is being uploaded for a composite asset, such as a presentation,
  *  dynamic playlist, etc. - the AssetType of the composite asset
- * @property [parentAssetNames] - the name of the composite asset for which this asset is being uploaded
+ * @property parentAssetNames - the name of the composite asset for which this asset is being uploaded
  */
 export interface BsAssetUploadFileItemSpec {
     file: FileSpec;
-    destinationPath: string;
+    destinationPath: string | null;
     targetName?: string;
     parentAssetType?: AssetType;
     parentAssetNames?: string[];
 }
 /**
  * Interface to specify a group of files comprising a web site to be uploaded
- * @property siteName {string} - name of the Html Site
- * @property siteType {AssetType} - type of the Html Site - one of {AssetType.HtmlSite, AssetType.DeviceHtmlSite}
- * @property [existingAsset] {BsAssetLocator} - if specified, this represent the AssetLocator of an existing web site
+ * @property siteName - name of the Html Site
+ * @property siteType - type of the Html Site - one of {AssetType.HtmlSite, AssetType.DeviceHtmlSite}
+ * @property existingAsset - if specified, this represent the AssetLocator of an existing web site
  *  to be updated. The name of the associated web site must match the siteName in this structure.
- * @property indexUploadFile {BsAssetUploadFileItemSpec} - file upload specification for the base index file
+ * @property indexUploadFile - file upload specification for the base index file
  *  for the web site
- * @property assetUploadFiles {Array<BsAssetUploadFileItemSpec>} - an array of file upload specifications for
- *  each of the web page asset files.
+ * @property assetUploadFiles - an array of file upload specifications for each of the web page asset files.
  *  The destinationPath for each of these specifications defines the relative path of the asset in relation to the
  *  main index file.
- * @property [presentationName] - if Html site is being uploaded as part of a presentation upload job,
+ *  This can be null if there are no asset files.
+ * @property presentationName - if Html site is being uploaded as part of a presentation upload job,
  *  the name of the presentation
  */
 export interface BsAssetUploadWebPageSessionSpec {
@@ -1988,7 +2051,7 @@ export interface BsAssetUploadWebPageSessionSpec {
     siteType: AssetType;
     existingAsset?: BsAssetLocator;
     indexUploadFile: BsAssetUploadFileItemSpec;
-    assetUploadFiles: BsAssetUploadFileItemSpec[];
+    assetUploadFiles: BsAssetUploadFileItemSpec[] | null;
     presentationNames?: string[];
 }
 export interface BsUploadJobResult extends BsTaskResult {
@@ -2003,7 +2066,8 @@ export interface CmiDuplicateAssetNameData {
     assetIndex: number;
     currentPath: string;
     targetName: string;
-    useExisting?: boolean;
+    replaceExisting?: boolean;
+    verifiedResolution?: boolean;
     existingBsnAsset?: BsAssetLocator;
     parentAssetType?: AssetType;
     parentAssetNames?: string[];
@@ -2019,11 +2083,12 @@ export interface BsUploadJobProgress extends BsTaskProgress {
 }
 export type BsUploadJobProgressCallback = (uploadJobProgress: BsUploadJobProgress) => void;
 export type BsUploadJobCallback = (task: BsTask) => void;
-export function cmCreateBsnUploadJob(name: string, uploadFileSpecs: BsAssetUploadFileItemSpec | BsAssetUploadFileItemSpec[] | null, uploadWebPageSpecs: BsAssetUploadWebPageSessionSpec | BsAssetUploadWebPageSessionSpec[] | null, onProgress: BsUploadJobProgressCallback | null, onSuccess?: BsUploadJobCallback | null, onError?: BsUploadJobCallback | null): CmiBsnAssetUploadJob;
+export function cmCreateBsnUploadJob(name: string, uploadFileSpecs: BsAssetUploadFileItemSpec | BsAssetUploadFileItemSpec[] | null, uploadWebPageSpecs: BsAssetUploadWebPageSessionSpec | BsAssetUploadWebPageSessionSpec[] | null, onProgress: BsUploadJobProgressCallback | null, onSuccess?: BsUploadJobCallback | null, onError?: BsUploadJobCallback | null, onCancel?: BsUploadJobCallback | null): CmiBsnAssetUploadJob;
 export function cmScheduleBsnUploadJob(uploadJob: CmiBsnAssetUploadJob, taskManager: BsTaskManager): BsTaskId;
 export interface CmiBsnAssetUploadJob extends BsTask {
     readonly onSuccess: BsUploadJobCallback | null;
     readonly onError: BsUploadJobCallback | null;
+    readonly onCancel: BsUploadJobCallback | null;
     readonly uploadFileSpecs: BsUploadFileItemSpec[] | null;
     readonly webPageUploadSessions: BsUploadWebPageSessionSpec[] | null;
     readonly uploadJobItemCount: number;
@@ -2047,11 +2112,12 @@ export interface CmiDynamicPlaylistUploadCheckResult {
 export type BsDynamicPlaylistUploadJobProgress = BsUploadJobProgress;
 export type BsDynamicPlaylistUploadJobProgressCallback = (uploadProgress: BsDynamicPlaylistUploadJobProgress) => void;
 export type BsDynamicPlaylistUploadJobCallback = (task: BsTask) => void;
-export function cmCreateBsnDynamicPlaylistUploadJob(name: string, dynamicPlaylistState: PlDmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsDynamicPlaylistUploadJobCallback | null, onError?: BsDynamicPlaylistUploadJobCallback | null): CmiBsnDynamicPlaylistUploadJob;
+export function cmCreateBsnDynamicPlaylistUploadJob(name: string, dynamicPlaylistState: PlDmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsDynamicPlaylistUploadJobCallback | null, onError?: BsDynamicPlaylistUploadJobCallback | null, onCancel?: BsDynamicPlaylistUploadJobCallback | null): CmiBsnDynamicPlaylistUploadJob;
 export function cmScheduleBsnDynamicPlaylistUploadJob(uploadJob: CmiBsnDynamicPlaylistUploadJob, taskManager: BsTaskManager): BsTaskId;
 export interface CmiBsnDynamicPlaylistUploadJob extends BsTask {
     readonly onSuccess: BsDynamicPlaylistUploadJobCallback | null;
     readonly onError: BsDynamicPlaylistUploadJobCallback | null;
+    readonly onCancel: BsDynamicPlaylistUploadJobCallback | null;
     readonly dynamicPlaylistId: string;
     check(): Promise<CmiDynamicPlaylistUploadCheckResult>;
     updateDuplicateResolutionAndCheck(modifiedCheckResult: CmiDynamicPlaylistUploadCheckResult): Promise<CmiDynamicPlaylistUploadCheckResult>;
@@ -2072,11 +2138,12 @@ export interface CmiMediaFeedUploadCheckResult {
 export type BsMediaFeedUploadJobProgress = BsUploadJobProgress;
 export type BsMediaFeedUploadJobProgressCallback = (uploadProgress: BsMediaFeedUploadJobProgress) => void;
 export type BsMediaFeedUploadJobCallback = (task: BsTask) => void;
-export function cmCreateBsnMediaFeedUploadJob(name: string, mediaFeedState: PlDmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsMediaFeedUploadJobCallback | null, onError?: BsMediaFeedUploadJobCallback | null): CmiBsnMediaFeedUploadJob;
+export function cmCreateBsnMediaFeedUploadJob(name: string, mediaFeedState: PlDmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsMediaFeedUploadJobCallback | null, onError?: BsMediaFeedUploadJobCallback | null, onCancel?: BsMediaFeedUploadJobCallback | null): CmiBsnMediaFeedUploadJob;
 export function cmScheduleBsnMediaFeedUploadJob(uploadJob: CmiBsnMediaFeedUploadJob, taskManager: BsTaskManager): BsTaskId;
 export interface CmiBsnMediaFeedUploadJob extends BsTask {
     readonly onSuccess: BsMediaFeedUploadJobCallback | null;
     readonly onError: BsMediaFeedUploadJobCallback | null;
+    readonly onCancel: BsMediaFeedUploadJobCallback | null;
     readonly mediaFeedId: string;
     check(): Promise<CmiMediaFeedUploadCheckResult>;
     updateDuplicateResolutionAndCheck(modifiedCheckResult: CmiMediaFeedUploadCheckResult): Promise<CmiMediaFeedUploadCheckResult>;
@@ -2124,7 +2191,7 @@ export interface BsExportJobProgress extends BsTaskProgress {
 }
 export type BsPresentationExportJobProgressCallback = (exportJobProgress: BsExportJobProgress) => void;
 export type BsPresentationExportJobCallback = (task: BsTask) => void;
-export function cmCreatePresentationExportJob(name: string, taskManager: BsTaskManager, presentationState: DmBsProjectState | DmState, presentationLocator: BsAssetLocator, targetFolder: string, progressCallback?: BsPresentationExportJobProgressCallback, onError?: BsPresentationExportJobCallback, onSuccess?: BsPresentationExportJobCallback): BsTaskId;
+export function cmCreatePresentationExportJob(name: string, taskManager: BsTaskManager, presentationState: DmBsProjectState | DmState, presentationLocator: BsAssetLocator, targetFolder: string, progressCallback?: BsPresentationExportJobProgressCallback, onError?: BsPresentationExportJobCallback, onSuccess?: BsPresentationExportJobCallback, onCancel?: BsPresentationExportJobCallback): BsTaskId;
 export class PresentationExportJob implements BsTask {
     get id(): string;
     get name(): string;
@@ -2139,7 +2206,8 @@ export class PresentationExportJob implements BsTask {
     get result(): BsPresentationExportJobResult;
     get onError(): BsPresentationExportJobCallback;
     get onSuccess(): BsPresentationExportJobCallback;
-    constructor(name: string, presentationState: DmBsProjectState | DmState, presentationLocator: BsAssetLocator, targetFolder: string, progressCallback?: BsPresentationExportJobProgressCallback, onError?: BsPresentationExportJobCallback | null, onSuccess?: BsPresentationExportJobCallback | null);
+    get onCancel(): BsPresentationExportJobCallback;
+    constructor(name: string, presentationState: DmBsProjectState | DmState, presentationLocator: BsAssetLocator, targetFolder: string, progressCallback?: BsPresentationExportJobProgressCallback | null, onError?: BsPresentationExportJobCallback | null, onSuccess?: BsPresentationExportJobCallback | null, onCancel?: BsPresentationExportJobCallback | null);
     start(): Promise<BsPresentationExportJobResult>;
     cancel(): void;
 }
@@ -2154,6 +2222,8 @@ export interface CmiPresentationCheckResult {
     targetName: string;
     existsOnBsn: boolean;
     publishedOnBsn: boolean;
+    verifiedResolution: boolean;
+    previousTargetName: string;
 }
 export interface CmiPresentationUploadCheckResult {
     hasDuplicates: boolean;
@@ -2166,19 +2236,20 @@ export interface CmiPresentationUploadCheckResult {
 }
 export interface BsPresentationUploadJobResult extends BsUploadJobResult {
     pluginUploadResults: BsUploadItemResult[];
-    presentationStateBsn: DmState;
-    presentationAsset: CmiPresentationAsset;
+    presentationStateBsn: DmState | null;
+    presentationAsset: CmiPresentationAsset | null;
 }
 export interface BsPresentationUploadJobProgress extends BsUploadJobProgress {
     pluginStatus: CmiPluginUploadJobProgress | null;
 }
 export type BsPresentationUploadJobProgressCallback = (uploadProgress: BsPresentationUploadJobProgress) => void;
 export type BsPresentationUploadJobCallback = (task: BsTask) => void;
-export function cmCreateBsnPresentationUploadJob(name: string, presentationState: DmBsProjectState | DmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsPresentationUploadJobCallback | null, onError?: BsPresentationUploadJobCallback | null): CmiBsnPresentationUploadJob;
+export function cmCreateBsnPresentationUploadJob(name: string, presentationState: DmBsProjectState | DmState, contentPath?: string | null, progressCallback?: BsUploadJobProgressCallback | null, onSuccess?: BsPresentationUploadJobCallback | null, onError?: BsPresentationUploadJobCallback | null, onCancel?: BsPresentationUploadJobCallback | null): CmiBsnPresentationUploadJob;
 export function cmScheduleBsnPresentationUploadJob(uploadJob: CmiBsnPresentationUploadJob, taskManager: BsTaskManager): BsTaskId;
 export interface CmiBsnPresentationUploadJob extends BsTask {
     readonly onSuccess: BsPresentationUploadJobCallback | null;
     readonly onError: BsPresentationUploadJobCallback | null;
+    readonly onCancel: BsPresentationUploadJobCallback | null;
     readonly presentationId: BsDmId;
     readonly dependentPresentationCount: number;
     check(): Promise<CmiPresentationUploadCheckResult>;
@@ -2188,6 +2259,7 @@ export interface CmiBsnPresentationUploadJob extends BsTask {
 export interface CmiPluginUploadFileItemSpec {
     file: FileSpec;
     targetName: string;
+    existingAsset?: BsAssetLocator | null;
     presentationNames?: string[];
 }
 export interface CmiPluginUploadCheckResult {
@@ -2208,14 +2280,16 @@ export interface CmiPluginUploadJobProgress extends BsTaskProgress {
     pluginStatus: CmiUploadPluginProgress[];
 }
 export type CmPluginUpdateCallback = (updateStatus: CmiPluginUploadJobProgress) => void;
+export type CmPluginUploadJobCallback = (task: BsTask) => void;
 /**
  * Create a PluginUploadJob.
  */
-export function cmCreateBsnPluginUploadJob(pluginUploadFileItemSpecs: CmiPluginUploadFileItemSpec[], onProgress?: CmPluginUpdateCallback): CmiPluginUploadJob;
+export function cmCreateBsnPluginUploadJob(pluginUploadFileItemSpecs: CmiPluginUploadFileItemSpec[], onProgress?: CmPluginUpdateCallback, onSuccess?: CmPluginUploadJobCallback | null, onError?: CmPluginUploadJobCallback | null, onCancel?: CmPluginUploadJobCallback | null): CmiPluginUploadJob;
 export function cmScheduleBsnPluginUploadJob(uploadJob: CmiPluginUploadJob, taskManager: BsTaskManager): BsTaskId;
 export interface CmiPluginUploadJob extends BsTask {
     readonly onSuccess: BsUploadJobCallback | null;
     readonly onError: BsUploadJobCallback | null;
+    readonly onCancel: BsUploadJobCallback | null;
     readonly uploadPluginSpecs: CmiPluginUploadFileItemSpec[];
     readonly pluginCount: number;
     start(): Promise<CmiPluginUploadJobResult>;
@@ -2695,7 +2769,6 @@ export interface CmiAssetEnumerationOptions {
     mediaFilters: MediaType[] | null;
     sortField: AssetSortField | null;
     sortDescending: boolean;
-    maxItems: number;
     pageSize: number;
 }
 /** @deprecated Use name CmiAssetEnumerationOptions */
@@ -2756,7 +2829,7 @@ export class BsCmError extends Error {
     constructor(type: BsCmErrorType, reason?: string);
 }
 
-/** @deprecated - use CmiAssetCollection */
+/** @deprecated use CmiAssetCollection */
 export type BsAssetCollectionType = CmiAssetCollection;
 /**
  * Class factory function for CmcAssetCollection.
@@ -2780,7 +2853,9 @@ export type BsAssetCollectionType = CmiAssetCollection;
  *  is created from that. Any locators that specify assets of a different AssetType, AssetLocation,
  *  or directoryPath from the collection are ignored.
  */
-export function cmGetBsAssetCollection(location: AssetLocation, assetType: AssetType | AssetType[], directoryPath?: string, enumerationOptions?: Partial<CmiAssetEnumerationOptions> | null, pinnedAssetItems?: BsAssetLocator[] | null): CmiAssetCollection;
+export function cmGetCmiAssetCollection(location: AssetLocation, assetType: AssetType | AssetType[], directoryPath?: string | null, enumerationOptions?: Partial<CmiAssetEnumerationOptions> | null, pinnedAssetItems?: BsAssetLocator[] | null): CmiAssetCollection;
+/** @deprecated renamed to cmGetCmiAssetCollection */
+export const cmGetBsAssetCollection: typeof cmGetCmiAssetCollection;
 /**
  * Pin a set of assetItems in all collections in which they are contained.  If no collection is
  *  found in the cache that matches the assets to be pinned, new collections are created as necessary
@@ -2799,139 +2874,475 @@ export function cmPinAssets(assetLocators: BsAssetLocator[]): void;
  */
 export function cmUnpinAssets(assetLocators: BsAssetLocator[]): void;
 /**
- * Return true if there is a CmiAssetCollection for the given locator in the assetCollection cache.
+ * Return true if there is an AssetCollection for the given locator in the assetCollection cache.
  * @param locator - the locatorHash for the desired asset collection. This can be retrieved from
  *  a CmiAssetCollection object by accessing the locatorHash property.
  */
-export function cmHasBsAssetCollectionForLocator(locator: string): boolean;
+export function cmHasAssetCollectionForLocator(locator: string): boolean;
+/** @deprecated renamed to cmHasAssetCollectionForLocator */
+export const cmHasBsAssetCollectionForLocator: typeof cmHasAssetCollectionForLocator;
 /**
  * Retrieve a CmiAssetCollection if it has been previously created and is present to the cache.
  * @param locator - the locatorHash for the desired asset collection. This can be retrieved from
  *  a CmiAssetCollection object by accessing the locatorHash property.
  */
-export function cmGetBsAssetCollectionByLocator(locator: string): CmiAssetCollection | null;
+export function cmGetCmiAssetCollectionByLocator(locator: string): CmiAssetCollection | null;
+/** @deprecated renamed to cmGetCmiAssetCollectionByLocator */
+export const cmGetBsAssetCollectionByLocator: typeof cmGetCmiAssetCollectionByLocator;
 /**
  * Remove all assetCollections and cached assetItems for the given assetLocation and scope.
  * @param location {AssetLocation}
  * @param scope {string}
  */
 export function cmRemoveAssetCollectionsForLocationAndScope(location: AssetLocation, scope: string): void;
+export function cmIsBrightScriptAssetCollection(obj: any): obj is CmiBrightScriptAssetCollection;
+export function cmIsDeviceWebPageAssetCollection(obj: any): obj is CmiDeviceWebPageAssetCollection;
+export function cmIsDynamicPlaylistAssetCollection(obj: any): obj is CmiDynamicPlaylistAssetCollection;
+export function cmIsHtmlSiteAssetCollection(obj: any): obj is CmiHtmlSiteAssetCollection;
+export function cmIsMediaAssetCollection(obj: any): obj is CmiMediaAssetCollection;
+export function cmIsMediaFeedAssetCollection(obj: any): obj is CmiMediaFeedAssetCollection;
+export function cmIsPresentationAssetCollection(obj: any): obj is CmiPresentationAssetCollection;
+export function cmIsScheduleAssetCollection(obj: any): obj is CmiScheduleAssetCollection;
+export function cmIsTaggedPlaylistAssetCollection(obj: any): obj is CmiTaggedPlaylistAssetCollection;
+export function cmIsTextFeedAssetCollection(obj: any): obj is CmiTextFeedAssetCollection;
 
-/** @deprecated - use CmiAsset */
+/** @deprecated use CmiAsset */
 export type BsAsset = CmiAsset;
-export interface CmiAssetReference {
-    locatorHash: string;
-    updateTime: Date;
-}
-export function cmGetBsAssetForLocatorHash(locatorHash: string): CmiAsset | null;
+/**
+ * Return CmiAsset for given locatorHash.
+ * Return null if the asset specified by the locatorHash is not in the cache.
+ * @param locatorHash unique string identifier for the asset
+ */
+export function cmGetCmiAssetForLocatorHash(locatorHash: string): CmiAsset | null;
+/**
+ * Return filtered BsAssetItem object for given locatorHash.
+ * Return null if the assetItem specified by the locatorHash is not in the cache.
+ * @param locatorHash unique string identifier for the asset
+ */
+export function cmGetBsAssetItemForLocatorHash(locatorHash: string): BsAssetItem | null;
+/**
+ * Return true if the assetItem for the given locatorHash is present in the cache.
+ * @param locatorHash unique string identifier for the asset
+ */
+export function cmHasCachedBsAssetItem(locatorHash: string): boolean;
+/**
+ * Return last updateTime for asset with the given locatorHash.
+ * Return null if the asset specified by the locatorHash is not in the cache.
+ * @param locatorHash unique string identifier for the asset
+ */
 export function cmGetAssetUpdateTime(locatorHash: string): Date | null;
 /**
  * Return appropriate derived CmiAsset object for given assetItem.
- *
- * @param {BsAssetItem} assetItem
- * @returns {CmiAsset | null} derived CmiAsset object or null if assetItem is not valid or not yet supported
- *  as a CmiAsset
+ * Return null if assetItem is not valid or not a supported type.
+ * @param assetItem
  */
-export function cmGetBsAsset(assetItem: BsAssetItem): CmiAsset | null;
+export function cmGetCmiAsset(assetItem: BsAssetItem): CmiAsset | null;
+/** @deprecated renamed to cmGetCmiAsset */
+export const cmGetBsAsset: typeof cmGetCmiAsset;
 /**
  * Return a temporary CmiAsset object based only on an asset specification. This object is useful
  *   for testing file existence, or performing certain operations on local files.
  *  For BSN based files, this CmiAsset object will not contain the BSN network ID, and so
  *   many BSN asset operations cannot be done. Testing for asset existence on BSN can be done with this object.
- * @param {BsAssetSpecification} assetSpec
- * @returns {CmiAsset | null}
+ *  Returns null if AssetSpecification is invalid (e.g., unsupported AssetType)
  */
 export function cmGetTemporaryAsset(assetSpec: BsAssetSpecification): CmiAsset | null;
 /**
  * Return updated CmiAsset object for the given AssetLocator. This function always refreshes the assetItem data.
- * @param {BsAssetLocator} assetLocator
- * @return {Promise<CmiAsset>}
  */
-export function cmGetBsAssetForAssetLocator(assetLocator: BsAssetLocator): Promise<CmiAsset | null>;
+export function cmGetCmiAssetForAssetLocator(assetLocator: BsAssetLocator): Promise<CmiAsset | null>;
+/** @deprecated renamed to cmGetCmiAssetForAssetLocator */
+export const cmGetBsAssetForAssetLocator: typeof cmGetCmiAssetForAssetLocator;
 /**
  * Test to see if specified asset exists in the associated location. This test takes into account
  *  whether the specified asset is a file or a folder (directory) and the associated Promise
- *  returns the boolean existence result accordingly (i.e., if a folder is requested, the asset
- *  is considered to exist only if the name is found and the name refers to a folder.
- * @param {BsAssetSpecification} assetSpec
- * @returns {Promise<boolean>}
+ *  returns the boolean existence result accordingly (i.e., if a folder is tested, the asset
+ *  is considered to exist only if the name is found and the name refers to a folder.)
  */
-export function cmBsAssetExists(assetSpec: BsAssetSpecification): Promise<boolean>;
+export function cmAssetExists(assetSpec: BsAssetSpecification): Promise<boolean>;
+/** @deprecated renamed to cmAssetExists */
+export const cmBsAssetExists: typeof cmAssetExists;
 /**
  * Retrieve asset information based on the given BsAssetSpecification, and create and return a populated CmiAsset
  *  object, based on the AssetType. The asset search is done based on the name and path. If the asset cannot be found,
  *  or does not match the specified AssetType, null is returned.
- * @param {BsAssetSpecification} assetSpec
- * @param {boolean} [forceUpdate=true] for BSN assets, if true, forces fetch of asset data
+ * @param assetSpec
+ * @param forceUpdate for BSN assets, if true, forces fetch of asset data
  *  even if asset is in the cache
- * @returns {Promise<CmiAsset | null>}
  */
-export function cmGetBsAssetForAssetSpecification(assetSpec: BsAssetSpecification, forceUpdate?: boolean): Promise<CmiAsset | null>;
+export function cmGetCmiAssetForAssetSpecification(assetSpec: BsAssetSpecification, forceUpdate?: boolean): Promise<CmiAsset | null>;
+/** @deprecated renamed to cmGetCmiAssetForAssetSpecification */
+export const cmGetBsAssetForAssetSpecification: typeof cmGetCmiAssetForAssetSpecification;
 /**
  * Return updated BSN based CmiAsset object for the given AssetLocator. This function always refreshes the assetItem
  *  data, so it can be used to retrieve a complete BSN based CmiAsset object given only the locator data.
- * @param {BsAssetLocator} assetLocator
- * @return {Promise<CmiAsset>}
+ * Returns null if BSN asset is not found corresponding to the given asset locator.
  */
-export function cmGetBsAssetForBsnAsset(assetLocator: BsAssetLocator): Promise<CmiAsset | null>;
+export function cmGetCmiAssetForBsnAsset(assetLocator: BsAssetLocator, forceUpdate?: boolean): Promise<CmiAsset | null>;
+/** @deprecated renamed to cmGetCmiAssetForBsnAsset */
+export const cmGetBsAssetForBsnAsset: typeof cmGetCmiAssetForBsnAsset;
 /**
  * Return CmiAsset object for a file on the local file system.
  * If local file system is not available, or if the file does not exist, null is returned.
- *
- * @param {string} fullPath - full path to file on local file system
- * @returns {CmiAsset | null}
+ * @param fullPath full path to file on local file system
  */
-export function cmGetBsAssetForLocalFile(fullPath: string): CmiAsset | null;
+export function cmGetCmiAssetForLocalFile(fullPath: string): CmiAsset | null;
+/** @deprecated renamed to cmGetCmiAssetForLocalFile */
+export const cmGetBsAssetForLocalFile: typeof cmGetCmiAssetForLocalFile;
 /**
  * For a given BsAssetLocator, return the BsAssetSpecification for the parent folder.
  * If the asset locator specifies an asset at the system root, null is returned.
- * @param assetLocator (BsAssetLocator}
- * @returns {BsAssetSpecification | null}
  */
 export function cmGetParentFolderAssetSpecification(assetLocator: BsAssetLocator): BsAssetSpecification | null;
 /**
  * Update the parent folder asset for a given assetItem. This is used to update the parent folder
  *  when assetItems are added or deleted to a folder, and will result in updated values for
  *  'hasFiles' and 'hasSubFolders' properties.
- * @param assetItem {BsAssetItem}
- * @returns {Promise<BsAssetItem>} - Promise returns the given assetItem
  */
 export function cmUpdateAssetItemParentFolder(assetItem: BsAssetItem): Promise<BsAssetItem>;
 /**
  * Update the assetItem for a given BsAssetSpecification, and if successful (i.e., if the assetSpec
  *  actually pointed to an asset,) send an update notification for the given assetItem.
- * @param assetSpec
- * @returns {Promise<void>}
  */
 export function cmUpdateAssetItemForAssetSpecification(assetSpec: BsAssetSpecification): Promise<void>;
+export function cmIsBrightScriptAsset(obj: any): obj is CmiBrightScriptAsset;
+export function cmIsContentAsset(obj: any): obj is CmiContentAsset;
+export function cmIsDeviceWebPageAsset(obj: any): obj is CmiDeviceWebPageAsset;
+export function cmIsDynamicPlaylistAsset(obj: any): obj is CmiDynamicPlaylistAsset;
+export function cmIsFolderAsset(obj: any): obj is CmiFolderAsset;
+export function cmIsHtmlSiteAsset(obj: any): obj is CmiHtmlSiteAsset;
+export function cmIsMediaAsset(obj: any): obj is CmiMediaAsset;
+export function cmIsMediaFeedAsset(obj: any): obj is CmiMediaFeedAsset;
+export function cmIsPresentationAsset(obj: any): obj is CmiPresentationAsset;
+export function cmIsScheduleAsset(obj: any): obj is CmiScheduleAsset;
+export function cmIsTaggedPlaylistAsset(obj: any): obj is CmiTaggedPlaylistAsset;
+export function cmIsTextFeedAsset(obj: any): obj is CmiTextFeedAsset;
 
+/**
+ * Interface for CmiAssetContainer is based on CmiAssetBase, which contains basic properties shared
+ *  with CmiAsset.
+ */
+export interface CmiAssetContainer extends CmiAssetBase {
+    /**
+     * Primary asset type of contained assets. For non-BSN containers, childAssetType can be null,
+     *  indicating child assets of any type. For BSN containers, childAssetType cannot be null.
+     */
+    readonly childAssetType: BseChildAssetType | null;
+    /**
+     * Return true if this container is a BSN system container (i.e., the container is a BSN container,
+     *  but it is not backed by a BSN Folder entity.)
+     */
+    readonly isBsnSystemContainer: boolean;
+    /**
+     * Return or set current sort options.
+     */
+    sortOptions: CmiSortOptions;
+    /**
+     * True if the container holds an assetCollection - some system containers
+     *  hold only other containers and do not have asset collections.
+     */
+    readonly hasCollection: boolean;
+    /**
+     * True if container can contain other folders (containers).
+     */
+    readonly canHaveFolders: boolean;
+    /**
+     * True if the container holds an assetCollection holding sub-folders.
+     */
+    readonly hasFolderCollection: boolean;
+    /**
+     * If container holds wraps a collection, this is the interface
+     *  to the collection holding file assets.
+     */
+    readonly collection: CmiAssetCollection | null;
+    /**
+     * If container wraps a collection of assets that can also contain folder assets, this is the interface
+     *  to the collection holding folder assets.
+     * This is null if the assetType does not support a folder structure.
+     */
+    readonly folderCollection: CmiAssetCollection | null;
+    /**
+     * True if container has finished updating all assets (or if a system container that does not contain assets.)
+     *  If not complete, the update methods can be called again to enumerate assets.
+     */
+    readonly isComplete: boolean;
+    /**
+     * Return true if the container has files.
+     * If container represent a folder asset, and the folder assetItem is not in the assetItem cache,
+     *  this property will return false.
+     */
+    readonly hasFiles: boolean;
+    /**
+     * Return true if the container has sub-folders.
+     * If container represent a folder asset, and the folder assetItem is not in the assetItem cache,
+     *  this property will return false.
+     */
+    readonly hasSubFolders: boolean;
+    /**
+     * The assetLocator for the parent container or folder
+     */
+    readonly assetLocator: BsAssetLocator;
+    /**
+     * Array of AssetLocator objects for all enumerated asset items, in current sort order.
+     */
+    readonly childAssetLocators: BsAssetLocator[];
+    /**
+     * Array of CmiAsset interfaces for all enumerated asset items, in current sort order.
+     */
+    readonly childAssets: CmiAsset[];
+    /**
+     * The full path of the container, including the container name.
+     */
+    readonly fullPath: string;
+    /**
+     * Return the folder asset for the folder underlying the container.
+     * If the container is a system container, this returns null because there is no underlying folder asset.
+     */
+    getFolderAsset(): Promise<CmiFolderAsset | null>;
+    /**
+     * Return the folder asset for the contained sub-folder with the given name.
+     * If non sub-folder exists with the given name, this returns null.
+     * This asynchronous method will return the FolderAsset for the given sub-folder name, if it exists,
+     *  even if the container has not been enumerated.
+     * @param name - sub-folder name for desired asset
+     */
+    getSubFolderAsset(name: string): Promise<CmiFolderAsset | null>;
+    /**
+     * Return list of container hashes for sub-folders.
+     * The container does not have to be enumerated before calling this method, and therefore the
+     *  function is asynchronous.
+     */
+    getSubFolderContainerHashes(): Promise<string[]>;
+    /**
+     * Return list of sub-folder assets, in current sort order.
+     * The container must be enumerated (or enumeration started if enumerating files by segment,) in order
+     *  for this method to return a valid sub-folder list.
+     * If the container does not support sub-folders, or if enumeration has not been started, an empty list
+     *  is returned.
+     */
+    getSubFolderAssets(): CmiFolderAsset[];
+    /**
+     * If the container has collection(s), update them by enumerating all assets.
+     * In order to get resolution for each set of assets  returned in a segmented enumeration (as from BSN,)
+     *  use {@link startUpdate} and {@link updateNext}.
+     * This method restarts enumeration on each call if onlyIfNecessary parameter is false (or is omitted.)
+     * If the onlyIfNecessary parameter is set to true, a new re-enumeration will not be done.
+     * @param [onlyIfNecessary=false] - set to true to skip re-enumeration is collection 'isComplete' property is true
+     */
+    update(onlyIfNecessary?: boolean): Promise<void>;
+    /**
+     * If the container has collection(s), start a segmented enumeration of all assets.
+     * Unlike {@link update}, if enumeration returns partial results (e.g., BSN with long asset lists), the promise
+     *  returned from this method will resolve with the first segment of results. The caller should check the
+     *  {@link isComplete} property to determine if updating is complete. If not, {@link updateNext} can be called
+     *  to get the next segment.
+     * For BSN containers which hold assets that support a sub-folder hierarchy (e.g., Content,) contained folder
+     *  assets are always completely enumerated by the initial startUpdate call. Subsequent updateNext() calls
+     *  are only necessary to complete asset file enumeration.
+     * This method restarts enumeration on each call if onlyIfNecessary parameter is false (or is omitted.)
+     * If the onlyIfNecessary parameter is set to true, a new re-enumeration will not be done.
+     * @param [onlyIfNecessary=false] - set to true to skip re-enumeration is collection 'isComplete' property is true
+     * (Re)Start update of asset directory from local file system or BSN.
+     * The collection object returned by the promise is the original, but updated, collection object
+     */
+    startUpdate(onlyIfNecessary?: boolean): Promise<void>;
+    /**
+     * Continue updating container assets from local file system or BSN
+     * This method should be called after an initial call to {@link startUpdate} or a subsequent call to this method
+     *  when the {@link isComplete} property is false.
+     * The collection object returned by the promise is the original, but updated, collection object
+     */
+    updateNext(): Promise<void>;
+    /**
+     * Return list of assetLocators for all child assets of the container that match the given filter options,
+     *  in current sort order.
+     */
+    getFilteredChildAssetLocators(filterOptions: CmiAssetFilterOptions | null): BsAssetLocator[];
+    /**
+     * Return list of CmiAsset interfaces for all child assets of the container that match the given filter options,
+     *  in current sort order.
+     */
+    getFilteredChildAssets(filterOptions: CmiAssetFilterOptions | null): CmiAsset[];
+}
+
+/**
+ * Return a newly created BsAssetLocator representing a BSN system container.
+ * Note: In a previous implementation of bs-content-manager-store, what we are referring to here as a
+ *  'BSN system container' was called a 'pseudo folder.'
+ * These container represent a 'pseudo folder' on BSN which holds a collection of assets at the root level,
+ *  which on BSN is not represented byb a folder asset.
+ * This includes the root directory BSN content, and also assets such as presentations, data feeds,
+ *  BrightScript files, etc.
+ * @param childAssetType the asset type of the assets held in the container
+ * @param name the name of the container
+ */
+export function cmGetBsnSystemContainerLocator(childAssetType: BseChildAssetType, name?: string | null): BsAssetContainerLocator;
+/**
+ * Return a newly created BsAssetLocator representing an AssetContainer for the given childAssetType, location, and
+ *  (if applicable) the path to the containing folder (directory.)
+ * If the given folder path is invalid, null is returned.
+ * The default folderPath is a blank string, which represents the root of the AssetLocation for the given
+ *  childAssetType.
+ * If childAssetType is null or undefined:
+ *  For BSN containers, the childAssetType is assumed to be Content.
+ *  For local assets, the childAssetType is left as null or undefined, indicating child assets of any type.
+ * @param location asset location
+ * @param childAssetType the asset type of the assets held in the container
+ * @param path the path of the containing folder
+ */
+export function cmGetContainerAssetLocator(location: AssetLocation, childAssetType: BseChildAssetType | null | undefined, path?: string): Promise<BsAssetContainerLocator | null>;
+/**
+ * Same as {@link cmGetContainerAssetLocator}, but looks in container cache for the container.
+ * Unlike cmGetContainerAssetLocator, this function is synchronous. It will return null if the container
+ *  represents a folder asset which is not in the cache.
+ * If childAssetType is null or undefined:
+ *  For BSN containers, the childAssetType is assumed to be Content.
+ *  For local assets, the childAssetType is left as null or undefined, indicating child assets of any type.
+ * @param location asset location
+ * @param childAssetType the asset type of the assets held in the container
+ * @param path the path of the containing folder
+ */
+export function cmGetContainerAssetLocatorFromCache(location: AssetLocation, childAssetType: BseChildAssetType | null | undefined, path?: string): BsAssetContainerLocator | null;
+/**
+ * Return true if the given assetLocator represents the BSN system root folder.
+ * @param assetLocator
+ */
+export function cmIsSystemRootContainerAssetLocator(assetLocator: BsAssetLocator | null | undefined): boolean;
+/**
+ * Return true if the given assetLocator represents a BSN system folder (i.e., a 'pseudo-folder'.)
+ * @param assetLocator
+ */
+export function cmIsSystemContainerAssetLocator(assetLocator: BsAssetLocator | null | undefined): boolean;
+/**
+ * Return true if the given assetLocator any BSN content folder, either the system BSN media root
+ *  or a standard BSN content folder
+ * @param locator
+ */
+export function cmIsBsnMediaContainerAssetLocator(locator: BsAssetLocator | null | undefined): boolean;
+/**
+ * Return true if an BSN based asset of childAssetType requires a Bsn System container as its parent.
+ * @param childAssetType
+ * @param path - path of childAsset, assumed to be BSN root path ifm omitted
+ */
+export function cmIsBsnSystemParentContainerForChildAsset(childAssetType: BseChildAssetType, path?: string): boolean;
+/**
+ * Get CmiAssetContainer interface for an AssetContainer specified by the given BsAssetLocator.
+ * If the container has been previously created and is present in the AssetContainerCache, that container is
+ *  returned.
+ * If the container had not been previously created, it is created and returned.
+ * If loader options are specified, they are applied to newly created or existing asset containers, with the
+ *  exception that the pageSize option is not changed if the container already exists.
+ * If the assetLocator does not represent a valid asset container, an exception is thrown.
+ * @param assetLocator
+ * @param loaderOptions
+ */
+export function cmGetOrCreateCmcAssetContainerForAssetLocator(assetLocator: BsAssetLocator, loaderOptions?: CmiAssetLoaderOptions | null): CmiAssetContainer;
+/**
+ * Return the CmiAssetContainer to an AssetContainer for the given childAssetType, location, and (if applicable) the
+ *  path to the containing folder (directory.)
+ * The AssetContainer is created if necessary.
+ * If the given folder path is invalid, null is returned.
+ * @param location asset location
+ * @param childAssetType the asset type of the assets held in the container - can be null for non-BSN
+ *  assets to indicate all assetTypes
+ * @param path the path to containing folder (root folder by default)
+ * @param loaderOptions
+ */
+export function cmGetAssetContainer(location: AssetLocation, childAssetType: BseChildAssetType | null | undefined, path?: string, loaderOptions?: CmiAssetLoaderOptions | null): Promise<CmiAssetContainer | null>;
+/**
+ * Return the CmiAssetContainer to an updated AssetContainer for the given childAssetType, location,
+ *  and (if applicable) the path to the containing folder (directory.)
+ * This functions insures that the container collections are updated.
+ * The AssetContainer is created if necessary.
+ * If the given folder path is invalid, null is returned.
+ * @param location asset location
+ * @param childAssetType the asset type of the assets held in the container - can be null for non-BSN
+ *  assets to indicate all assetTypes
+ * @param path the path to containing folder (root folder by default)
+ * @param loaderOptions
+ */
+export function cmGetUpdatedAssetContainer(location: AssetLocation, childAssetType: BseChildAssetType | null | undefined, path?: string, loaderOptions?: CmiAssetLoaderOptions | null): Promise<CmiAssetContainer | null>;
+/**
+ * Given a locatorHash string representing an AssetContainer, if the associated container has been created
+ *  and is present in the AssetContainerCache, return the CmiAssetContainer interface to the container.
+ * If the locatorHash does not correspond to an existing container, null is returned.
+ * @param locatorHash
+ */
+export function cmGetExistingAssetContainerForLocatorHash(locatorHash: string): CmiAssetContainer | null;
+/**
+ * Given a BsAssetLocator representing an AssetContainer or a folder asset, if the associated container has been created
+ *  and is present in the AssetContainerCache, return the CmiAssetContainer interface to the container.
+ * If the assetLocator does not represent a container or a folder, an exception will be thrown.
+ * If the assetLocator does represent a container, but the container does not exist in the AssetContainerCache,
+ *  null is returned.
+ * If it is desired to create the container if it does not exist, use {@link cmGetAssetContainer},
+ *  {@link cmGetUpdatedAssetContainer}, orm {@link cmGetOrCreateCmcAssetContainerForAssetLocator}.
+ * @param assetLocator
+ */
+export function cmGetExistingAssetContainerForContainerLocator(assetLocator: BsAssetContainerLocator): CmiAssetContainer | null;
+/**
+ * Return the AssetContainer locator representing the container which contains the asset specified by the given
+ *  child AssetLocator.
+ * @param childAssetLocator
+ */
+export function cmGetContainerLocatorForChildAsset(childAssetLocator: BsAssetLocator): Promise<BsAssetContainerLocator | null>;
+/**
+ * Return locatorHash string for a given BsAssetLocator representing either an actual asset or an AssetContainer.
+ * @param assetLocator
+ */
+export function cmGetLocatorHashForAssetLocator(assetLocator: BsAssetLocator): string;
+/**
+ * Set default size for segmented collection load operations in AssetContainers.
+ * @param size
+ */
+export function cmSetContainerDefaultLoaderPageSize(size: number): void;
+/**
+ * Remove all assetContainers, assetCollections and cached assetItems for the given assetLocation and scope.
+ * @param location
+ * @param scope
+ */
+export function cmRemoveAssetContainersForLocationAndScope(location: AssetLocation, scope: string): void;
+/**
+ * Return Asset Container Path based on the Asset Container Locator passed as parameter.
+ * @param locator
+ */
+export function cmGetAssetContainerPath(locator: BsAssetContainerLocator): string;
+
+export enum CmeAssetNotificationType {
+    addAssets = "addAsset",
+    updateAssets = "updateAsset",
+    removeAssets = "removeAsset",
+    addAssetContainer = "addContainer",
+    updateAssetContainer = "updateContainer",
+    updateAssetContainerFolders = "updateContainerFolders",
+    removeAssetContainer = "removeContainer"
+}
+export interface CmiAssetReference {
+    locatorHash: string;
+    updateTime: Date;
+}
 export interface CmiAssetContainerReference {
     locatorHash: string;
     updateTime: Date;
 }
-export interface CmiAssetContainer {
-    readonly name: string;
-    readonly path: string;
-    readonly assetType: AssetType;
-    readonly location: AssetLocation;
-    readonly locatorHash: string;
-    readonly childAssetType: BseChildAssetType;
-    readonly hasCollection: boolean;
-    readonly hasFolderCollection: boolean;
-    readonly collection: CmiAssetCollection | null;
-    readonly folderCollection: CmiAssetCollection | null;
-    readonly assetLocator: BsAssetLocator;
-    readonly fullPath: string;
-    hasSubFolders(): Promise<boolean>;
-    getSubFolderContainerHashes(): Promise<string[]>;
+export type CmiAssetNotificationDataValue = CmiAssetReference | CmiAssetContainerReference | string;
+export interface CmiAssetNotification {
+    kind: CmeAssetNotificationType;
+    changedItems: CmiAssetNotificationDataValue[];
 }
-export function cmGetBsnSystemFolderAssetLocator(childAssetType: BseChildAssetType, name: string | null): BsAssetLocator;
-export function cmIsSystemRootContainerAssetLocator(assetLocator: BsAssetLocator): boolean;
-export function cmIsSystemContainerAssetLocator(assetLocator: BsAssetLocator): boolean;
-export function cmGetCmcAssetContainerForLocatorHash(locatorHash: string): CmiAssetContainer | null;
-export function cmGetCmcAssetContainerForAssetLocator(assetLocator: BsAssetLocator): CmiAssetContainer | null;
-export function cmGetLocatorHashForAssetLocator(assetLocator: BsAssetLocator): string;
-export function cmGetOrCreateCmcAssetContainerForAssetLocator(assetLocator: BsAssetLocator, loaderOptions?: CmiAssetLoaderOptions | null): CmiAssetContainer | null;
+export interface CmiAssetItemNotification extends CmiAssetNotification {
+    changedItems: CmiAssetReference[];
+}
+export function cmIsAssetNotification(notification: CmiAssetNotification): notification is CmiAssetItemNotification;
+export interface CmiAssetContainerNotification extends CmiAssetNotification {
+    changedItems: CmiAssetContainerReference[];
+}
+export function cmIsAssetContainerNotification(notification: CmiAssetNotification): notification is CmiAssetContainerNotification;
+export interface CmiAssetNotificationSubscriber {
+    notify(notification: CmiAssetNotification): void;
+}
+export function cmSubscribeAssetNotifications(subscriber: CmiAssetNotificationSubscriber): void;
+export function cmUnsubscribeAssetNotifications(subscriber: CmiAssetNotificationSubscriber): void;
 
 export function cmCacheFileBlobAndGetAssetItem(file: File, scope: string): BsAssetItem | null;
 export function cmGetFileBlobForAssetItem(assetItem: BsAssetItem): File | null;
@@ -2975,6 +3386,15 @@ export function cmGetBsnTagKeys(pattern?: BsnTagKeyPatternSpecification): Promis
  * @param pattern {BsnTagValuePatternSpecification}
  */
 export function cmGetBsnTagValueStrings(pattern?: BsnTagValuePatternSpecification): Promise<string[]>;
+/**
+ * Return the BsnSession object that is being used by ContentManager. In properly packaged environments
+ *  (e.g., a production environment,) there will be only a single bsnConnector module, and this will the return
+ *  the same BsnSession as a call to the bsnConnector function bsnGetSession().
+ * However, in some development environments with multiple dependency trees, this may not be the case. This function
+ *  is primarily included for testing in those types of environments.
+ * It is perfectly fine to use this function to get the BsnSession object in any environment, however.
+ */
+export function cmGetBsnSession(): BsnSession;
 
 export interface CmSimpleRssItem {
     title: string;

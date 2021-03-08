@@ -1,5 +1,6 @@
 /* tslint:disable:quotemark max-line-length trailing-comma */
-import {BsAssetItem, BscFileTypeInfo, BsColor, BsnAutorunProperties, BsnCustomFields, BsnGroupItem, BsnPresentationStatus, BsnPresentationType, BsnScreenSettings, BsnTaggedPlaylistItemStatus, BsnTagSpecification, ColorSpaceType, ImageOrientationType, LanguageType, MediaType, MonitorOrientationType, PlayerFamily, PlayerModel, StorageSpaceLimitUnits, TimeSpanString, VideoConnectorType, VideoMode, BsnConnectorOverrideProps, BsnFilterCombineType, BsnFilterComponent, BsnFilterSpecification, BsnFilterType, BsnTagSortSpecification, BsnTagKeySpecification, BsnTagKeyPatternSpecification, BsnTagValuePatternSpecification, BsProfileEntity, BDeployApplication, BDeployDevice, BDeployDeviceFilter, BDeploySetupFilter, BsDsSetupParams, BsnDeviceRegistrationTokenEntity, BsAssetLocator, BsUploadFile, BsUploadFileProgressCallback, BsUploadFileSource, BsUploadWebPage, BsUploadWebPageProgressCallback, BsUploadWebPageSessionSpec} from './bscore';
+import {BsAssetItem, BscFileTypeInfo, BsColor, BsnAutorunProperties, BsnCustomFields, BsnGroupItem, BsnPresentationReferenceType, BsnPresentationStatus, BsnPresentationType, BsnScreenSettings, BsnTaggedPlaylistItemStatus, BsnTagSpecification, ColorSpaceType, ImageOrientationType, LanguageType, MediaType, MonitorOrientationType, PlayerFamily, PlayerModel, StorageSpaceLimitUnits, TimeSpanString, VideoConnectorType, VideoMode, BsnConnectorOverrideProps, BsnFilterCombineType, BsnFilterComponent, BsnFilterOperator, BsnFilterParamArrays, BsnFilterSpecification, BsnFilterType, BsnTagSortSpecification, BsnTimeSpanFilter, BsnTagKeySpecification, BsnTagKeyPatternSpecification, BsnTagValuePatternSpecification, BsProfileEntity, BDeployApplication, BDeployDevice, BDeployDeviceFilter, BDeploySetupFilter, BsDsSetupParams, BsnDeviceRegistrationTokenEntity, BsAssetLocator, BsUploadFile, BsUploadFileProgressCallback, BsUploadFileSource, BsUploadWebPage, BsUploadWebPageProgressCallback, BsUploadWebPageSessionSpec} from './bscore';
+export const NullDateString = "0001-01-01 00:00:00Z";
 export interface BsnFileContentEntity {
     id: number;
     fileName: string;
@@ -101,13 +102,13 @@ export interface BsnPresentationFile {
     lastModifiedDate: Date | null;
 }
 export interface BsnPresentationNewFile {
-    type: 'New';
+    type: BsnPresentationFileType.New;
     name: string;
     body: object | string;
     transferEncoding: string;
     size: number;
-    lastModifiedDate: Date | string;
-    creationDate: Date | string;
+    lastModifiedDate: Date | string | null;
+    creationDate: Date | string | null;
 }
 export interface BsnPresentationEntity {
     id: number;
@@ -132,14 +133,10 @@ export interface BsnPresentationEntity {
     groups: BsnGroupItem[];
     permissions: BsnPermissionEntity[];
 }
-export enum BsnPresentationReferenceTypeField {
-    Presentation = "Presentation",
-    BrightWallPresentation = "BrightWallPresentation"
-}
 export interface BsnPresentationReferenceEntity {
     id: number;
     name: string;
-    type: BsnPresentationReferenceTypeField;
+    type: BsnPresentationReferenceType;
 }
 export interface BsnPresentationSaveData {
     id?: number;
@@ -195,8 +192,8 @@ export interface BsnEntityListBase {
 export interface BsnDataFeedItemEntityBase {
     title: string;
     description: string;
-    validityStartDate: Date;
-    validityEndDate: Date;
+    validityStartDate: Date | null;
+    validityEndDate: Date | null;
 }
 export interface BsnDataFeedEntityBase {
     id: number;
@@ -231,7 +228,7 @@ export interface BsnMediaFeedItemEntity extends BsnDataFeedItemEntityBase {
     contentId: number;
     fileName: string;
     disabled: boolean;
-    displayDuration: TimeSpanString;
+    displayDuration: TimeSpanString | null;
     customFields: BsnCustomFields | null;
 }
 export interface BsnMediaFeedEntity extends BsnDataFeedEntityBase {
@@ -347,7 +344,7 @@ export interface BsnNewPluginEntity {
     id: number;
     name: string;
     fileInfo: BsnPresentationNewFile;
-    presentations: BsnPresentationReferenceEntity[];
+    presentations: BsnPresentationReferenceEntity[] | null;
 }
 export interface BsnPluginSaveData {
     id?: number;
@@ -479,7 +476,8 @@ export enum BsnDeviceSetupType {
     BSN = "BSN",
     SFN = "SFN",
     LFN = "LFN",
-    Standalone = "Standalone"
+    Standalone = "Standalone",
+    PartnerApplication = "PartnerApplication"
 }
 export enum BsnContentCheckPeriod {
     Custom = "Custom",
@@ -674,6 +672,8 @@ export interface BsnRegularGroupEntity {
     creationDate: Date;
     lastModifiedDate: Date;
     autorun: BsnAutorunProperties;
+    auX5Firmware: string;
+    auX5FirmwareId: number;
     hdX23Firmware: string;
     hdX23FirmwareId: number;
     lsX23Firmware: string;
@@ -786,9 +786,9 @@ export interface BsnPersonEntity {
     password: string | null;
     firstName: string;
     lastName: string;
-    creationDate: Date;
-    lastModifiedDate: Date;
-    activationDate: Date;
+    creationDate: Date | null;
+    lastModifiedDate: Date | null;
+    activationDate: Date | null;
 }
 /** This is the person entity returned for a person login in Token calls */
 export interface BsnPersonDescriptionEntity {
@@ -852,7 +852,7 @@ export enum BsnNetworkSubscriptionLevel {
     Management = "Management",
     Trial = "Trial"
 }
-/** Deprecated name: use BsnNetworkSubscriptionLevel */
+/** @deprecated renamed to BsnNetworkSubscriptionLevel */
 export type BsnSubscriptionLevel = BsnNetworkSubscriptionLevel;
 /** This is the subscription entity returned in Token calls */
 export interface BsnNetworkSubscriptionDescriptionEntity {
@@ -906,7 +906,7 @@ export interface BsnPermissionEntity {
     isFixed: boolean;
     isInherited: boolean;
     isAllowed: boolean;
-    creationDate: Date;
+    creationDate: Date | null;
 }
 export enum BsnBusinessOperationType {
     Device = "Device",
@@ -1133,7 +1133,7 @@ export function bsnClientReactivateFunctionConfig(clientFunction: ClientReactiva
 export interface BsnEnumerationOptions {
     sortExpression?: string;
     filter?: BsnFilter;
-    /** @deprecated - use filter property to specify filters */
+    /** @deprecated use filter property to specify filters */
     filterExpression?: string;
     virtualPath?: string;
     pageSize?: number;
@@ -1141,12 +1141,12 @@ export interface BsnEnumerationOptions {
 export class BsnEnumerator {
     marker: string;
     filterExpression: string;
-    pathExpression: string;
+    pathExpression: string | null;
     sortExpression: string;
-    pageSize: number;
+    pageSize: number | null;
     isComplete: boolean;
     get queryString(): string;
-    constructor(options: BsnEnumerationOptions, allowVirtualPath: boolean);
+    constructor(options: BsnEnumerationOptions | null | undefined, allowVirtualPath: boolean);
 }
 
 /** The new form of this function using a BsnFilterSpecification parameter is preferred. */
@@ -1186,11 +1186,15 @@ export class BsnTagFilter extends BsnFilter {
  *  cannot be specifically inferred For certain rule expressions, the data type may be either a string or a stringArray.
  *  In these cases, the type dataType must be determined by other means.
  */
-export class BsnParsedFilterType extends BsnFilterType {
-    static stringOrStringArray: string;
+export enum BsnPossibleFilterType {
+    stringOrStringArray = "stringOrStringArray"
 }
-export interface BsnParsedTagFilterComponent extends BsnFilterComponent {
+export type BsnParsedFilterType = BsnFilterType | BsnPossibleFilterType;
+export interface BsnParsedTagFilterComponent {
     type: BsnParsedFilterType;
+    property: string;
+    operator: BsnFilterOperator;
+    params: BsnFilterParamArrays | BsnTimeSpanFilter;
 }
 export interface BsnParsedTagFilterSpecification {
     components: BsnParsedTagFilterComponent[];
@@ -1256,11 +1260,14 @@ export function bsnCreateUserPermission(user: BsnUserEntity, targetEntityId: num
  */
 export function bsnCreateRolePermission(role: BsnRoleEntity, targetEntityId: number | null, operationUid: string, isAllowed: boolean): BsnPermissionEntity;
 
-export function bsnGetFileContentEntityTemplate(): BsnFileContentEntity;
-export function bsnGetFolderContentEntityTemplate(): BsnFolderContentEntity;
-export function bsnGetRegularGroupEntityTemplate(): BsnRegularGroupEntity;
-/** DEPRECATED - use bsnGetRegularGroupEntityTemplate (spelled correctly!) */
-export const bsnGetReguarGroupEntityTemplate: () => BsnRegularGroupEntity;
+export type NullableProps<T> = {
+    [P in keyof T]?: T[P] | null;
+};
+export function bsnGetFileContentEntityTemplate(): NullableProps<BsnFileContentEntity>;
+export function bsnGetFolderContentEntityTemplate(): NullableProps<BsnFolderContentEntity>;
+export function bsnGetRegularGroupEntityTemplate(): NullableProps<BsnRegularGroupEntity>;
+/** @deprecated use bsnGetRegularGroupEntityTemplate (spelled correctly!) */
+export const bsnGetReguarGroupEntityTemplate: () => NullableProps<BsnRegularGroupEntity>;
 
 export type BsnContentSegment = BsnListSegment<BsnContentEntity>;
 export class BsnContentOperations {
@@ -1307,7 +1314,7 @@ export interface RemoteProcedureDownsampleSourceItemEntity {
 export interface RemoteProcedureDownsampleEntity {
     jobType: string;
     items: RemoteProcedureDownsampleSourceItemEntity[];
-    authenticationToken: string;
+    authenticationToken: string | undefined;
     username: string;
     network: string;
 }
@@ -1493,7 +1500,7 @@ export class BsnSelfOperations {
     getNetworkListForUser(): Promise<string[]>;
     getSelfUserEntity(): Promise<BsnUserEntity>;
     updateNetworkSettings(settings: Partial<BsnNetworkSettingsEntity>): Promise<void>;
-    updateNetworkSubscriptionLevel(level: BsnNetworkSubscriptionLevel): Promise<void>;
+    updateNetworkSubscriptionLevel(level: BsnNetworkSubscriptionLevel, password?: string): Promise<void>;
     getSelfRoleEntity(): Promise<BsnRoleEntity>;
     getSelfRolePermissions(): Promise<BsnPermissionEntity[]>;
 }
@@ -1548,7 +1555,7 @@ export class BsncDeviceLogEnumerator {
     hasNextPage: boolean;
     scrollId: string | null;
     get queryString(): string;
-    constructor(options: BsniDeviceLogEnumerationOptions);
+    constructor(options?: BsniDeviceLogEnumerationOptions);
 }
 export interface BsniDeviceLogListSegment {
     items: BsniDeviceLogRecord[];
@@ -1610,7 +1617,7 @@ export class BsnGroupOperations {
     getRegularGroupCount(options?: BsnEnumerationOptions): Promise<number>;
     getRegularGroupEntity(idOrName: number | string): Promise<BsnRegularGroupEntity>;
     existsRegularGroup(name: string): Promise<boolean>;
-    createRegularGroup(data: BsnRegularGroupEntity): Promise<BsnRegularGroupEntity>;
+    createRegularGroup(data: NullableProps<BsnRegularGroupEntity>): Promise<BsnRegularGroupEntity>;
     updateRegularGroup(data: BsnRegularGroupEntity): Promise<void>;
     deleteRegularGroup(idOrName: number | string): Promise<void>;
     getRegularGroupPermissions(idOrName: number | string): Promise<BsnPermissionEntity[]>;
@@ -1638,8 +1645,8 @@ export class BsnUserOperations {
     getUserListBySegment(options?: BsnEnumerationOptions): Promise<BsnUserListSegment>;
     getNextUserListSegment(enumerator: BsnEnumerator): Promise<BsnUserListSegment>;
     getUserEntity(idOrLogin: number | string): Promise<BsnUserEntity>;
-    createUser(data: BsnUserEntity): Promise<BsnUserEntity>;
-    updateUser(data: BsnUserEntity): Promise<void>;
+    createUser(data: NullableProps<BsnUserEntity>): Promise<BsnUserEntity>;
+    updateUser(data: NullableProps<BsnUserEntity>): Promise<void>;
     deleteUser(id: number): Promise<void>;
     getUserPermissions(idOrLogin: number | string): Promise<BsnPermissionEntity[]>;
     setUserPermissions(idOrLogin: number | string, permissions: BsnPermissionEntity[]): Promise<void>;
@@ -1653,8 +1660,8 @@ export class BsnRoleOperations {
     getRoleListBySegment(options?: BsnEnumerationOptions): Promise<BsnRoleListSegment>;
     getNextRoleListSegment(enumerator: BsnEnumerator): Promise<BsnRoleListSegment>;
     getRoleEntity(idOrName: number | string): Promise<BsnRoleEntity>;
-    createRole(data: BsnRoleEntity): Promise<BsnRoleEntity>;
-    updateRole(data: BsnRoleEntity): Promise<void>;
+    createRole(data: NullableProps<BsnRoleEntity>): Promise<BsnRoleEntity>;
+    updateRole(data: NullableProps<BsnRoleEntity>): Promise<void>;
     deleteRole(idOrName: number | string): Promise<void>;
     getRolePermissions(idOrName: number | string): Promise<BsnPermissionEntity[]>;
     setRolePermissions(idOrName: number | string, permissions: BsnPermissionEntity[]): Promise<void>;
@@ -1678,12 +1685,12 @@ export enum BsnUploadMediaType {
     WebPage = "WebPage",
     DeviceWebPage = "DeviceWebPage"
 }
-export function bsnCreateFileUploadItem(fileSource: BsUploadFileSource, destinationPath: string, jobIndex: number, progressHandler: BsUploadFileProgressCallback, existingAsset?: BsAssetLocator, sessionToken?: string, uploadToken?: string, relativePath?: string, uploadMediaType?: BsnUploadMediaType, targetName?: string): BsUploadFile;
+export function bsnCreateFileUploadItem(fileSource: BsUploadFileSource, destinationPath: string, jobIndex: number, progressHandler: BsUploadFileProgressCallback | null, existingAsset?: BsAssetLocator | null, sessionToken?: string | null, uploadToken?: string | null, relativePath?: string | null, uploadMediaType?: BsnUploadMediaType | null, targetName?: string | null): BsUploadFile;
 
-export function bsnCreateWebPageUploadItem(htmlSiteSpec: BsUploadWebPageSessionSpec, jobIndex: number, progressCallback: BsUploadWebPageProgressCallback): BsUploadWebPage;
+export function bsnCreateWebPageUploadItem(htmlSiteSpec: BsUploadWebPageSessionSpec, jobIndex: number, progressCallback: BsUploadWebPageProgressCallback | null): BsUploadWebPage;
 
 export function bsnGetSession(): BsnSession;
-/** DEPRECATED - use new prefixed function name bsnGetSession() */
+/** @deprecated use new prefixed function name bsnGetSession() */
 export function getBsnSession(): BsnSession;
 export interface XmlOptions {
     explicitArray?: boolean;
@@ -1902,7 +1909,7 @@ export class BsnSession implements BsnContentOperations, BsnPresentationOperatio
     getRegularGroupCount: (options?: BsnEnumerationOptions) => Promise<number>;
     getRegularGroupEntity: (idOrName: number | string) => Promise<BsnRegularGroupEntity>;
     existsRegularGroup: (name: string) => Promise<boolean>;
-    createRegularGroup: (data: BsnRegularGroupEntity) => Promise<BsnRegularGroupEntity>;
+    createRegularGroup: (data: NullableProps<BsnRegularGroupEntity>) => Promise<BsnRegularGroupEntity>;
     updateRegularGroup: (data: BsnRegularGroupEntity) => Promise<void>;
     deleteRegularGroup: (idOrName: number | string) => Promise<void>;
     getRegularGroupPermissions: (idOrName: number | string) => Promise<BsnPermissionEntity[]>;
@@ -1926,8 +1933,8 @@ export class BsnSession implements BsnContentOperations, BsnPresentationOperatio
     getUserListBySegment: (options?: BsnEnumerationOptions) => Promise<BsnUserListSegment>;
     getNextUserListSegment: (enumerator: BsnEnumerator) => Promise<BsnUserListSegment>;
     getUserEntity: (idOrLogin: number | string) => Promise<BsnUserEntity>;
-    createUser: (data: BsnUserEntity) => Promise<BsnUserEntity>;
-    updateUser: (data: BsnUserEntity) => Promise<void>;
+    createUser: (data: NullableProps<BsnUserEntity>) => Promise<BsnUserEntity>;
+    updateUser: (data: NullableProps<BsnUserEntity>) => Promise<void>;
     deleteUser: (id: number) => Promise<void>;
     getUserPermissions: (idOrLogin: number | string) => Promise<BsnPermissionEntity[]>;
     setUserPermissions: (idOrLogin: number | string, permissions: BsnPermissionEntity[]) => Promise<void>;
@@ -1937,8 +1944,8 @@ export class BsnSession implements BsnContentOperations, BsnPresentationOperatio
     getRoleListBySegment: (options?: BsnEnumerationOptions) => Promise<BsnRoleListSegment>;
     getNextRoleListSegment: (enumerator: BsnEnumerator) => Promise<BsnRoleListSegment>;
     getRoleEntity: (idOrName: number | string) => Promise<BsnRoleEntity>;
-    createRole: (data: BsnRoleEntity) => Promise<BsnRoleEntity>;
-    updateRole: (data: BsnRoleEntity) => Promise<void>;
+    createRole: (data: NullableProps<BsnRoleEntity>) => Promise<BsnRoleEntity>;
+    updateRole: (data: NullableProps<BsnRoleEntity>) => Promise<void>;
     deleteRole: (idOrName: number | string) => Promise<void>;
     getRolePermissions: (idOrName: number | string) => Promise<BsnPermissionEntity[]>;
     setRolePermissions: (idOrName: number | string, permissions: BsnPermissionEntity[]) => Promise<void>;
@@ -1961,15 +1968,19 @@ export class BsnSession implements BsnContentOperations, BsnPresentationOperatio
     get isNetworkSpecified(): boolean;
     get isUserActive(): boolean;
     get isNetworkActive(): boolean;
+    get isCachedUser(): boolean;
     get logLevel(): BsnLogLevel;
     set logLevel(value: BsnLogLevel);
     get logOptions(): BsnLogOptions;
     set logOptions(value: BsnLogOptions);
-    activate(userName: string, password: string, networkName?: string, serverUrl?: string): Promise<BsnSession>;
+    activate(userName: string, password: string, networkName?: string | null, serverUrl?: string | null): Promise<BsnSession>;
+    refresh(): Promise<BsnSession>;
+    changeNetwork(networkName: string): Promise<void>;
     activateWithRefreshToken(userName: string, networkName: string, refreshToken: string): Promise<BsnSession>;
     deactivate(): void;
     setPasswordRefreshFunction(fn: BsnPasswordRefreshFunction | null): void;
     openNetwork(networkName: string): Promise<BsnSession>;
+    isSelectedNetworkActive(networkName: string): boolean;
     hasScope(scope: string): boolean;
     /**
      * Return true if the current user has the scope for the given BsnOperation and optional action.

@@ -1,12 +1,12 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("./bscore"), require("lodash"), require("base64-js"), require("qs"), require("form-urlencoded"), require("isomorphic-fetch-extended"), require("xml2js"));
+		module.exports = factory(require("lodash"), require("./bscore"), require("base64-js"), require("qs"), require("form-urlencoded"), require("isomorphic-fetch-extended"), require("xml2js"));
 	else if(typeof define === 'function' && define.amd)
-		define(["./bscore", "lodash", "base64-js", "qs", "form-urlencoded", "isomorphic-fetch-extended", "xml2js"], factory);
+		define(["lodash", "./bscore", "base64-js", "qs", "form-urlencoded", "isomorphic-fetch-extended", "xml2js"], factory);
 	else if(typeof exports === 'object')
-		exports["bsnConnector"] = factory(require("./bscore"), require("lodash"), require("base64-js"), require("qs"), require("form-urlencoded"), require("isomorphic-fetch-extended"), require("xml2js"));
+		exports["bsnConnector"] = factory(require("lodash"), require("./bscore"), require("base64-js"), require("qs"), require("form-urlencoded"), require("isomorphic-fetch-extended"), require("xml2js"));
 	else
-		root["bsnConnector"] = factory(root["./bscore"], root["lodash"], root["base64-js"], root["qs"], root["form-urlencoded"], root["isomorphic-fetch-extended"], root["xml2js"]);
+		root["bsnConnector"] = factory(root["lodash"], root["./bscore"], root["base64-js"], root["qs"], root["form-urlencoded"], root["isomorphic-fetch-extended"], root["xml2js"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_14__, __WEBPACK_EXTERNAL_MODULE_41__, __WEBPACK_EXTERNAL_MODULE_42__, __WEBPACK_EXTERNAL_MODULE_43__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -94,13 +94,14 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTagSpecificationArrayFromTagEntity = exports.getTagKeySpecification = exports.parseTagValueString = exports.getTagValueString = exports.getTagKeyString = exports.getTagKey = exports.getTagKeyPatternQueryString = exports.checkEnclosingPathSeparators = exports.standardPathToBsnRelativePath = exports.standardPathToBsnVirtualPathForQueryString = exports.standardPathToBsnVirtualPath = exports.bsnVirtualPathToStandardPath = exports.checkFileRetrievalStatus = exports.getDateFromBsnDateString = exports.updateEntityDataTypes = exports.processBsnRequestError = exports.deleteBsnEntityTags = exports.setBsnEntityTags = exports.getBsnEntityTags = exports.TagsApiPathElement = exports.deleteBsnEntityPermissions = exports.replaceBsnEntityPermissions = exports.setBsnEntityPermissions = exports.getBsnEntityPermissions = exports.PermissionApiPathElement = exports.getAllBsnListFragments = exports.getNextBsnListSegment = exports.getBsnListBySegment = exports.getBsnBinaryData = exports.deleteBsnEntity = exports.updateBsnEntity = exports.getBsnEntityCount = exports.getBsnEntityData = exports.encodeIdOrName = exports.getBsnListData = exports.addBsnListItem = exports.executeApiCallWithNullResponse = exports.executeApiCall = exports.bsnFetch = exports.setServerUrl = exports.configServerUrl = exports.configClientRedirectUrl = exports.addBDeployListItem = exports.bsnGetUploadApiUrl = exports.BsnUploadUrl = exports.BsnUploadApiEndpoint = exports.bsnGetApiUrl = exports.BsnUrl = exports.BsnRestApiEndpoint = exports.bsnGetAuthUrl = exports.BsnAuthUrl = exports.BsnAuthEndpoint = exports.getIndexUrl = exports.getBdeployUrl = exports.getClientRedirectUrl = exports.fetchOAuthToken = exports.getOAuthTokenUrl = exports.BsnLogLevel = exports.BsnSessionStatus = void 0;
-var bscore_1 = __webpack_require__(2);
+exports.standardPathToBsnVirtualPathForQueryString = exports.standardPathToBsnVirtualPath = exports.bsnVirtualPathToStandardPath = exports.checkFileRetrievalStatus = exports.getDateFromBsnDateString = exports.updateEntityDataTypes = exports.processBsnRequestError = exports.deleteBsnEntityTags = exports.setBsnEntityTags = exports.getBsnEntityTags = exports.TagsApiPathElement = exports.deleteBsnEntityPermissions = exports.replaceBsnEntityPermissions = exports.setBsnEntityPermissions = exports.getBsnEntityPermissions = exports.PermissionApiPathElement = exports.getAllBsnListFragments = exports.getNextBsnListSegment = exports.getBsnListBySegment = exports.getBsnBinaryData = exports.deleteBsnEntity = exports.updateBsnEntity = exports.getBsnEntityCount = exports.getBsnEntityData = exports.encodeIdOrName = exports.getBsnListData = exports.addBsnListItem = exports.executeApiCallWithNullResponse = exports.executeApiCall = exports.bsnFetch = exports.setServerUrl = exports.configServerUrl = exports.configClientRedirectUrl = exports.addBDeployListItem = exports.bsnGetUploadApiUrl = exports.BsnUploadUrl = exports.BsnUploadApiEndpoint = exports.bsnGetApiUrl = exports.BsnUrl = exports.BsnRestApiEndpoint = exports.bsnGetAuthUrl = exports.BsnAuthUrl = exports.BsnAuthEndpoint = exports.getIndexUrl = exports.getBdeployUrl = exports.getClientRedirectUrl = exports.fetchOAuthToken = exports.getOAuthTokenUrl = exports.BsnLogLevel = exports.BsnSessionStatus = void 0;
+exports.getTagSpecificationArrayFromTagEntity = exports.getTagKeySpecification = exports.parseTagValueString = exports.getTagValueString = exports.getTagKeyString = exports.getTagKey = exports.getTagKeyPatternQueryString = exports.checkEnclosingPathSeparators = exports.standardPathToBsnRelativePath = void 0;
+var bscore_1 = __webpack_require__(3);
 var error_1 = __webpack_require__(1);
 var enumerator_1 = __webpack_require__(9);
 var authenticator_1 = __webpack_require__(4);
 var permission_1 = __webpack_require__(10);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var BsnSessionStatus;
 (function (BsnSessionStatus) {
     BsnSessionStatus["invalidUserInfo"] = "invalidUserInfo";
@@ -136,7 +137,10 @@ function fetchOAuthToken() {
     var authenticator = authenticator_1.getBsnAuthenticator();
     return authenticator.checkAuthentication()
         .then(function () { return authenticator.checkNetworkActive(); })
-        .then(function () { return authenticator.oauthAccessToken; })
+        .then(function () {
+        var token = authenticator.oauthAccessToken;
+        return lodash_1.isNil(token) ? '' : token;
+    })
         .catch(function (error) { throw processBsnRequestError(error); });
 }
 exports.fetchOAuthToken = fetchOAuthToken;
@@ -237,7 +241,7 @@ function configServerUrl(bsnServerConfiguration, bDeployServerConfiguration, ind
 }
 exports.configServerUrl = configServerUrl;
 function setServerUrl(url) {
-    if (!url) {
+    if (lodash_1.isNil(url)) {
         url = getDefaultUrl();
     }
     if (url.charAt(url.length - 1) === '/') {
@@ -278,7 +282,7 @@ function executeApiCallWithNullResponse(url, init, networkRequired) {
     if (init === void 0) { init = {}; }
     if (networkRequired === void 0) { networkRequired = true; }
     return bsnFetch(url, init, networkRequired)
-        .then(function () { return null; })
+        .then(function () { return; })
         .catch(function (error) { throw processBsnRequestError(error); });
 }
 exports.executeApiCallWithNullResponse = executeApiCallWithNullResponse;
@@ -424,7 +428,7 @@ function setBsnEntityPermissions(apiPath, entityIdOrName, permissions) {
         return fetch(request3)
             .then(function (response) { return authenticator.checkStatus(response, request3, body); });
     })
-        .then(function () { return null; })
+        .then(function () { return; })
         .catch(function (error) { throw processBsnRequestError(error); });
 }
 exports.setBsnEntityPermissions = setBsnEntityPermissions;
@@ -460,7 +464,7 @@ function replaceBsnEntityPermissions(apiPath, entityIdOrName, permissions) {
                 .then(function (response) { return authenticator.checkStatus(response, request3_1, body_1); });
         }
     })
-        .then(function () { return null; })
+        .then(function () { return; })
         .catch(function (error) { throw processBsnRequestError(error); });
 }
 exports.replaceBsnEntityPermissions = replaceBsnEntityPermissions;
@@ -522,7 +526,7 @@ function setBsnEntityTags(apiPath, entityIdOrName, tags) {
                 .then(function (response) { return authenticator.checkStatus(response, request3_2, body_2); });
         }
     })
-        .then(function () { return null; })
+        .then(function () { return; })
         .catch(function (error) { throw processBsnRequestError(error); });
 }
 exports.setBsnEntityTags = setBsnEntityTags;
@@ -585,11 +589,12 @@ function updateEntityDataTypes(entity) {
     return entity;
 }
 exports.updateEntityDataTypes = updateEntityDataTypes;
-exports.getDateFromBsnDateString = function (str) {
+var getDateFromBsnDateString = function (str) {
     str = str.trim();
     var modStr = str.endsWith('Z') ? str : str + 'Z';
     return new Date(modStr);
 };
+exports.getDateFromBsnDateString = getDateFromBsnDateString;
 function checkFileRetrievalStatus(response) {
     if (response.ok) {
         return response;
@@ -695,7 +700,7 @@ function parseTagValueString(keySpec, val) {
         case 'numericarray':
             return lodash_1.isNil(val) ? [] : val.split(',').map(function (s) { return s.trim(); });
         case 'stringarray':
-            return lodash_1.isNil(val) ? [] : val.split(',').map(function (s) { return s.replace(/['" ]/g, ''); });
+            return lodash_1.isNil(val) ? [] : val.split(',').map(function (s) { return s.replace(/['"]/g, '').trim(); });
     }
 }
 exports.parseTagValueString = parseTagValueString;
@@ -735,7 +740,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -818,13 +823,13 @@ exports.BsnError = BsnError;
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("./bscore");
+module.exports = require("lodash");
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = require("./bscore");
 
 /***/ }),
 /* 4 */
@@ -835,7 +840,8 @@ module.exports = require("lodash");
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnAuthenticator = exports.getBsnAuthenticator = exports.configOAuthClient = exports.configBsnClient = void 0;
 var form_urlencoded_1 = __webpack_require__(41);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
+var entities_1 = __webpack_require__(6);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
 var configurator_1 = __webpack_require__(7);
@@ -869,12 +875,13 @@ var bsnIsUserTokenResponse = function (response) {
     return response.hasOwnProperty('user');
 };
 var authenticator;
-exports.getBsnAuthenticator = function () {
+var getBsnAuthenticator = function () {
     if (!authenticator) {
         authenticator = new BsnAuthenticator();
     }
     return authenticator;
 };
+exports.getBsnAuthenticator = getBsnAuthenticator;
 var BsnAuthenticator = (function () {
     function BsnAuthenticator() {
         this._userName = '';
@@ -1025,7 +1032,7 @@ var BsnAuthenticator = (function () {
     });
     Object.defineProperty(BsnAuthenticator.prototype, "isNetworkSpecified", {
         get: function () {
-            return this.isUserInfoValid && !lodash_1.isNil(this._networkName) && this._networkName.length > 0;
+            return this.isUserInfoValid && this._networkName.length > 0;
         },
         enumerable: false,
         configurable: true
@@ -1113,6 +1120,45 @@ var BsnAuthenticator = (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(BsnAuthenticator.prototype, "sessionUserName", {
+        get: function () {
+            if (typeof window !== 'undefined' && !lodash_1.isNil(sessionStorage)) {
+                var userName = sessionStorage.getItem('userName');
+                if (!lodash_1.isNil(userName)) {
+                    return userName;
+                }
+            }
+            return null;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BsnAuthenticator.prototype, "sessionNetworkName", {
+        get: function () {
+            if (typeof window !== 'undefined' && !lodash_1.isNil(sessionStorage)) {
+                var networkName = sessionStorage.getItem('networkName');
+                if (!lodash_1.isNil(networkName)) {
+                    return networkName;
+                }
+            }
+            return null;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(BsnAuthenticator.prototype, "sessionRefreshToken", {
+        get: function () {
+            if (typeof window !== 'undefined' && !lodash_1.isNil(sessionStorage)) {
+                var refreshToken = sessionStorage.getItem('refreshToken');
+                if (!lodash_1.isNil(refreshToken)) {
+                    return refreshToken;
+                }
+            }
+            return null;
+        },
+        enumerable: false,
+        configurable: true
+    });
     BsnAuthenticator.prototype.getFetchInfo = function (networkRequired) {
         var info = {
             userName: this._userName,
@@ -1126,8 +1172,52 @@ var BsnAuthenticator = (function () {
     BsnAuthenticator.prototype.setPasswordRefreshFunction = function (fn) {
         this._passwordRefreshFunction = fn;
     };
+    BsnAuthenticator.prototype.isCachedUser = function (userContext) {
+        userContext = lodash_1.isNil(userContext) ? this.getStoredUserContext() : userContext;
+        return !lodash_1.isNil(userContext)
+            && !lodash_1.isNil(userContext.userName)
+            && !lodash_1.isEmpty(userContext.userName)
+            && !lodash_1.isNil(userContext.networkName)
+            && !lodash_1.isEmpty(userContext.networkName)
+            && !lodash_1.isNil(userContext.refreshToken)
+            && !lodash_1.isEmpty(userContext.refreshToken);
+    };
+    BsnAuthenticator.prototype.refresh = function () {
+        var userContext = this.getStoredUserContext();
+        if (this.isCachedUser(userContext)) {
+            return this.activateWithRefreshOAuthToken(userContext.userName, userContext.networkName, userContext.refreshToken);
+        }
+        else {
+            return Promise.reject();
+        }
+    };
+    BsnAuthenticator.prototype.changeNetwork = function (networkName) {
+        var refreshToken = this.sessionRefreshToken;
+        if (!lodash_1.isNil(refreshToken)) {
+            return this.activateWithRefreshOAuthToken(this._userName, networkName, refreshToken);
+        }
+        else {
+            return Promise.reject();
+        }
+    };
+    BsnAuthenticator.prototype.isSelectedNetworkActive = function (network) {
+        return !lodash_1.isNil(network)
+            && !lodash_1.isEmpty(network)
+            && !lodash_1.isNil(this._networkStatusMap)
+            && !lodash_1.isEmpty(this._networkStatusMap)
+            && this._networkStatusMap[network] !== entities_1.BsnNetworkStatus.Suspended;
+    };
+    BsnAuthenticator.prototype.setNetworkStatusMap = function () {
+        this._networkStatusMap = {};
+        if (!lodash_1.isNil(this._currentPerson)) {
+            var users = this._currentPerson.users;
+            for (var i = 0, l = users.length; i < l; i++) {
+                this._networkStatusMap[users[i].network.name] = users[i].network.status;
+            }
+        }
+    };
     BsnAuthenticator.prototype.activateWithRefreshOAuthToken = function (userName, networkName, refreshToken) {
-        this.init(userName, '', networkName);
+        this.init(userName, networkName);
         var refreshRequest = {
             grant_type: 'refresh_token',
             client_id: OauthClientId,
@@ -1139,7 +1229,7 @@ var BsnAuthenticator = (function () {
     };
     BsnAuthenticator.prototype.activate = function (userName, password, networkName, serverUrl) {
         var _this = this;
-        this.init(userName, password, networkName, serverUrl);
+        this.init(userName, networkName, serverUrl);
         if (this._status === common_1.BsnSessionStatus.invalidUserInfo || !lodash_1.isString(password)) {
             return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.invalidUserPassword));
         }
@@ -1162,6 +1252,7 @@ var BsnAuthenticator = (function () {
             },
             body: body,
         });
+        var userStatus;
         return fetch(request)
             .then(function (response) { return _this.logResponse(response, request, body); })
             .then(function (response) {
@@ -1189,6 +1280,7 @@ var BsnAuthenticator = (function () {
             .then(function (data) {
             _this.getAuthenticationData(data);
             if (_this._currentPerson === null) {
+                userStatus = data.user;
                 return common_1.bsnFetch(common_1.BsnUrl + 'Self/');
             }
         })
@@ -1198,23 +1290,32 @@ var BsnAuthenticator = (function () {
                     .then(function (personEntity) {
                     var id = personEntity.id, login = personEntity.login, firstName = personEntity.firstName, lastName = personEntity.lastName;
                     _this._currentPerson = { id: id, login: login, firstName: firstName, lastName: lastName, users: [] };
+                    if (!lodash_1.isNil(userStatus)) {
+                        _this._currentPerson.users.push(userStatus);
+                    }
                 })
                     .catch();
             }
+            _this.setNetworkStatusMap();
         })
             .catch(function (error) {
             throw common_1.processBsnRequestError(error);
         });
     };
-    BsnAuthenticator.prototype.refreshPasswordAndActivate = function () {
+    BsnAuthenticator.prototype.refreshPasswordAndActivate = function (userPassword) {
+        var password = '';
         if (!lodash_1.isNil(this._passwordRefreshFunction)) {
-            var password = this._passwordRefreshFunction(this.getFetchInfo(this.isNetworkSpecified));
+            password = this._passwordRefreshFunction(this.getFetchInfo(this.isNetworkSpecified));
+            return this.activate(this._userName, password, this._networkName);
+        }
+        else if (userPassword) {
+            password = userPassword;
             return this.activate(this._userName, password, this._networkName);
         }
         return Promise.resolve();
     };
     BsnAuthenticator.prototype.deactivate = function () {
-        this.init('', '', '');
+        this.init('', '');
     };
     BsnAuthenticator.prototype.openNetwork = function (networkName) {
         if (!lodash_1.isNil(networkName) && networkName.length && networkName !== this._networkName) {
@@ -1461,7 +1562,7 @@ var BsnAuthenticator = (function () {
         });
     };
     BsnAuthenticator.prototype.setupTestExpiredToken = function () {
-        this.init('user@company.com', 'password', 'myNetwork');
+        this.init('user@company.com', 'myNetwork');
         this._accessToken = '1Z5GqJ4GkojvRHoBH4Bn913I';
         this._refreshToken = '62ae9ddd54cc493593e9905125080b4b';
         this._accessTokenExpiration = new Date(new Date().getTime() - (2 * refreshExpirationInterval));
@@ -1477,7 +1578,30 @@ var BsnAuthenticator = (function () {
         this._accessToken = '1Z5GqJ4GkojvRHoBH4Bn913I';
         this._accessTokenExpiration = new Date(new Date().getTime() - (2 * refreshExpirationInterval));
     };
-    BsnAuthenticator.prototype.init = function (userName, password, networkName, serverUrl) {
+    BsnAuthenticator.prototype.clearUserContext = function () {
+        if (typeof window !== 'undefined' && !lodash_1.isNil(sessionStorage)) {
+            sessionStorage.removeItem('userName');
+            sessionStorage.removeItem('networkName');
+            sessionStorage.removeItem('refreshToken');
+        }
+    };
+    BsnAuthenticator.prototype.storeUserContext = function () {
+        if (typeof window !== 'undefined' && !lodash_1.isNil(sessionStorage)) {
+            sessionStorage.setItem('userName', this._userName);
+            sessionStorage.setItem('networkName', this._networkName);
+            sessionStorage.setItem('refreshToken', lodash_1.isNil(this._refreshToken) ? '' : this._refreshToken);
+        }
+    };
+    BsnAuthenticator.prototype.getStoredUserContext = function () {
+        var userName = this.sessionUserName;
+        var networkName = this.sessionNetworkName;
+        var refreshToken = this.sessionRefreshToken;
+        if (lodash_1.isString(userName) && lodash_1.isString(networkName) && lodash_1.isString(refreshToken)) {
+            return { userName: userName, networkName: networkName, refreshToken: refreshToken };
+        }
+        return null;
+    };
+    BsnAuthenticator.prototype.init = function (userName, networkName, serverUrl) {
         if (serverUrl) {
             common_1.setServerUrl(serverUrl);
         }
@@ -1485,8 +1609,10 @@ var BsnAuthenticator = (function () {
         this._networkName = lodash_1.isNil(networkName) ? '' : networkName;
         this._currentUser = null;
         this._currentPerson = null;
+        this._networkStatusMap = null;
         this._accessToken = '';
         this._refreshToken = '';
+        this.clearUserContext();
         this._scopeSet = new Set();
         this._accessTokenExpiration = new Date();
         if (!this.isUserInfoValid) {
@@ -1504,7 +1630,7 @@ var BsnAuthenticator = (function () {
             grant_type: 'refresh_token',
             client_id: OauthClientId,
             client_secret: OauthClientSecret,
-            refresh_token: this._refreshToken,
+            refresh_token: lodash_1.isNil(this._refreshToken) ? '' : this._refreshToken,
         };
         if (!lodash_1.isNil(networkName) && networkName.length && networkName !== this._networkName) {
             this._networkName = networkName;
@@ -1523,12 +1649,14 @@ var BsnAuthenticator = (function () {
             },
             body: body,
         });
+        var userStatus;
         return fetch(request)
             .then(function (response) { return _this.checkStatus(response, request, body); })
             .then(function (response) { return _this.getJsonResponse(response); })
             .then(function (data) {
             _this.getAuthenticationData(data);
             if (_this._currentPerson === null) {
+                userStatus = data.user;
                 return common_1.bsnFetch(common_1.BsnUrl + 'Self/');
             }
         })
@@ -1538,6 +1666,9 @@ var BsnAuthenticator = (function () {
                     .then(function (personEntity) {
                     var id = personEntity.id, login = personEntity.login, firstName = personEntity.firstName, lastName = personEntity.lastName;
                     _this._currentPerson = { id: id, login: login, firstName: firstName, lastName: lastName, users: [] };
+                    if (!lodash_1.isNil(userStatus)) {
+                        _this._currentPerson.users.push(userStatus);
+                    }
                     _this._checkAuthenticationPromise = null;
                 })
                     .catch(_this._checkAuthenticationPromise = null);
@@ -1545,6 +1676,7 @@ var BsnAuthenticator = (function () {
             else {
                 _this._checkAuthenticationPromise = null;
             }
+            _this.setNetworkStatusMap();
         })
             .catch(function (error) {
             var bsnError = common_1.processBsnRequestError(error);
@@ -1562,6 +1694,7 @@ var BsnAuthenticator = (function () {
             this._refreshToken = data.refresh_token;
             this._accessTokenExpiration = new Date(data['.expires']);
             this._scopeSet = new Set(data.scope.split(' '));
+            this.storeUserContext();
             if (bsnIsUserTokenResponse(data)) {
                 this._currentUser = data.user;
                 this._currentPerson = null;
@@ -1580,6 +1713,7 @@ var BsnAuthenticator = (function () {
         this._currentUser = null;
         this._currentPerson = null;
         this._status = common_1.BsnSessionStatus.waitingForAuthentication;
+        this.clearUserContext();
     };
     return BsnAuthenticator;
 }());
@@ -1596,7 +1730,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -1606,11 +1740,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bsnParseTagOrderExpression = exports.bsnParseTagRuleExpression = exports.BsnParsedFilterType = exports.BsnTagFilter = exports.BsnFilter = exports.bsnCreateTagFilter = exports.bsnCreateFilter = void 0;
-var bscore_1 = __webpack_require__(2);
+exports.bsnParseTagOrderExpression = exports.bsnParseTagRuleExpression = exports.BsnPossibleFilterType = exports.BsnTagFilter = exports.BsnFilter = exports.bsnCreateTagFilter = exports.bsnCreateFilter = void 0;
+var bscore_1 = __webpack_require__(3);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 function bsnCreateFilter() {
     var params = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -1719,8 +1853,8 @@ var buildFilterComponentExpression = function (component, isTagName) {
                 case bscore_1.BsnArrayFilterOperator.Contains:
                     valueString = '' + component.params[0];
                     break;
-                case bscore_1.BsnStringFilterOperator.ContainsAll:
-                case bscore_1.BsnStringFilterOperator.ContainsAny:
+                case bscore_1.BsnArrayFilterOperator.ContainsAll:
+                case bscore_1.BsnArrayFilterOperator.ContainsAny:
                     valueString = '(' + component.params.join(',') + ')';
                     break;
                 default:
@@ -1838,7 +1972,7 @@ function stripQuotes(str) {
     }
     return str;
 }
-var tagNameRe = /\s*<([\w. ]+)>\s*/;
+var tagNameRe = /\s*<([\w-. ]+)>\s*/;
 var opWordRe = /\s*(\w+)\s*/;
 var quoteValRe = /'([^']*)'\s*/;
 var parenValRe = /\(([^)]*)\)\s*/;
@@ -1847,15 +1981,10 @@ var isoDateRe = /\d*-\d*-\d*T\d*:\d*:\d*(\.\d+)?Z?/;
 var andValExprRe = /\s*AND\s+'*([\d-:.TZ]+)'*\s*/;
 var combineRe = /\s*(AND|OR)\s*/;
 var startValueCharArray = ['\'', '(', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-var BsnParsedFilterType = (function (_super) {
-    __extends(BsnParsedFilterType, _super);
-    function BsnParsedFilterType() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    BsnParsedFilterType.stringOrStringArray = 'stringOrStringArray';
-    return BsnParsedFilterType;
-}(bscore_1.BsnFilterType));
-exports.BsnParsedFilterType = BsnParsedFilterType;
+var BsnPossibleFilterType;
+(function (BsnPossibleFilterType) {
+    BsnPossibleFilterType["stringOrStringArray"] = "stringOrStringArray";
+})(BsnPossibleFilterType = exports.BsnPossibleFilterType || (exports.BsnPossibleFilterType = {}));
 function bsnParseTagRuleExpression(ruleExpr) {
     var components = [];
     var combineType = bscore_1.BsnFilterCombineType.All;
@@ -1869,7 +1998,7 @@ function bsnParseTagRuleExpression(ruleExpr) {
         var str = ruleExpr;
         while (str.length > 0) {
             var comp = {
-                type: BsnParsedFilterType.string,
+                type: bscore_1.BsnFilterType.string,
                 property: '',
                 operator: bscore_1.BsnStringFilterOperator.Is,
                 params: [],
@@ -1894,7 +2023,7 @@ function bsnParseTagRuleExpression(ruleExpr) {
                 }
             }
             comp.operator = opStr;
-            comp.type = getTagFilterTypeFromOperator(opStr);
+            var componentType = getTagFilterTypeFromOperator(opStr);
             var valStr = '';
             result = null;
             if (str[0] === '\'') {
@@ -1912,24 +2041,27 @@ function bsnParseTagRuleExpression(ruleExpr) {
                 }
                 var ucValStr = valStr.toUpperCase();
                 comp.params = [valStr];
-                if (lodash_1.isNil(comp.type)) {
+                if (lodash_1.isNil(componentType)) {
                     if (comp.operator === 'IS' && (ucValStr === 'TRUE' || ucValStr === 'FALSE')) {
-                        comp.type = BsnParsedFilterType.boolean;
+                        comp.type = bscore_1.BsnFilterType.boolean;
                     }
                     else if (valStr.trim().match(isoDateRe)) {
                         comp.params = [common_1.getDateFromBsnDateString(valStr)];
-                        comp.type = BsnParsedFilterType.dateTime;
+                        comp.type = bscore_1.BsnFilterType.dateTime;
                     }
                     else {
                         if (comp.operator === bscore_1.BsnStringFilterOperator.Contains) {
-                            comp.type = BsnParsedFilterType.stringOrStringArray;
+                            comp.type = BsnPossibleFilterType.stringOrStringArray;
                         }
                         else {
-                            comp.type = BsnParsedFilterType.string;
+                            comp.type = bscore_1.BsnFilterType.string;
                         }
                     }
                 }
-                if (comp.type === BsnParsedFilterType.dateTime
+                else {
+                    comp.type = componentType;
+                }
+                if (comp.type === bscore_1.BsnFilterType.dateTime
                     && (comp.operator === bscore_1.BsnDateFilterOperator.IsInTheRange
                         || comp.operator === bscore_1.BsnDateFilterOperator.IsNotInTheRange)) {
                     result = andValExprRe.exec(str);
@@ -1946,6 +2078,7 @@ function bsnParseTagRuleExpression(ruleExpr) {
                     var elements = result[1].split(',').map(function (elStr) { return elStr.trim(); });
                     if (comp.operator === bscore_1.BsnDateFilterOperator.InTheLast
                         || comp.operator === bscore_1.BsnDateFilterOperator.NotInTheLast) {
+                        comp.type = componentType;
                         comp.params = {
                             units: elements[0],
                             length: Number(elements[1]),
@@ -1957,33 +2090,36 @@ function bsnParseTagRuleExpression(ruleExpr) {
                         if (elementsAreStrings) {
                             elements = elements.map(stripQuotes);
                         }
-                        if (lodash_1.isNil(comp.type)) {
+                        if (lodash_1.isNil(componentType)) {
                             if (elementsAreStrings) {
                                 if (elements.some(function (el) { return !el.match(isoDateRe); })) {
                                     if (TagArrayOperators.has(comp.operator)) {
-                                        comp.type = BsnParsedFilterType.stringOrStringArray;
+                                        comp.type = BsnPossibleFilterType.stringOrStringArray;
                                     }
                                     else {
-                                        comp.type = BsnParsedFilterType.string;
+                                        comp.type = bscore_1.BsnFilterType.string;
                                     }
                                 }
                                 else {
-                                    comp.type = BsnParsedFilterType.dateTime;
+                                    comp.type = bscore_1.BsnFilterType.dateTime;
                                 }
                             }
                             else {
                                 if (TagArrayOperators.has(comp.operator)) {
-                                    comp.type = BsnParsedFilterType.numericArray;
+                                    comp.type = bscore_1.BsnFilterType.numericArray;
                                 }
                                 else {
-                                    comp.type = BsnParsedFilterType.number;
+                                    comp.type = bscore_1.BsnFilterType.number;
                                 }
                             }
                         }
-                        if (comp.type === BsnParsedFilterType.dateTime) {
+                        else {
+                            comp.type = componentType;
+                        }
+                        if (comp.type === bscore_1.BsnFilterType.dateTime) {
                             comp.params = elements.map(function (elStr) { return common_1.getDateFromBsnDateString(elStr); });
                         }
-                        else if (comp.type === BsnParsedFilterType.number || comp.type === BsnParsedFilterType.numericArray) {
+                        else if (comp.type === bscore_1.BsnFilterType.number || comp.type === bscore_1.BsnFilterType.numericArray) {
                             comp.params = elements.map(function (elStr) { return Number(elStr); });
                         }
                         else {
@@ -1998,10 +2134,10 @@ function bsnParseTagRuleExpression(ruleExpr) {
                     str = str.substring(result[0].length);
                     comp.params = [Number(result[1])];
                     if (comp.operator === bscore_1.BsnArrayFilterOperator.Contains) {
-                        comp.type = BsnParsedFilterType.numericArray;
+                        comp.type = bscore_1.BsnFilterType.numericArray;
                     }
                     else {
-                        comp.type = BsnParsedFilterType.number;
+                        comp.type = bscore_1.BsnFilterType.number;
                         if (comp.operator === bscore_1.BsnDateFilterOperator.IsInTheRange
                             || comp.operator === bscore_1.BsnDateFilterOperator.IsNotInTheRange) {
                             result = andValExprRe.exec(str);
@@ -2031,14 +2167,16 @@ function bsnParseTagRuleExpression(ruleExpr) {
 exports.bsnParseTagRuleExpression = bsnParseTagRuleExpression;
 function bsnParseTagOrderExpression(tagOrderExpr) {
     var tagSortSpec = bscore_1.bscCreateTagSortSpecification();
-    var tagOrderRe = /\s*<([\w.]+)>\s*(ASC|DESC)/;
-    var result = tagOrderRe.exec(tagOrderExpr);
-    if (!lodash_1.isNil(result)) {
-        if (!lodash_1.isNil(result[2])) {
-            tagSortSpec.sortDescending = result[2] === 'DESC';
-        }
-        if (!lodash_1.isNil(result[1])) {
-            tagSortSpec.sortTagName = result[1];
+    if (!lodash_1.isNil(tagOrderExpr)) {
+        var tagOrderRe = /\s*<([\w.]+)>\s*(ASC|DESC)/;
+        var result = tagOrderRe.exec(tagOrderExpr);
+        if (!lodash_1.isNil(result)) {
+            if (!lodash_1.isNil(result[2])) {
+                tagSortSpec.sortDescending = result[2] === 'DESC';
+            }
+            if (!lodash_1.isNil(result[1])) {
+                tagSortSpec.sortTagName = result[1];
+            }
         }
     }
     return tagSortSpec;
@@ -2053,9 +2191,10 @@ exports.bsnParseTagOrderExpression = bsnParseTagOrderExpression;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BsneDeviceLogSortField = exports.bsnGetRequiredScopeForOperation = exports.BsnOperationAction = exports.BsnBusinessOperationType = exports.BsnPermissionPrincipalType = exports.BsnNetworkSubscriptionLevel = exports.BsnNetworkStatus = exports.BsnUserStatus = exports.BsnDeviceField = exports.BsnContentCheckPeriod = exports.BsnDeviceSetupType = exports.BsnDeviceSubscriptionStatus = exports.BsnDeviceSubscriptionType = exports.BsnDeviceHealthStatus = exports.BsnPluginSortField = exports.BsnHtmlSiteSortField = exports.bsnGetTaggedPlaylistOrderTagString = exports.BsnDataFeedSortField = exports.bsnColorToBsColor = exports.bsColorToBsnColor = exports.BsnPresentationSortField = exports.BsnPresentationReferenceTypeField = exports.bsnAssetItemToBsnPresentationFileType = exports.bsnPresentationFileEntityToFileTypeInfo = exports.BsnPresentationFileType = exports.BsnContentSortField = exports.bsnIsFileContentEntity = exports.bsnIsFolderContentEntity = void 0;
-var bscore_1 = __webpack_require__(2);
-var lodash_1 = __webpack_require__(3);
+exports.BsneDeviceLogSortField = exports.bsnGetRequiredScopeForOperation = exports.BsnOperationAction = exports.BsnBusinessOperationType = exports.BsnPermissionPrincipalType = exports.BsnNetworkSubscriptionLevel = exports.BsnNetworkStatus = exports.BsnUserStatus = exports.BsnDeviceField = exports.BsnContentCheckPeriod = exports.BsnDeviceSetupType = exports.BsnDeviceSubscriptionStatus = exports.BsnDeviceSubscriptionType = exports.BsnDeviceHealthStatus = exports.BsnPluginSortField = exports.BsnHtmlSiteSortField = exports.bsnGetTaggedPlaylistOrderTagString = exports.BsnDataFeedSortField = exports.bsnColorToBsColor = exports.bsColorToBsnColor = exports.BsnPresentationSortField = exports.bsnAssetItemToBsnPresentationFileType = exports.bsnPresentationFileEntityToFileTypeInfo = exports.BsnPresentationFileType = exports.BsnContentSortField = exports.bsnIsFileContentEntity = exports.bsnIsFolderContentEntity = exports.NullDateString = void 0;
+var bscore_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
+exports.NullDateString = '0001-01-01 00:00:00Z';
 var BsnFolderMediaTypeString = 'Folder';
 function bsnIsFolderContentEntity(item) {
     return item.mediaType && item.mediaType === BsnFolderMediaTypeString;
@@ -2110,7 +2249,14 @@ function bsnPresentationFileEntityToFileTypeInfo(pf) {
             typeInfo.assetType = bscore_1.AssetType.BSNTaggedPlaylist;
             break;
         case BsnPresentationFileType.Stored:
-            typeInfo = bscore_1.bscGetBscFileTypeInfo(pf.name);
+            {
+                if (!lodash_1.isNil(pf.name)) {
+                    typeInfo = bscore_1.bscGetBscFileTypeInfo(pf.name);
+                }
+                else {
+                    typeInfo.assetType = bscore_1.AssetType.Other;
+                }
+            }
             break;
     }
     return typeInfo;
@@ -2133,11 +2279,6 @@ function bsnAssetItemToBsnPresentationFileType(assetItem) {
     return BsnPresentationFileType.Stored;
 }
 exports.bsnAssetItemToBsnPresentationFileType = bsnAssetItemToBsnPresentationFileType;
-var BsnPresentationReferenceTypeField;
-(function (BsnPresentationReferenceTypeField) {
-    BsnPresentationReferenceTypeField["Presentation"] = "Presentation";
-    BsnPresentationReferenceTypeField["BrightWallPresentation"] = "BrightWallPresentation";
-})(BsnPresentationReferenceTypeField = exports.BsnPresentationReferenceTypeField || (exports.BsnPresentationReferenceTypeField = {}));
 var BsnPresentationSortField;
 (function (BsnPresentationSortField) {
     BsnPresentationSortField["name"] = "name";
@@ -2146,13 +2287,14 @@ var BsnPresentationSortField;
     BsnPresentationSortField["creationDate"] = "creationDate";
     BsnPresentationSortField["lastModifiedDate"] = "lastModifiedDate";
 })(BsnPresentationSortField = exports.BsnPresentationSortField || (exports.BsnPresentationSortField = {}));
-exports.bsColorToBsnColor = function (color) {
+var bsColorToBsnColor = function (color) {
     return 'RGB:'
         + ('00' + color.r.toString(16)).slice(-2).toUpperCase()
         + ('00' + color.g.toString(16)).slice(-2).toUpperCase()
         + ('00' + color.b.toString(16)).slice(-2).toUpperCase();
 };
-exports.bsnColorToBsColor = function (color) {
+exports.bsColorToBsnColor = bsColorToBsnColor;
+var bsnColorToBsColor = function (color) {
     return {
         a: 255,
         r: parseInt(color.slice(4, 6), 16),
@@ -2160,6 +2302,7 @@ exports.bsnColorToBsColor = function (color) {
         b: parseInt(color.slice(8, 10), 16),
     };
 };
+exports.bsnColorToBsColor = bsnColorToBsColor;
 var BsnDataFeedSortField;
 (function (BsnDataFeedSortField) {
     BsnDataFeedSortField["name"] = "name";
@@ -2213,6 +2356,7 @@ var BsnDeviceSetupType;
     BsnDeviceSetupType["SFN"] = "SFN";
     BsnDeviceSetupType["LFN"] = "LFN";
     BsnDeviceSetupType["Standalone"] = "Standalone";
+    BsnDeviceSetupType["PartnerApplication"] = "PartnerApplication";
 })(BsnDeviceSetupType = exports.BsnDeviceSetupType || (exports.BsnDeviceSetupType = {}));
 var BsnContentCheckPeriod;
 (function (BsnContentCheckPeriod) {
@@ -2587,7 +2731,7 @@ exports.BsnEnumerator = BsnEnumerator;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bsnCreateRolePermission = exports.bsnCreateUserPermission = exports.bsnFindMatchingPermission = exports.bsnFindRolePermission = exports.bsnFindUserPermission = void 0;
 var entities_1 = __webpack_require__(6);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 function bsnFindUserPermission(permissionList, user, operationUid) {
     var permission = lodash_1.find(permissionList, function (prm) {
         return operationUid === prm.operationUID
@@ -2669,12 +2813,13 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnFileUploadItem = exports.bsnCreateFileUploadItem = exports.getUploadMediaTypeForFile = exports.BsnUploadMediaType = exports.UploadAcceptHeader = exports.UploadChunkStatus = exports.FileUploadState = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var common_1 = __webpack_require__(0);
+var entities_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(1);
 var authenticator_1 = __webpack_require__(4);
 var testFramework_1 = __webpack_require__(40);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var FileUploadState;
 (function (FileUploadState) {
     FileUploadState["Unknown"] = "Unknown";
@@ -2763,12 +2908,12 @@ var BsnFileUploadItem = (function () {
         this._bsnUploadParams = {
             sessionToken: null,
             uploadToken: null,
-            fileName: undefined,
-            virtualPath: undefined,
+            fileName: '',
+            virtualPath: '',
             mediaType: BsnUploadMediaType.Auto,
             fileSize: 0,
             fileLastModifiedDate: new Date(),
-            shA1Hash: null,
+            shA1Hash: '',
             fileThumb: null,
         };
         this._status = bscore_1.BsUploadItemStatus.Pending;
@@ -2784,7 +2929,7 @@ var BsnFileUploadItem = (function () {
             uploadMediaType ? uploadMediaType : getUploadMediaTypeForFile(this._bsnUploadParams.fileName);
         this._bsnUploadParams.fileSize = this._uploadSource.fileSize;
         this._bsnUploadParams.fileLastModifiedDate = this._uploadSource.lastModifiedDate;
-        this._progressCallback = progressCallback;
+        this._progressCallback = progressCallback ? progressCallback : null;
         this._existingAsset = existingAsset ? existingAsset : null;
         if (sessionToken) {
             this._bsnUploadParams.sessionToken = sessionToken;
@@ -2890,7 +3035,7 @@ var BsnFileUploadItem = (function () {
     });
     Object.defineProperty(BsnFileUploadItem.prototype, "maxConcurrentChunkUploads", {
         get: function () {
-            return 1;
+            return 3;
         },
         enumerable: false,
         configurable: true
@@ -3073,7 +3218,8 @@ var BsnFileUploadItem = (function () {
         })
             .then(function () { return _this._authenticator.checkNetworkActive(); })
             .then(function () {
-            var body = JSON.stringify(_this._bsnUploadParams);
+            var startUploadParams = __assign(__assign({}, _this._bsnUploadParams), { fileLastModifiedDate: entities_1.NullDateString });
+            var body = JSON.stringify(startUploadParams);
             var url = common_1.BsnUploadUrl + 'Sessions/' + _this.sessionToken + '/Uploads/';
             var method = 'POST';
             if (_this.isWebPageAssetUpload) {
@@ -3150,64 +3296,58 @@ var BsnFileUploadItem = (function () {
     };
     BsnFileUploadItem.prototype.processChunkUploads = function () {
         var _this = this;
-        return new Promise(function (resolve, reject) {
-            var processNextChunkUpload = function () {
-                _this.updateFileChunkSummary();
-                testFramework_1.testHook(testFramework_1.Breakpoint.beforeRandomChunkUpload, { chunksComplete: _this._fileChunkSummary.complete });
-                if (_this._fileChunkSummary.complete === _this.totalChunkCount) {
-                    _this.getBsnUploadStatus()
-                        .then(function (status) {
-                        _this._bsnUploadStatus = status;
-                        resolve(status);
-                    })
-                        .catch(function (error) { return reject(error); });
+        var processNextChunkUpload = function () {
+            _this.updateFileChunkSummary();
+            testFramework_1.testHook(testFramework_1.Breakpoint.beforeRandomChunkUpload, { chunksComplete: _this._fileChunkSummary.complete });
+            if (_this._fileChunkSummary.complete === _this.totalChunkCount) {
+                return _this.getBsnUploadStatus()
+                    .then(function (status) {
+                    _this._bsnUploadStatus = status;
+                    return status;
+                });
+            }
+            if (_this._progressCallback && _this._fileChunkSummary.complete) {
+                try {
+                    _this._progressCallback(_this.uploadProgress);
                 }
-                else {
-                    if (_this._progressCallback && _this._fileChunkSummary.complete) {
-                        try {
-                            _this._progressCallback(_this.uploadProgress);
-                        }
-                        catch (error) {
-                            reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'Exception in progress callback: ' + error.message));
-                            return;
-                        }
-                    }
-                    if (!_this._cancellationRequested) {
-                        if (_this._fileChunkSummary.uploading < _this.maxConcurrentChunkUploads) {
-                            if (_this._fileChunkSummary.nextPendingIndex !== null) {
-                                var nextChunkStatus = _this._chunkStatusList[_this._fileChunkSummary.nextPendingIndex];
-                                _this._activeUploadMap.set(nextChunkStatus.startOffset, _this.uploadChunk(nextChunkStatus));
-                            }
-                        }
-                        if (_this._activeUploadMap.size === 0) {
-                            reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'File chunk Upload map is inconsistent'));
-                            return;
-                        }
-                    }
-                    else if (_this._fileChunkSummary.uploading === 0) {
-                        _this.cancelUpload()
-                            .then(function () {
-                            resolve(_this._bsnUploadStatus);
-                            return;
-                        })
-                            .catch(function () {
-                            resolve(_this._bsnUploadStatus);
-                            return;
-                        });
-                    }
-                    return Promise.race(_this._activeUploadMap.values())
-                        .then(function (chunkStatus) {
-                        _this._activeUploadMap.delete(chunkStatus.startOffset);
-                        if (chunkStatus.status === UploadChunkStatus.failed && !_this._cancellationRequested) {
-                            reject(chunkStatus.error);
-                            return;
-                        }
-                        return processNextChunkUpload();
-                    });
+                catch (error) {
+                    return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'Exception in progress callback: ' + error.message));
                 }
-            };
-            return processNextChunkUpload();
-        });
+            }
+            if (!_this._cancellationRequested) {
+                while (_this._fileChunkSummary.uploading < _this.maxConcurrentChunkUploads) {
+                    if (_this._fileChunkSummary.nextPendingIndex !== null) {
+                        var nextChunkStatus = _this._chunkStatusList[_this._fileChunkSummary.nextPendingIndex];
+                        _this._activeUploadMap.set(nextChunkStatus.startOffset, _this.uploadChunk(nextChunkStatus));
+                        _this.updateFileChunkSummary();
+                    }
+                    else {
+                        break;
+                    }
+                }
+                if (_this._activeUploadMap.size === 0) {
+                    return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'File chunk Upload map is inconsistent'));
+                }
+            }
+            else if (_this._fileChunkSummary.uploading === 0) {
+                _this.cancelUpload()
+                    .then(function () {
+                    return _this._bsnUploadStatus;
+                })
+                    .catch(function () {
+                    return _this._bsnUploadStatus;
+                });
+            }
+            return Promise.race(_this._activeUploadMap.values())
+                .then(function (chunkStatus) {
+                _this._activeUploadMap.delete(chunkStatus.startOffset);
+                if (chunkStatus.status === UploadChunkStatus.failed && !_this._cancellationRequested) {
+                    return Promise.reject(chunkStatus.error);
+                }
+                return processNextChunkUpload();
+            });
+        };
+        return processNextChunkUpload();
     };
     BsnFileUploadItem.prototype.uploadChunk = function (chunkStatus) {
         var _this = this;
@@ -3321,7 +3461,7 @@ var qs = __webpack_require__(14);
 var error_1 = __webpack_require__(1);
 var common_1 = __webpack_require__(0);
 var authenticator_1 = __webpack_require__(4);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var bsnRemoteProcedureJobAssignEndPoint = '/procedureJobAssign';
 var bsnRemoteProcedureJobStatusEndPoint = '/procedureJobQuery';
 var bsnRemoteProcedureJobDeleteEndPoint = '/procedureJobRemove';
@@ -3388,7 +3528,7 @@ var RemoteContentProcessOperations = (function () {
         var request = new Request(bsnRemoteProcedureJobDeleteUrl + ("/" + jobId) + ("?" + queryString), { method: 'DELETE', headers: headers });
         return fetch(request)
             .then(function (response) { return authenticator.logResponse(response, request); })
-            .then(function () { return null; })
+            .then(function () { return; })
             .catch(function (error) { throw common_1.processBsnRequestError(error); });
     };
     return RemoteContentProcessOperations;
@@ -3452,7 +3592,7 @@ var self_1 = __webpack_require__(34);
 var password_1 = __webpack_require__(29);
 var error_1 = __webpack_require__(1);
 var xml2js_1 = __webpack_require__(43);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var session;
 function bsnGetSession() {
     if (!session) {
@@ -3556,6 +3696,11 @@ var BsnSession = (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(BsnSession.prototype, "isCachedUser", {
+        get: function () { return this._authenticator.isCachedUser(); },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(BsnSession.prototype, "logLevel", {
         get: function () { return this._authenticator.logLevel; },
         set: function (value) { this._authenticator.logLevel = value; },
@@ -3573,6 +3718,14 @@ var BsnSession = (function () {
         return this._authenticator.activate(userName, password, networkName, serverUrl)
             .then(function () { return _this; });
     };
+    BsnSession.prototype.refresh = function () {
+        var _this = this;
+        return this._authenticator.refresh()
+            .then(function () { return _this; });
+    };
+    BsnSession.prototype.changeNetwork = function (networkName) {
+        return this._authenticator.changeNetwork(networkName);
+    };
     BsnSession.prototype.activateWithRefreshToken = function (userName, networkName, refreshToken) {
         var _this = this;
         return this._authenticator.activateWithRefreshOAuthToken(userName, networkName, refreshToken)
@@ -3586,6 +3739,9 @@ var BsnSession = (function () {
         var _this = this;
         return this._authenticator.openNetwork(networkName)
             .then(function () { return _this; });
+    };
+    BsnSession.prototype.isSelectedNetworkActive = function (networkName) {
+        return this._authenticator.isSelectedNetworkActive(networkName);
     };
     BsnSession.prototype.hasScope = function (scope) {
         return this._authenticator.hasScope(scope);
@@ -3623,7 +3779,7 @@ var BsnSession = (function () {
             .then(function (response) { return authenticator.getTextResponse(response); })
             .then(function (xmlText) {
             return new Promise(function (resolve, reject) {
-                xml2js_1.parseString(xmlText, options, function (error, result) {
+                xml2js_1.parseString(xmlText, lodash_1.isNil(options) ? {} : options, function (error, result) {
                     if (error) {
                         reject(new error_1.BsnError(error_1.BsnErrorType.invalidDataError, 'getStoredXmlFile: Could not parse XML: ' + error.message));
                     }
@@ -3712,11 +3868,12 @@ exports.BsnSession = BsnSession;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnWebPageUploadItem = exports.bsnCreateWebPageUploadItem = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var error_1 = __webpack_require__(1);
 var authenticator_1 = __webpack_require__(4);
 var common_1 = __webpack_require__(0);
 var uploadFileItem_1 = __webpack_require__(11);
+var lodash_1 = __webpack_require__(2);
 function bsnCreateWebPageUploadItem(htmlSiteSpec, jobIndex, progressCallback) {
     return new BsnWebPageUploadItem(htmlSiteSpec, jobIndex, progressCallback);
 }
@@ -3730,15 +3887,15 @@ var BsnWebPageUploadItem = (function () {
         this._totalBytes = 0;
         this._cancellationRequested = false;
         this._bsnWebPageUploadParams = {
-            name: null,
+            name: '',
             sessionToken: null,
             uploadToken: null,
-            fileName: undefined,
-            virtualPath: null,
+            fileName: '',
+            virtualPath: '',
             mediaType: uploadFileItem_1.BsnUploadMediaType.WebPage,
             fileSize: 0,
             fileLastModifiedDate: new Date(),
-            shA1Hash: null,
+            shA1Hash: '',
             fileThumb: null,
             assets: [],
         };
@@ -3765,7 +3922,7 @@ var BsnWebPageUploadItem = (function () {
             uploadFileItem_1.BsnUploadMediaType.DeviceWebPage : uploadFileItem_1.BsnUploadMediaType.WebPage;
         this._bsnWebPageUploadParams.fileSize = this._indexFileSpec.file.fileSize;
         this._bsnWebPageUploadParams.fileLastModifiedDate = this._indexFileSpec.file.lastModifiedDate;
-        this._progressCallback = progressCallback;
+        this._progressCallback = progressCallback ? progressCallback : null;
         this._indexFileIndex = this._assetFileSpec ? this._assetFileSpec.length : 0;
         this._assetFileIndexOffset = 0;
         var initFileProgress = function (fileIndex, fileSpec) { return ({
@@ -3797,11 +3954,11 @@ var BsnWebPageUploadItem = (function () {
                     sessionToken: null,
                     uploadToken: null,
                     fileName: webPageAsset.file.fileName,
-                    virtualPath: null,
+                    virtualPath: '',
                     mediaType: uploadFileItem_1.getUploadMediaTypeForFile(webPageAsset.file.fileName),
                     fileSize: webPageAsset.file.fileSize,
                     fileLastModifiedDate: webPageAsset.file.lastModifiedDate,
-                    shA1Hash: null,
+                    shA1Hash: '',
                     fileThumb: null,
                     webPageAssetId: 0,
                     relativePath: common_1.standardPathToBsnRelativePath(webPageAsset.destinationPath),
@@ -4091,67 +4248,59 @@ var BsnWebPageUploadItem = (function () {
     };
     BsnWebPageUploadItem.prototype.processWebPageAssetUploads = function () {
         var _this = this;
-        return new Promise(function (resolve, reject) {
-            var processNextWebPageAssetUpload = function () {
-                _this.updateWebPageAssetSummary();
-                if (_this._assetSummary.complete === _this.totalFileCount) {
-                    _this.getBsnWebPageUploadStatus()
-                        .then(function (status) {
-                        _this._bsnWebPageUploadStatus = status;
-                        resolve(_this._bsnWebPageUploadStatus);
-                    })
-                        .catch(function (error) { return reject(error); });
+        var processNextWebPageAssetUpload = function () {
+            _this.updateWebPageAssetSummary();
+            if (_this._assetSummary.complete === _this.totalFileCount) {
+                return _this.getBsnWebPageUploadStatus()
+                    .then(function (status) {
+                    _this._bsnWebPageUploadStatus = status;
+                    return status;
+                });
+            }
+            if (!_this._cancellationRequested) {
+                if (_this._assetSummary.uploading < _this.maxConcurrentFileUploads) {
+                    var nextIndex = _this._assetSummary.nextPendingIndex;
+                    if (nextIndex !== null) {
+                        _this._activeUploadMap.set(nextIndex, _this.uploadWebPageFile(nextIndex));
+                    }
+                }
+                if (_this._activeUploadMap.size === 0) {
+                    return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'Web page upload map is inconsistent'));
+                }
+            }
+            else {
+                if (_this._assetSummary.uploading !== 0) {
+                    _this._activeUploadMap.forEach(function (webPageUploadItem) { return webPageUploadItem.uploadFile.cancel(); });
+                }
+                return Promise.resolve(_this._bsnWebPageUploadStatus);
+            }
+            var promiseArray = [];
+            _this._activeUploadMap.forEach(function (webPageUploadItem) { return promiseArray.push(webPageUploadItem.promise); });
+            return Promise.race(promiseArray)
+                .then(function (uploadResult) {
+                _this._activeUploadMap.delete(uploadResult.jobIndex);
+                if (uploadResult.jobIndex === _this._indexFileIndex) {
+                    _this._indexFileUploadResult = uploadResult;
                 }
                 else {
-                    if (!_this._cancellationRequested) {
-                        if (_this._assetSummary.uploading < _this.maxConcurrentFileUploads) {
-                            var nextIndex = _this._assetSummary.nextPendingIndex;
-                            if (nextIndex !== null) {
-                                _this._activeUploadMap.set(nextIndex, _this.uploadWebPageFile(nextIndex));
-                            }
-                        }
-                        if (_this._activeUploadMap.size === 0) {
-                            reject(new error_1.BsnError(error_1.BsnErrorType.unexpectedError, 'Web page upload map is inconsistent'));
-                            return;
-                        }
+                    var assetIndex = uploadResult.jobIndex - _this._assetFileIndexOffset;
+                    _this._assetUploadResult[assetIndex] = uploadResult;
+                    if (uploadResult.status !== bscore_1.BsUploadItemStatus.Failed) {
+                        _this._bsnWebPageUploadParams.assets[assetIndex].webPageAssetId =
+                            uploadResult.assetItem.networkId;
                     }
                     else {
-                        if (_this._assetSummary.uploading !== 0) {
-                            _this._activeUploadMap.forEach(function (webPageUploadItem) { return webPageUploadItem.uploadFile.cancel(); });
+                        var reason = 'File: ' + _this._assetUploadProgress[assetIndex].fileName;
+                        if (uploadResult.error) {
+                            reason += ', reason: ' + uploadResult.error.message;
                         }
-                        resolve(_this._bsnWebPageUploadStatus);
-                        return;
+                        return Promise.reject(new error_1.BsnError(error_1.BsnErrorType.webPageUploadError, reason));
                     }
-                    var promiseArray_1 = [];
-                    _this._activeUploadMap.forEach(function (webPageUploadItem) { return promiseArray_1.push(webPageUploadItem.promise); });
-                    return Promise.race(promiseArray_1)
-                        .then(function (uploadResult) {
-                        _this._activeUploadMap.delete(uploadResult.jobIndex);
-                        if (uploadResult.jobIndex === _this._indexFileIndex) {
-                            _this._indexFileUploadResult = uploadResult;
-                        }
-                        else {
-                            var assetIndex = uploadResult.jobIndex - _this._assetFileIndexOffset;
-                            _this._assetUploadResult[assetIndex] = uploadResult;
-                            if (uploadResult.status !== bscore_1.BsUploadItemStatus.Failed) {
-                                _this._bsnWebPageUploadParams.assets[assetIndex].webPageAssetId =
-                                    uploadResult.assetItem.networkId;
-                            }
-                            else {
-                                var reason = 'File: ' + _this._assetUploadProgress[assetIndex].fileName;
-                                if (uploadResult.error) {
-                                    reason += ', reason: ' + uploadResult.error.message;
-                                }
-                                reject(new error_1.BsnError(error_1.BsnErrorType.webPageUploadError, reason));
-                                return;
-                            }
-                        }
-                        return processNextWebPageAssetUpload();
-                    });
                 }
-            };
-            return processNextWebPageAssetUpload();
-        });
+                return processNextWebPageAssetUpload();
+            });
+        };
+        return processNextWebPageAssetUpload();
     };
     BsnWebPageUploadItem.prototype.uploadWebPageFile = function (fileIndex) {
         var fileUploadSpec = fileIndex === this._indexFileIndex ?
@@ -4202,7 +4351,7 @@ var BsnWebPageUploadItem = (function () {
             return fetch(request)
                 .then(function (response) { return _this._authenticator.checkStatus(response, request); });
         })
-            .then(function () { return null; })
+            .then(function () { return; })
             .catch(function (error) {
             throw common_1.processBsnRequestError(error);
         });
@@ -4256,6 +4405,7 @@ var BsnWebPageUploadItem = (function () {
     BsnWebPageUploadItem.prototype.getBsAssetItemFromUpload = function (status) {
         var _this = this;
         var name = status.name, contentId = status.contentId, indexFileName = status.fileName, fileSize = status.fileSize, indexFileHash = status.shA1Hash;
+        var uploadDate = lodash_1.isNil(status.endTime) ? new Date() : status.endTime;
         var assetItem = {
             id: '0',
             name: name,
@@ -4268,17 +4418,17 @@ var BsnWebPageUploadItem = (function () {
             fileSize: fileSize,
             fileHash: indexFileHash,
             lastModifiedDate: this._bsnWebPageUploadParams.fileLastModifiedDate,
-            uploadDate: status.endTime,
+            uploadDate: uploadDate,
         };
         var htmlSite = {
             location: bscore_1.AssetLocation.Bsn,
             id: contentId,
             name: name,
-            uploadDate: status.endTime,
+            uploadDate: uploadDate,
             indexFile: {
                 name: indexFileName,
                 path: '/',
-                fileUrl: null,
+                fileUrl: '',
                 fileSize: fileSize,
                 fileHash: indexFileHash,
             },
@@ -4292,7 +4442,7 @@ var BsnWebPageUploadItem = (function () {
                 var htmlAsset = {
                     name: fileName,
                     path: _this._assetFileSpec[index].destinationPath,
-                    fileUrl: null,
+                    fileUrl: '',
                     fileSize: assetFileSize,
                     fileHash: assetHash,
                 };
@@ -4511,9 +4661,10 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BsnLogLevel = exports.bsnGetUploadApiUrl = exports.bsnGetApiUrl = exports.bsnGetAuthUrl = exports.BsnSessionStatus = exports.getBsnSession = exports.bsnGetSession = exports.BsnSession = void 0;
 __exportStar(__webpack_require__(6), exports);
 __exportStar(__webpack_require__(1), exports);
 var session_1 = __webpack_require__(15);
@@ -4545,7 +4696,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnBusinessOperationOperations = void 0;
 var common_1 = __webpack_require__(0);
 var entities_1 = __webpack_require__(6);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var BusinessOperationApiPath = 'Operations/Root/';
 var BsnBusinessOperationOperations = (function () {
     function BsnBusinessOperationOperations() {
@@ -4578,12 +4729,12 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnContentOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var entityTemplate_1 = __webpack_require__(8);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var ContentApiPath = 'Content/';
 var BsnContentOperations = (function () {
     function BsnContentOperations() {
@@ -4702,7 +4853,7 @@ var BsnContentOperations = (function () {
                 }
                 return common_1.updateBsnEntity(ContentApiPath, id, JSON.stringify(newEntity));
             }
-            return null;
+            return;
         });
     };
     BsnContentOperations.prototype.createFolder = function (name, virtualPath) {
@@ -4752,12 +4903,12 @@ exports.BsnContentOperations = BsnContentOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnDeviceOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var entities_1 = __webpack_require__(6);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var DeviceApiPath = 'Devices/';
 var DeviceErrorApiPathElement = "/Errors/";
 var DeviceDownloadApiPathElement = "/Downloads/";
@@ -4922,7 +5073,7 @@ exports.BsnDeviceLogOperations = exports.BsncDeviceLogEnumerator = void 0;
 var authenticator_1 = __webpack_require__(4);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var DeviceLogApiPath = '/api/v1/logs/';
 var BsncDeviceLogEnumerator = (function () {
     function BsncDeviceLogEnumerator(options) {
@@ -4934,24 +5085,26 @@ var BsncDeviceLogEnumerator = (function () {
         this.pageSize = null;
         this.hasNextPage = true;
         this.scrollId = null;
-        if (!lodash_1.isNil(options.filter)) {
-            if (lodash_1.isString(options.filter.serial)) {
-                this.serial = options.filter.serial;
+        if (!lodash_1.isNil(options)) {
+            if (!lodash_1.isNil(options.filter)) {
+                if (lodash_1.isString(options.filter.serial)) {
+                    this.serial = options.filter.serial;
+                }
+                var hasTimeStamp = options.filter.startTimeStamp instanceof Date;
+                if (hasTimeStamp) {
+                    this.startTimeStamp = options.filter.startTimeStamp;
+                    this.endTimeStamp = options.filter.endTimeStamp instanceof Date ? options.filter.endTimeStamp : new Date();
+                }
+                if (lodash_1.isString(options.filter.textSearch)) {
+                    this.textSearch = options.filter.textSearch;
+                }
             }
-            var hasTimeStamp = options.filter.startTimeStamp instanceof Date;
-            if (hasTimeStamp) {
-                this.startTimeStamp = options.filter.startTimeStamp;
-                this.endTimeStamp = options.filter.endTimeStamp instanceof Date ? options.filter.endTimeStamp : new Date();
+            if (Array.isArray(options.sortOrder) && options.sortOrder.length > 0) {
+                this.sortOrder = options.sortOrder;
             }
-            if (lodash_1.isString(options.filter.textSearch)) {
-                this.textSearch = options.filter.textSearch;
+            if (lodash_1.isNumber(options.pageSize)) {
+                this.pageSize = options.pageSize;
             }
-        }
-        if (Array.isArray(options.sortOrder) && options.sortOrder.length > 0) {
-            this.sortOrder = options.sortOrder;
-        }
-        if (lodash_1.isNumber(options.pageSize)) {
-            this.pageSize = options.pageSize;
         }
     }
     Object.defineProperty(BsncDeviceLogEnumerator.prototype, "queryString", {
@@ -4966,7 +5119,7 @@ var BsncDeviceLogEnumerator = (function () {
                     query = sep + "serial=" + this.serial;
                     sep = '&';
                 }
-                if (!lodash_1.isNil(this.startTimeStamp)) {
+                if (!lodash_1.isNil(this.startTimeStamp) && !lodash_1.isNil(this.endTimeStamp)) {
                     query +=
                         sep + "startTimeStamp=" + this.startTimeStamp.toISOString() + "&endTimeStamp=" + this.endTimeStamp.toISOString();
                     sep = '&';
@@ -5083,12 +5236,23 @@ exports.BsnDeviceLogOperations = BsnDeviceLogOperations;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnDeviceProvisioningOperations = void 0;
 var common_1 = __webpack_require__(0);
 var authenticator_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var qs = __webpack_require__(14);
 var DeviceSetupApiPath = 'Provisioning/Setups/';
 var DeviceProvisioningApiPath = 'Provisioning/Devices/';
@@ -5142,14 +5306,13 @@ var BsnDeviceProvisioningOperations = (function () {
         return common_1.getBsnBinaryData(DeviceSetupApiPath, JSON.stringify(deviceSettings, null, 0));
     };
     BsnDeviceProvisioningOperations.prototype.getDeviceRegistrationToken = function () {
-        var body = JSON.stringify('');
         var authenticator = authenticator_1.getBsnAuthenticator();
         return authenticator.checkAuthentication()
             .then(function () { return authenticator.checkNetworkActive(); })
             .then(function () {
-            var request = new Request(common_1.BsnUrl + 'Provisioning/Setups/Tokens/', { method: 'POST', headers: authenticator.requestHeadersForPostOrPut, body: body });
+            var request = new Request(common_1.BsnUrl + 'Provisioning/Setups/Tokens/', { method: 'POST', headers: authenticator.requestHeaders });
             return fetch(request)
-                .then(function (response) { return authenticator.logResponse(response, request, body); });
+                .then(function (response) { return authenticator.logResponse(response, request); });
         })
             .then(function (response) { return authenticator.getJsonResponse(response); })
             .then(function (result) { return common_1.updateEntityDataTypes(result); })
@@ -5206,8 +5369,8 @@ var BsnDeviceProvisioningOperations = (function () {
     };
     BsnDeviceProvisioningOperations.prototype.getBDeployDeviceList = function (options) {
         var authenticator = authenticator_1.getBsnAuthenticator();
-        var finalOptions = Object.assign({}, options);
-        if (lodash_1.isObject(options.query)) {
+        var finalOptions = __assign({}, options);
+        if (!lodash_1.isNil(finalOptions.query)) {
             finalOptions.query.NetworkName = authenticator.networkName;
         }
         else {
@@ -5262,7 +5425,7 @@ var BsnDeviceProvisioningOperations = (function () {
             .then(function (response) { return authenticator.getJsonResponse(response); })
             .then(function (response) {
             if (lodash_1.isNull(response.error)) {
-                return null;
+                return;
             }
             throw new error_1.BsnError(error_1.BsnErrorType.bDeployError, 'deleteBDeployDeviceSetup: Error in deleting device');
         })
@@ -5282,8 +5445,8 @@ var BsnDeviceProvisioningOperations = (function () {
     };
     BsnDeviceProvisioningOperations.prototype.getBDeployDeviceSetupList = function (options) {
         var authenticator = authenticator_1.getBsnAuthenticator();
-        var finalOptions = Object.assign({}, options);
-        if (lodash_1.isObject(options.query)) {
+        var finalOptions = __assign({}, options);
+        if (!lodash_1.isNil(finalOptions.query)) {
             finalOptions.query.networkName = authenticator.networkName;
         }
         else {
@@ -5331,7 +5494,7 @@ var BsnDeviceProvisioningOperations = (function () {
             .then(function (response) { return authenticator.getJsonResponse(response); })
             .then(function (response) {
             if (lodash_1.isNull(response.error)) {
-                return null;
+                return;
             }
             throw new error_1.BsnError(error_1.BsnErrorType.bDeployError, 'deleteBDeployDeviceSetup: Error in deleting device setup');
         })
@@ -5376,7 +5539,7 @@ exports.BsnDeviceProvisioningOperations = BsnDeviceProvisioningOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnDeviceWebPageOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
@@ -5441,7 +5604,7 @@ exports.BsnDeviceWebPageOperations = BsnDeviceWebPageOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnDynamicPlaylistOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
@@ -5514,7 +5677,7 @@ exports.BsnDynamicPlaylistOperations = BsnDynamicPlaylistOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnGroupOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
@@ -5640,7 +5803,7 @@ exports.BsnGroupOperations = BsnGroupOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnHtmlSiteOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
@@ -5705,7 +5868,7 @@ exports.BsnHtmlSiteOperations = BsnHtmlSiteOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnMediaFeedOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
@@ -5791,7 +5954,7 @@ var BsnPasswordOperations = (function () {
             + PasswordApiPath + ("?returnUrl=" + encodeURIComponent(returnUrl)));
         return fetch(request)
             .then(function (response) { return authenticator.checkStatus(response, request); })
-            .then(function () { return null; })
+            .then(function () { return; })
             .catch(function (error) {
             throw common_1.processBsnRequestError(error);
         });
@@ -5810,7 +5973,7 @@ exports.BsnPasswordOperations = BsnPasswordOperations;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnPluginOperations = void 0;
 var base64 = __webpack_require__(13);
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var entities_1 = __webpack_require__(6);
 var common_1 = __webpack_require__(0);
@@ -5908,12 +6071,12 @@ exports.BsnPluginOperations = BsnPluginOperations;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnPresentationOperations = void 0;
 var base64 = __webpack_require__(13);
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var entities_1 = __webpack_require__(6);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var PresentationApiPath = 'Presentations/';
 var BsnPresentationOperations = (function () {
     function BsnPresentationOperations() {
@@ -5935,7 +6098,9 @@ var BsnPresentationOperations = (function () {
             resourcesFile: resourcesFile ? resourcesFile : null,
             userDefinedEventsFile: userDefinedEventsFile ? userDefinedEventsFile : null,
             thumbnailFile: thumbnailFile ? thumbnailFile : null,
-            deviceWebPage: deviceWebPage, autorunPlugins: autorunPlugins, files: files, dependencies: dependencies, groups: groups, permissions: permissions,
+            deviceWebPage: deviceWebPage, autorunPlugins: autorunPlugins, files: files, dependencies: dependencies,
+            groups: lodash_1.isNil(groups) ? [] : groups,
+            permissions: lodash_1.isNil(permissions) ? [] : permissions,
         };
     };
     BsnPresentationOperations.getPresentationItemForSaveOrCreate = function (data) {
@@ -6202,14 +6367,17 @@ var BsnPresentationOperations = (function () {
     };
     BsnPresentationOperations.prototype.updatePresentation = function (data, assetFiles, permissions) {
         var _this = this;
+        var getPermissions = function () {
+            return (lodash_1.isNil(permissions) ?
+                (lodash_1.isNil(data.id) ? Promise.resolve(null) : _this.getPresentationPermissions(data.id))
+                : Promise.resolve(permissions));
+        };
         try {
             var presentationEntity_1 = BsnPresentationOperations.getPresentationItemForSaveOrCreate(data);
             if (!lodash_1.isNil(assetFiles)) {
                 presentationEntity_1 = BsnPresentationOperations.setPresentationItemAssetFiles(presentationEntity_1, assetFiles);
             }
-            return (lodash_1.isNil(permissions) ?
-                (lodash_1.isNil(data.id) ? Promise.resolve(null) : this.getPresentationPermissions(data.id))
-                : Promise.resolve(permissions))
+            return getPermissions()
                 .then(function (permissions1) {
                 if (!lodash_1.isNil(permissions1)) {
                     presentationEntity_1.permissions = permissions1;
@@ -6223,11 +6391,14 @@ var BsnPresentationOperations = (function () {
     };
     BsnPresentationOperations.prototype.publishPresentation = function (data, publishFiles, permissions) {
         var _this = this;
+        var getPermissions = function () {
+            return (lodash_1.isNil(permissions) ?
+                (lodash_1.isNil(data.id) ? Promise.resolve(null) : _this.getPresentationPermissions(data.id))
+                : Promise.resolve(permissions));
+        };
         try {
             var presentationEntity_2 = BsnPresentationOperations.setPresentationItemPublishFiles(BsnPresentationOperations.getPresentationItemForSaveOrCreate(data), publishFiles);
-            return (lodash_1.isNil(permissions) ?
-                (lodash_1.isNil(data.id) ? Promise.resolve(null) : this.getPresentationPermissions(data.id))
-                : Promise.resolve(permissions))
+            return getPermissions()
                 .then(function (permissions1) {
                 if (!lodash_1.isNil(permissions1)) {
                     presentationEntity_2.permissions = permissions1;
@@ -6494,7 +6665,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnSelfOperations = void 0;
 var authenticator_1 = __webpack_require__(4);
 var common_1 = __webpack_require__(0);
-var common_2 = __webpack_require__(0);
 var SelfApiPath = 'Self/';
 var NetworkApiPath = 'Self/Networks/';
 var UsersApiPath = 'Self/Users/';
@@ -6578,10 +6748,10 @@ var BsnSelfOperations = (function () {
         var authenticator = authenticator_1.getBsnAuthenticator();
         var body = JSON.stringify(settings, null, 0);
         return common_1.bsnFetch(common_1.BsnUrl + NetworkApiPath + authenticator.networkName + SettingsApiPathElement + '/', { method: 'PUT', body: body })
-            .then(function () { return null; })
+            .then(function () { return; })
             .catch(function (error) { throw common_1.processBsnRequestError(error); });
     };
-    BsnSelfOperations.prototype.updateNetworkSubscriptionLevel = function (level) {
+    BsnSelfOperations.prototype.updateNetworkSubscriptionLevel = function (level, password) {
         var authenticator = authenticator_1.getBsnAuthenticator();
         var body = JSON.stringify({ level: level }, null, 0);
         return common_1.bsnFetch(common_1.BsnUrl + NetworkApiPath + authenticator.networkName + SubscriptionApiPathElement + '/', {
@@ -6589,14 +6759,14 @@ var BsnSelfOperations = (function () {
             headers: new Headers(authenticator.requestHeadersForPostOrPutWithNotification),
             body: body,
         })
-            .then(function () { return authenticator.refreshPasswordAndActivate(); })
+            .then(function () { return authenticator.refreshPasswordAndActivate(password); })
             .catch(function (error) { throw common_1.processBsnRequestError(error); });
     };
     BsnSelfOperations.prototype.getSelfRoleEntity = function () {
         return common_1.executeApiCall(common_1.BsnUrl + UsersApiPath + authenticator_1.getBsnAuthenticator().userId + RoleApiPathElement + '/');
     };
     BsnSelfOperations.prototype.getSelfRolePermissions = function () {
-        return common_1.executeApiCall(common_1.BsnUrl + UsersApiPath + authenticator_1.getBsnAuthenticator().userId + RoleApiPathElement + common_2.PermissionApiPathElement);
+        return common_1.executeApiCall(common_1.BsnUrl + UsersApiPath + authenticator_1.getBsnAuthenticator().userId + RoleApiPathElement + common_1.PermissionApiPathElement);
     };
     return BsnSelfOperations;
 }());
@@ -6649,11 +6819,11 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnTaggedPlaylistOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var TaggedPlaylistApiPath = 'Playlists/Tagged/';
 var correctedSaveData = function (data) {
     var contentsVirtualPath = lodash_1.isNil(data.contentsVirtualPath) ? '\\' : common_1.standardPathToBsnVirtualPath(data.contentsVirtualPath);
@@ -6728,7 +6898,7 @@ exports.BsnTaggedPlaylistOperations = BsnTaggedPlaylistOperations;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnTagOperations = void 0;
 var common_1 = __webpack_require__(0);
-var lodash_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(2);
 var authenticator_1 = __webpack_require__(4);
 var TagApiPath = 'Tags/';
 var BsnTagOperations = (function () {
@@ -6766,7 +6936,7 @@ exports.BsnTagOperations = BsnTagOperations;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BsnTextFeedOperations = void 0;
-var bscore_1 = __webpack_require__(2);
+var bscore_1 = __webpack_require__(3);
 var filter_1 = __webpack_require__(5);
 var common_1 = __webpack_require__(0);
 var error_1 = __webpack_require__(1);

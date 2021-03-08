@@ -125,7 +125,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -142,56 +142,51 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isInstanceOfEnum = exports.getEnumKeyOfValue = exports.bscIsBsSize = exports.bscIsBsColor = exports.BsBlack = exports.TwitterFeedRestrictionType = exports.PlayerTagMatchingType = exports.DataFeedUsageType = exports.DataFeedType = exports.HtmlSiteType = exports.PlayFileTriggerType = exports.MediaListPlaybackType = exports.SystemVariableType = exports.NumberParameterType = exports.StringParameterType = exports.AccessType = exports.BlcChannels = exports.BlcTransitionMode = exports.BlcPlaybackMode = exports.BlcBlink = exports.BlcEffect = exports.BlcIndex = exports.BpAction = exports.CommandSequenceType = exports.CommandType = exports.CompareOperator = exports.TransitionType = exports.DistanceUnits = exports.RegionDirection = exports.IrTransmitterDestination = exports.IrReceiverEncodings = exports.IrReceiverSource = exports.ButtonDirection = exports.ButtonPanelNameArray = exports.ButtonPanelName = exports.BpIndex = exports.GpioType = exports.BpType = exports.EventIntrinsicAction = exports.EventType = exports.TextScrollingMethodType = exports.TextHAlignmentType = exports.RotationType = exports.VideoDisplayModeType = exports.MosaicMaxContentResolutionType = exports.AudioMixModeType = exports.AudioOutputType = exports.AudioConfiguration = exports.AudioOutputNameArray = exports.UsbConnectorNameArray = exports.AudioOutputName = exports.UsbConnectorName = exports.AudioMappingType = exports.AudioModeType = exports.AudioOutputSelectionType = exports.ImageOrientationType = exports.ColorSpaceType = exports.ImageModeType = exports.ViewModeType = exports.LanguageKeyType = exports.LanguageType = exports.UdpAddressType = exports.GraphicsZOrderType = exports.TouchCursorDisplayModeType = exports.DeviceWebPageDisplay = exports.MonitorOverscanType = exports.MonitorOrientationType = exports.VideoConnectorType = exports.VideoDecoderSize = exports.VideoDecoderName = exports.VideoDecoderMode = exports.VideoZoneLayerType = exports.ZoneLayerType = exports.ZoneType = exports.bscGetContentItemTypeForMediaType = exports.ContentItemType = exports.PlayableMediaTypes = exports.MediaType = void 0;
+exports.RegionDirection = exports.IrTransmitterDestination = exports.IrReceiverEncodings = exports.IrReceiverSource = exports.ButtonDirection = exports.ButtonPanelNameArray = exports.ButtonPanelName = exports.BpIndex = exports.GpioType = exports.BpType = exports.EventIntrinsicAction = exports.EventType = exports.TextScrollingMethodType = exports.TextHAlignmentType = exports.RotationType = exports.VideoDisplayModeType = exports.MosaicMaxContentResolutionType = exports.AudioMixModeType = exports.AudioOutputType = exports.AudioConfiguration = exports.AudioOutputNameArray = exports.UsbConnectorNameArray = exports.AudioOutputName = exports.UsbConnectorName = exports.AudioMappingType = exports.AudioModeType = exports.AudioOutputSelectionType = exports.ImageOrientationType = exports.ColorSpaceType = exports.ImageModeType = exports.ViewModeType = exports.LanguageKeyType = exports.LanguageType = exports.UdpAddressType = exports.GraphicsZOrderType = exports.TouchCursorDisplayModeType = exports.DeviceWebPageDisplay = exports.MonitorOverscanType = exports.MonitorOrientationType = exports.VideoConnectorType = exports.VideoDecoderSize = exports.VideoDecoderName = exports.VideoDecoderMode = exports.VideoZoneLayerType = exports.ZoneLayerType = exports.ZoneType = exports.bscGetContentItemTypeForMediaType = exports.ContentItemType = exports.PlayableMediaTypes = exports.MediaType = void 0;
+exports.isInstanceOfEnum = exports.getEnumKeyOfValue = exports.bscIsBsSize = exports.bscIsBsColor = exports.BsBlack = exports.TwitterFeedRestrictionType = exports.PlayerTagMatchingType = exports.DataFeedUsageType = exports.DataFeedType = exports.HtmlSiteType = exports.PlayFileTriggerType = exports.MediaListPlaybackType = exports.SystemVariableType = exports.NumberParameterType = exports.StringParameterType = exports.AccessType = exports.BlcChannels = exports.BlcTransitionMode = exports.BlcPlaybackMode = exports.BlcBlink = exports.BlcEffect = exports.BlcIndex = exports.BpAction = exports.CommandSequenceType = exports.CommandType = exports.CompareOperator = exports.TransitionType = exports.DistanceUnits = void 0;
 var assets_1 = __webpack_require__(4);
 var isNil = __webpack_require__(0);
-var MediaType = (function () {
-    function MediaType() {
-    }
-    MediaType.Video = 'Video';
-    MediaType.Audio = 'Audio';
-    MediaType.Image = 'Image';
-    MediaType.Text = 'Text';
-    MediaType.Font = 'Font';
-    MediaType.Css = 'Css';
-    MediaType.Auxiliary = 'Auxiliary';
-    MediaType.Other = 'Other';
-    return MediaType;
-}());
-exports.MediaType = MediaType;
-Object.freeze(MediaType);
+var MediaType;
+(function (MediaType) {
+    MediaType["Video"] = "Video";
+    MediaType["Audio"] = "Audio";
+    MediaType["Image"] = "Image";
+    MediaType["Text"] = "Text";
+    MediaType["Font"] = "Font";
+    MediaType["Css"] = "Css";
+    MediaType["Auxiliary"] = "Auxiliary";
+    MediaType["Other"] = "Other";
+})(MediaType = exports.MediaType || (exports.MediaType = {}));
 var PlayableMediaTypeArray = [
     MediaType.Image, MediaType.Video, MediaType.Audio, MediaType.Text
 ];
 exports.PlayableMediaTypes = new Set(PlayableMediaTypeArray);
-var ContentItemType = (function () {
-    function ContentItemType() {
-    }
-    ContentItemType.Video = 'Video';
-    ContentItemType.Image = 'Image';
-    ContentItemType.Audio = 'Audio';
-    ContentItemType.Html = 'Html';
-    ContentItemType.LiveVideo = 'LiveVideo';
-    ContentItemType.DataFeed = 'DataFeed';
-    ContentItemType.MrssFeed = 'MrssFeed';
-    ContentItemType.TwitterFeed = 'TwitterFeed';
-    ContentItemType.Text = 'Text';
-    ContentItemType.UserVariable = 'UserVariable';
-    ContentItemType.VideoStream = 'VideoStream';
-    ContentItemType.AudioStream = 'AudioStream';
-    ContentItemType.MjpegStream = 'MjpegStream';
-    ContentItemType.Time = 'Time';
-    ContentItemType.Date = 'Date';
-    ContentItemType.EventHandler = 'EventHandler';
-    ContentItemType.PlayFile = 'PlayFile';
-    ContentItemType.MediaList = 'MediaList';
-    ContentItemType.LiveText = 'LiveText';
-    ContentItemType.SuperState = 'SuperState';
-    ContentItemType.Invalid = 'Invalid';
-    return ContentItemType;
-}());
-exports.ContentItemType = ContentItemType;
-Object.freeze(ContentItemType);
+var ContentItemType;
+(function (ContentItemType) {
+    ContentItemType["Video"] = "Video";
+    ContentItemType["Image"] = "Image";
+    ContentItemType["Audio"] = "Audio";
+    ContentItemType["Html"] = "Html";
+    ContentItemType["LiveVideo"] = "LiveVideo";
+    ContentItemType["DataFeed"] = "DataFeed";
+    ContentItemType["MrssFeed"] = "MrssFeed";
+    ContentItemType["TwitterFeed"] = "TwitterFeed";
+    ContentItemType["Text"] = "Text";
+    ContentItemType["UserVariable"] = "UserVariable";
+    ContentItemType["VideoStream"] = "VideoStream";
+    ContentItemType["AudioStream"] = "AudioStream";
+    ContentItemType["MjpegStream"] = "MjpegStream";
+    ContentItemType["Time"] = "Time";
+    ContentItemType["Date"] = "Date";
+    ContentItemType["EventHandler"] = "EventHandler";
+    ContentItemType["PlayFile"] = "PlayFile";
+    ContentItemType["MediaList"] = "MediaList";
+    ContentItemType["LocalPlaylist"] = "LocalPlaylist";
+    ContentItemType["LocalPlaylistItem"] = "LocalPlaylistItem";
+    ContentItemType["LiveText"] = "LiveText";
+    ContentItemType["SuperState"] = "SuperState";
+    ContentItemType["Invalid"] = "Invalid";
+})(ContentItemType = exports.ContentItemType || (exports.ContentItemType = {}));
 function bscGetContentItemTypeForMediaType(type) {
     if (assets_1.bscIsMediaTypePlayable(type)) {
         return type;
@@ -199,282 +194,196 @@ function bscGetContentItemTypeForMediaType(type) {
     return ContentItemType.Invalid;
 }
 exports.bscGetContentItemTypeForMediaType = bscGetContentItemTypeForMediaType;
-var ZoneType = (function () {
-    function ZoneType() {
-    }
-    ZoneType.VideoOrImages = 'VideoOrImages';
-    ZoneType.VideoOnly = 'VideoOnly';
-    ZoneType.Images = 'Images';
-    ZoneType.AudioOnly = 'AudioOnly';
-    ZoneType.EnhancedAudio = 'EnhancedAudio';
-    ZoneType.Ticker = 'Ticker';
-    ZoneType.Clock = 'Clock';
-    ZoneType.BackgroundImage = 'BackgroundImage';
-    ZoneType.Control = 'Control';
-    return ZoneType;
-}());
-exports.ZoneType = ZoneType;
-Object.freeze(ZoneType);
-var ZoneLayerType = (function () {
-    function ZoneLayerType() {
-    }
-    ZoneLayerType.Video = 'Video';
-    ZoneLayerType.Audio = 'Audio';
-    ZoneLayerType.Graphics = 'Graphics';
-    ZoneLayerType.Invisible = 'Invisible';
-    return ZoneLayerType;
-}());
-exports.ZoneLayerType = ZoneLayerType;
-Object.freeze(ZoneLayerType);
-var VideoZoneLayerType = (function () {
-    function VideoZoneLayerType() {
-    }
-    VideoZoneLayerType.FourK = 'FourK';
-    VideoZoneLayerType.HD = 'HD';
-    return VideoZoneLayerType;
-}());
-exports.VideoZoneLayerType = VideoZoneLayerType;
-Object.freeze(VideoZoneLayerType);
-var VideoDecoderMode = (function () {
-    function VideoDecoderMode() {
-    }
-    VideoDecoderMode.Regular = 'Regular';
-    VideoDecoderMode.Mosaic = 'Mosaic';
-    return VideoDecoderMode;
-}());
-exports.VideoDecoderMode = VideoDecoderMode;
-Object.freeze(VideoDecoderMode);
-var VideoDecoderName = (function () {
-    function VideoDecoderName() {
-    }
-    VideoDecoderName.FourKFirstDecoder = '4K';
-    VideoDecoderName.FourKSecondDecoder = '4K2';
-    VideoDecoderName.HDDecoder = 'Hd';
-    return VideoDecoderName;
-}());
-exports.VideoDecoderName = VideoDecoderName;
-Object.freeze(VideoDecoderName);
-var VideoDecoderSize = (function () {
-    function VideoDecoderSize() {
-    }
-    VideoDecoderSize.FourK = 'FourK';
-    VideoDecoderSize.HD = 'HD';
-    return VideoDecoderSize;
-}());
-exports.VideoDecoderSize = VideoDecoderSize;
-Object.freeze(VideoDecoderSize);
-var VideoConnectorType = (function () {
-    function VideoConnectorType() {
-    }
-    VideoConnectorType.Hdmi = 'HDMI';
-    VideoConnectorType.Vga = 'VGA';
-    VideoConnectorType.Component = 'Component';
-    VideoConnectorType.None = 'None';
-    return VideoConnectorType;
-}());
-exports.VideoConnectorType = VideoConnectorType;
-Object.freeze(VideoConnectorType);
-var MonitorOrientationType = (function () {
-    function MonitorOrientationType() {
-    }
-    MonitorOrientationType.Landscape = 'Landscape';
-    MonitorOrientationType.PortraitBottomLeft = 'PortraitBottomLeft';
-    MonitorOrientationType.PortraitBottomRight = 'PortraitBottomRight';
-    MonitorOrientationType.None = 'None';
-    return MonitorOrientationType;
-}());
-exports.MonitorOrientationType = MonitorOrientationType;
-Object.freeze(MonitorOrientationType);
-var MonitorOverscanType = (function () {
-    function MonitorOverscanType() {
-    }
-    MonitorOverscanType.NoOverscan = 'NoOverscan';
-    MonitorOverscanType.OverscanActionSafeArea = 'OverscanActionSafeArea';
-    MonitorOverscanType.OverscanTitleSafeArea = 'OverscanTitleSafeArea';
-    return MonitorOverscanType;
-}());
-exports.MonitorOverscanType = MonitorOverscanType;
-Object.freeze(MonitorOverscanType);
-var DeviceWebPageDisplay = (function () {
-    function DeviceWebPageDisplay() {
-    }
-    DeviceWebPageDisplay.None = 'None';
-    DeviceWebPageDisplay.Standard = 'Standard';
-    DeviceWebPageDisplay.Custom = 'Custom';
-    return DeviceWebPageDisplay;
-}());
-exports.DeviceWebPageDisplay = DeviceWebPageDisplay;
-Object.freeze(DeviceWebPageDisplay);
-var TouchCursorDisplayModeType = (function () {
-    function TouchCursorDisplayModeType() {
-    }
-    TouchCursorDisplayModeType.Disabled = 'Disabled';
-    TouchCursorDisplayModeType.Auto = 'Auto';
-    TouchCursorDisplayModeType.Display = 'Display';
-    return TouchCursorDisplayModeType;
-}());
-exports.TouchCursorDisplayModeType = TouchCursorDisplayModeType;
-Object.freeze(TouchCursorDisplayModeType);
-var GraphicsZOrderType = (function () {
-    function GraphicsZOrderType() {
-    }
-    GraphicsZOrderType.Back = 'Back';
-    GraphicsZOrderType.Middle = 'Middle';
-    GraphicsZOrderType.Front = 'Front';
-    return GraphicsZOrderType;
-}());
-exports.GraphicsZOrderType = GraphicsZOrderType;
-Object.freeze(GraphicsZOrderType);
-var UdpAddressType = (function () {
-    function UdpAddressType() {
-    }
-    UdpAddressType.IPAddress = 'IPAddress';
-    UdpAddressType.LocalSubnet = 'LocalSubnet';
-    UdpAddressType.Ethernet = 'Ethernet';
-    UdpAddressType.Wireless = 'Wireless';
-    return UdpAddressType;
-}());
-exports.UdpAddressType = UdpAddressType;
-Object.freeze(UdpAddressType);
-var LanguageType = (function () {
-    function LanguageType() {
-    }
-    LanguageType.English = 'English';
-    LanguageType.French = 'French';
-    LanguageType.German = 'German';
-    LanguageType.Spanish = 'Spanish';
-    LanguageType.Italian = 'Italian';
-    LanguageType.Dutch = 'Dutch';
-    LanguageType.Swedish = 'Swedish';
-    return LanguageType;
-}());
-exports.LanguageType = LanguageType;
-Object.freeze(LanguageType);
-var LanguageKeyType = (function () {
-    function LanguageKeyType() {
-    }
-    LanguageKeyType.English = 'eng';
-    LanguageKeyType.French = 'fre';
-    LanguageKeyType.German = 'ger';
-    LanguageKeyType.Spanish = 'spa';
-    LanguageKeyType.Italian = 'ita';
-    LanguageKeyType.Dutch = 'dut';
-    LanguageKeyType.Swedish = 'swe';
-    return LanguageKeyType;
-}());
-exports.LanguageKeyType = LanguageKeyType;
-Object.freeze(LanguageKeyType);
-var ViewModeType = (function () {
-    function ViewModeType() {
-    }
-    ViewModeType.ScaleToFill = 'Scale to Fill';
-    ViewModeType.Letterboxed = 'Letterboxed and Centered';
-    ViewModeType.FillAndCenter = 'Fill Screen and Centered';
-    return ViewModeType;
-}());
-exports.ViewModeType = ViewModeType;
-Object.freeze(ViewModeType);
-var ImageModeType = (function () {
-    function ImageModeType() {
-    }
-    ImageModeType.CenterImage = 'Center Image';
-    ImageModeType.ScaleToFit = 'Scale to Fit';
-    ImageModeType.FillAndCrop = 'Scale to Fill and Crop';
-    ImageModeType.ScaleToFill = 'Scale to Fill';
-    return ImageModeType;
-}());
-exports.ImageModeType = ImageModeType;
-Object.freeze(ImageModeType);
-var ColorSpaceType = (function () {
-    function ColorSpaceType() {
-    }
-    ColorSpaceType.Unknown = 'Unknown';
-    ColorSpaceType.CMY = 'CMY';
-    ColorSpaceType.CMYK = 'CMYK';
-    ColorSpaceType.Gray = 'Gray';
-    ColorSpaceType.HCL = 'HCL';
-    ColorSpaceType.HCLp = 'HCLp';
-    ColorSpaceType.HSB = 'HSB';
-    ColorSpaceType.HSI = 'HSI';
-    ColorSpaceType.HSL = 'HSL';
-    ColorSpaceType.HSV = 'HSV';
-    ColorSpaceType.HWB = 'HWB';
-    ColorSpaceType.Lab = 'Lab';
-    ColorSpaceType.LCH = 'LCH';
-    ColorSpaceType.LCHab = 'LCHab';
-    ColorSpaceType.LCHuv = 'LCHuv';
-    ColorSpaceType.Log = 'Log';
-    ColorSpaceType.LMS = 'LMS';
-    ColorSpaceType.Luv = 'Luv';
-    ColorSpaceType.OHTA = 'OHTA';
-    ColorSpaceType.Rec601YCbCr = 'Rec601YCbCr';
-    ColorSpaceType.Rec709YCbCr = 'Rec709YCbCr';
-    ColorSpaceType.RGB = 'RGB';
-    ColorSpaceType.scRGB = 'scRGB';
-    ColorSpaceType.sRGB = 'sRGB';
-    ColorSpaceType.Transparent = 'Transparent';
-    ColorSpaceType.XyV = 'XyV';
-    ColorSpaceType.XYZ = 'XYZ';
-    ColorSpaceType.YCbCr = 'YCbCr';
-    ColorSpaceType.YCC = 'YCC';
-    ColorSpaceType.YDbDr = 'YDbDr';
-    ColorSpaceType.YIQ = 'YIQ';
-    ColorSpaceType.YPbPr = 'YPbPr';
-    ColorSpaceType.YUV = 'YUV';
-    ColorSpaceType.LinearGray = 'LinearGray';
-    return ColorSpaceType;
-}());
-exports.ColorSpaceType = ColorSpaceType;
-var ImageOrientationType = (function () {
-    function ImageOrientationType() {
-    }
-    ImageOrientationType.Undefined = 'Undefined';
-    ImageOrientationType.TopLeft = 'TopLeft';
-    ImageOrientationType.TopRight = 'TopRight';
-    ImageOrientationType.BottomRight = 'BottomRight';
-    ImageOrientationType.BottomLeft = 'BottomLeft';
-    ImageOrientationType.LeftTop = 'LeftTop';
-    ImageOrientationType.RightTop = 'RightTop';
-    ImageOrientationType.RightBottom = 'RightBottom';
-    ImageOrientationType.LeftBottom = 'LeftBottom';
-    return ImageOrientationType;
-}());
-exports.ImageOrientationType = ImageOrientationType;
-var AudioOutputSelectionType = (function () {
-    function AudioOutputSelectionType() {
-    }
-    AudioOutputSelectionType.Analog = 'Analog';
-    AudioOutputSelectionType.Usb = 'Usb';
-    AudioOutputSelectionType.DigitalPcm = 'DigitalPcm';
-    AudioOutputSelectionType.DigitalAc3 = 'DigitalAc3';
-    AudioOutputSelectionType.AnalogHdmiAc3 = 'AnalogHdmiAc3';
-    return AudioOutputSelectionType;
-}());
-exports.AudioOutputSelectionType = AudioOutputSelectionType;
-Object.freeze(AudioOutputSelectionType);
-var AudioModeType = (function () {
-    function AudioModeType() {
-    }
-    AudioModeType.Surround = 'Surround';
-    AudioModeType.Stereo = 'Stereo';
-    AudioModeType.NoAudio = 'NoAudio';
-    AudioModeType.Left = 'Left';
-    AudioModeType.Right = 'Right';
-    return AudioModeType;
-}());
-exports.AudioModeType = AudioModeType;
-Object.freeze(AudioModeType);
-var AudioMappingType = (function () {
-    function AudioMappingType() {
-    }
-    AudioMappingType.Audio1 = 'Audio1';
-    AudioMappingType.Audio2 = 'Audio2';
-    AudioMappingType.Audio3 = 'Audio3';
-    AudioMappingType.AudioAll = 'AudioAll';
-    return AudioMappingType;
-}());
-exports.AudioMappingType = AudioMappingType;
-Object.freeze(AudioMappingType);
+var ZoneType;
+(function (ZoneType) {
+    ZoneType["VideoOrImages"] = "VideoOrImages";
+    ZoneType["VideoOnly"] = "VideoOnly";
+    ZoneType["Images"] = "Images";
+    ZoneType["AudioOnly"] = "AudioOnly";
+    ZoneType["EnhancedAudio"] = "EnhancedAudio";
+    ZoneType["Ticker"] = "Ticker";
+    ZoneType["Clock"] = "Clock";
+    ZoneType["BackgroundImage"] = "BackgroundImage";
+    ZoneType["Control"] = "Control";
+})(ZoneType = exports.ZoneType || (exports.ZoneType = {}));
+var ZoneLayerType;
+(function (ZoneLayerType) {
+    ZoneLayerType["Video"] = "Video";
+    ZoneLayerType["Audio"] = "Audio";
+    ZoneLayerType["Graphics"] = "Graphics";
+    ZoneLayerType["Invisible"] = "Invisible";
+})(ZoneLayerType = exports.ZoneLayerType || (exports.ZoneLayerType = {}));
+var VideoZoneLayerType;
+(function (VideoZoneLayerType) {
+    VideoZoneLayerType["FourK"] = "FourK";
+    VideoZoneLayerType["HD"] = "HD";
+})(VideoZoneLayerType = exports.VideoZoneLayerType || (exports.VideoZoneLayerType = {}));
+var VideoDecoderMode;
+(function (VideoDecoderMode) {
+    VideoDecoderMode["Regular"] = "Regular";
+    VideoDecoderMode["Mosaic"] = "Mosaic";
+})(VideoDecoderMode = exports.VideoDecoderMode || (exports.VideoDecoderMode = {}));
+var VideoDecoderName;
+(function (VideoDecoderName) {
+    VideoDecoderName["FourKFirstDecoder"] = "4K";
+    VideoDecoderName["FourKSecondDecoder"] = "4K2";
+    VideoDecoderName["HDDecoder"] = "Hd";
+})(VideoDecoderName = exports.VideoDecoderName || (exports.VideoDecoderName = {}));
+var VideoDecoderSize;
+(function (VideoDecoderSize) {
+    VideoDecoderSize["FourK"] = "FourK";
+    VideoDecoderSize["HD"] = "HD";
+})(VideoDecoderSize = exports.VideoDecoderSize || (exports.VideoDecoderSize = {}));
+var VideoConnectorType;
+(function (VideoConnectorType) {
+    VideoConnectorType["Hdmi"] = "HDMI";
+    VideoConnectorType["Vga"] = "VGA";
+    VideoConnectorType["Component"] = "Component";
+    VideoConnectorType["None"] = "None";
+})(VideoConnectorType = exports.VideoConnectorType || (exports.VideoConnectorType = {}));
+var MonitorOrientationType;
+(function (MonitorOrientationType) {
+    MonitorOrientationType["Landscape"] = "Landscape";
+    MonitorOrientationType["PortraitBottomLeft"] = "PortraitBottomLeft";
+    MonitorOrientationType["PortraitBottomRight"] = "PortraitBottomRight";
+    MonitorOrientationType["None"] = "None";
+})(MonitorOrientationType = exports.MonitorOrientationType || (exports.MonitorOrientationType = {}));
+var MonitorOverscanType;
+(function (MonitorOverscanType) {
+    MonitorOverscanType["NoOverscan"] = "NoOverscan";
+    MonitorOverscanType["OverscanActionSafeArea"] = "OverscanActionSafeArea";
+    MonitorOverscanType["OverscanTitleSafeArea"] = "OverscanTitleSafeArea";
+})(MonitorOverscanType = exports.MonitorOverscanType || (exports.MonitorOverscanType = {}));
+var DeviceWebPageDisplay;
+(function (DeviceWebPageDisplay) {
+    DeviceWebPageDisplay["None"] = "None";
+    DeviceWebPageDisplay["Standard"] = "Standard";
+    DeviceWebPageDisplay["Custom"] = "Custom";
+})(DeviceWebPageDisplay = exports.DeviceWebPageDisplay || (exports.DeviceWebPageDisplay = {}));
+var TouchCursorDisplayModeType;
+(function (TouchCursorDisplayModeType) {
+    TouchCursorDisplayModeType["Disabled"] = "Disabled";
+    TouchCursorDisplayModeType["Auto"] = "Auto";
+    TouchCursorDisplayModeType["Display"] = "Display";
+})(TouchCursorDisplayModeType = exports.TouchCursorDisplayModeType || (exports.TouchCursorDisplayModeType = {}));
+var GraphicsZOrderType;
+(function (GraphicsZOrderType) {
+    GraphicsZOrderType["Back"] = "Back";
+    GraphicsZOrderType["Middle"] = "Middle";
+    GraphicsZOrderType["Front"] = "Front";
+})(GraphicsZOrderType = exports.GraphicsZOrderType || (exports.GraphicsZOrderType = {}));
+var UdpAddressType;
+(function (UdpAddressType) {
+    UdpAddressType["IPAddress"] = "IPAddress";
+    UdpAddressType["LocalSubnet"] = "LocalSubnet";
+    UdpAddressType["Ethernet"] = "Ethernet";
+    UdpAddressType["Wireless"] = "Wireless";
+})(UdpAddressType = exports.UdpAddressType || (exports.UdpAddressType = {}));
+var LanguageType;
+(function (LanguageType) {
+    LanguageType["English"] = "English";
+    LanguageType["French"] = "French";
+    LanguageType["German"] = "German";
+    LanguageType["Spanish"] = "Spanish";
+    LanguageType["Italian"] = "Italian";
+    LanguageType["Dutch"] = "Dutch";
+    LanguageType["Swedish"] = "Swedish";
+})(LanguageType = exports.LanguageType || (exports.LanguageType = {}));
+var LanguageKeyType;
+(function (LanguageKeyType) {
+    LanguageKeyType["English"] = "eng";
+    LanguageKeyType["French"] = "fre";
+    LanguageKeyType["German"] = "ger";
+    LanguageKeyType["Spanish"] = "spa";
+    LanguageKeyType["Italian"] = "ita";
+    LanguageKeyType["Dutch"] = "dut";
+    LanguageKeyType["Swedish"] = "swe";
+})(LanguageKeyType = exports.LanguageKeyType || (exports.LanguageKeyType = {}));
+var ViewModeType;
+(function (ViewModeType) {
+    ViewModeType["ScaleToFill"] = "Scale to Fill";
+    ViewModeType["Letterboxed"] = "Letterboxed and Centered";
+    ViewModeType["FillAndCenter"] = "Fill Screen and Centered";
+})(ViewModeType = exports.ViewModeType || (exports.ViewModeType = {}));
+var ImageModeType;
+(function (ImageModeType) {
+    ImageModeType["CenterImage"] = "Center Image";
+    ImageModeType["ScaleToFit"] = "Scale to Fit";
+    ImageModeType["FillAndCrop"] = "Scale to Fill and Crop";
+    ImageModeType["ScaleToFill"] = "Scale to Fill";
+})(ImageModeType = exports.ImageModeType || (exports.ImageModeType = {}));
+var ColorSpaceType;
+(function (ColorSpaceType) {
+    ColorSpaceType["Unknown"] = "Unknown";
+    ColorSpaceType["CMY"] = "CMY";
+    ColorSpaceType["CMYK"] = "CMYK";
+    ColorSpaceType["Gray"] = "Gray";
+    ColorSpaceType["HCL"] = "HCL";
+    ColorSpaceType["HCLp"] = "HCLp";
+    ColorSpaceType["HSB"] = "HSB";
+    ColorSpaceType["HSI"] = "HSI";
+    ColorSpaceType["HSL"] = "HSL";
+    ColorSpaceType["HSV"] = "HSV";
+    ColorSpaceType["HWB"] = "HWB";
+    ColorSpaceType["Lab"] = "Lab";
+    ColorSpaceType["LCH"] = "LCH";
+    ColorSpaceType["LCHab"] = "LCHab";
+    ColorSpaceType["LCHuv"] = "LCHuv";
+    ColorSpaceType["Log"] = "Log";
+    ColorSpaceType["LMS"] = "LMS";
+    ColorSpaceType["Luv"] = "Luv";
+    ColorSpaceType["OHTA"] = "OHTA";
+    ColorSpaceType["Rec601YCbCr"] = "Rec601YCbCr";
+    ColorSpaceType["Rec709YCbCr"] = "Rec709YCbCr";
+    ColorSpaceType["RGB"] = "RGB";
+    ColorSpaceType["scRGB"] = "scRGB";
+    ColorSpaceType["sRGB"] = "sRGB";
+    ColorSpaceType["Transparent"] = "Transparent";
+    ColorSpaceType["XyV"] = "XyV";
+    ColorSpaceType["XYZ"] = "XYZ";
+    ColorSpaceType["YCbCr"] = "YCbCr";
+    ColorSpaceType["YCC"] = "YCC";
+    ColorSpaceType["YDbDr"] = "YDbDr";
+    ColorSpaceType["YIQ"] = "YIQ";
+    ColorSpaceType["YPbPr"] = "YPbPr";
+    ColorSpaceType["YUV"] = "YUV";
+    ColorSpaceType["LinearGray"] = "LinearGray";
+})(ColorSpaceType = exports.ColorSpaceType || (exports.ColorSpaceType = {}));
+var ImageOrientationType;
+(function (ImageOrientationType) {
+    ImageOrientationType["Undefined"] = "Undefined";
+    ImageOrientationType["TopLeft"] = "TopLeft";
+    ImageOrientationType["TopRight"] = "TopRight";
+    ImageOrientationType["BottomRight"] = "BottomRight";
+    ImageOrientationType["BottomLeft"] = "BottomLeft";
+    ImageOrientationType["LeftTop"] = "LeftTop";
+    ImageOrientationType["RightTop"] = "RightTop";
+    ImageOrientationType["RightBottom"] = "RightBottom";
+    ImageOrientationType["LeftBottom"] = "LeftBottom";
+})(ImageOrientationType = exports.ImageOrientationType || (exports.ImageOrientationType = {}));
+var AudioOutputSelectionType;
+(function (AudioOutputSelectionType) {
+    AudioOutputSelectionType["Analog"] = "Analog";
+    AudioOutputSelectionType["Usb"] = "Usb";
+    AudioOutputSelectionType["DigitalPcm"] = "DigitalPcm";
+    AudioOutputSelectionType["DigitalAc3"] = "DigitalAc3";
+    AudioOutputSelectionType["AnalogHdmiAc3"] = "AnalogHdmiAc3";
+})(AudioOutputSelectionType = exports.AudioOutputSelectionType || (exports.AudioOutputSelectionType = {}));
+var AudioModeType;
+(function (AudioModeType) {
+    AudioModeType["Surround"] = "Surround";
+    AudioModeType["Stereo"] = "Stereo";
+    AudioModeType["NoAudio"] = "NoAudio";
+    AudioModeType["Left"] = "Left";
+    AudioModeType["Right"] = "Right";
+})(AudioModeType = exports.AudioModeType || (exports.AudioModeType = {}));
+var AudioMappingType;
+(function (AudioMappingType) {
+    AudioMappingType["Audio1"] = "Audio1";
+    AudioMappingType["Audio2"] = "Audio2";
+    AudioMappingType["Audio3"] = "Audio3";
+    AudioMappingType["AudioAll"] = "AudioAll";
+})(AudioMappingType = exports.AudioMappingType || (exports.AudioMappingType = {}));
 var UsbConnectorName = (function () {
     function UsbConnectorName() {
     }
@@ -524,560 +433,398 @@ exports.UsbConnectorNameArray = [
 exports.AudioOutputNameArray = __spreadArrays([
     'analog1', 'analog2', 'analog3', 'hdmi', 'spdif'
 ], exports.UsbConnectorNameArray);
-var AudioConfiguration = (function () {
-    function AudioConfiguration() {
-    }
-    AudioConfiguration.MixedAudioPCMOnly = 'MixedAudioPCMOnly';
-    AudioConfiguration.MixedAudioPCMCompressed = 'MixedAudioPCMCompressed';
-    AudioConfiguration.FixedAudio = 'FixedAudio';
-    return AudioConfiguration;
-}());
-exports.AudioConfiguration = AudioConfiguration;
-Object.freeze(AudioConfiguration);
-var AudioOutputType = (function () {
-    function AudioOutputType() {
-    }
-    AudioOutputType.Pcm = 'Pcm';
-    AudioOutputType.Passthrough = 'Passthrough';
-    AudioOutputType.Multichannel = 'Multichannel';
-    AudioOutputType.None = 'None';
-    return AudioOutputType;
-}());
-exports.AudioOutputType = AudioOutputType;
-Object.freeze(AudioOutputType);
-var AudioMixModeType = (function () {
-    function AudioMixModeType() {
-    }
-    AudioMixModeType.Stereo = 'Stereo';
-    AudioMixModeType.Left = 'Left';
-    AudioMixModeType.Right = 'Right';
-    return AudioMixModeType;
-}());
-exports.AudioMixModeType = AudioMixModeType;
-Object.freeze(AudioMixModeType);
-var MosaicMaxContentResolutionType = (function () {
-    function MosaicMaxContentResolutionType() {
-    }
-    MosaicMaxContentResolutionType.NotApplicable = 'NotApplicable';
-    MosaicMaxContentResolutionType.QCIF = 'QCIF';
-    MosaicMaxContentResolutionType.CIF = 'CIF';
-    MosaicMaxContentResolutionType.SD = 'SD';
-    MosaicMaxContentResolutionType.HD = 'HD';
-    MosaicMaxContentResolutionType.FK = '4K';
-    return MosaicMaxContentResolutionType;
-}());
-exports.MosaicMaxContentResolutionType = MosaicMaxContentResolutionType;
-Object.freeze(MosaicMaxContentResolutionType);
-var VideoDisplayModeType = (function () {
-    function VideoDisplayModeType() {
-    }
-    VideoDisplayModeType.m2D = '2D';
-    VideoDisplayModeType.m3DTOB = '3DTOB';
-    VideoDisplayModeType.m3DSBS = '3DSBS';
-    return VideoDisplayModeType;
-}());
-exports.VideoDisplayModeType = VideoDisplayModeType;
-Object.freeze(VideoDisplayModeType);
-var RotationType = (function () {
-    function RotationType() {
-    }
-    RotationType.rot0 = '0';
-    RotationType.rot90 = '90';
-    RotationType.rot180 = '180';
-    RotationType.rot270 = '270';
-    return RotationType;
-}());
-exports.RotationType = RotationType;
-Object.freeze(RotationType);
-var TextHAlignmentType = (function () {
-    function TextHAlignmentType() {
-    }
-    TextHAlignmentType.Left = 'Left';
-    TextHAlignmentType.Center = 'Center';
-    TextHAlignmentType.Right = 'Right';
-    return TextHAlignmentType;
-}());
-exports.TextHAlignmentType = TextHAlignmentType;
-Object.freeze(TextHAlignmentType);
-var TextScrollingMethodType = (function () {
-    function TextScrollingMethodType() {
-    }
-    TextScrollingMethodType.Animated = 'Animated';
-    TextScrollingMethodType.StaticText = 'StaticText';
-    TextScrollingMethodType.Scrolling = 'Scrolling';
-    return TextScrollingMethodType;
-}());
-exports.TextScrollingMethodType = TextScrollingMethodType;
-Object.freeze(TextScrollingMethodType);
-var EventType = (function () {
-    function EventType() {
-    }
-    EventType.MediaEnd = 'MediaEnd';
-    EventType.Timer = 'Timer';
-    EventType.MediaEndOrTimer = 'MediaEndOrTimer';
-    EventType.MediaListEnd = 'MediaListEnd';
-    EventType.Keyboard = 'Keyboard';
-    EventType.Remote = 'Remote';
-    EventType.Usb = 'Usb';
-    EventType.Synchronize = 'Synchronize';
-    EventType.ZoneMessage = 'ZoneMessage';
-    EventType.InternalSynchronize = 'InternalSynchronize';
-    EventType.Success = 'Success';
-    EventType.Fail = 'Fail';
-    EventType.Serial = 'Serial';
-    EventType.TimeClock = 'TimeClock';
-    EventType.Gps = 'Gps';
-    EventType.AudioTimeCode = 'AudioTimeCode';
-    EventType.VideoTimeCode = 'VideoTimeCode';
-    EventType.RectangularTouch = 'RectangularTouch';
-    EventType.Gpio = 'Gpio';
-    EventType.Bp = 'Bp';
-    EventType.PluginMessage = 'PluginMessage';
-    EventType.Udp = 'Udp';
-    EventType.InteractiveMenu = 'InteractiveMenu';
-    EventType.WssEvent = 'WssEvent';
-    EventType.Button = 'Button';
-    EventType.Bmap = 'Bmap';
-    EventType.BmapHex = 'BmapHex';
-    return EventType;
-}());
-exports.EventType = EventType;
-Object.freeze(EventType);
-var EventIntrinsicAction = (function () {
-    function EventIntrinsicAction() {
-    }
-    EventIntrinsicAction.None = 'None';
-    EventIntrinsicAction.SequenceForward = 'SeqFwd';
-    EventIntrinsicAction.SequenceBackward = 'SeqBack';
-    EventIntrinsicAction.ReturnToPriorState = 'ReturnToPriorState';
-    EventIntrinsicAction.StopPlayback = 'StopPlayback';
-    EventIntrinsicAction.StopPlaybackAndClearScreen = 'StopPlaybackAndClearScreen';
-    return EventIntrinsicAction;
-}());
-exports.EventIntrinsicAction = EventIntrinsicAction;
-var BpType = (function () {
-    function BpType() {
-    }
-    BpType.Bp200 = 'bp200';
-    BpType.Bp900 = 'bp900';
-    BpType.Gpio = 'gpio';
-    return BpType;
-}());
-exports.BpType = BpType;
-Object.freeze(BpType);
-var GpioType = (function () {
-    function GpioType() {
-    }
-    GpioType.Input = 'input';
-    GpioType.Output = 'output';
-    return GpioType;
-}());
-exports.GpioType = GpioType;
-Object.freeze(GpioType);
-var BpIndex = (function () {
-    function BpIndex() {
-    }
-    BpIndex.A = 'a';
-    BpIndex.B = 'b';
-    BpIndex.C = 'c';
-    BpIndex.D = 'd';
-    return BpIndex;
-}());
-exports.BpIndex = BpIndex;
-Object.freeze(BpIndex);
-var ButtonPanelName = (function () {
-    function ButtonPanelName() {
-    }
-    ButtonPanelName.Bp900a = 'bp900a';
-    ButtonPanelName.Bp900b = 'bp900b';
-    ButtonPanelName.Bp900c = 'bp900c';
-    ButtonPanelName.Bp900d = 'bp900d';
-    ButtonPanelName.Bp200a = 'bp200a';
-    ButtonPanelName.Bp200b = 'bp200b';
-    ButtonPanelName.Bp200c = 'bp200c';
-    ButtonPanelName.Bp200d = 'bp200d';
-    return ButtonPanelName;
-}());
-exports.ButtonPanelName = ButtonPanelName;
-Object.freeze(ButtonPanelName);
+var AudioConfiguration;
+(function (AudioConfiguration) {
+    AudioConfiguration["MixedAudioPCMOnly"] = "MixedAudioPCMOnly";
+    AudioConfiguration["MixedAudioPCMCompressed"] = "MixedAudioPCMCompressed";
+    AudioConfiguration["FixedAudio"] = "FixedAudio";
+})(AudioConfiguration = exports.AudioConfiguration || (exports.AudioConfiguration = {}));
+var AudioOutputType;
+(function (AudioOutputType) {
+    AudioOutputType["Pcm"] = "Pcm";
+    AudioOutputType["Passthrough"] = "Passthrough";
+    AudioOutputType["Multichannel"] = "Multichannel";
+    AudioOutputType["None"] = "None";
+})(AudioOutputType = exports.AudioOutputType || (exports.AudioOutputType = {}));
+var AudioMixModeType;
+(function (AudioMixModeType) {
+    AudioMixModeType["Stereo"] = "Stereo";
+    AudioMixModeType["Left"] = "Left";
+    AudioMixModeType["Right"] = "Right";
+})(AudioMixModeType = exports.AudioMixModeType || (exports.AudioMixModeType = {}));
+var MosaicMaxContentResolutionType;
+(function (MosaicMaxContentResolutionType) {
+    MosaicMaxContentResolutionType["NotApplicable"] = "NotApplicable";
+    MosaicMaxContentResolutionType["QCIF"] = "QCIF";
+    MosaicMaxContentResolutionType["CIF"] = "CIF";
+    MosaicMaxContentResolutionType["SD"] = "SD";
+    MosaicMaxContentResolutionType["HD"] = "HD";
+    MosaicMaxContentResolutionType["FK"] = "4K";
+})(MosaicMaxContentResolutionType = exports.MosaicMaxContentResolutionType || (exports.MosaicMaxContentResolutionType = {}));
+var VideoDisplayModeType;
+(function (VideoDisplayModeType) {
+    VideoDisplayModeType["m2D"] = "2D";
+    VideoDisplayModeType["m3DTOB"] = "3DTOB";
+    VideoDisplayModeType["m3DSBS"] = "3DSBS";
+})(VideoDisplayModeType = exports.VideoDisplayModeType || (exports.VideoDisplayModeType = {}));
+var RotationType;
+(function (RotationType) {
+    RotationType["rot0"] = "0";
+    RotationType["rot90"] = "90";
+    RotationType["rot180"] = "180";
+    RotationType["rot270"] = "270";
+})(RotationType = exports.RotationType || (exports.RotationType = {}));
+var TextHAlignmentType;
+(function (TextHAlignmentType) {
+    TextHAlignmentType["Left"] = "Left";
+    TextHAlignmentType["Center"] = "Center";
+    TextHAlignmentType["Right"] = "Right";
+})(TextHAlignmentType = exports.TextHAlignmentType || (exports.TextHAlignmentType = {}));
+var TextScrollingMethodType;
+(function (TextScrollingMethodType) {
+    TextScrollingMethodType["Animated"] = "Animated";
+    TextScrollingMethodType["StaticText"] = "StaticText";
+    TextScrollingMethodType["Scrolling"] = "Scrolling";
+})(TextScrollingMethodType = exports.TextScrollingMethodType || (exports.TextScrollingMethodType = {}));
+var EventType;
+(function (EventType) {
+    EventType["MediaEnd"] = "MediaEnd";
+    EventType["Timer"] = "Timer";
+    EventType["MediaEndOrTimer"] = "MediaEndOrTimer";
+    EventType["MediaListEnd"] = "MediaListEnd";
+    EventType["Keyboard"] = "Keyboard";
+    EventType["Remote"] = "Remote";
+    EventType["Usb"] = "Usb";
+    EventType["Synchronize"] = "Synchronize";
+    EventType["ZoneMessage"] = "ZoneMessage";
+    EventType["InternalSynchronize"] = "InternalSynchronize";
+    EventType["Success"] = "Success";
+    EventType["Fail"] = "Fail";
+    EventType["Serial"] = "Serial";
+    EventType["TimeClock"] = "TimeClock";
+    EventType["Gps"] = "Gps";
+    EventType["AudioTimeCode"] = "AudioTimeCode";
+    EventType["VideoTimeCode"] = "VideoTimeCode";
+    EventType["RectangularTouch"] = "RectangularTouch";
+    EventType["Gpio"] = "Gpio";
+    EventType["Bp"] = "Bp";
+    EventType["PluginMessage"] = "PluginMessage";
+    EventType["Udp"] = "Udp";
+    EventType["InteractiveMenu"] = "InteractiveMenu";
+    EventType["WssEvent"] = "WssEvent";
+    EventType["Button"] = "Button";
+    EventType["Bmap"] = "Bmap";
+    EventType["BmapHex"] = "BmapHex";
+})(EventType = exports.EventType || (exports.EventType = {}));
+var EventIntrinsicAction;
+(function (EventIntrinsicAction) {
+    EventIntrinsicAction["None"] = "None";
+    EventIntrinsicAction["SequenceForward"] = "SeqFwd";
+    EventIntrinsicAction["SequenceBackward"] = "SeqBack";
+    EventIntrinsicAction["ReturnToPriorState"] = "ReturnToPriorState";
+    EventIntrinsicAction["StopPlayback"] = "StopPlayback";
+    EventIntrinsicAction["StopPlaybackAndClearScreen"] = "StopPlaybackAndClearScreen";
+})(EventIntrinsicAction = exports.EventIntrinsicAction || (exports.EventIntrinsicAction = {}));
+var BpType;
+(function (BpType) {
+    BpType["Bp200"] = "bp200";
+    BpType["Bp900"] = "bp900";
+    BpType["Gpio"] = "gpio";
+})(BpType = exports.BpType || (exports.BpType = {}));
+var GpioType;
+(function (GpioType) {
+    GpioType["Input"] = "input";
+    GpioType["Output"] = "output";
+})(GpioType = exports.GpioType || (exports.GpioType = {}));
+var BpIndex;
+(function (BpIndex) {
+    BpIndex["A"] = "a";
+    BpIndex["B"] = "b";
+    BpIndex["C"] = "c";
+    BpIndex["D"] = "d";
+})(BpIndex = exports.BpIndex || (exports.BpIndex = {}));
+var ButtonPanelName;
+(function (ButtonPanelName) {
+    ButtonPanelName["Bp900a"] = "bp900a";
+    ButtonPanelName["Bp900b"] = "bp900b";
+    ButtonPanelName["Bp900c"] = "bp900c";
+    ButtonPanelName["Bp900d"] = "bp900d";
+    ButtonPanelName["Bp200a"] = "bp200a";
+    ButtonPanelName["Bp200b"] = "bp200b";
+    ButtonPanelName["Bp200c"] = "bp200c";
+    ButtonPanelName["Bp200d"] = "bp200d";
+})(ButtonPanelName = exports.ButtonPanelName || (exports.ButtonPanelName = {}));
 exports.ButtonPanelNameArray = [
     'bp900a', 'bp900b', 'bp900c', 'bp900d', 'bp200a', 'bp200b', 'bp200c', 'bp200d',
 ];
-var ButtonDirection = (function () {
-    function ButtonDirection() {
-    }
-    ButtonDirection.Down = 'Down';
-    ButtonDirection.Up = 'Up';
-    return ButtonDirection;
-}());
-exports.ButtonDirection = ButtonDirection;
-Object.freeze(ButtonDirection);
-var IrReceiverSource = (function () {
-    function IrReceiverSource() {
-    }
-    IrReceiverSource.IrIn = 'Ir-in';
-    IrReceiverSource.GPIO = 'GPIO';
-    IrReceiverSource.Iguana = 'Iguana';
-    IrReceiverSource.None = 'None';
-    return IrReceiverSource;
-}());
-exports.IrReceiverSource = IrReceiverSource;
-Object.freeze(IrReceiverSource);
-var IrReceiverEncodings = (function () {
-    function IrReceiverEncodings() {
-    }
-    IrReceiverEncodings.NEC = 'NEC';
-    IrReceiverEncodings.RC5 = 'RC5';
-    return IrReceiverEncodings;
-}());
-exports.IrReceiverEncodings = IrReceiverEncodings;
-Object.freeze(IrReceiverEncodings);
-var IrTransmitterDestination = (function () {
-    function IrTransmitterDestination() {
-    }
-    IrTransmitterDestination.IrOut = 'Ir-out';
-    IrTransmitterDestination.Iguana = 'Iguana';
-    IrTransmitterDestination.None = 'None';
-    return IrTransmitterDestination;
-}());
-exports.IrTransmitterDestination = IrTransmitterDestination;
-Object.freeze(IrTransmitterDestination);
-var RegionDirection = (function () {
-    function RegionDirection() {
-    }
-    RegionDirection.Enter = 'Enter';
-    RegionDirection.Exit = 'Exit';
-    return RegionDirection;
-}());
-exports.RegionDirection = RegionDirection;
-Object.freeze(RegionDirection);
-var DistanceUnits = (function () {
-    function DistanceUnits() {
-    }
-    DistanceUnits.Miles = 'Miles';
-    DistanceUnits.Kilometers = 'Kilometers';
-    return DistanceUnits;
-}());
-exports.DistanceUnits = DistanceUnits;
-Object.freeze(DistanceUnits);
-var TransitionType = (function () {
-    function TransitionType() {
-    }
-    TransitionType.None = 'None';
-    TransitionType.NoEffect = 'No effect';
-    TransitionType.WipeTop = 'Image wipe from top';
-    TransitionType.WipeBottom = 'Image wipe from bottom';
-    TransitionType.WipeLeft = 'Image wipe from left';
-    TransitionType.WipeRight = 'Image wipe from right';
-    TransitionType.ExplodeFromCenter = 'Explode from center';
-    TransitionType.ExplodeTopLeft = 'Explode top left';
-    TransitionType.ExplodeTopRight = 'Explode top right';
-    TransitionType.ExplodeBottomLeft = 'Explode bottom left';
-    TransitionType.ExplodeBottomRight = 'Explode bottom right';
-    TransitionType.BlindsVertical = 'Venetian blinds - vertical';
-    TransitionType.BlindsHorizontal = 'Venetian blinds - horizontal';
-    TransitionType.CombVertical = 'Comb effect - vertical';
-    TransitionType.CombHorizontal = 'Comb effect - horizontal';
-    TransitionType.FadeToBackground = 'Fade to background color';
-    TransitionType.Fade = 'Fade to new image';
-    TransitionType.SlideFromTop = 'Slide from top';
-    TransitionType.SlideFromBottom = 'Slide from bottom';
-    TransitionType.SlideFromLeft = 'Slide from left';
-    TransitionType.SlideFromRight = 'Slide from right';
-    return TransitionType;
-}());
-exports.TransitionType = TransitionType;
-Object.freeze(TransitionType);
-var CompareOperator = (function () {
-    function CompareOperator() {
-    }
-    CompareOperator.EQ = 'EQ';
-    CompareOperator.NEQ = 'NEQ';
-    CompareOperator.BTW = 'BTW';
-    CompareOperator.GT = 'GT';
-    CompareOperator.GTE = 'GTE';
-    CompareOperator.LT = 'LT';
-    CompareOperator.LTE = 'LTE';
-    return CompareOperator;
-}());
-exports.CompareOperator = CompareOperator;
-Object.freeze(CompareOperator);
-var CommandType = (function () {
-    function CommandType() {
-    }
-    CommandType.SendBpOutput = 'sendBpOutput';
-    CommandType.SetAllAudioOutputs = 'setAllAudioOutputs';
-    CommandType.SetAudioMode = 'setAudioMode';
-    CommandType.ConfigureAudioResources = 'configureAudioResources';
-    CommandType.SetConnectorVolume = 'setConnectorVolume';
-    CommandType.IncrementConnectorVolume = 'incrementConnectorVolume';
-    CommandType.DecrementConnectorVolume = 'decrementConnectorVolume';
-    CommandType.MuteAudioOutputs = 'muteAudioOutputs';
-    CommandType.UnmuteAudioOutputs = 'unmuteAudioOutputs';
-    CommandType.SetZoneVolume = 'setZoneVolume';
-    CommandType.IncrementZoneVolume = 'incrementZoneVolume';
-    CommandType.DecrementZoneVolume = 'decrementZoneVolume';
-    CommandType.SetZoneChannelVolume = 'setZoneChannelVolume';
-    CommandType.IncrementZoneChannelVolume = 'incrementZoneChannelVolume';
-    CommandType.DecrementZoneChannelVolume = 'decrementZoneChannelVolume';
-    CommandType.SendZoneMessage = 'sendZoneMessage';
-    CommandType.SendUdp = 'sendUdp';
-    CommandType.SendUdpBytes = 'sendUdpBytes';
-    CommandType.SendIRRemote = 'sendIRRemote';
-    CommandType.SendProntoIRRemote = 'sendProntoIRRemote';
-    CommandType.SerialSendString = 'serialSendString';
-    CommandType.SerialSendByte = 'serialSendByte';
-    CommandType.SerialSendBytes = 'serialSendBytes';
-    CommandType.SendPluginMessage = 'sendPluginMessage';
-    CommandType.Synchronize = 'synchronize';
-    CommandType.InternalSynchronize = 'internalSynchronize';
-    CommandType.GpioOn = 'gpioOn';
-    CommandType.GpioOff = 'gpioOff';
-    CommandType.GpioSetState = 'gpioSetState';
-    CommandType.PauseVideo = 'pauseVideo';
-    CommandType.ResumeVideo = 'resumeVideo';
-    CommandType.EnablePowerSaveMode = 'enablePowerSaveMode';
-    CommandType.DisablePowerSaveMode = 'disablePowerSaveMode';
-    CommandType.CecDisplayOn = 'cecDisplayOn';
-    CommandType.CecDisplayOff = 'cecDisplayOff';
-    CommandType.CecSetSourceToBrightSign = 'cecSetSourceToBrightSign';
-    CommandType.CecSendString = 'cecSendString';
-    CommandType.CecPhilipsSetVolume = 'cecPhilipsSetVolume';
-    CommandType.BeaconStart = 'beaconStart';
-    CommandType.BeaconStop = 'beaconStop';
-    CommandType.Pause = 'pause';
-    CommandType.Resume = 'resume';
-    CommandType.SetVariable = 'setVariable';
-    CommandType.IncrementVariable = 'incrementVariable';
-    CommandType.DecrementVariable = 'decrementVariable';
-    CommandType.ResetVariable = 'resetVariable';
-    CommandType.ResetVariables = 'resetVariables';
-    CommandType.SwitchPresentation = 'switchPresentation';
-    CommandType.UpdateDataFeed = 'updateDataFeed';
-    CommandType.ResizeZone = 'resizeZone';
-    CommandType.HideZone = 'hideZone';
-    CommandType.ShowZone = 'showZone';
-    CommandType.PauseZonePlayback = 'pauseZonePlayback';
-    CommandType.ResumeZonePlayback = 'resumeZonePlayback';
-    CommandType.Reboot = 'reboot';
-    CommandType.SendBLC400Output = 'sendBLC400Output';
-    CommandType.SendWss = 'sendWss';
-    CommandType.LightOn = 'lightOn';
-    CommandType.LightOff = 'lightOff';
-    CommandType.SendBmap = 'sendBmap';
-    CommandType.SendBmapHex = 'sendBmapHex';
-    return CommandType;
-}());
-exports.CommandType = CommandType;
-Object.freeze(CommandType);
-var CommandSequenceType = (function () {
-    function CommandSequenceType() {
-    }
-    CommandSequenceType.StateEntry = 'StateEntry';
-    CommandSequenceType.StateExit = 'StateExit';
-    CommandSequenceType.Event = 'Event';
-    CommandSequenceType.Transition = 'Transition';
-    CommandSequenceType.SequenceItemNext = 'ItemNext';
-    CommandSequenceType.SequenceItemPrevious = 'ItemPrev';
-    return CommandSequenceType;
-}());
-exports.CommandSequenceType = CommandSequenceType;
-Object.freeze(CommandSequenceType);
-var BpAction = (function () {
-    function BpAction() {
-    }
-    BpAction.Off = 'Off';
-    BpAction.On = 'On';
-    BpAction.FastBlink = 'FastBlink';
-    BpAction.MediumBlink = 'MediumBlink';
-    BpAction.SlowBlink = 'SlowBlink';
-    return BpAction;
-}());
-exports.BpAction = BpAction;
-Object.freeze(BpAction);
-var BlcIndex = (function () {
-    function BlcIndex() {
-    }
-    BlcIndex.A = 'a';
-    BlcIndex.B = 'b';
-    BlcIndex.C = 'c';
-    return BlcIndex;
-}());
-exports.BlcIndex = BlcIndex;
-Object.freeze(BlcIndex);
-var BlcEffect = (function () {
-    function BlcEffect() {
-    }
-    BlcEffect.Intensity = 'Intensity';
-    BlcEffect.Blink = 'Blink';
-    BlcEffect.Breathe = 'Breathe';
-    BlcEffect.Strobe = 'Strobe';
-    BlcEffect.Marquee = 'Marquee';
-    return BlcEffect;
-}());
-exports.BlcEffect = BlcEffect;
-Object.freeze(BlcEffect);
-var BlcBlink = (function () {
-    function BlcBlink() {
-    }
-    BlcBlink.FastBlink = 'FastBlink';
-    BlcBlink.MediumBlink = 'MediumBlink';
-    BlcBlink.SlowBlink = 'SlowBlink';
-    return BlcBlink;
-}());
-exports.BlcBlink = BlcBlink;
-Object.freeze(BlcBlink);
-var BlcPlaybackMode = (function () {
-    function BlcPlaybackMode() {
-    }
-    BlcPlaybackMode.Loop = 'Loop';
-    BlcPlaybackMode.BackAndForth = 'BackAndForth';
-    BlcPlaybackMode.PlayOnce = 'PlayOnce';
-    BlcPlaybackMode.Random = 'Random';
-    return BlcPlaybackMode;
-}());
-exports.BlcPlaybackMode = BlcPlaybackMode;
-Object.freeze(BlcPlaybackMode);
-var BlcTransitionMode = (function () {
-    function BlcTransitionMode() {
-    }
-    BlcTransitionMode.HardOnOff = 'HardOnOff';
-    BlcTransitionMode.SmoothDelay = 'SmoothDelay';
-    BlcTransitionMode.SmoothFullOverlap = 'SmoothFullOverlap';
-    BlcTransitionMode.SmoothPartialOverlap = 'SmoothPartialOverlap';
-    return BlcTransitionMode;
-}());
-exports.BlcTransitionMode = BlcTransitionMode;
-Object.freeze(BlcTransitionMode);
-var BlcChannels = (function () {
-    function BlcChannels() {
-    }
-    BlcChannels.A = 'A';
-    BlcChannels.B = 'B';
-    BlcChannels.C = 'C';
-    BlcChannels.D = 'D';
-    return BlcChannels;
-}());
-exports.BlcChannels = BlcChannels;
-Object.freeze(BlcChannels);
-var AccessType = (function () {
-    function AccessType() {
-    }
-    AccessType.Private = 'Private';
-    AccessType.Shared = 'Shared';
-    return AccessType;
-}());
-exports.AccessType = AccessType;
-Object.freeze(AccessType);
-var StringParameterType = (function () {
-    function StringParameterType() {
-    }
-    StringParameterType.Text = 'Text';
-    StringParameterType.UserVariable = 'UserVariable';
-    StringParameterType.UserVariableName = 'UserVariableName';
-    return StringParameterType;
-}());
-exports.StringParameterType = StringParameterType;
-Object.freeze(StringParameterType);
-var NumberParameterType = (function () {
-    function NumberParameterType() {
-    }
-    NumberParameterType.Number = 'Number';
-    NumberParameterType.UserVariable = 'UserVariable';
-    NumberParameterType.UserVariableName = 'UserVariableName';
-    return NumberParameterType;
-}());
-exports.NumberParameterType = NumberParameterType;
-Object.freeze(NumberParameterType);
-var SystemVariableType = (function () {
-    function SystemVariableType() {
-    }
-    SystemVariableType.SerialNumber = 'SerialNumber';
-    SystemVariableType.IPAddressWired = 'IPAddressWired';
-    SystemVariableType.IPAddressWireless = 'IPAddressWireless';
-    SystemVariableType.FirmwareVersion = 'FirmwareVersion';
-    SystemVariableType.ScriptVersion = 'ScriptVersion';
-    SystemVariableType.EdidMonitorSerialNumber = 'EdidMonitorSerialNumber';
-    SystemVariableType.EdidYearOfManufacture = 'EdidYearOfManufacture';
-    SystemVariableType.EdidMonitorName = 'EdidMonitorName';
-    SystemVariableType.EdidManufacturer = 'EdidManufacturer';
-    SystemVariableType.EdidUnspecifiedText = 'EdidUnspecifiedText';
-    SystemVariableType.EdidSerialNumber = 'EdidSerialNumber';
-    SystemVariableType.EdidManufacturerProductCode = 'EdidManufacturerProductCode';
-    SystemVariableType.EdidWeekOfManufacture = 'EdidWeekOfManufacture';
-    SystemVariableType.ActivePresentation = 'ActivePresentation';
-    return SystemVariableType;
-}());
-exports.SystemVariableType = SystemVariableType;
-var MediaListPlaybackType = (function () {
-    function MediaListPlaybackType() {
-    }
-    MediaListPlaybackType.FromBeginning = 'FromBeginning';
-    MediaListPlaybackType.NextInList = 'NextInList';
-    MediaListPlaybackType.FromIndex = 'FromIndex';
-    return MediaListPlaybackType;
-}());
-exports.MediaListPlaybackType = MediaListPlaybackType;
-var PlayFileTriggerType = (function () {
-    function PlayFileTriggerType() {
-    }
-    PlayFileTriggerType.ByEventData = 'ByEventData';
-    PlayFileTriggerType.ByUserVariable = 'ByUserVariable';
-    return PlayFileTriggerType;
-}());
-exports.PlayFileTriggerType = PlayFileTriggerType;
-var HtmlSiteType = (function () {
-    function HtmlSiteType() {
-    }
-    HtmlSiteType.Hosted = 'Hosted';
-    HtmlSiteType.Remote = 'Remote';
-    return HtmlSiteType;
-}());
-exports.HtmlSiteType = HtmlSiteType;
-Object.freeze(HtmlSiteType);
-var DataFeedType = (function () {
-    function DataFeedType() {
-    }
-    DataFeedType.URLDataFeed = 'URLDataFeed';
-    DataFeedType.BSNDataFeed = 'BSNDataFeed';
-    DataFeedType.BSNMediaFeed = 'BSNMediaFeed';
-    DataFeedType.BSNDynamicPlaylist = 'BSNDynamicPlaylist';
-    DataFeedType.BSNTaggedPlaylist = 'BSNTaggedPlaylist';
-    return DataFeedType;
-}());
-exports.DataFeedType = DataFeedType;
-Object.freeze(DataFeedType);
-var DataFeedUsageType = (function () {
-    function DataFeedUsageType() {
-    }
-    DataFeedUsageType.Text = 'Text';
-    DataFeedUsageType.Mrss = 'MRSS';
-    DataFeedUsageType.MrssWith4K = 'MRSSWith4K';
-    DataFeedUsageType.Content = 'Content';
-    return DataFeedUsageType;
-}());
-exports.DataFeedUsageType = DataFeedUsageType;
-Object.freeze(DataFeedUsageType);
-var PlayerTagMatchingType = (function () {
-    function PlayerTagMatchingType() {
-    }
-    PlayerTagMatchingType.DoNotMatchTags = 'DoNotMatchTags';
-    PlayerTagMatchingType.MatchAllMediaTagsToPlayerTags = 'MatchAllMediaTagsToPlayerTags';
-    PlayerTagMatchingType.MatchAllPlayerTagsToMediaTags = 'MatchAllPlayerTagsToMediaTags';
-    PlayerTagMatchingType.MatchAnyPlayerAndMediaTags = 'MatchAnyPlayerAndMediaTags';
-    return PlayerTagMatchingType;
-}());
-exports.PlayerTagMatchingType = PlayerTagMatchingType;
-Object.freeze(PlayerTagMatchingType);
-var TwitterFeedRestrictionType = (function () {
-    function TwitterFeedRestrictionType() {
-    }
-    TwitterFeedRestrictionType.None = 'None';
-    TwitterFeedRestrictionType.ByCount = 'ByCount';
-    TwitterFeedRestrictionType.ByRecentDays = 'ByRecentDays';
-    return TwitterFeedRestrictionType;
-}());
-exports.TwitterFeedRestrictionType = TwitterFeedRestrictionType;
+var ButtonDirection;
+(function (ButtonDirection) {
+    ButtonDirection["Down"] = "Down";
+    ButtonDirection["Up"] = "Up";
+})(ButtonDirection = exports.ButtonDirection || (exports.ButtonDirection = {}));
+var IrReceiverSource;
+(function (IrReceiverSource) {
+    IrReceiverSource["IrIn"] = "Ir-in";
+    IrReceiverSource["GPIO"] = "GPIO";
+    IrReceiverSource["Iguana"] = "Iguana";
+    IrReceiverSource["None"] = "None";
+})(IrReceiverSource = exports.IrReceiverSource || (exports.IrReceiverSource = {}));
+var IrReceiverEncodings;
+(function (IrReceiverEncodings) {
+    IrReceiverEncodings["NEC"] = "NEC";
+    IrReceiverEncodings["RC5"] = "RC5";
+})(IrReceiverEncodings = exports.IrReceiverEncodings || (exports.IrReceiverEncodings = {}));
+var IrTransmitterDestination;
+(function (IrTransmitterDestination) {
+    IrTransmitterDestination["IrOut"] = "Ir-out";
+    IrTransmitterDestination["Iguana"] = "Iguana";
+    IrTransmitterDestination["None"] = "None";
+})(IrTransmitterDestination = exports.IrTransmitterDestination || (exports.IrTransmitterDestination = {}));
+var RegionDirection;
+(function (RegionDirection) {
+    RegionDirection["Enter"] = "Enter";
+    RegionDirection["Exit"] = "Exit";
+})(RegionDirection = exports.RegionDirection || (exports.RegionDirection = {}));
+var DistanceUnits;
+(function (DistanceUnits) {
+    DistanceUnits["Miles"] = "Miles";
+    DistanceUnits["Kilometers"] = "Kilometers";
+})(DistanceUnits = exports.DistanceUnits || (exports.DistanceUnits = {}));
+var TransitionType;
+(function (TransitionType) {
+    TransitionType["None"] = "None";
+    TransitionType["NoEffect"] = "No effect";
+    TransitionType["WipeTop"] = "Image wipe from top";
+    TransitionType["WipeBottom"] = "Image wipe from bottom";
+    TransitionType["WipeLeft"] = "Image wipe from left";
+    TransitionType["WipeRight"] = "Image wipe from right";
+    TransitionType["ExplodeFromCenter"] = "Explode from center";
+    TransitionType["ExplodeTopLeft"] = "Explode top left";
+    TransitionType["ExplodeTopRight"] = "Explode top right";
+    TransitionType["ExplodeBottomLeft"] = "Explode bottom left";
+    TransitionType["ExplodeBottomRight"] = "Explode bottom right";
+    TransitionType["BlindsVertical"] = "Venetian blinds - vertical";
+    TransitionType["BlindsHorizontal"] = "Venetian blinds - horizontal";
+    TransitionType["CombVertical"] = "Comb effect - vertical";
+    TransitionType["CombHorizontal"] = "Comb effect - horizontal";
+    TransitionType["FadeToBackground"] = "Fade to background color";
+    TransitionType["Fade"] = "Fade to new image";
+    TransitionType["SlideFromTop"] = "Slide from top";
+    TransitionType["SlideFromBottom"] = "Slide from bottom";
+    TransitionType["SlideFromLeft"] = "Slide from left";
+    TransitionType["SlideFromRight"] = "Slide from right";
+})(TransitionType = exports.TransitionType || (exports.TransitionType = {}));
+var CompareOperator;
+(function (CompareOperator) {
+    CompareOperator["EQ"] = "EQ";
+    CompareOperator["NEQ"] = "NEQ";
+    CompareOperator["BTW"] = "BTW";
+    CompareOperator["GT"] = "GT";
+    CompareOperator["GTE"] = "GTE";
+    CompareOperator["LT"] = "LT";
+    CompareOperator["LTE"] = "LTE";
+})(CompareOperator = exports.CompareOperator || (exports.CompareOperator = {}));
+var CommandType;
+(function (CommandType) {
+    CommandType["SendBpOutput"] = "sendBpOutput";
+    CommandType["SetAllAudioOutputs"] = "setAllAudioOutputs";
+    CommandType["SetAudioMode"] = "setAudioMode";
+    CommandType["ConfigureAudioResources"] = "configureAudioResources";
+    CommandType["SetConnectorVolume"] = "setConnectorVolume";
+    CommandType["IncrementConnectorVolume"] = "incrementConnectorVolume";
+    CommandType["DecrementConnectorVolume"] = "decrementConnectorVolume";
+    CommandType["MuteAudioOutputs"] = "muteAudioOutputs";
+    CommandType["UnmuteAudioOutputs"] = "unmuteAudioOutputs";
+    CommandType["SetZoneVolume"] = "setZoneVolume";
+    CommandType["IncrementZoneVolume"] = "incrementZoneVolume";
+    CommandType["DecrementZoneVolume"] = "decrementZoneVolume";
+    CommandType["SetZoneChannelVolume"] = "setZoneChannelVolume";
+    CommandType["IncrementZoneChannelVolume"] = "incrementZoneChannelVolume";
+    CommandType["DecrementZoneChannelVolume"] = "decrementZoneChannelVolume";
+    CommandType["SendZoneMessage"] = "sendZoneMessage";
+    CommandType["SendUdp"] = "sendUdp";
+    CommandType["SendUdpBytes"] = "sendUdpBytes";
+    CommandType["SendIRRemote"] = "sendIRRemote";
+    CommandType["SendProntoIRRemote"] = "sendProntoIRRemote";
+    CommandType["SerialSendString"] = "serialSendString";
+    CommandType["SerialSendByte"] = "serialSendByte";
+    CommandType["SerialSendBytes"] = "serialSendBytes";
+    CommandType["SendPluginMessage"] = "sendPluginMessage";
+    CommandType["Synchronize"] = "synchronize";
+    CommandType["InternalSynchronize"] = "internalSynchronize";
+    CommandType["GpioOn"] = "gpioOn";
+    CommandType["GpioOff"] = "gpioOff";
+    CommandType["GpioSetState"] = "gpioSetState";
+    CommandType["PauseVideo"] = "pauseVideo";
+    CommandType["ResumeVideo"] = "resumeVideo";
+    CommandType["EnablePowerSaveMode"] = "enablePowerSaveMode";
+    CommandType["DisablePowerSaveMode"] = "disablePowerSaveMode";
+    CommandType["CecDisplayOn"] = "cecDisplayOn";
+    CommandType["CecDisplayOff"] = "cecDisplayOff";
+    CommandType["CecSetSourceToBrightSign"] = "cecSetSourceToBrightSign";
+    CommandType["CecSendString"] = "cecSendString";
+    CommandType["CecPhilipsSetVolume"] = "cecPhilipsSetVolume";
+    CommandType["BeaconStart"] = "beaconStart";
+    CommandType["BeaconStop"] = "beaconStop";
+    CommandType["Pause"] = "pause";
+    CommandType["Resume"] = "resume";
+    CommandType["SetVariable"] = "setVariable";
+    CommandType["IncrementVariable"] = "incrementVariable";
+    CommandType["DecrementVariable"] = "decrementVariable";
+    CommandType["ResetVariable"] = "resetVariable";
+    CommandType["ResetVariables"] = "resetVariables";
+    CommandType["SwitchPresentation"] = "switchPresentation";
+    CommandType["UpdateDataFeed"] = "updateDataFeed";
+    CommandType["ResizeZone"] = "resizeZone";
+    CommandType["HideZone"] = "hideZone";
+    CommandType["ShowZone"] = "showZone";
+    CommandType["PauseZonePlayback"] = "pauseZonePlayback";
+    CommandType["ResumeZonePlayback"] = "resumeZonePlayback";
+    CommandType["Reboot"] = "reboot";
+    CommandType["SendBLC400Output"] = "sendBLC400Output";
+    CommandType["SendWss"] = "sendWss";
+    CommandType["LightOn"] = "lightOn";
+    CommandType["LightOff"] = "lightOff";
+    CommandType["SendBmap"] = "sendBmap";
+    CommandType["SendBmapHex"] = "sendBmapHex";
+})(CommandType = exports.CommandType || (exports.CommandType = {}));
+var CommandSequenceType;
+(function (CommandSequenceType) {
+    CommandSequenceType["StateEntry"] = "StateEntry";
+    CommandSequenceType["StateExit"] = "StateExit";
+    CommandSequenceType["Event"] = "Event";
+    CommandSequenceType["Transition"] = "Transition";
+    CommandSequenceType["SequenceItemNext"] = "ItemNext";
+    CommandSequenceType["SequenceItemPrevious"] = "ItemPrev";
+})(CommandSequenceType = exports.CommandSequenceType || (exports.CommandSequenceType = {}));
+var BpAction;
+(function (BpAction) {
+    BpAction["Off"] = "Off";
+    BpAction["On"] = "On";
+    BpAction["FastBlink"] = "FastBlink";
+    BpAction["MediumBlink"] = "MediumBlink";
+    BpAction["SlowBlink"] = "SlowBlink";
+})(BpAction = exports.BpAction || (exports.BpAction = {}));
+var BlcIndex;
+(function (BlcIndex) {
+    BlcIndex["A"] = "a";
+    BlcIndex["B"] = "b";
+    BlcIndex["C"] = "c";
+})(BlcIndex = exports.BlcIndex || (exports.BlcIndex = {}));
+var BlcEffect;
+(function (BlcEffect) {
+    BlcEffect["Intensity"] = "Intensity";
+    BlcEffect["Blink"] = "Blink";
+    BlcEffect["Breathe"] = "Breathe";
+    BlcEffect["Strobe"] = "Strobe";
+    BlcEffect["Marquee"] = "Marquee";
+})(BlcEffect = exports.BlcEffect || (exports.BlcEffect = {}));
+var BlcBlink;
+(function (BlcBlink) {
+    BlcBlink["FastBlink"] = "FastBlink";
+    BlcBlink["MediumBlink"] = "MediumBlink";
+    BlcBlink["SlowBlink"] = "SlowBlink";
+})(BlcBlink = exports.BlcBlink || (exports.BlcBlink = {}));
+var BlcPlaybackMode;
+(function (BlcPlaybackMode) {
+    BlcPlaybackMode["Loop"] = "Loop";
+    BlcPlaybackMode["BackAndForth"] = "BackAndForth";
+    BlcPlaybackMode["PlayOnce"] = "PlayOnce";
+    BlcPlaybackMode["Random"] = "Random";
+})(BlcPlaybackMode = exports.BlcPlaybackMode || (exports.BlcPlaybackMode = {}));
+var BlcTransitionMode;
+(function (BlcTransitionMode) {
+    BlcTransitionMode["HardOnOff"] = "HardOnOff";
+    BlcTransitionMode["SmoothDelay"] = "SmoothDelay";
+    BlcTransitionMode["SmoothFullOverlap"] = "SmoothFullOverlap";
+    BlcTransitionMode["SmoothPartialOverlap"] = "SmoothPartialOverlap";
+})(BlcTransitionMode = exports.BlcTransitionMode || (exports.BlcTransitionMode = {}));
+var BlcChannels;
+(function (BlcChannels) {
+    BlcChannels["A"] = "A";
+    BlcChannels["B"] = "B";
+    BlcChannels["C"] = "C";
+    BlcChannels["D"] = "D";
+})(BlcChannels = exports.BlcChannels || (exports.BlcChannels = {}));
+var AccessType;
+(function (AccessType) {
+    AccessType["Private"] = "Private";
+    AccessType["Shared"] = "Shared";
+})(AccessType = exports.AccessType || (exports.AccessType = {}));
+var StringParameterType;
+(function (StringParameterType) {
+    StringParameterType["Text"] = "Text";
+    StringParameterType["UserVariable"] = "UserVariable";
+    StringParameterType["UserVariableName"] = "UserVariableName";
+})(StringParameterType = exports.StringParameterType || (exports.StringParameterType = {}));
+var NumberParameterType;
+(function (NumberParameterType) {
+    NumberParameterType["Number"] = "Number";
+    NumberParameterType["UserVariable"] = "UserVariable";
+    NumberParameterType["UserVariableName"] = "UserVariableName";
+})(NumberParameterType = exports.NumberParameterType || (exports.NumberParameterType = {}));
+var SystemVariableType;
+(function (SystemVariableType) {
+    SystemVariableType["SerialNumber"] = "SerialNumber";
+    SystemVariableType["IPAddressWired"] = "IPAddressWired";
+    SystemVariableType["IPAddressWireless"] = "IPAddressWireless";
+    SystemVariableType["FirmwareVersion"] = "FirmwareVersion";
+    SystemVariableType["ScriptVersion"] = "ScriptVersion";
+    SystemVariableType["EdidMonitorSerialNumber"] = "EdidMonitorSerialNumber";
+    SystemVariableType["EdidYearOfManufacture"] = "EdidYearOfManufacture";
+    SystemVariableType["EdidMonitorName"] = "EdidMonitorName";
+    SystemVariableType["EdidManufacturer"] = "EdidManufacturer";
+    SystemVariableType["EdidUnspecifiedText"] = "EdidUnspecifiedText";
+    SystemVariableType["EdidSerialNumber"] = "EdidSerialNumber";
+    SystemVariableType["EdidManufacturerProductCode"] = "EdidManufacturerProductCode";
+    SystemVariableType["EdidWeekOfManufacture"] = "EdidWeekOfManufacture";
+    SystemVariableType["ActivePresentation"] = "ActivePresentation";
+    SystemVariableType["BrightAuthorVersion"] = "BrightAuthorVersion";
+})(SystemVariableType = exports.SystemVariableType || (exports.SystemVariableType = {}));
+var MediaListPlaybackType;
+(function (MediaListPlaybackType) {
+    MediaListPlaybackType["FromBeginning"] = "FromBeginning";
+    MediaListPlaybackType["NextInList"] = "NextInList";
+    MediaListPlaybackType["FromIndex"] = "FromIndex";
+})(MediaListPlaybackType = exports.MediaListPlaybackType || (exports.MediaListPlaybackType = {}));
+var PlayFileTriggerType;
+(function (PlayFileTriggerType) {
+    PlayFileTriggerType["ByEventData"] = "ByEventData";
+    PlayFileTriggerType["ByUserVariable"] = "ByUserVariable";
+})(PlayFileTriggerType = exports.PlayFileTriggerType || (exports.PlayFileTriggerType = {}));
+var HtmlSiteType;
+(function (HtmlSiteType) {
+    HtmlSiteType["Hosted"] = "Hosted";
+    HtmlSiteType["Remote"] = "Remote";
+})(HtmlSiteType = exports.HtmlSiteType || (exports.HtmlSiteType = {}));
+var DataFeedType;
+(function (DataFeedType) {
+    DataFeedType["URLDataFeed"] = "URLDataFeed";
+    DataFeedType["BSNDataFeed"] = "BSNDataFeed";
+    DataFeedType["BSNMediaFeed"] = "BSNMediaFeed";
+    DataFeedType["BSNDynamicPlaylist"] = "BSNDynamicPlaylist";
+    DataFeedType["BSNTaggedPlaylist"] = "BSNTaggedPlaylist";
+})(DataFeedType = exports.DataFeedType || (exports.DataFeedType = {}));
+var DataFeedUsageType;
+(function (DataFeedUsageType) {
+    DataFeedUsageType["Text"] = "Text";
+    DataFeedUsageType["Mrss"] = "MRSS";
+    DataFeedUsageType["MrssWith4K"] = "MRSSWith4K";
+    DataFeedUsageType["Content"] = "Content";
+})(DataFeedUsageType = exports.DataFeedUsageType || (exports.DataFeedUsageType = {}));
+var PlayerTagMatchingType;
+(function (PlayerTagMatchingType) {
+    PlayerTagMatchingType["DoNotMatchTags"] = "DoNotMatchTags";
+    PlayerTagMatchingType["MatchAllMediaTagsToPlayerTags"] = "MatchAllMediaTagsToPlayerTags";
+    PlayerTagMatchingType["MatchAllPlayerTagsToMediaTags"] = "MatchAllPlayerTagsToMediaTags";
+    PlayerTagMatchingType["MatchAnyPlayerAndMediaTags"] = "MatchAnyPlayerAndMediaTags";
+})(PlayerTagMatchingType = exports.PlayerTagMatchingType || (exports.PlayerTagMatchingType = {}));
+var TwitterFeedRestrictionType;
+(function (TwitterFeedRestrictionType) {
+    TwitterFeedRestrictionType["None"] = "None";
+    TwitterFeedRestrictionType["ByCount"] = "ByCount";
+    TwitterFeedRestrictionType["ByRecentDays"] = "ByRecentDays";
+})(TwitterFeedRestrictionType = exports.TwitterFeedRestrictionType || (exports.TwitterFeedRestrictionType = {}));
 exports.BsBlack = { a: 255, r: 0, g: 0, b: 0 };
 Object.freeze(exports.BsBlack);
 function bscIsBsColor(value) {
@@ -1221,89 +968,78 @@ module.exports = isString;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bscGetBsnFirmwareKeyForPlayerModel = exports.bscPlayerModelToPlayerFamily = exports.bscSerialToPlayerFamily = exports.AllModels = exports.Series2Models = exports.Series3Models = exports.Series4Models = exports.MonacoModels = exports.PumaModels = exports.PantherModels = exports.CheetahModels = exports.BobcatModels = exports.LynxModels = exports.SebringModels = exports.TigerModels = exports.PanteraModels = exports.ImpalaModels = exports.PaganiHDModels = exports.PaganiModels = exports.MalibuModels = exports.PlayerModel = exports.PlayerMachineNameSuffix = exports.PlayerFamily = void 0;
-var PlayerFamily = (function () {
-    function PlayerFamily() {
-    }
-    PlayerFamily.Unknown = 'Unknown';
-    PlayerFamily.Malibu = 'Malibu';
-    PlayerFamily.Pagani = 'Pagani';
-    PlayerFamily.Impala = 'Impala';
-    PlayerFamily.Pantera = 'Pantera';
-    PlayerFamily.Tiger = 'Tiger';
-    PlayerFamily.Sebring = 'Sebring';
-    PlayerFamily.Lynx = 'Lynx';
-    PlayerFamily.Bobcat = 'Bobcat';
-    PlayerFamily.Cheetah = 'Cheetah';
-    PlayerFamily.Panther = 'Panther';
-    PlayerFamily.Puma = 'Puma';
-    PlayerFamily.Monaco = 'Monaco';
-    return PlayerFamily;
-}());
-exports.PlayerFamily = PlayerFamily;
-Object.freeze(PlayerFamily);
-var PlayerMachineNameSuffix = (function () {
-    function PlayerMachineNameSuffix() {
-    }
-    PlayerMachineNameSuffix.SingleDecoder = 'Single_Decoder';
-    PlayerMachineNameSuffix.No4K = 'No4K';
-    return PlayerMachineNameSuffix;
-}());
-exports.PlayerMachineNameSuffix = PlayerMachineNameSuffix;
-Object.freeze(PlayerMachineNameSuffix);
-var PlayerModel = (function () {
-    function PlayerModel() {
-    }
-    PlayerModel.Unknown = 'Unknown';
-    PlayerModel.XD1034 = 'XD1034';
-    PlayerModel.XD234 = 'XD234';
-    PlayerModel.XT1144 = 'XT1144';
-    PlayerModel.XT244 = 'XT244';
-    PlayerModel.HD1024 = 'HD1024';
-    PlayerModel.HD224 = 'HD224';
-    PlayerModel.HS144 = 'HS144';
-    PlayerModel.LS424 = 'LS424';
-    PlayerModel.HS124 = 'HS124';
-    PlayerModel.XD1033 = 'XD1033';
-    PlayerModel.XD233 = 'XD233';
-    PlayerModel.XT1043 = 'XT1043';
-    PlayerModel.XT1143 = 'XT1143';
-    PlayerModel.XT243 = 'XT243';
-    PlayerModel.HD1023 = 'HD1023';
-    PlayerModel.HD223 = 'HD223';
-    PlayerModel.HS123 = 'HS123';
-    PlayerModel.HO523 = 'HO523';
-    PlayerModel.LS423 = 'LS423';
-    PlayerModel.FK1142 = '4K1142';
-    PlayerModel.FK1042 = '4K1042';
-    PlayerModel.FK242 = '4K242';
-    PlayerModel.AU325 = 'AU325';
-    PlayerModel.AU335 = 'AU335';
-    PlayerModel.XD1132 = 'XD1132';
-    PlayerModel.XD1032 = 'XD1032';
-    PlayerModel.XD232 = 'XD232';
-    PlayerModel.HD1022 = 'HD1022';
-    PlayerModel.HD222 = 'HD222';
-    PlayerModel.HD972 = 'HD972';
-    PlayerModel.HD922 = 'HD922';
-    PlayerModel.XD1230 = 'XD1230';
-    PlayerModel.XD1030 = 'XD1030';
-    PlayerModel.XD230 = 'XD230';
-    PlayerModel.HD1020 = 'HD1020';
-    PlayerModel.HD220 = 'HD220';
-    PlayerModel.HD120 = 'HD120';
-    PlayerModel.LS422 = 'LS422';
-    PlayerModel.LS322 = 'LS322';
-    PlayerModel.AU320 = 'AU320';
-    PlayerModel.HD970 = 'HD970';
-    PlayerModel.HD920 = 'HD920';
-    PlayerModel.A915 = 'A915';
-    PlayerModel.HD917 = 'HD917';
-    PlayerModel.HD210 = 'HD210';
-    PlayerModel.HD1010 = 'HD1010';
-    PlayerModel.TD1012 = 'TD1012';
-    return PlayerModel;
-}());
-exports.PlayerModel = PlayerModel;
+var PlayerFamily;
+(function (PlayerFamily) {
+    PlayerFamily["Unknown"] = "Unknown";
+    PlayerFamily["Malibu"] = "Malibu";
+    PlayerFamily["Pagani"] = "Pagani";
+    PlayerFamily["Impala"] = "Impala";
+    PlayerFamily["Pantera"] = "Pantera";
+    PlayerFamily["Tiger"] = "Tiger";
+    PlayerFamily["Sebring"] = "Sebring";
+    PlayerFamily["Lynx"] = "Lynx";
+    PlayerFamily["Bobcat"] = "Bobcat";
+    PlayerFamily["Cheetah"] = "Cheetah";
+    PlayerFamily["Panther"] = "Panther";
+    PlayerFamily["Puma"] = "Puma";
+    PlayerFamily["Monaco"] = "Monaco";
+})(PlayerFamily = exports.PlayerFamily || (exports.PlayerFamily = {}));
+var PlayerMachineNameSuffix;
+(function (PlayerMachineNameSuffix) {
+    PlayerMachineNameSuffix["SingleDecoder"] = "Single_Decoder";
+    PlayerMachineNameSuffix["No4K"] = "No4K";
+})(PlayerMachineNameSuffix = exports.PlayerMachineNameSuffix || (exports.PlayerMachineNameSuffix = {}));
+var PlayerModel;
+(function (PlayerModel) {
+    PlayerModel["Unknown"] = "Unknown";
+    PlayerModel["XD1034"] = "XD1034";
+    PlayerModel["XD234"] = "XD234";
+    PlayerModel["XT1144"] = "XT1144";
+    PlayerModel["XT244"] = "XT244";
+    PlayerModel["HD1024"] = "HD1024";
+    PlayerModel["HD224"] = "HD224";
+    PlayerModel["HS144"] = "HS144";
+    PlayerModel["LS424"] = "LS424";
+    PlayerModel["HS124"] = "HS124";
+    PlayerModel["XD1033"] = "XD1033";
+    PlayerModel["XD233"] = "XD233";
+    PlayerModel["XT1043"] = "XT1043";
+    PlayerModel["XT1143"] = "XT1143";
+    PlayerModel["XT243"] = "XT243";
+    PlayerModel["HD1023"] = "HD1023";
+    PlayerModel["HD223"] = "HD223";
+    PlayerModel["HS123"] = "HS123";
+    PlayerModel["HO523"] = "HO523";
+    PlayerModel["LS423"] = "LS423";
+    PlayerModel["FK1142"] = "4K1142";
+    PlayerModel["FK1042"] = "4K1042";
+    PlayerModel["FK242"] = "4K242";
+    PlayerModel["AU325"] = "AU325";
+    PlayerModel["AU335"] = "AU335";
+    PlayerModel["XD1132"] = "XD1132";
+    PlayerModel["XD1032"] = "XD1032";
+    PlayerModel["XD232"] = "XD232";
+    PlayerModel["HD1022"] = "HD1022";
+    PlayerModel["HD222"] = "HD222";
+    PlayerModel["HD972"] = "HD972";
+    PlayerModel["HD922"] = "HD922";
+    PlayerModel["XD1230"] = "XD1230";
+    PlayerModel["XD1030"] = "XD1030";
+    PlayerModel["XD230"] = "XD230";
+    PlayerModel["HD1020"] = "HD1020";
+    PlayerModel["HD220"] = "HD220";
+    PlayerModel["HD120"] = "HD120";
+    PlayerModel["LS422"] = "LS422";
+    PlayerModel["LS322"] = "LS322";
+    PlayerModel["AU320"] = "AU320";
+    PlayerModel["HD970"] = "HD970";
+    PlayerModel["HD920"] = "HD920";
+    PlayerModel["A915"] = "A915";
+    PlayerModel["HD917"] = "HD917";
+    PlayerModel["HD210"] = "HD210";
+    PlayerModel["HD1010"] = "HD1010";
+    PlayerModel["TD1012"] = "TD1012";
+})(PlayerModel = exports.PlayerModel || (exports.PlayerModel = {}));
 var MalibuModelArray = [
     PlayerModel.XD1034,
     PlayerModel.XD234,
@@ -1528,19 +1264,6 @@ exports.bscGetBsnFirmwareKeyForPlayerModel = bscGetBsnFirmwareKeyForPlayerModel;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -1553,7 +1276,8 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bscGetBscFileTypeInfo = exports.BsAllFileBasedAssetTypes = exports.bscGetAssetItemFileTypeInfo = exports.styleSheetFileSuffixes = exports.fontFileSuffixes = exports.htmlSiteFileSuffixes = exports.projectBpfFileSuffixes = exports.scheduleFileSuffixes = exports.projectFileFragmentSuffixes = exports.projectFileSuffixes = exports.bscGetFileProjectFragmentExtension = exports.bscGetFileProjectFragmentType = exports.bscStripFileExtension = exports.bscIsAssetItemPlayableContent = exports.bscIsMediaTypePlayable = exports.bscGetFileMediaType = exports.textFileSuffixes = exports.audioFileSuffixes = exports.videoFileSuffixes = exports.imageFileSuffixes = exports.bscIsDefaultAssetItem = exports.bscGetDefaultAssetItem = exports.bscIsNullAssetItem = exports.bscGetNullAssetItem = exports.bscGetBsnAssetLocatorKey = exports.bscGetFtpAssetLocatorKey = exports.bscGetLocalAssetLocatorKey = exports.bscGenerateAssetLocatorKey = exports.bscAssetItemFromBasicAssetInfo = exports.bscGetAssetSpecification = exports.bscAssetLocatorForLocalAsset = exports.bscGetAssetFullPath = exports.bscGetAssetExtension = exports.bscGetAssetName = exports.bscAssetLocatorForBsnAsset = exports.bscAssetLocatorFromAssetItem = exports.bscAssetItemFromAssetLocator = exports.bscAssetItemIsBsnDataFeed = exports.bscIsAssetItem = exports.bscIsAssetLocator = exports.bscIsLocalAssetThumbnail = exports.bscCreateNetworkAssetThumbnail = exports.bscCreateLocalAssetThumbnail = exports.BsProjectFragmentType = exports.bscConvertProbeDataToAvMetadata = exports.bscIsImageData = exports.bscIsAudioData = exports.bscIsVideoData = exports.FtpObjectPermissionGroup = exports.BseChildAssetType = exports.AssetType = exports.AssetLocation = exports.bscIsValidAssetId = exports.BsAssetIdNone = void 0;
+exports.scheduleFileSuffixes = exports.projectFileFragmentSuffixes = exports.projectFileSuffixes = exports.bscGetFileProjectFragmentExtension = exports.bscGetFileProjectFragmentType = exports.bscStripFileExtension = exports.bscIsAssetItemPlayableContent = exports.bscIsMediaTypePlayable = exports.bscGetFileMediaType = exports.textFileSuffixes = exports.audioFileSuffixes = exports.videoFileSuffixes = exports.imageFileSuffixes = exports.bscIsDefaultAssetItem = exports.bscGetDefaultAssetItem = exports.bscIsNullAssetItem = exports.bscGetNullAssetItem = exports.bscGetBsnAssetLocatorKey = exports.bscGetFtpAssetLocatorKey = exports.bscGetLocalAssetLocatorKey = exports.bscGenerateAssetLocatorKey = exports.bscGetAssetPathSeparator = exports.bscGetAssetRootPath = exports.bscAssetItemFromBasicAssetInfo = exports.bscGetAssetSpecification = exports.bscAssetLocatorForLocalAsset = exports.bscGetAssetFullPath = exports.bscGetAssetExtension = exports.bscGetAssetName = exports.bscAssetLocatorForBsnAsset = exports.bscAssetLocatorFromAssetItem = exports.bscAssetItemFromAssetLocator = exports.bscAssetItemIsBsnDataFeed = exports.bscIsAssetItem = exports.bscIsAssetLocator = exports.bscIsLocalAssetThumbnail = exports.bscCreateNetworkAssetThumbnail = exports.bscCreateLocalAssetThumbnail = exports.BsProjectFragmentType = exports.bscConvertProbeDataToAvMetadata = exports.bscIsImageData = exports.bscIsAudioData = exports.bscIsVideoData = exports.FtpObjectPermissionGroup = exports.bscIsAssetContainerLocator = exports.BseContainerAssetType = exports.AssetType = exports.AssetLocation = exports.bscIsValidAssetId = exports.BsAssetIdNone = void 0;
+exports.bscGetBscFileTypeInfo = exports.BsAllFileBasedAssetTypes = exports.bscGetAssetItemFileTypeInfo = exports.styleSheetFileSuffixes = exports.fontFileSuffixes = exports.htmlSiteFileSuffixes = exports.projectBpfFileSuffixes = void 0;
 var metadata_1 = __webpack_require__(1);
 var isomorphic_path_1 = __webpack_require__(25);
 var isNil = __webpack_require__(0);
@@ -1564,49 +1288,41 @@ function bscIsValidAssetId(id) {
     return typeof id === 'string' && id.length >= 8;
 }
 exports.bscIsValidAssetId = bscIsValidAssetId;
-var AssetLocation = (function () {
-    function AssetLocation() {
-    }
-    AssetLocation.Local = 'Local';
-    AssetLocation.Bsn = 'Bsn';
-    AssetLocation.Ftp = 'Ftp';
-    AssetLocation.Blob = 'Blob';
-    return AssetLocation;
-}());
-exports.AssetLocation = AssetLocation;
-Object.freeze(AssetLocation);
-var AssetType = (function () {
-    function AssetType() {
-    }
-    AssetType.Content = 'Content';
-    AssetType.Project = 'Project';
-    AssetType.ProjectBpf = 'ProjectBpf';
-    AssetType.ProjectFragment = 'ProjectFragment';
-    AssetType.Schedule = 'Schedule';
-    AssetType.BrightScript = 'BrightScript';
-    AssetType.HtmlSite = 'HtmlSite';
-    AssetType.DeviceHtmlSite = 'DeviceHtmlSite';
-    AssetType.Folder = 'Folder';
-    AssetType.BSNDataFeed = 'BSNDataFeed';
-    AssetType.BSNMediaFeed = 'BSNMediaFeed';
-    AssetType.BSNDynamicPlaylist = 'BSNDynamicPlaylist';
-    AssetType.BSNTaggedPlaylist = 'BSNTaggedPlaylist';
-    AssetType.Other = 'Other';
-    return AssetType;
-}());
-exports.AssetType = AssetType;
-Object.freeze(AssetType);
-var BseChildAssetType = (function (_super) {
-    __extends(BseChildAssetType, _super);
-    function BseChildAssetType() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    BseChildAssetType.Asset = 'Asset';
-    BseChildAssetType.Component = 'Component';
-    return BseChildAssetType;
-}(AssetType));
-exports.BseChildAssetType = BseChildAssetType;
-Object.freeze(BseChildAssetType);
+var AssetLocation;
+(function (AssetLocation) {
+    AssetLocation["Local"] = "Local";
+    AssetLocation["Bsn"] = "Bsn";
+    AssetLocation["Ftp"] = "Ftp";
+    AssetLocation["Blob"] = "Blob";
+})(AssetLocation = exports.AssetLocation || (exports.AssetLocation = {}));
+var AssetType;
+(function (AssetType) {
+    AssetType["Content"] = "Content";
+    AssetType["Project"] = "Project";
+    AssetType["ProjectBpf"] = "ProjectBpf";
+    AssetType["ProjectFragment"] = "ProjectFragment";
+    AssetType["Schedule"] = "Schedule";
+    AssetType["BrightScript"] = "BrightScript";
+    AssetType["HtmlSite"] = "HtmlSite";
+    AssetType["DeviceHtmlSite"] = "DeviceHtmlSite";
+    AssetType["Folder"] = "Folder";
+    AssetType["BSNDataFeed"] = "BSNDataFeed";
+    AssetType["BSNMediaFeed"] = "BSNMediaFeed";
+    AssetType["BSNDynamicPlaylist"] = "BSNDynamicPlaylist";
+    AssetType["BSNTaggedPlaylist"] = "BSNTaggedPlaylist";
+    AssetType["Other"] = "Other";
+})(AssetType = exports.AssetType || (exports.AssetType = {}));
+var BseContainerAssetType;
+(function (BseContainerAssetType) {
+    BseContainerAssetType["Asset"] = "Asset";
+    BseContainerAssetType["Component"] = "Component";
+})(BseContainerAssetType = exports.BseContainerAssetType || (exports.BseContainerAssetType = {}));
+function bscIsAssetContainerLocator(assetLocator) {
+    return !isNil(assetLocator)
+        && assetLocator.assetType === AssetType.Folder
+        && (assetLocator.location !== AssetLocation.Bsn || !isNil(assetLocator.childAssetType));
+}
+exports.bscIsAssetContainerLocator = bscIsAssetContainerLocator;
 var FtpObjectPermissionGroup;
 (function (FtpObjectPermissionGroup) {
     FtpObjectPermissionGroup[FtpObjectPermissionGroup["Owner"] = 0] = "Owner";
@@ -1716,18 +1432,15 @@ function bscConvertProbeDataToAvMetadata(probeData, mediaType) {
     return {};
 }
 exports.bscConvertProbeDataToAvMetadata = bscConvertProbeDataToAvMetadata;
-var BsProjectFragmentType = (function () {
-    function BsProjectFragmentType() {
-    }
-    BsProjectFragmentType.None = 'None';
-    BsProjectFragmentType.MediaStateCopySet = 'MediaStateCopySet';
-    BsProjectFragmentType.CommandCopySet = 'CommandCopySet';
-    BsProjectFragmentType.LiveTextItemCopySet = 'LiveTextItemCopySet';
-    BsProjectFragmentType.UserVariableCopySet = 'UserVariableCopySet';
-    BsProjectFragmentType.UserDefinedEventSet = 'UserDefinedEventSet';
-    return BsProjectFragmentType;
-}());
-exports.BsProjectFragmentType = BsProjectFragmentType;
+var BsProjectFragmentType;
+(function (BsProjectFragmentType) {
+    BsProjectFragmentType["None"] = "None";
+    BsProjectFragmentType["MediaStateCopySet"] = "MediaStateCopySet";
+    BsProjectFragmentType["CommandCopySet"] = "CommandCopySet";
+    BsProjectFragmentType["LiveTextItemCopySet"] = "LiveTextItemCopySet";
+    BsProjectFragmentType["UserVariableCopySet"] = "UserVariableCopySet";
+    BsProjectFragmentType["UserDefinedEventSet"] = "UserDefinedEventSet";
+})(BsProjectFragmentType = exports.BsProjectFragmentType || (exports.BsProjectFragmentType = {}));
 function bscCreateLocalAssetThumbnail(data, type, size, hash) {
     return {
         kind: 'local',
@@ -1802,6 +1515,9 @@ function bscAssetLocatorForBsnAsset(assetType, bsnId, network, name, path, origi
         networkId: bsnId,
         scope: isNil(network) ? '' : network,
     };
+    if (assetType === AssetType.Folder) {
+        locator.childAssetType = AssetType.Content;
+    }
     if (!isNil(origin)) {
         locator.origin = origin;
     }
@@ -1861,6 +1577,9 @@ function bscAssetLocatorForLocalAsset(assetType, fullPath, scope, origin) {
 }
 exports.bscAssetLocatorForLocalAsset = bscAssetLocatorForLocalAsset;
 function bscGetAssetSpecification(location, assetType, path, fileName) {
+    if (isNil(path) || path === '') {
+        path = bscGetAssetRootPath(location);
+    }
     var dirName = isNil(fileName) ? isomorphic_path_1.default.dirname(path) : path;
     return {
         name: isNil(fileName) ? isomorphic_path_1.default.basename(path) : fileName,
@@ -1877,7 +1596,7 @@ function bscAssetItemFromBasicAssetInfo(assetType, fileName, fileDirPath, bsnId,
     if (scope === void 0) { scope = ''; }
     var assetLocator;
     if (!fileDirPath) {
-        fileDirPath = isomorphic_path_1.default.sep;
+        fileDirPath = bsnId ? isomorphic_path_1.default.posix.sep : isomorphic_path_1.default.sep;
     }
     if (isNil(scope)) {
         scope = '';
@@ -1904,6 +1623,20 @@ function bscAssetItemFromBasicAssetInfo(assetType, fileName, fileDirPath, bsnId,
     return null;
 }
 exports.bscAssetItemFromBasicAssetInfo = bscAssetItemFromBasicAssetInfo;
+function bscGetAssetRootPath(location) {
+    if (location === AssetLocation.Bsn || location === AssetLocation.Ftp) {
+        return isomorphic_path_1.default.posix.sep;
+    }
+    return isomorphic_path_1.default.sep;
+}
+exports.bscGetAssetRootPath = bscGetAssetRootPath;
+function bscGetAssetPathSeparator(location) {
+    if (location === AssetLocation.Bsn || location === AssetLocation.Ftp) {
+        return isomorphic_path_1.default.posix.sep;
+    }
+    return isomorphic_path_1.default.sep;
+}
+exports.bscGetAssetPathSeparator = bscGetAssetPathSeparator;
 function bscGenerateAssetLocatorKey(item) {
     switch (item.location) {
         case AssetLocation.Local:
@@ -2022,7 +1755,7 @@ function bscIsDefaultAssetItem(assetItem) {
 }
 exports.bscIsDefaultAssetItem = bscIsDefaultAssetItem;
 exports.imageFileSuffixes = new Set(['jpg', 'jpeg', 'png', 'bmp']);
-exports.videoFileSuffixes = new Set(['mov', 'mp4', 'mpg', 'ts', 'vob', 'wmv', 'm2ts', 'mkv']);
+exports.videoFileSuffixes = new Set(['mov', 'mp4', 'mpg', 'ts', 'vob', 'wmv', 'm2ts', 'mkv', 'webm']);
 exports.audioFileSuffixes = new Set(['mp3', 'wav', 'ogg', 'flac', 'm4a', 'aac', 'ac3', 'eac3', 'ec3']);
 exports.textFileSuffixes = new Set(['txt']);
 function bscGetFileExt(pathOrFileName) {
@@ -2103,7 +1836,7 @@ exports.projectFileFragmentSuffixes = new Set([
 exports.scheduleFileSuffixes = new Set(['bpsx']);
 exports.projectBpfFileSuffixes = new Set(['bpf']);
 exports.htmlSiteFileSuffixes = new Set(['html', 'htm', 'js']);
-exports.fontFileSuffixes = new Set(['ttf', 'otf']);
+exports.fontFileSuffixes = new Set(['ttf', 'otf', 'ttc']);
 exports.styleSheetFileSuffixes = new Set(['css']);
 function bscGetAssetItemFileTypeInfo(assetItem) {
     var typeInfo = {
@@ -2193,65 +1926,61 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bscPlayerModelToPlayerMachineName = exports.bscPlayerModelHasFeature = exports.ModelFeature = void 0;
 var playerModel_1 = __webpack_require__(3);
-var ModelFeature = (function () {
-    function ModelFeature() {
-    }
-    ModelFeature.Gpio = 'gpio';
-    ModelFeature.Networking = 'net';
-    ModelFeature.SingleAnalogVolumeLimitation = '1audVol';
-    ModelFeature.Hdmi = 'hdmi';
-    ModelFeature.HdmiEArc = 'hdmiEArc';
-    ModelFeature.VideoStreaming = 'vstrm';
-    ModelFeature.AudioStreaming = 'astrm';
-    ModelFeature.AudioMixer = 'amix';
-    ModelFeature.Audio = 'aud';
-    ModelFeature.EnhancedAudio = 'enhaud';
-    ModelFeature.Images = 'img';
-    ModelFeature.Video = 'vid';
-    ModelFeature.Clock = 'clk';
-    ModelFeature.GraphicsZOrdering = 'grfZ';
-    ModelFeature.VideoZOrdering = 'vidZ';
-    ModelFeature.Html5 = 'html5';
-    ModelFeature.Html5Camera = 'htmlCam';
-    ModelFeature.AudioOutputControl = 'aoctl';
-    ModelFeature.Spdif = 'spdif';
-    ModelFeature.IrOut = 'ir';
-    ModelFeature.Usb = 'usb';
-    ModelFeature.Bp = 'bp';
-    ModelFeature.Serial = 'ser';
-    ModelFeature.Blc400 = 'blc400';
-    ModelFeature.HdmiIn = 'hdmiIn';
-    ModelFeature.EnhancedSynchronization = 'enhsync';
-    ModelFeature.Pronto = 'pronto';
-    ModelFeature.ScrollingTicker = 'scrlTic';
-    ModelFeature.TenBitColor = '10bit';
-    ModelFeature.FourKImages = '4kimg';
-    ModelFeature.FullResGraphics = 'fullResGfx';
-    ModelFeature.FullResGraphicsHiFR = 'fullResGfxHiFR';
-    ModelFeature.DualDecoder = '2dec';
-    ModelFeature.MosaicMode = 'mosaic';
-    ModelFeature.Bluetooth = 'btle';
-    ModelFeature.AudioConfiguration = 'acnf';
-    ModelFeature.DedicatedIr = 'dedir';
-    ModelFeature.DolbyVision = 'dolby';
-    ModelFeature.UsbTap = 'usbTap';
-    ModelFeature.ButtonsByGpio = 'buttonsByGpio';
-    ModelFeature.LightsByGpio = 'lightsByGpio';
-    ModelFeature.BroadcomSupport = 'BroadcomSupport';
-    ModelFeature.RfTuner = 'tun';
-    ModelFeature.AudioDetect = 'auddet';
-    ModelFeature.ExternalAudioDetect = 'extAudDet';
-    ModelFeature.SingleOnBoardAnalogChannel = '1aud';
-    ModelFeature.ThreeOnBoardAnalogChannels = '3aud';
-    ModelFeature.UsbAudio = 'usbAud';
-    ModelFeature.PumaUsbAudio = 'pumaAud';
-    ModelFeature.BoseUsb = 'boseUsb';
-    ModelFeature.AudioIn = 'audIn';
-    ModelFeature.AudioDownMix = 'audDMix';
-    return ModelFeature;
-}());
-exports.ModelFeature = ModelFeature;
-Object.freeze(ModelFeature);
+var ModelFeature;
+(function (ModelFeature) {
+    ModelFeature["Gpio"] = "gpio";
+    ModelFeature["Networking"] = "net";
+    ModelFeature["SingleAnalogVolumeLimitation"] = "1audVol";
+    ModelFeature["Hdmi"] = "hdmi";
+    ModelFeature["HdmiEArc"] = "hdmiEArc";
+    ModelFeature["VideoStreaming"] = "vstrm";
+    ModelFeature["AudioStreaming"] = "astrm";
+    ModelFeature["AudioMixer"] = "amix";
+    ModelFeature["Audio"] = "aud";
+    ModelFeature["EnhancedAudio"] = "enhaud";
+    ModelFeature["Images"] = "img";
+    ModelFeature["Video"] = "vid";
+    ModelFeature["Clock"] = "clk";
+    ModelFeature["GraphicsZOrdering"] = "grfZ";
+    ModelFeature["VideoZOrdering"] = "vidZ";
+    ModelFeature["Html5"] = "html5";
+    ModelFeature["Html5Camera"] = "htmlCam";
+    ModelFeature["AudioOutputControl"] = "aoctl";
+    ModelFeature["Spdif"] = "spdif";
+    ModelFeature["IrOut"] = "ir";
+    ModelFeature["Usb"] = "usb";
+    ModelFeature["Bp"] = "bp";
+    ModelFeature["Serial"] = "ser";
+    ModelFeature["Blc400"] = "blc400";
+    ModelFeature["HdmiIn"] = "hdmiIn";
+    ModelFeature["EnhancedSynchronization"] = "enhsync";
+    ModelFeature["Pronto"] = "pronto";
+    ModelFeature["ScrollingTicker"] = "scrlTic";
+    ModelFeature["TenBitColor"] = "10bit";
+    ModelFeature["FourKImages"] = "4kimg";
+    ModelFeature["FullResGraphics"] = "fullResGfx";
+    ModelFeature["FullResGraphicsHiFR"] = "fullResGfxHiFR";
+    ModelFeature["DualDecoder"] = "2dec";
+    ModelFeature["MosaicMode"] = "mosaic";
+    ModelFeature["Bluetooth"] = "btle";
+    ModelFeature["AudioConfiguration"] = "acnf";
+    ModelFeature["DedicatedIr"] = "dedir";
+    ModelFeature["DolbyVision"] = "dolby";
+    ModelFeature["UsbTap"] = "usbTap";
+    ModelFeature["ButtonsByGpio"] = "buttonsByGpio";
+    ModelFeature["LightsByGpio"] = "lightsByGpio";
+    ModelFeature["BroadcomSupport"] = "BroadcomSupport";
+    ModelFeature["RfTuner"] = "tun";
+    ModelFeature["AudioDetect"] = "auddet";
+    ModelFeature["ExternalAudioDetect"] = "extAudDet";
+    ModelFeature["SingleOnBoardAnalogChannel"] = "1aud";
+    ModelFeature["ThreeOnBoardAnalogChannels"] = "3aud";
+    ModelFeature["UsbAudio"] = "usbAud";
+    ModelFeature["PumaUsbAudio"] = "pumaAud";
+    ModelFeature["BoseUsb"] = "boseUsb";
+    ModelFeature["AudioIn"] = "audIn";
+    ModelFeature["AudioDownMix"] = "audDMix";
+})(ModelFeature = exports.ModelFeature || (exports.ModelFeature = {}));
 var ImpalaFeatureArray = [
     ModelFeature.Gpio, ModelFeature.Networking, ModelFeature.Hdmi,
     ModelFeature.SingleAnalogVolumeLimitation, ModelFeature.VideoStreaming, ModelFeature.AudioStreaming,
@@ -2629,7 +2358,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(1), exports);
@@ -2662,15 +2391,11 @@ __exportStar(__webpack_require__(15), exports);
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BDeploySortType = void 0;
-var BDeploySortType = (function () {
-    function BDeploySortType() {
-    }
-    BDeploySortType.ASC = 1;
-    BDeploySortType.DESC = -1;
-    return BDeploySortType;
-}());
-exports.BDeploySortType = BDeploySortType;
-Object.freeze(BDeploySortType);
+var BDeploySortType;
+(function (BDeploySortType) {
+    BDeploySortType[BDeploySortType["ASC"] = 1] = "ASC";
+    BDeploySortType[BDeploySortType["DESC"] = -1] = "DESC";
+})(BDeploySortType = exports.BDeploySortType || (exports.BDeploySortType = {}));
 
 
 /***/ }),
@@ -2698,83 +2423,55 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bscIsTaggedListSpecification = exports.bscCreateTaggedListSpecification = exports.bscIsTagSortSpecification = exports.bscCreateTagSortSpecification = exports.bscIsBsnFilterSpecification = exports.bscCreateBsnFilterSpecification = exports.bscIsValidBsnFilterComponent = exports.bscCreateTagFilterComponent = exports.bscGetBsnFilterTypeForTagDataType = exports.bscCreateFilterComponent = exports.bscIsTimeSpanFilterParam = exports.BsnFilterCombineType = exports.bscGetOperatorListForTagDataType = exports.bscGetOperatorListForFilterType = exports.BsnArrayFilterOperator = exports.BsnBooleanFilterOperator = exports.BsnDateFilterOperator = exports.BsnNumberFilterOperator = exports.BsnStringFilterOperator = exports.BsnTimeUnits = exports.BsnFilterType = exports.bscIsBsnObjectUserPermission = exports.bscCreateBsnObjectUserPermission = exports.bscIsBsnObjectRolePermission = exports.bscCreateBsnObjectRolePermission = exports.BsnObjectPermissionType = exports.BsnPresentationReferenceType = exports.BsnPresentationStatus = exports.BsnPresentationType = exports.BsnTagType = exports.BsnTagDataType = exports.BsnTaggedPlaylistItemStatus = void 0;
+exports.bscIsTaggedListSpecification = exports.bscCreateTaggedListSpecification = exports.bscIsTagSortSpecification = exports.bscCreateTagSortSpecification = exports.bscIsBsnFilterSpecification = exports.bscCreateBsnFilterSpecification = exports.bscIsValidBsnFilterComponent = exports.bscCreateTagFilterComponent = exports.bscGetBsnTagDataTypeForFilterType = exports.bscGetBsnFilterTypeForTagDataType = exports.bscCreateFilterComponent = exports.bscIsTimeSpanFilterParam = exports.BsnFilterCombineType = exports.bscGetOperatorListForTagDataType = exports.bscGetOperatorListForFilterType = exports.BsnArrayFilterOperator = exports.BsnBooleanFilterOperator = exports.BsnDateFilterOperator = exports.BsnNumberFilterOperator = exports.BsnStringFilterOperator = exports.BsnTimeUnits = exports.BsnFilterType = exports.bscIsBsnObjectUserPermission = exports.bscCreateBsnObjectUserPermission = exports.bscIsBsnObjectRolePermission = exports.bscCreateBsnObjectRolePermission = exports.BsnObjectPermissionType = exports.BsnPresentationReferenceType = exports.BsnPresentationStatus = exports.BsnPresentationType = exports.BsnTagType = exports.BsnTagDataType = exports.BsnTaggedPlaylistItemStatus = void 0;
 var isNil = __webpack_require__(0);
 var isString = __webpack_require__(2);
-var BsnTaggedPlaylistItemStatus = (function () {
-    function BsnTaggedPlaylistItemStatus() {
-    }
-    BsnTaggedPlaylistItemStatus.Approved = 'Approved';
-    BsnTaggedPlaylistItemStatus.PendingAddition = 'PendingAddition';
-    BsnTaggedPlaylistItemStatus.PendingDeletion = 'PendingDeletion';
-    BsnTaggedPlaylistItemStatus.Pending = 'Pending';
-    return BsnTaggedPlaylistItemStatus;
-}());
-exports.BsnTaggedPlaylistItemStatus = BsnTaggedPlaylistItemStatus;
-Object.freeze(BsnTaggedPlaylistItemStatus);
-var BsnTagDataType = (function () {
-    function BsnTagDataType() {
-    }
-    BsnTagDataType.String = 'string';
-    BsnTagDataType.Number = 'number';
-    BsnTagDataType.Boolean = 'boolean';
-    BsnTagDataType.DateTime = 'dateTime';
-    BsnTagDataType.NumericArray = 'numericArray';
-    BsnTagDataType.StringArray = 'stringArray';
-    return BsnTagDataType;
-}());
-exports.BsnTagDataType = BsnTagDataType;
-Object.freeze(BsnTagDataType);
-var BsnTagType = (function () {
-    function BsnTagType() {
-    }
-    BsnTagType.SystemDevice = '[sys].[Device]';
-    BsnTagType.SystemContent = '[sys].[Content]';
-    BsnTagType.Device = '[Device]';
-    BsnTagType.Content = '[Content]';
-    return BsnTagType;
-}());
-exports.BsnTagType = BsnTagType;
-Object.freeze(BsnTagType);
-var BsnPresentationType = (function () {
-    function BsnPresentationType() {
-    }
-    BsnPresentationType.Simple = 'Simple';
-    BsnPresentationType.Complete = 'Complete';
-    return BsnPresentationType;
-}());
-exports.BsnPresentationType = BsnPresentationType;
-Object.freeze(BsnPresentationType);
-var BsnPresentationStatus = (function () {
-    function BsnPresentationStatus() {
-    }
-    BsnPresentationStatus.Draft = 'Draft';
-    BsnPresentationStatus.Published = 'Published';
-    return BsnPresentationStatus;
-}());
-exports.BsnPresentationStatus = BsnPresentationStatus;
-Object.freeze(BsnPresentationStatus);
-var BsnPresentationReferenceType = (function () {
-    function BsnPresentationReferenceType() {
-    }
-    BsnPresentationReferenceType.Presentation = 'Presentation';
-    BsnPresentationReferenceType.BrightWallPresentation = 'BrightWallPresentation';
-    return BsnPresentationReferenceType;
-}());
-exports.BsnPresentationReferenceType = BsnPresentationReferenceType;
-Object.freeze(BsnPresentationReferenceType);
-var BsnObjectPermissionType = (function () {
-    function BsnObjectPermissionType() {
-    }
-    BsnObjectPermissionType.Role = 'Role';
-    BsnObjectPermissionType.User = 'User';
-    return BsnObjectPermissionType;
-}());
-exports.BsnObjectPermissionType = BsnObjectPermissionType;
-Object.freeze(BsnObjectPermissionType);
+var BsnTaggedPlaylistItemStatus;
+(function (BsnTaggedPlaylistItemStatus) {
+    BsnTaggedPlaylistItemStatus["Approved"] = "Approved";
+    BsnTaggedPlaylistItemStatus["PendingAddition"] = "PendingAddition";
+    BsnTaggedPlaylistItemStatus["PendingDeletion"] = "PendingDeletion";
+    BsnTaggedPlaylistItemStatus["Pending"] = "Pending";
+})(BsnTaggedPlaylistItemStatus = exports.BsnTaggedPlaylistItemStatus || (exports.BsnTaggedPlaylistItemStatus = {}));
+var BsnTagDataType;
+(function (BsnTagDataType) {
+    BsnTagDataType["String"] = "string";
+    BsnTagDataType["Number"] = "number";
+    BsnTagDataType["Boolean"] = "boolean";
+    BsnTagDataType["DateTime"] = "dateTime";
+    BsnTagDataType["NumericArray"] = "numericArray";
+    BsnTagDataType["StringArray"] = "stringArray";
+})(BsnTagDataType = exports.BsnTagDataType || (exports.BsnTagDataType = {}));
+var BsnTagType;
+(function (BsnTagType) {
+    BsnTagType["SystemDevice"] = "[sys].[Device]";
+    BsnTagType["SystemContent"] = "[sys].[Content]";
+    BsnTagType["Device"] = "[Device]";
+    BsnTagType["Content"] = "[Content]";
+})(BsnTagType = exports.BsnTagType || (exports.BsnTagType = {}));
+var BsnPresentationType;
+(function (BsnPresentationType) {
+    BsnPresentationType["Simple"] = "Simple";
+    BsnPresentationType["Complete"] = "Complete";
+})(BsnPresentationType = exports.BsnPresentationType || (exports.BsnPresentationType = {}));
+var BsnPresentationStatus;
+(function (BsnPresentationStatus) {
+    BsnPresentationStatus["Draft"] = "Draft";
+    BsnPresentationStatus["Published"] = "Published";
+})(BsnPresentationStatus = exports.BsnPresentationStatus || (exports.BsnPresentationStatus = {}));
+var BsnPresentationReferenceType;
+(function (BsnPresentationReferenceType) {
+    BsnPresentationReferenceType["Presentation"] = "Presentation";
+    BsnPresentationReferenceType["BrightWallPresentation"] = "BrightWallPresentation";
+})(BsnPresentationReferenceType = exports.BsnPresentationReferenceType || (exports.BsnPresentationReferenceType = {}));
+var BsnObjectPermissionType;
+(function (BsnObjectPermissionType) {
+    BsnObjectPermissionType["Role"] = "Role";
+    BsnObjectPermissionType["User"] = "User";
+})(BsnObjectPermissionType = exports.BsnObjectPermissionType || (exports.BsnObjectPermissionType = {}));
 function bscCreateBsnObjectRolePermission(roleName, operationUid, isAllowed) {
     return {
-        type: 'Role',
+        type: BsnObjectPermissionType.Role,
         roleName: roleName,
         operationUid: operationUid,
         isAllowed: isAllowed,
@@ -2787,7 +2484,7 @@ function bscIsBsnObjectRolePermission(permission) {
 exports.bscIsBsnObjectRolePermission = bscIsBsnObjectRolePermission;
 function bscCreateBsnObjectUserPermission(login, operationUid, isAllowed) {
     return {
-        type: 'User',
+        type: BsnObjectPermissionType.User,
         login: login,
         operationUid: operationUid,
         isAllowed: isAllowed,
@@ -2798,96 +2495,69 @@ function bscIsBsnObjectUserPermission(permission) {
     return !isNil(permission) && permission.type === BsnObjectPermissionType.User;
 }
 exports.bscIsBsnObjectUserPermission = bscIsBsnObjectUserPermission;
-var BsnFilterType = (function () {
-    function BsnFilterType() {
-    }
-    BsnFilterType.string = 'string';
-    BsnFilterType.enum = 'enum';
-    BsnFilterType.number = 'number';
-    BsnFilterType.dateTime = 'dateTime';
-    BsnFilterType.boolean = 'boolean';
-    BsnFilterType.stringArray = 'stringArray';
-    BsnFilterType.numericArray = 'numericArray';
-    return BsnFilterType;
-}());
-exports.BsnFilterType = BsnFilterType;
-Object.freeze(BsnFilterType);
-var BsnTimeUnits = (function () {
-    function BsnTimeUnits() {
-    }
-    BsnTimeUnits.years = 'years';
-    BsnTimeUnits.months = 'months';
-    BsnTimeUnits.days = 'days';
-    return BsnTimeUnits;
-}());
-exports.BsnTimeUnits = BsnTimeUnits;
-var BsnStringFilterOperator = (function () {
-    function BsnStringFilterOperator() {
-    }
-    BsnStringFilterOperator.Is = 'IS';
-    BsnStringFilterOperator.IsNot = 'IS NOT';
-    BsnStringFilterOperator.BeginsWith = 'BEGINS WITH';
-    BsnStringFilterOperator.EndsWith = 'ENDS WITH';
-    BsnStringFilterOperator.Contains = 'CONTAINS';
-    BsnStringFilterOperator.ContainsAll = 'CONTAINS ALL';
-    BsnStringFilterOperator.ContainsAny = 'CONTAINS ANY';
-    BsnStringFilterOperator.DoesNotContain = 'DOES NOT CONTAIN';
-    BsnStringFilterOperator.IsIn = 'IS IN';
-    BsnStringFilterOperator.IsNotIn = 'IS NOT IN';
-    return BsnStringFilterOperator;
-}());
-exports.BsnStringFilterOperator = BsnStringFilterOperator;
-Object.freeze(BsnStringFilterOperator);
-var BsnNumberFilterOperator = (function () {
-    function BsnNumberFilterOperator() {
-    }
-    BsnNumberFilterOperator.Is = 'IS';
-    BsnNumberFilterOperator.IsNot = 'IS NOT';
-    BsnNumberFilterOperator.IsGreaterThan = 'IS GREATER THAN';
-    BsnNumberFilterOperator.IsLessThan = 'IS LESS THAN';
-    BsnNumberFilterOperator.IsInTheRange = 'IS IN THE RANGE';
-    BsnNumberFilterOperator.IsNotInTheRange = 'IS NOT IN THE RANGE';
-    BsnNumberFilterOperator.IsIn = 'IS IN';
-    BsnNumberFilterOperator.IsNotIn = 'IS NOT IN';
-    return BsnNumberFilterOperator;
-}());
-exports.BsnNumberFilterOperator = BsnNumberFilterOperator;
-Object.freeze(BsnNumberFilterOperator);
-var BsnDateFilterOperator = (function () {
-    function BsnDateFilterOperator() {
-    }
-    BsnDateFilterOperator.Is = 'IS';
-    BsnDateFilterOperator.IsNot = 'IS NOT';
-    BsnDateFilterOperator.IsAfter = 'IS AFTER';
-    BsnDateFilterOperator.IsBefore = 'IS BEFORE';
-    BsnDateFilterOperator.InTheLast = 'IN THE LAST';
-    BsnDateFilterOperator.NotInTheLast = 'NOT IN THE LAST';
-    BsnDateFilterOperator.IsInTheRange = 'IS IN THE RANGE';
-    BsnDateFilterOperator.IsNotInTheRange = 'IS NOT IN THE RANGE';
-    BsnDateFilterOperator.IsIn = 'IS IN';
-    BsnDateFilterOperator.IsNotIn = 'IS NOT IN';
-    return BsnDateFilterOperator;
-}());
-exports.BsnDateFilterOperator = BsnDateFilterOperator;
-Object.freeze(BsnDateFilterOperator);
-var BsnBooleanFilterOperator = (function () {
-    function BsnBooleanFilterOperator() {
-    }
-    BsnBooleanFilterOperator.Is = 'IS';
-    return BsnBooleanFilterOperator;
-}());
-exports.BsnBooleanFilterOperator = BsnBooleanFilterOperator;
-Object.freeze(BsnBooleanFilterOperator);
-var BsnArrayFilterOperator = (function () {
-    function BsnArrayFilterOperator() {
-    }
-    BsnArrayFilterOperator.Contains = 'CONTAINS';
-    BsnArrayFilterOperator.ContainsAll = 'CONTAINS ALL';
-    BsnArrayFilterOperator.ContainsAny = 'CONTAINS ANY';
-    return BsnArrayFilterOperator;
-}());
-exports.BsnArrayFilterOperator = BsnArrayFilterOperator;
-Object.freeze(BsnArrayFilterOperator);
+var BsnFilterType;
+(function (BsnFilterType) {
+    BsnFilterType["string"] = "string";
+    BsnFilterType["enum"] = "enum";
+    BsnFilterType["number"] = "number";
+    BsnFilterType["dateTime"] = "dateTime";
+    BsnFilterType["boolean"] = "boolean";
+    BsnFilterType["stringArray"] = "stringArray";
+    BsnFilterType["numericArray"] = "numericArray";
+})(BsnFilterType = exports.BsnFilterType || (exports.BsnFilterType = {}));
+var BsnTimeUnits;
+(function (BsnTimeUnits) {
+    BsnTimeUnits["years"] = "years";
+    BsnTimeUnits["months"] = "months";
+    BsnTimeUnits["days"] = "days";
+})(BsnTimeUnits = exports.BsnTimeUnits || (exports.BsnTimeUnits = {}));
+var BsnStringFilterOperator;
+(function (BsnStringFilterOperator) {
+    BsnStringFilterOperator["Is"] = "IS";
+    BsnStringFilterOperator["IsNot"] = "IS NOT";
+    BsnStringFilterOperator["BeginsWith"] = "BEGINS WITH";
+    BsnStringFilterOperator["EndsWith"] = "ENDS WITH";
+    BsnStringFilterOperator["Contains"] = "CONTAINS";
+    BsnStringFilterOperator["ContainsAll"] = "CONTAINS ALL";
+    BsnStringFilterOperator["ContainsAny"] = "CONTAINS ANY";
+    BsnStringFilterOperator["DoesNotContain"] = "DOES NOT CONTAIN";
+    BsnStringFilterOperator["IsIn"] = "IS IN";
+    BsnStringFilterOperator["IsNotIn"] = "IS NOT IN";
+})(BsnStringFilterOperator = exports.BsnStringFilterOperator || (exports.BsnStringFilterOperator = {}));
+var BsnNumberFilterOperator;
+(function (BsnNumberFilterOperator) {
+    BsnNumberFilterOperator["Is"] = "IS";
+    BsnNumberFilterOperator["IsNot"] = "IS NOT";
+    BsnNumberFilterOperator["IsGreaterThan"] = "IS GREATER THAN";
+    BsnNumberFilterOperator["IsLessThan"] = "IS LESS THAN";
+    BsnNumberFilterOperator["IsInTheRange"] = "IS IN THE RANGE";
+    BsnNumberFilterOperator["IsNotInTheRange"] = "IS NOT IN THE RANGE";
+    BsnNumberFilterOperator["IsIn"] = "IS IN";
+    BsnNumberFilterOperator["IsNotIn"] = "IS NOT IN";
+})(BsnNumberFilterOperator = exports.BsnNumberFilterOperator || (exports.BsnNumberFilterOperator = {}));
+var BsnDateFilterOperator;
+(function (BsnDateFilterOperator) {
+    BsnDateFilterOperator["Is"] = "IS";
+    BsnDateFilterOperator["IsNot"] = "IS NOT";
+    BsnDateFilterOperator["IsAfter"] = "IS AFTER";
+    BsnDateFilterOperator["IsBefore"] = "IS BEFORE";
+    BsnDateFilterOperator["InTheLast"] = "IN THE LAST";
+    BsnDateFilterOperator["NotInTheLast"] = "NOT IN THE LAST";
+    BsnDateFilterOperator["IsInTheRange"] = "IS IN THE RANGE";
+    BsnDateFilterOperator["IsNotInTheRange"] = "IS NOT IN THE RANGE";
+    BsnDateFilterOperator["IsIn"] = "IS IN";
+    BsnDateFilterOperator["IsNotIn"] = "IS NOT IN";
+})(BsnDateFilterOperator = exports.BsnDateFilterOperator || (exports.BsnDateFilterOperator = {}));
+var BsnBooleanFilterOperator;
+(function (BsnBooleanFilterOperator) {
+    BsnBooleanFilterOperator["Is"] = "IS";
+})(BsnBooleanFilterOperator = exports.BsnBooleanFilterOperator || (exports.BsnBooleanFilterOperator = {}));
+var BsnArrayFilterOperator;
+(function (BsnArrayFilterOperator) {
+    BsnArrayFilterOperator["Contains"] = "CONTAINS";
+    BsnArrayFilterOperator["ContainsAll"] = "CONTAINS ALL";
+    BsnArrayFilterOperator["ContainsAny"] = "CONTAINS ANY";
+})(BsnArrayFilterOperator = exports.BsnArrayFilterOperator || (exports.BsnArrayFilterOperator = {}));
 var commonFilterOperators = [
     BsnStringFilterOperator.Is, BsnStringFilterOperator.IsNot,
     BsnStringFilterOperator.IsIn, BsnStringFilterOperator.IsNotIn,
@@ -2937,15 +2607,11 @@ function bscGetOperatorListForTagDataType(dataType) {
     }
 }
 exports.bscGetOperatorListForTagDataType = bscGetOperatorListForTagDataType;
-var BsnFilterCombineType = (function () {
-    function BsnFilterCombineType() {
-    }
-    BsnFilterCombineType.All = 'AND';
-    BsnFilterCombineType.Any = 'OR';
-    return BsnFilterCombineType;
-}());
-exports.BsnFilterCombineType = BsnFilterCombineType;
-Object.freeze(BsnFilterCombineType);
+var BsnFilterCombineType;
+(function (BsnFilterCombineType) {
+    BsnFilterCombineType["All"] = "AND";
+    BsnFilterCombineType["Any"] = "OR";
+})(BsnFilterCombineType = exports.BsnFilterCombineType || (exports.BsnFilterCombineType = {}));
 function bscIsTimeSpanFilterParam(param) {
     return !isNil(param)
         && typeof param === 'object'
@@ -3024,6 +2690,25 @@ function bscGetBsnFilterTypeForTagDataType(dataType) {
     }
 }
 exports.bscGetBsnFilterTypeForTagDataType = bscGetBsnFilterTypeForTagDataType;
+function bscGetBsnTagDataTypeForFilterType(filterType) {
+    switch (filterType) {
+        default:
+        case BsnFilterType.string:
+        case BsnFilterType.enum:
+            return BsnTagDataType.String;
+        case BsnFilterType.number:
+            return BsnTagDataType.Number;
+        case BsnFilterType.dateTime:
+            return BsnTagDataType.DateTime;
+        case BsnFilterType.boolean:
+            return BsnTagDataType.Boolean;
+        case BsnFilterType.stringArray:
+            return BsnTagDataType.StringArray;
+        case BsnFilterType.numericArray:
+            return BsnTagDataType.NumericArray;
+    }
+}
+exports.bscGetBsnTagDataTypeForFilterType = bscGetBsnTagDataTypeForFilterType;
 function bscCreateTagFilterComponent(tagKey, operator, values) {
     var validOperators = bscGetOperatorListForTagDataType(tagKey.dataType);
     if (validOperators.indexOf(operator) >= 0) {
@@ -3591,6 +3276,7 @@ exports.bscCreatePublishFirmware = bscCreatePublishFirmware;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bscGetIrRemoteControl = void 0;
+var metadata_1 = __webpack_require__(1);
 var irRemoteModel_1 = __webpack_require__(5);
 function bscGetIrRemoteControl(irRemoteModel) {
     var _a, _b;
@@ -3599,7 +3285,7 @@ function bscGetIrRemoteControl(irRemoteModel) {
         default:
             return {
                 id: 'RC-1001',
-                encoding: 'NEC',
+                encoding: metadata_1.IrReceiverEncodings.NEC,
                 manufacturerCode: 0x6F90,
                 buttons: (_a = {},
                     _a[0x16] = { buttonCode: 0x16, buttonDescription: 'Power' },
@@ -3626,7 +3312,7 @@ function bscGetIrRemoteControl(irRemoteModel) {
         case irRemoteModel_1.IrRemoteModel.RC1002:
             return {
                 id: 'RC-1002',
-                encoding: 'NEC',
+                encoding: metadata_1.IrReceiverEncodings.NEC,
                 manufacturerCode: 0x6F90,
                 buttons: (_b = {},
                     _b[0x16] = { buttonCode: 0x16, buttonDescription: 'Power' },
@@ -4021,19 +3707,15 @@ exports.PublishDataKeys = [
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bscGetMimeTypeForFileExtension = exports.bscGetFileExtensionForMimeType = exports.bscIsLocalFileBuffer = exports.bscCreateLocalFileBuffer = exports.BsUploadItemStatus = void 0;
-var BsUploadItemStatus = (function () {
-    function BsUploadItemStatus() {
-    }
-    BsUploadItemStatus.Pending = 'Pending';
-    BsUploadItemStatus.Uploading = 'Uploading';
-    BsUploadItemStatus.Uploaded = 'Uploaded';
-    BsUploadItemStatus.Matched = 'Matched';
-    BsUploadItemStatus.Cancelled = 'Cancelled';
-    BsUploadItemStatus.Failed = 'Failed';
-    return BsUploadItemStatus;
-}());
-exports.BsUploadItemStatus = BsUploadItemStatus;
-Object.freeze(BsUploadItemStatus);
+var BsUploadItemStatus;
+(function (BsUploadItemStatus) {
+    BsUploadItemStatus["Pending"] = "Pending";
+    BsUploadItemStatus["Uploading"] = "Uploading";
+    BsUploadItemStatus["Uploaded"] = "Uploaded";
+    BsUploadItemStatus["Matched"] = "Matched";
+    BsUploadItemStatus["Cancelled"] = "Cancelled";
+    BsUploadItemStatus["Failed"] = "Failed";
+})(BsUploadItemStatus = exports.BsUploadItemStatus || (exports.BsUploadItemStatus = {}));
 function bscCreateLocalFileBuffer(name, data, type, lastModifiedDate, hash) {
     var obj = {
         name: name, data: data,
@@ -4123,7 +3805,7 @@ exports.bscGetMimeTypeForFileExtension = bscGetMimeTypeForFileExtension;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bscIsNumericArray = exports.bscImageOrientationToRotationType = exports.bscTimeSpanStringFromSeconds = exports.bscTimeSpanStringToSeconds = exports.bscReplaceTimeZoneWithUTC = void 0;
+exports.bscGetDateToFormattedString = exports.bscGetFormattedFileSize = exports.bscIsNumericArray = exports.bscImageOrientationToRotationType = exports.bscTimeSpanStringFromSeconds = exports.bscTimeSpanStringToSeconds = exports.bscReplaceTimeZoneWithUTC = void 0;
 var metadata_1 = __webpack_require__(1);
 var isString = __webpack_require__(2);
 var isNil = __webpack_require__(0);
@@ -4191,6 +3873,43 @@ function bscIsNumericArray(strArray) {
     return !strArray.some(function (str) { return !(isString(str) && regEx.test(str)); });
 }
 exports.bscIsNumericArray = bscIsNumericArray;
+var getNumberWithLeadingZeroTwoDecimals = function (num) {
+    return num < 10 ? '0' + num : num.toString();
+};
+var bscGetFormattedFileSize = function (size) {
+    if (isNil(size)) {
+        return '';
+    }
+    var kb = 1000;
+    var units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    if (Math.abs(size) < kb) {
+        return size + 'B';
+    }
+    var index = -1;
+    while (Math.abs(size) >= kb && index < units.length - 1) {
+        size = size / kb;
+        ++index;
+    }
+    return "" + size.toFixed(0) + units[index];
+};
+exports.bscGetFormattedFileSize = bscGetFormattedFileSize;
+var bscGetDateToFormattedString = function (date) {
+    var months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+    if (!isNil(date) && date instanceof Date) {
+        return months[date.getMonth()]
+            + ' ' + getNumberWithLeadingZeroTwoDecimals(date.getDate())
+            + ', ' + date.getFullYear()
+            + ' ' + getNumberWithLeadingZeroTwoDecimals(date.getHours())
+            + ':' + getNumberWithLeadingZeroTwoDecimals(date.getMinutes());
+    }
+    else {
+        return '';
+    }
+};
+exports.bscGetDateToFormattedString = bscGetDateToFormattedString;
 
 
 /***/ }),
@@ -4205,189 +3924,181 @@ var playerModel_1 = __webpack_require__(3);
 var playerFeature_1 = __webpack_require__(6);
 var metadata_1 = __webpack_require__(1);
 var rectangle_1 = __webpack_require__(8);
-var VideoResolution = (function () {
-    function VideoResolution() {
-    }
-    VideoResolution.v4096x2160 = '4096x2160';
-    VideoResolution.v3840x2160 = '3840x2160';
-    VideoResolution.v3840x1080 = '3840x1080';
-    VideoResolution.v3840x600 = '3840x600';
-    VideoResolution.v3440x1440 = '3440x1440';
-    VideoResolution.v2560x1600 = '2560x1600';
-    VideoResolution.v2560x1440 = '2560x1440';
-    VideoResolution.v2560x1080 = '2560x1080';
-    VideoResolution.v2560x960 = '2560x960';
-    VideoResolution.v2376x288 = '2376x288';
-    VideoResolution.v2048x1152 = '2048x1152';
-    VideoResolution.v1920x1920 = '1920x1920';
-    VideoResolution.v1920x1200 = '1920x1200';
-    VideoResolution.v1920x1080 = '1920x1080';
-    VideoResolution.v1920x540 = '1920x540';
-    VideoResolution.v1792x1344 = '1792x1344';
-    VideoResolution.v1680x1050 = '1680x1050';
-    VideoResolution.v1600x1200 = '1600x1200';
-    VideoResolution.v1600x900 = '1600x900';
-    VideoResolution.v1440x1088 = '1440x1088';
-    VideoResolution.v1440x1080 = '1440x1080';
-    VideoResolution.v1440x900 = '1440x900';
-    VideoResolution.v1400x1050 = '1400x1050';
-    VideoResolution.v1366x768 = '1366x768';
-    VideoResolution.v1360x768 = '1360x768';
-    VideoResolution.v1280x1024 = '1280x1024';
-    VideoResolution.v1280x960 = '1280x960';
-    VideoResolution.v1280x800 = '1280x800';
-    VideoResolution.v1280x768 = '1280x768';
-    VideoResolution.v1280x720 = '1280x720';
-    VideoResolution.v1200x1920 = '1200x1920';
-    VideoResolution.v1024x768 = '1024x768';
-    VideoResolution.v960x960 = '960x960';
-    VideoResolution.v848x480 = '848x480';
-    VideoResolution.v800x1280 = '800x1280';
-    VideoResolution.v800x600 = '800x600';
-    VideoResolution.v720x576 = '720x576';
-    VideoResolution.v720x480 = '720x480';
-    VideoResolution.v640x480 = '640x480';
-    VideoResolution.vNtscComponent = 'NTSC-COMPONENT';
-    VideoResolution.vNtscM = 'NTSC-M';
-    VideoResolution.vNtscMJpn = 'NTSC-M-JPN';
-    VideoResolution.vPalComponent = 'PAL-COMPONENT';
-    VideoResolution.vPalI = 'PAL-I';
-    VideoResolution.vPalBG = 'PAL-BG';
-    VideoResolution.vPalN = 'PAL-N';
-    VideoResolution.vPalNC = 'PAL-NC';
-    VideoResolution.vPalM = 'PAL-M';
-    VideoResolution.vSecam = 'SECAM';
-    VideoResolution.None = '0x0';
-    return VideoResolution;
-}());
-exports.VideoResolution = VideoResolution;
-var VideoFrameRate = (function () {
-    function VideoFrameRate() {
-    }
-    VideoFrameRate.r75p = '75p';
-    VideoFrameRate.r60p = '60p';
-    VideoFrameRate.r59p = '59.94p';
-    VideoFrameRate.r57p = '57p';
-    VideoFrameRate.r50p = '50p';
-    VideoFrameRate.r30p = '30p';
-    VideoFrameRate.r29p = '29.97p';
-    VideoFrameRate.r25p = '25p';
-    VideoFrameRate.r24p = '24p';
-    VideoFrameRate.r23p = '23.976p';
-    VideoFrameRate.r60i = '60i';
-    VideoFrameRate.r59i = '59.94i';
-    VideoFrameRate.r50i = '50i';
-    VideoFrameRate.None = '0p';
-    return VideoFrameRate;
-}());
-exports.VideoFrameRate = VideoFrameRate;
-var VideoMode = (function () {
-    function VideoMode() {
-    }
-    VideoMode.v4096x2160x60p = '4096x2160x60p';
-    VideoMode.v4096x2160x59p = '4096x2160x59.94p';
-    VideoMode.v4096x2160x50p = '4096x2160x50p';
-    VideoMode.v4096x2160x30p = '4096x2160x30p';
-    VideoMode.v4096x2160x29p = '4096x2160x29.97p';
-    VideoMode.v4096x2160x25p = '4096x2160x25p';
-    VideoMode.v4096x2160x24p = '4096x2160x24p';
-    VideoMode.v4096x2160x23p = '4096x2160x23.976p';
-    VideoMode.v3840x2160x60p = '3840x2160x60p';
-    VideoMode.v3840x2160x59p = '3840x2160x59.94p';
-    VideoMode.v3840x2160x50p = '3840x2160x50p';
-    VideoMode.v3840x2160x30p = '3840x2160x30p';
-    VideoMode.v3840x2160x29p = '3840x2160x29.97p';
-    VideoMode.v3840x2160x25p = '3840x2160x25p';
-    VideoMode.v3840x2160x24p = '3840x2160x24p';
-    VideoMode.v3840x2160x23p = '3840x2160x23.976p';
-    VideoMode.v3840x1080x60p = '3840x1080x60p';
-    VideoMode.v3840x1080x50p = '3840x1080x50p';
-    VideoMode.v3840x1080x30p = '3840x1080x30p';
-    VideoMode.v3840x1080x25p = '3840x1080x25p';
-    VideoMode.v3840x600x60p = '3840x600x60p';
-    VideoMode.v3440x1440x60p = '3440x1440x60p';
-    VideoMode.v3440x1440x50p = '3440x1440x50p';
-    VideoMode.v3440x1440x30p = '3440x1440x30p';
-    VideoMode.v2560x1600x60p = '2560x1600x60p';
-    VideoMode.v2560x1440x60p = '2560x1440x60p';
-    VideoMode.v2560x1440x30p = '2560x1440x30p';
-    VideoMode.v2560x1080x60p = '2560x1080x60p';
-    VideoMode.v2560x960x60p = '2560x960x60p';
-    VideoMode.v2376x288x60p = '2376x288x60p';
-    VideoMode.v2048x1152x60p = '2048x1152x60p';
-    VideoMode.v1920x1920x60p = '1920x1920x60p';
-    VideoMode.v1920x1200x60p = '1920x1200x60p';
-    VideoMode.v1920x1200x50p = '1920x1200x50p';
-    VideoMode.v1920x1080x60p = '1920x1080x60p';
-    VideoMode.v1920x1080x59p = '1920x1080x59.94p';
-    VideoMode.v1920x1080x50p = '1920x1080x50p';
-    VideoMode.v1920x1080x30p = '1920x1080x30p';
-    VideoMode.v1920x1080x29p = '1920x1080x29.97p';
-    VideoMode.v1920x1080x25p = '1920x1080x25p';
-    VideoMode.v1920x1080x24p = '1920x1080x24p';
-    VideoMode.v1920x1080x23p = '1920x1080x23.976p';
-    VideoMode.v1920x1080x60i = '1920x1080x60i';
-    VideoMode.v1920x1080x59i = '1920x1080x59.94i';
-    VideoMode.v1920x1080x50i = '1920x1080x50i';
-    VideoMode.v1920x540x60p = '1920x540x60p';
-    VideoMode.v1792x1344x60p = '1792x1344x60p';
-    VideoMode.v1680x1050x60p = '1680x1050x60p';
-    VideoMode.v1600x1200x60p = '1600x1200x60p';
-    VideoMode.v1600x900x60p = '1600x900x60p';
-    VideoMode.v1440x1088x57p = '1440x1088x57p';
-    VideoMode.v1440x1080x60p = '1440x1080x60p';
-    VideoMode.v1440x900x75p = '1440x900x75p';
-    VideoMode.v1440x900x60p = '1440x900x60p';
-    VideoMode.v1400x1050x75p = '1400x1050x75p';
-    VideoMode.v1400x1050x60p = '1400x1050x60p';
-    VideoMode.v1366x768x60p = '1366x768x60p';
-    VideoMode.v1360x768x60p = '1360x768x60p';
-    VideoMode.v1280x1024x75p = '1280x1024x75p';
-    VideoMode.v1280x1024x60p = '1280x1024x60p';
-    VideoMode.v1280x960x60p = '1280x960x60p';
-    VideoMode.v1280x800x75p = '1280x800x75p';
-    VideoMode.v1280x800x60p = '1280x800x60p';
-    VideoMode.v1280x768x60p = '1280x768x60p';
-    VideoMode.v1280x720x60p = '1280x720x60p';
-    VideoMode.v1280x720x59p = '1280x720x59.94p';
-    VideoMode.v1280x720x50p = '1280x720x50p';
-    VideoMode.v1280x720x25p = '1280x720x25p';
-    VideoMode.v1280x720x24p = '1280x720x24p';
-    VideoMode.v1280x720x23p = '1280x720x23.976p';
-    VideoMode.v1200x1920x60p = '1200x1920x60p';
-    VideoMode.v1024x768x75p = '1024x768x75p';
-    VideoMode.v1024x768x60p = '1024x768x60p';
-    VideoMode.v960x960x60p = '960x960x60p';
-    VideoMode.v848x480x60p = '848x480x60p';
-    VideoMode.v800x1280x60p = '800x1280x60p';
-    VideoMode.v800x600x75p = '800x600x75p';
-    VideoMode.v800x600x60p = '800x600x60p';
-    VideoMode.v720x576x50p = '720x576x50p';
-    VideoMode.v720x576x50i = '720x576x50i';
-    VideoMode.v720x480x60p = '720x480x60p';
-    VideoMode.v720x480x59p = '720x480x59.94p';
-    VideoMode.v720x480x60i = '720x480x60i';
-    VideoMode.v640x480x60p = '640x480x60p';
-    VideoMode.vNtscComponent = 'NTSC-COMPONENT';
-    VideoMode.vNtscM = 'NTSC-M';
-    VideoMode.vNtscMJpn = 'NTSC-M-JPN';
-    VideoMode.vPalComponent = 'PAL-COMPONENT';
-    VideoMode.vPalI = 'PAL-I';
-    VideoMode.vPalBG = 'PAL-BG';
-    VideoMode.vPalN = 'PAL-N';
-    VideoMode.vPalNC = 'PAL-NC';
-    VideoMode.vPalM = 'PAL-M';
-    VideoMode.vSecam = 'SECAM';
-    VideoMode.None = '0x0x0p';
-    return VideoMode;
-}());
-exports.VideoMode = VideoMode;
+var VideoResolution;
+(function (VideoResolution) {
+    VideoResolution["v4096x2160"] = "4096x2160";
+    VideoResolution["v3840x2160"] = "3840x2160";
+    VideoResolution["v3840x1080"] = "3840x1080";
+    VideoResolution["v3840x600"] = "3840x600";
+    VideoResolution["v3440x1440"] = "3440x1440";
+    VideoResolution["v2560x1600"] = "2560x1600";
+    VideoResolution["v2560x1440"] = "2560x1440";
+    VideoResolution["v2560x1080"] = "2560x1080";
+    VideoResolution["v2560x960"] = "2560x960";
+    VideoResolution["v2376x288"] = "2376x288";
+    VideoResolution["v2048x1152"] = "2048x1152";
+    VideoResolution["v1920x1920"] = "1920x1920";
+    VideoResolution["v1920x1200"] = "1920x1200";
+    VideoResolution["v1920x1080"] = "1920x1080";
+    VideoResolution["v1920x540"] = "1920x540";
+    VideoResolution["v1792x1344"] = "1792x1344";
+    VideoResolution["v1680x1050"] = "1680x1050";
+    VideoResolution["v1600x1200"] = "1600x1200";
+    VideoResolution["v1600x900"] = "1600x900";
+    VideoResolution["v1440x1088"] = "1440x1088";
+    VideoResolution["v1440x1080"] = "1440x1080";
+    VideoResolution["v1440x900"] = "1440x900";
+    VideoResolution["v1400x1050"] = "1400x1050";
+    VideoResolution["v1366x768"] = "1366x768";
+    VideoResolution["v1360x768"] = "1360x768";
+    VideoResolution["v1280x1024"] = "1280x1024";
+    VideoResolution["v1280x960"] = "1280x960";
+    VideoResolution["v1280x800"] = "1280x800";
+    VideoResolution["v1280x768"] = "1280x768";
+    VideoResolution["v1280x720"] = "1280x720";
+    VideoResolution["v1200x1920"] = "1200x1920";
+    VideoResolution["v1024x768"] = "1024x768";
+    VideoResolution["v960x960"] = "960x960";
+    VideoResolution["v848x480"] = "848x480";
+    VideoResolution["v800x1280"] = "800x1280";
+    VideoResolution["v800x600"] = "800x600";
+    VideoResolution["v720x576"] = "720x576";
+    VideoResolution["v720x480"] = "720x480";
+    VideoResolution["v640x480"] = "640x480";
+    VideoResolution["vNtscComponent"] = "NTSC-COMPONENT";
+    VideoResolution["vNtscM"] = "NTSC-M";
+    VideoResolution["vNtscMJpn"] = "NTSC-M-JPN";
+    VideoResolution["vPalComponent"] = "PAL-COMPONENT";
+    VideoResolution["vPalI"] = "PAL-I";
+    VideoResolution["vPalBG"] = "PAL-BG";
+    VideoResolution["vPalN"] = "PAL-N";
+    VideoResolution["vPalNC"] = "PAL-NC";
+    VideoResolution["vPalM"] = "PAL-M";
+    VideoResolution["vSecam"] = "SECAM";
+    VideoResolution["None"] = "0x0";
+})(VideoResolution = exports.VideoResolution || (exports.VideoResolution = {}));
+var VideoFrameRate;
+(function (VideoFrameRate) {
+    VideoFrameRate["r75p"] = "75p";
+    VideoFrameRate["r60p"] = "60p";
+    VideoFrameRate["r59p"] = "59.94p";
+    VideoFrameRate["r57p"] = "57p";
+    VideoFrameRate["r50p"] = "50p";
+    VideoFrameRate["r30p"] = "30p";
+    VideoFrameRate["r29p"] = "29.97p";
+    VideoFrameRate["r25p"] = "25p";
+    VideoFrameRate["r24p"] = "24p";
+    VideoFrameRate["r23p"] = "23.976p";
+    VideoFrameRate["r60i"] = "60i";
+    VideoFrameRate["r59i"] = "59.94i";
+    VideoFrameRate["r50i"] = "50i";
+    VideoFrameRate["None"] = "0p";
+})(VideoFrameRate = exports.VideoFrameRate || (exports.VideoFrameRate = {}));
+var VideoMode;
+(function (VideoMode) {
+    VideoMode["v4096x2160x60p"] = "4096x2160x60p";
+    VideoMode["v4096x2160x59p"] = "4096x2160x59.94p";
+    VideoMode["v4096x2160x50p"] = "4096x2160x50p";
+    VideoMode["v4096x2160x30p"] = "4096x2160x30p";
+    VideoMode["v4096x2160x29p"] = "4096x2160x29.97p";
+    VideoMode["v4096x2160x25p"] = "4096x2160x25p";
+    VideoMode["v4096x2160x24p"] = "4096x2160x24p";
+    VideoMode["v4096x2160x23p"] = "4096x2160x23.976p";
+    VideoMode["v3840x2160x60p"] = "3840x2160x60p";
+    VideoMode["v3840x2160x59p"] = "3840x2160x59.94p";
+    VideoMode["v3840x2160x50p"] = "3840x2160x50p";
+    VideoMode["v3840x2160x30p"] = "3840x2160x30p";
+    VideoMode["v3840x2160x29p"] = "3840x2160x29.97p";
+    VideoMode["v3840x2160x25p"] = "3840x2160x25p";
+    VideoMode["v3840x2160x24p"] = "3840x2160x24p";
+    VideoMode["v3840x2160x23p"] = "3840x2160x23.976p";
+    VideoMode["v3840x1080x60p"] = "3840x1080x60p";
+    VideoMode["v3840x1080x50p"] = "3840x1080x50p";
+    VideoMode["v3840x1080x30p"] = "3840x1080x30p";
+    VideoMode["v3840x1080x25p"] = "3840x1080x25p";
+    VideoMode["v3840x600x60p"] = "3840x600x60p";
+    VideoMode["v3440x1440x60p"] = "3440x1440x60p";
+    VideoMode["v3440x1440x50p"] = "3440x1440x50p";
+    VideoMode["v3440x1440x30p"] = "3440x1440x30p";
+    VideoMode["v2560x1600x60p"] = "2560x1600x60p";
+    VideoMode["v2560x1440x60p"] = "2560x1440x60p";
+    VideoMode["v2560x1440x30p"] = "2560x1440x30p";
+    VideoMode["v2560x1080x60p"] = "2560x1080x60p";
+    VideoMode["v2560x960x60p"] = "2560x960x60p";
+    VideoMode["v2376x288x60p"] = "2376x288x60p";
+    VideoMode["v2048x1152x60p"] = "2048x1152x60p";
+    VideoMode["v2048x1152x50p"] = "2048x1152x50p";
+    VideoMode["v1920x1920x60p"] = "1920x1920x60p";
+    VideoMode["v1920x1200x60p"] = "1920x1200x60p";
+    VideoMode["v1920x1200x50p"] = "1920x1200x50p";
+    VideoMode["v1920x1080x60p"] = "1920x1080x60p";
+    VideoMode["v1920x1080x59p"] = "1920x1080x59.94p";
+    VideoMode["v1920x1080x50p"] = "1920x1080x50p";
+    VideoMode["v1920x1080x30p"] = "1920x1080x30p";
+    VideoMode["v1920x1080x29p"] = "1920x1080x29.97p";
+    VideoMode["v1920x1080x25p"] = "1920x1080x25p";
+    VideoMode["v1920x1080x24p"] = "1920x1080x24p";
+    VideoMode["v1920x1080x23p"] = "1920x1080x23.976p";
+    VideoMode["v1920x1080x60i"] = "1920x1080x60i";
+    VideoMode["v1920x1080x59i"] = "1920x1080x59.94i";
+    VideoMode["v1920x1080x50i"] = "1920x1080x50i";
+    VideoMode["v1920x540x60p"] = "1920x540x60p";
+    VideoMode["v1792x1344x60p"] = "1792x1344x60p";
+    VideoMode["v1680x1050x60p"] = "1680x1050x60p";
+    VideoMode["v1600x1200x60p"] = "1600x1200x60p";
+    VideoMode["v1600x900x60p"] = "1600x900x60p";
+    VideoMode["v1440x1088x57p"] = "1440x1088x57p";
+    VideoMode["v1440x1080x60p"] = "1440x1080x60p";
+    VideoMode["v1440x900x75p"] = "1440x900x75p";
+    VideoMode["v1440x900x60p"] = "1440x900x60p";
+    VideoMode["v1400x1050x75p"] = "1400x1050x75p";
+    VideoMode["v1400x1050x60p"] = "1400x1050x60p";
+    VideoMode["v1366x768x60p"] = "1366x768x60p";
+    VideoMode["v1360x768x60p"] = "1360x768x60p";
+    VideoMode["v1280x1024x75p"] = "1280x1024x75p";
+    VideoMode["v1280x1024x60p"] = "1280x1024x60p";
+    VideoMode["v1280x960x60p"] = "1280x960x60p";
+    VideoMode["v1280x800x75p"] = "1280x800x75p";
+    VideoMode["v1280x800x60p"] = "1280x800x60p";
+    VideoMode["v1280x768x60p"] = "1280x768x60p";
+    VideoMode["v1280x720x60p"] = "1280x720x60p";
+    VideoMode["v1280x720x59p"] = "1280x720x59.94p";
+    VideoMode["v1280x720x50p"] = "1280x720x50p";
+    VideoMode["v1280x720x25p"] = "1280x720x25p";
+    VideoMode["v1280x720x24p"] = "1280x720x24p";
+    VideoMode["v1280x720x23p"] = "1280x720x23.976p";
+    VideoMode["v1200x1920x60p"] = "1200x1920x60p";
+    VideoMode["v1024x768x75p"] = "1024x768x75p";
+    VideoMode["v1024x768x60p"] = "1024x768x60p";
+    VideoMode["v960x960x60p"] = "960x960x60p";
+    VideoMode["v848x480x60p"] = "848x480x60p";
+    VideoMode["v800x1280x60p"] = "800x1280x60p";
+    VideoMode["v800x600x75p"] = "800x600x75p";
+    VideoMode["v800x600x60p"] = "800x600x60p";
+    VideoMode["v720x576x50p"] = "720x576x50p";
+    VideoMode["v720x576x50i"] = "720x576x50i";
+    VideoMode["v720x480x60p"] = "720x480x60p";
+    VideoMode["v720x480x59p"] = "720x480x59.94p";
+    VideoMode["v720x480x60i"] = "720x480x60i";
+    VideoMode["v640x480x60p"] = "640x480x60p";
+    VideoMode["vNtscComponent"] = "NTSC-COMPONENT";
+    VideoMode["vNtscM"] = "NTSC-M";
+    VideoMode["vNtscMJpn"] = "NTSC-M-JPN";
+    VideoMode["vPalComponent"] = "PAL-COMPONENT";
+    VideoMode["vPalI"] = "PAL-I";
+    VideoMode["vPalBG"] = "PAL-BG";
+    VideoMode["vPalN"] = "PAL-N";
+    VideoMode["vPalNC"] = "PAL-NC";
+    VideoMode["vPalM"] = "PAL-M";
+    VideoMode["vSecam"] = "SECAM";
+    VideoMode["None"] = "0x0x0p";
+})(VideoMode = exports.VideoMode || (exports.VideoMode = {}));
 function bscGetVideoMode(resolution, frameRate) {
     if (resolution[0] === 'N' || resolution[0] === 'P' || resolution[0] === 'S') {
         return resolution;
     }
     else {
-        return resolution + 'x' + frameRate;
+        return (resolution + 'x' + frameRate);
     }
 }
 exports.bscGetVideoMode = bscGetVideoMode;
@@ -4412,7 +4123,7 @@ exports.FourKVideoModeSpec = [
     { resolution: VideoResolution.v2560x1080, availableRates: [VideoFrameRate.r60p] },
     { resolution: VideoResolution.v2560x960, availableRates: [VideoFrameRate.r60p] },
     { resolution: VideoResolution.v2376x288, availableRates: [VideoFrameRate.r60p] },
-    { resolution: VideoResolution.v2048x1152, availableRates: [VideoFrameRate.r60p] },
+    { resolution: VideoResolution.v2048x1152, availableRates: [VideoFrameRate.r60p, VideoFrameRate.r50p] },
     { resolution: VideoResolution.v1920x1920, availableRates: [VideoFrameRate.r60p] },
     { resolution: VideoResolution.v1920x1200, availableRates: [VideoFrameRate.r60p, VideoFrameRate.r50p] },
     { resolution: VideoResolution.v1920x1080, availableRates: [
@@ -4434,6 +4145,7 @@ exports.FourKVideoModeSpec = [
     { resolution: VideoResolution.v1280x1024, availableRates: [VideoFrameRate.r75p, VideoFrameRate.r60p] },
     { resolution: VideoResolution.v1280x960, availableRates: [VideoFrameRate.r60p] },
     { resolution: VideoResolution.v1280x800, availableRates: [VideoFrameRate.r75p, VideoFrameRate.r60p] },
+    { resolution: VideoResolution.v1280x768, availableRates: [VideoFrameRate.r60p] },
     { resolution: VideoResolution.v1280x720, availableRates: [
             VideoFrameRate.r60p, VideoFrameRate.r59p, VideoFrameRate.r50p,
             VideoFrameRate.r25p, VideoFrameRate.r24p, VideoFrameRate.r23p

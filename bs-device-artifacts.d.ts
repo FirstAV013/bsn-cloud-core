@@ -45,6 +45,7 @@ export function bsDaGetStaticFileAsArrayBuffer(path: string, options?: BsDaGetSt
 export function bsDaGetStaticFileAsBlob(path: string, options?: BsDaGetStaticFileOptions): Promise<Blob>;
 export function bsDaGetStaticFileAsObject(path: string, options?: BsDaGetStaticFileOptions): Promise<File>;
 export function bsDaGetStaticFileSpec(path: string, options?: BsDaGetStaticFileOptions): Promise<FileSpec>;
+export function bsDaGetStaticFileManifest(): Promise<object>;
 export function bsDaCopyStaticFile(path: string, dest: string, options?: BsDaGetStaticFileOptions): Promise<void>;
 export function bsDaGetStaticFileAbsolutePath(path: string): string;
 export function bsDaFetchFileAsArrayBuffer(path: string, options?: BsDaGetStaticFileOptions): Promise<ArrayBuffer>;

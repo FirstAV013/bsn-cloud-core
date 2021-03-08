@@ -217,6 +217,9 @@ export interface PlDmState {
     modifiedTime: string;
     customFields: PlDmCustomFieldsState;
 }
+export interface PlDmProjectState {
+    bspl: PlDmState;
+}
 export interface PlDmCustomFieldsState {
     customFieldsOrder: string[];
     customFieldsNameById: PlDmCfNameMap;
@@ -540,6 +543,7 @@ export type PlaylistParams = DynamicPlaylistParams;
 export type PlaylistAction = PlDmAction<PlaylistParams>;
 /**
  * Create a new dynamic playlist
+ * Note: leading and trailing spaces are trimmed from the name
  *
  * @param {string} name
  * @param {boolean} supportsAudio
@@ -552,6 +556,7 @@ export function plDmNewPlaylist(name: string, supportsAudio: boolean, supportsVi
 export type LiveMediaFeedAction = PlDmAction<LiveMediaFeedParams>;
 /**
  * Create a new live media feed.
+ * Note: leading and trailing spaces are trimmed from the name
  *
  * @param {string} name
  * @param {number} ttl
@@ -692,33 +697,37 @@ export const plDmFilterBaseState: (state: any) => PlDmState;
 /**
  * When save and create playlist on BSN, client should call this selector to get base state.
  * This state converts all time to UTC with the same time value.
+ * This returns a copy of the DmState with validity dates converted.
  */
-export const plDmGetBaseStateForUniversalTimeZone: (state: any) => PlDmState;
-export const plDmGetBaseState: (state: any) => PlDmState;
+export const plDmGetBaseStateForUniversalTimeZone: (state: PlDmProjectState | PlDmState) => PlDmState;
+/**
+ * Return a PlDmState given either a PlDmState or a PlDmProjectState.
+ * Throws an exception if PlDmState is invalid.
+ * @param state {PlDmProjectState | PlDmState}
+ */
+export const plDmGetBaseState: (state: PlDmProjectState | PlDmState) => PlDmState;
 
 /**
  * Get dynamic playlist content Item Entity
  * NOTE: only use for dynamic playlist. Use plDmGetLiveMediaContentItemEntityById for media feed.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {PlDmIdParam} props
  * @returns {PlDmcDynamicPlaylistContentItem}
  */
-export function plDmGetDynamicPlaylistContentItemById(state: PlDmState, props: PlDmIdParam): PlDmcDynamicPlaylistContentItem | null;
-/**
- * DEPRECATED function name: use plDmGetDynamicPlaylistContentItemById
- */
-export function plDmGetContentItemById(state: PlDmState, props: PlDmIdParam): PlDmcDynamicPlaylistContentItem | null;
+export function plDmGetDynamicPlaylistContentItemById(state: PlDmProjectState | PlDmState, props: PlDmIdParam): PlDmcDynamicPlaylistContentItem | null;
+/** @deprecated: renamed to plDmGetDynamicPlaylistContentItemById */
+export const plDmGetContentItemById: typeof plDmGetDynamicPlaylistContentItemById;
 /**
  * Only use for Live Media feed.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {PlDmIdParam} props
  * @returns {PlDmcMediaFeedContentItem}
  */
-export function plDmGetLiveMediaContentItemById(state: PlDmState, props: PlDmIdParam): PlDmcMediaFeedContentItem | null;
+export function plDmGetLiveMediaContentItemById(state: PlDmProjectState | PlDmState, props: PlDmIdParam): PlDmcMediaFeedContentItem | null;
 
-export const plDmGetAssetMapState: (state: PlDmState) => PlDmAssetMapState;
+export const plDmGetAssetMapState: (state: PlDmProjectState | PlDmState) => PlDmAssetMapState;
 /**
  * Return BsAssetId for a given asset locator string
  *
@@ -727,172 +736,177 @@ export const plDmGetAssetMapState: (state: PlDmState) => PlDmAssetMapState;
  * @returns {BsAssetId} assetId string corresponding to given locator
  *          null if assetId is not found for the locator
  */
-export const plDmGetAssetIdByLocator: (state: PlDmState, props: PlDmLocatorParam) => BsAssetId | null;
+export const plDmGetAssetIdByLocator: (state: PlDmProjectState | PlDmState, props: PlDmLocatorParam) => BsAssetId | null;
 /**
  *
  * @param {PlDmState} state
  * @param {PlDmIdParam} props
  * @returns {BsAssetItem}
  */
-export function plDmGetAssetItemById(state: PlDmState, props: PlDmIdParam): BsAssetItem | null;
+export function plDmGetAssetItemById(state: PlDmProjectState | PlDmState, props: PlDmIdParam): BsAssetItem | null;
 /**
  *
  * @param {PlDmState} state
  * @param {PlDmLocatorParam} props
  * @returns {BsAssetItem}
  */
-export function plDmGetAssetItemByLocator(state: PlDmState, props: PlDmLocatorParam): BsAssetItem | null;
+export function plDmGetAssetItemByLocator(state: PlDmProjectState | PlDmState, props: PlDmLocatorParam): BsAssetItem | null;
 /**
  *
  * @param {PlDmState} state
  * @returns {string[]}
  */
-export function plDmGetAssetItemIdsForPlaylist(state: PlDmState): string[];
+export function plDmGetAssetItemIdsForPlaylist(state: PlDmProjectState | PlDmState): string[];
 /**
  * Return list of assetItems for all Blob assetItems in the assetPool.
- * @param state {PlDmState} - bs-playlist-dm state
+ * @param state {PlDmProjectState | PlDmState}
  * @returns {BsAssetItem[]}
  */
-export function plDmGetBlobAssetItemList(state: PlDmState): BsAssetItem[];
+export function plDmGetBlobAssetItemList(state: PlDmProjectState | PlDmState): BsAssetItem[];
 /**
  * Return BsAssetItem[] containing all assetItems for BSN publishing.
  * All assets must be located on BSN.
  * Returns null if there are any local assets.
- * @param state {PlDmState} - bs-playlist-dm state
+ * @param state {PlDmProjectState | PlDmState}
  * @returns {BsAssetItem[] | null}
  */
-export function plDmGetBsnPlaylistAssetItemList(state: PlDmState): BsAssetItem[] | null;
+export function plDmGetBsnPlaylistAssetItemList(state: PlDmProjectState | PlDmState): BsAssetItem[] | null;
 
-export const plDmGetContentItemsState: (state: PlDmState) => PlDmContentItemsState;
+export const plDmGetContentItemsState: (state: PlDmProjectState | PlDmState) => PlDmContentItemsState;
 /**
  * Return PlDmMediaContentItem with passed in Id.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {PlDmIdParam} props
  * @returns {PlDmMediaContentItem}
  */
-export function plDmGetContentItemStateById(state: PlDmState, props: PlDmIdParam): PlDmMediaContentItem | null;
+export function plDmGetContentItemStateById(state: PlDmProjectState | PlDmState, props: PlDmIdParam): PlDmMediaContentItem | null;
 /**
  * Return PlDmContentItemMap which contains all content items.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {PlDmContentItemMap}
  */
-export function plDmGetAllContentItems(state: PlDmState): PlDmContentItemMap;
+export function plDmGetAllContentItems(state: PlDmProjectState | PlDmState): PlDmContentItemMap;
 /**
  * Return an array with content items' ids.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {string[]}
  */
-export function plDmGetContentItemsArrayInOrder(state: PlDmState): string[];
+export function plDmGetContentItemsArrayInOrder(state: PlDmProjectState | PlDmState): string[];
 
-export const plDmGetPlaylistState: (state: PlDmState) => PlDmPlaylist;
+export const plDmGetPlaylistState: (state: PlDmProjectState | PlDmState) => PlDmPlaylist;
 /**
  * Return playlist id
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {string}
  */
-export function plDmGetPlaylistId(state: PlDmState): string;
+export function plDmGetPlaylistId(state: PlDmProjectState | PlDmState): string;
 /**
  * Return playlist name.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {string}
  */
-export function plDmGetPlaylistName(state: PlDmState): string;
+export function plDmGetPlaylistName(state: PlDmProjectState | PlDmState): string;
 /**
  * Return playlist last modified date.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {Date}
  */
-export function plDmGetPlaylistLastModifiedDate(state: PlDmState): Date;
+export function plDmGetPlaylistLastModifiedDate(state: PlDmProjectState | PlDmState): Date;
 /**
  * Return playlist store that contains all the metadata.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {PlDmPlaylist}
  */
-export function plDmGetPlaylistProperties(state: PlDmState): PlDmPlaylist;
+export function plDmGetPlaylistProperties(state: PlDmProjectState | PlDmState): PlDmPlaylist;
 /**
  * Return media types that this playlist can support.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {PlDmSupports}
  */
-export function plDmGetPlaylistSupports(state: PlDmState): PlDmSupports;
+export function plDmGetPlaylistSupports(state: PlDmProjectState | PlDmState): PlDmSupports;
 
-export const plDmGetModifiedTimeState: (state: PlDmState) => string;
+export const plDmGetModifiedTimeState: (state: PlDmProjectState | PlDmState) => string;
 /**
  * Return playlist last modified time.
  * Nearly an alias for plDmGetModifiedTimeState() - was add for compatibility reasons.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {Date}
  */
-export function plDmGetPlaylistLastModifiedTime(state: PlDmState): Date;
+export function plDmGetPlaylistLastModifiedTime(state: PlDmProjectState | PlDmState): Date;
 
 /**
  * This returns an array with custom fields name id. This array maintains the order of custom fields.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {string[]}
  */
-export function plDmGetCustomFieldsOrder(state: PlDmState): string[];
+export function plDmGetCustomFieldsOrder(state: PlDmProjectState | PlDmState): string[];
 /**
  * Returns all the PlDmCfCollections that are being used by content items.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {PlDmCfCollectionMap | {}}
  */
-export function plDmGetCustomFieldsCollectionMap(state: PlDmState): PlDmCfCollectionMap | {};
+export function plDmGetCustomFieldsCollectionMap(state: PlDmProjectState | PlDmState): PlDmCfCollectionMap | {};
 /**
  * Returns custom fields name map.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @returns {PlDmCfNameMap | {}}
  */
-export function plDmGetCustomFieldsNameMap(state: PlDmState): PlDmCfNameMap | {};
-export function plDmGetCustomFieldsDerivedCollectionByContentItemId(state: PlDmState, props: PlDmIdParam): PlDmCustomFieldMap;
+export function plDmGetCustomFieldsNameMap(state: PlDmProjectState | PlDmState): PlDmCfNameMap | {};
+/**
+ * Return PlDmCustomFieldMap for the given content item.
+ * @param state
+ * @param props
+ */
+export function plDmGetCustomFieldsDerivedCollectionByContentItemId(state: PlDmProjectState | PlDmState, props: PlDmIdParam): PlDmCustomFieldMap;
 /**
  * Pass in custom field name, return the corresponding name id. Return null if the name doesn't exist
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {string} fieldName
  * @returns {string}
  */
-export function plDmGetFieldIdByName(state: PlDmState, fieldName: string): string | null;
+export function plDmGetFieldIdByName(state: PlDmProjectState | PlDmState, fieldName: string): string | null;
 /**
  * Pass in customFieldsMap id from the content item and custom field name, return the value.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {PlDmCustomFieldValueByNameParams} props
  * @returns {string}
  */
-export function plDmGetCustomFieldValueByFieldName(state: PlDmState, props: PlDmCustomFieldValueByNameParams): string | null;
+export function plDmGetCustomFieldValueByFieldName(state: PlDmProjectState | PlDmState, props: PlDmCustomFieldValueByNameParams): string | null;
 /**
  * Pass in customFieldsMap id from the content item and custom field nameId, return the value.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {PlDmCustomFieldValueParams} props
  * @returns {string}
  */
-export function plDmGetCustomFieldValue(state: PlDmState, props: PlDmCustomFieldValueParams): string;
+export function plDmGetCustomFieldValue(state: PlDmProjectState | PlDmState, props: PlDmCustomFieldValueParams): string;
 /**
  * Pass in custom field nameId, return the custom field name
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {string} props
  * @returns {string}
  */
-export function plDmGetCustomFieldNameById(state: PlDmState, props: string): string;
+export function plDmGetCustomFieldNameById(state: PlDmProjectState | PlDmState, props: string): string;
 /**
  * Call before try to update a custom field name. Return true if the name already exists, false otherwise.
  *
- * @param {PlDmState} state
+ * @param {PlDmProjectState | PlDmState} state
  * @param {string} newName
  * @returns {boolean}
  */
-export function plDmCustomFieldNameExistCheck(state: PlDmState, newName: string): boolean;
+export function plDmCustomFieldNameExistCheck(state: PlDmProjectState | PlDmState, newName: string): boolean;

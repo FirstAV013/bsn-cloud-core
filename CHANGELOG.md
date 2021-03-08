@@ -1,3 +1,24 @@
+## 1.0.4 (March 5, 2021)
+- Updated all core modules to correspond to BA:con version 1.2.7.
+- Made some Typescript adjustments in examples for Typescript 4.1 compatibility.
+
+####Core package versions:
+
+|Package|Version |
+|---|---|
+|bsCore|1.3.3   |
+|bsDataModel|1.2.1|
+|fsConnector|1.1.7|
+|fsMetadata|1.0.4|
+|bsnConnector|1.3.5|
+|bs-task-manager|1.0.6|
+|bs-playlist-dm |1.0.5|
+|bs-data-feed-dm|1.0.3|
+|bs-tagged-playlist-dm|1.0.5|
+|bs-autoplay-generator|1.1.2|
+|bs-device-artifacts|1.0.82|
+|bs-content-manager|1.2.7|
+
 ## 1.0.3 (August 6, 2020)
 - Updated bs-content-manager to include newly refactored Asset and AssetCollection naming and export strategy.
 - Added notes about ffmpeg requirement to Readme file.

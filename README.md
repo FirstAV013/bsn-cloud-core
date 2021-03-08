@@ -57,7 +57,7 @@ All examples are provided as Typescript files. The transpiled Javascript files a
 
 ### Requirements
 - Node.js version 10 or greater
-- Typescript version 3.8 or 3.9 (if you want to use Typescript for development.)
+- Typescript version 4.1 (if you want to use Typescript for development.)
 - ffmpeg must be installed and accessible via the user's PATH environment variable.
     - The easiest way to install ffmpeg, if you don't have it already, is to download a static build and directly place it in a common directory in your PATH.
 

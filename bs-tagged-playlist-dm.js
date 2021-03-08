@@ -92,7 +92,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -112,6 +112,7 @@ var TplDmErrorType;
     TplDmErrorType[TplDmErrorType["invalidOperation"] = 3] = "invalidOperation";
     TplDmErrorType[TplDmErrorType["invalidState"] = 4] = "invalidState";
     TplDmErrorType[TplDmErrorType["apiError"] = 5] = "apiError";
+    TplDmErrorType[TplDmErrorType["assetNotFound"] = 6] = "assetNotFound";
 })(TplDmErrorType = exports.TplDmErrorType || (exports.TplDmErrorType = {}));
 var tplDmErrorMessage = (_a = {},
     _a[TplDmErrorType.unknownError] = 'Unknown error',
@@ -120,6 +121,7 @@ var tplDmErrorMessage = (_a = {},
     _a[TplDmErrorType.invalidOperation] = 'Invalid operation attempt',
     _a[TplDmErrorType.invalidState] = 'Invalid tagged playlist state',
     _a[TplDmErrorType.apiError] = 'API error',
+    _a[TplDmErrorType.assetNotFound] = 'The asset was not found in the asset list',
     _a);
 var TplDmError = (function (_super) {
     __extends(TplDmError, _super);
@@ -165,7 +167,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(9), exports);
@@ -210,28 +212,33 @@ function tplDmCheckForInvalidTplDmPlaylistState(state) {
     }
 }
 exports.tplDmCheckForInvalidTplDmPlaylistState = tplDmCheckForInvalidTplDmPlaylistState;
-exports.tplDmIsValidModifiedTimeState = function (state) {
+var tplDmIsValidModifiedTimeState = function (state) {
     return typeof state === 'string';
 };
-exports.tplDmIsValidPlaylistState = function (state) {
+exports.tplDmIsValidModifiedTimeState = tplDmIsValidModifiedTimeState;
+var tplDmIsValidPlaylistState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('id')
         && state.hasOwnProperty('name');
 };
-exports.tplDmIsValidRulesState = function (state) {
+exports.tplDmIsValidPlaylistState = tplDmIsValidPlaylistState;
+var tplDmIsValidRulesState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('order')
         && state.hasOwnProperty('ruleEntities')
         && state.hasOwnProperty('combiner');
 };
-exports.tplDmIsValidAssetMapState = function (state) {
+exports.tplDmIsValidRulesState = tplDmIsValidRulesState;
+var tplDmIsValidAssetMapState = function (state) {
     return typeof state === 'object';
 };
-exports.tplDmIsValidContentsState = function (state) {
+exports.tplDmIsValidAssetMapState = tplDmIsValidAssetMapState;
+var tplDmIsValidContentsState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('order')
         && state.hasOwnProperty('contentItems');
 };
+exports.tplDmIsValidContentsState = tplDmIsValidContentsState;
 
 
 /***/ }),
@@ -244,13 +251,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createDefaultTaggedPlaylistProperties = exports.TplDefaultSortTagName = exports.newTplDmId = void 0;
 var lodash_1 = __webpack_require__(0);
 var uuid_1 = __webpack_require__(35);
-exports.newTplDmId = function () { return uuid_1.v4(); };
+var newTplDmId = function () { return uuid_1.v4(); };
+exports.newTplDmId = newTplDmId;
 exports.TplDefaultSortTagName = 'FileName';
-exports.createDefaultTaggedPlaylistProperties = function (params) {
+var createDefaultTaggedPlaylistProperties = function (params) {
     var playlistSpec = params.playlistSpec;
     return {
         id: lodash_1.isNil(params.id) ? exports.newTplDmId() : params.id,
-        name: params.name,
+        name: params.name.trim(),
         sortTagName: lodash_1.isNil(playlistSpec) ? exports.TplDefaultSortTagName : params.playlistSpec.sortTagName,
         sortDescending: lodash_1.isNil(playlistSpec) ? false : params.playlistSpec.sortDescending,
         contentsVirtualPath: lodash_1.isNil(params.contentsVirtualPath) ? '\\' : params.contentsVirtualPath,
@@ -259,6 +267,7 @@ exports.createDefaultTaggedPlaylistProperties = function (params) {
         waitingForApprove: lodash_1.isNil(params.waitingForApprove) ? true : params.waitingForApprove,
     };
 };
+exports.createDefaultTaggedPlaylistProperties = createDefaultTaggedPlaylistProperties;
 
 
 /***/ }),
@@ -271,7 +280,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.tplDmGetBaseState = exports.tplDmFilterBaseState = void 0;
 var tplDmError_1 = __webpack_require__(1);
 var tplDmValidation_1 = __webpack_require__(4);
-exports.tplDmFilterBaseState = function (state) {
+var tplDmFilterBaseState = function (state) {
     if (state.hasOwnProperty('bstpldm') && (tplDmValidation_1.tplDmCheckForInvalidTplDmPlaylistState(state.bstpldm) === null)) {
         return state.bstpldm;
     }
@@ -283,9 +292,11 @@ exports.tplDmFilterBaseState = function (state) {
         throw new tplDmError_1.TplDmError(tplDmError_1.TplDmErrorType.invalidParameters, exceptionMessage);
     }
 };
-exports.tplDmGetBaseState = function (state) {
+exports.tplDmFilterBaseState = tplDmFilterBaseState;
+var tplDmGetBaseState = function (state) {
     return exports.tplDmFilterBaseState(state);
 };
+exports.tplDmGetBaseState = tplDmGetBaseState;
 
 
 /***/ }),
@@ -308,7 +319,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(6), exports);
@@ -371,7 +382,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tplDmPrepareAssetItem = exports.tplDmRemoveAssetItems = exports.tplDmHydrateAssetItemsWithoutTest = exports.tplDmHydrateAssetItems = exports.TPLDM_REMOVE_ASSET_ITEMS = exports.TPLDM_HYDRATE_ASSET_ITEMS = void 0;
+exports.tplDmUpdateAssetLocation = exports.tplDmPrepareAssetItem = exports.tplDmRemoveAssetItems = exports.tplDmHydrateAssetItemsWithoutTest = exports.tplDmHydrateAssetItems = exports.TPLDM_UPDATE_ASSET_LOCATION = exports.TPLDM_REMOVE_ASSET_ITEMS = exports.TPLDM_HYDRATE_ASSET_ITEMS = void 0;
 var bscore_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var base_1 = __webpack_require__(9);
@@ -380,6 +391,7 @@ var tplDmError_1 = __webpack_require__(1);
 var utils_1 = __webpack_require__(5);
 exports.TPLDM_HYDRATE_ASSET_ITEMS = 'TPLDM_HYDRATE_ASSET_ITEMS';
 exports.TPLDM_REMOVE_ASSET_ITEMS = 'TPLDM_REMOVE_ASSET_ITEMS';
+exports.TPLDM_UPDATE_ASSET_LOCATION = 'TPLDM_DM_UPDATE_ASSET_LOCATION';
 function tplDmHydrateAssetItems(params) {
     return function (dispatch, getState) {
         var items = lodash_1.isArray(params) ? params : [params];
@@ -429,6 +441,28 @@ function tplDmPrepareAssetItem(state, assetItem, action) {
     return preparedAssetItem;
 }
 exports.tplDmPrepareAssetItem = tplDmPrepareAssetItem;
+function tplDmUpdateAssetLocation(currentLocator, newAssetItem) {
+    return function (dispatch, getState) {
+        var locator = bscore_1.bscGenerateAssetLocatorKey(currentLocator);
+        var assetId = selectors_1.tplDmGetAssetIdByLocator(base_1.tplDmFilterTplDmState(getState()), { locator: locator });
+        if (lodash_1.isNil(assetId)) {
+            throw new tplDmError_1.TplDmError(tplDmError_1.TplDmErrorType.assetNotFound, 'plDmUpdateAssetLocation: ' + locator);
+        }
+        var newLocatorKey = bscore_1.bscGenerateAssetLocatorKey(newAssetItem);
+        var filteredAssetItem = tplDmPrepareAssetItem(getState(), newAssetItem);
+        var assetItem = Object.assign(filteredAssetItem, { id: assetId, locator: newLocatorKey });
+        var updateAction = {
+            type: exports.TPLDM_UPDATE_ASSET_LOCATION,
+            payload: { assetItem: assetItem },
+        };
+        if (!newLocatorKey) {
+            throw new tplDmError_1.TplDmError(tplDmError_1.TplDmErrorType.invalidParameters, 'plDmUpdateAssetLocation: New AssetLocator does not contain valid locator information', updateAction);
+        }
+        dispatch(updateAction);
+        return updateAction;
+    };
+}
+exports.tplDmUpdateAssetLocation = tplDmUpdateAssetLocation;
 
 
 /***/ }),
@@ -445,7 +479,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(31), exports);
@@ -742,6 +776,9 @@ function tplDmOpenPlaylist(newState) {
 }
 exports.tplDmOpenPlaylist = tplDmOpenPlaylist;
 function tplDmUpdatePlaylist(params) {
+    if (!lodash_1.isNil(params.name)) {
+        params.name = params.name.trim();
+    }
     return {
         type: exports.TPLDM_UPDATE_PLAYLIST,
         payload: params,
@@ -812,11 +849,23 @@ exports.tplDmRemoveAllRules = tplDmRemoveAllRules;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.assetMapReducer = void 0;
 var lodash_1 = __webpack_require__(0);
 var actions_1 = __webpack_require__(2);
 var assetById = function (state, action) {
+    var _a;
     if (state === void 0) { state = {}; }
     var type = action.type, payload = action.payload;
     switch (type) {
@@ -848,6 +897,15 @@ var assetById = function (state, action) {
                 }
             });
             return newState_2;
+        }
+        case actions_1.TPLDM_UPDATE_ASSET_LOCATION: {
+            var assetItem = payload.assetItem;
+            var existingItem = state[assetItem.id];
+            if (!lodash_1.isNil(existingItem)) {
+                var newItem = __assign(__assign({}, assetItem), { refCount: existingItem.refCount });
+                return Object.assign({}, state, (_a = {}, _a[assetItem.id] = newItem, _a));
+            }
+            break;
         }
         case actions_1.TPLDM_CLEAR_STATE: {
             return {};
@@ -1175,9 +1233,10 @@ var lodash_1 = __webpack_require__(0);
 var tplDmValidation_1 = __webpack_require__(4);
 var base_1 = __webpack_require__(6);
 var tplDmError_1 = __webpack_require__(1);
-exports.tplDmGetAssetMapState = function (state) {
+var tplDmGetAssetMapState = function (state) {
     return getAssetMapState(state);
 };
+exports.tplDmGetAssetMapState = tplDmGetAssetMapState;
 var getAssetMapState = reselect_1.createSelector(base_1.tplDmGetBaseState, function (state) {
     if (tplDmValidation_1.tplDmIsValidAssetMapState(state.assetMap)) {
         return state.assetMap;
@@ -1187,7 +1246,7 @@ var getAssetMapState = reselect_1.createSelector(base_1.tplDmGetBaseState, funct
         throw new tplDmError_1.TplDmError(tplDmError_1.TplDmErrorType.invalidParameters, exceptionMessage);
     }
 });
-exports.tplDmGetAssetIdByLocator = function (state, props) {
+var tplDmGetAssetIdByLocator = function (state, props) {
     var subState = exports.tplDmGetAssetMapState(state);
     var assetId = null;
     var locator = props.locator;
@@ -1199,6 +1258,7 @@ exports.tplDmGetAssetIdByLocator = function (state, props) {
     });
     return assetId;
 };
+exports.tplDmGetAssetIdByLocator = tplDmGetAssetIdByLocator;
 function tplDmGetAssetItemById(state, id) {
     var subState = exports.tplDmGetAssetMapState(state);
     var asset = subState[id];
@@ -1243,9 +1303,10 @@ var selectorAssetMap_1 = __webpack_require__(23);
 var base_1 = __webpack_require__(6);
 var tplDmValidation_1 = __webpack_require__(4);
 var tplDmError_1 = __webpack_require__(1);
-exports.tplDmGetContentsState = function (state) {
+var tplDmGetContentsState = function (state) {
     return getContentsState(state);
 };
+exports.tplDmGetContentsState = tplDmGetContentsState;
 var getContentsState = reselect_1.createSelector(base_1.tplDmGetBaseState, function (state) {
     if (tplDmValidation_1.tplDmIsValidContentsState(state.contents)) {
         return state.contents;
@@ -1365,9 +1426,10 @@ var tplDmValidation_1 = __webpack_require__(4);
 var reselect_1 = __webpack_require__(7);
 var base_1 = __webpack_require__(6);
 var tplDmError_1 = __webpack_require__(1);
-exports.tplDmGetPlaylistState = function (state) {
+var tplDmGetPlaylistState = function (state) {
     return getPlaylistState(state);
 };
+exports.tplDmGetPlaylistState = tplDmGetPlaylistState;
 var getPlaylistState = reselect_1.createSelector(base_1.tplDmGetBaseState, function (state) {
     if (tplDmValidation_1.tplDmIsValidPlaylistState(state.playlist)) {
         return state.playlist;
@@ -1450,9 +1512,10 @@ var bscore_1 = __webpack_require__(3);
 var base_1 = __webpack_require__(6);
 var tplDmValidation_1 = __webpack_require__(4);
 var tplDmError_1 = __webpack_require__(1);
-exports.tplDmGetRulesState = function (state) {
+var tplDmGetRulesState = function (state) {
     return getRulesState(state);
 };
+exports.tplDmGetRulesState = tplDmGetRulesState;
 var getRulesState = reselect_1.createSelector(base_1.tplDmGetBaseState, function (state) {
     if (tplDmValidation_1.tplDmIsValidRulesState(state.rules)) {
         return state.rules;
@@ -1662,7 +1725,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(2), exports);
@@ -1724,9 +1787,10 @@ var reselect_1 = __webpack_require__(7);
 var base_1 = __webpack_require__(6);
 var tplDmValidation_1 = __webpack_require__(4);
 var tplDmError_1 = __webpack_require__(1);
-exports.tplDmGetModifiedTimeState = function (state) {
+var tplDmGetModifiedTimeState = function (state) {
     return getModifiedTimeState(state);
 };
+exports.tplDmGetModifiedTimeState = tplDmGetModifiedTimeState;
 var getModifiedTimeState = reselect_1.createSelector(base_1.tplDmGetBaseState, function (state) {
     if (tplDmValidation_1.tplDmIsValidModifiedTimeState(state.modifiedTime)) {
         return state.modifiedTime;
@@ -1736,9 +1800,10 @@ var getModifiedTimeState = reselect_1.createSelector(base_1.tplDmGetBaseState, f
         throw new tplDmError_1.TplDmError(tplDmError_1.TplDmErrorType.invalidParameters, exceptionMessage);
     }
 });
-exports.tplDmGetModifiedTimeStateInDate = function (state) {
+var tplDmGetModifiedTimeStateInDate = function (state) {
     return new Date(exports.tplDmGetModifiedTimeState(state));
 };
+exports.tplDmGetModifiedTimeStateInDate = tplDmGetModifiedTimeStateInDate;
 
 
 /***/ }),

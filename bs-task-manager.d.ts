@@ -79,7 +79,7 @@ export class BsTmError extends Error {
 
 export function tmGetTaskManager(): BsTaskManager;
 export class BsTaskManager {
-    get currentTask(): BsTask;
+    get currentTask(): BsTask | null;
     get taskIsInProgress(): boolean;
     get pendingTasks(): BsTaskId[];
     get pendingTaskCount(): number;

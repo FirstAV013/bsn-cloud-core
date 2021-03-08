@@ -1054,7 +1054,7 @@ module.exports = require("zlib");
 		exports["bsCore"] = factory(require("isomorphic-path"));
 	else
 		root["bsCore"] = factory(root["isomorphic-path"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_24__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_25__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1189,6 +1189,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isInstanceOfEnum = exports.getEnumKeyOfValue = exports.bscIsBsSize = exports.bscIsBsColor = exports.BsBlack = exports.TwitterFeedRestrictionType = exports.PlayerTagMatchingType = exports.DataFeedUsageType = exports.DataFeedType = exports.HtmlSiteType = exports.PlayFileTriggerType = exports.MediaListPlaybackType = exports.SystemVariableType = exports.NumberParameterType = exports.StringParameterType = exports.AccessType = exports.BlcChannels = exports.BlcTransitionMode = exports.BlcPlaybackMode = exports.BlcBlink = exports.BlcEffect = exports.BlcIndex = exports.BpAction = exports.CommandSequenceType = exports.CommandType = exports.CompareOperator = exports.TransitionType = exports.DistanceUnits = exports.RegionDirection = exports.IrTransmitterDestination = exports.IrReceiverEncodings = exports.IrReceiverSource = exports.ButtonDirection = exports.ButtonPanelNameArray = exports.ButtonPanelName = exports.BpIndex = exports.GpioType = exports.BpType = exports.EventIntrinsicAction = exports.EventType = exports.TextScrollingMethodType = exports.TextHAlignmentType = exports.RotationType = exports.VideoDisplayModeType = exports.MosaicMaxContentResolutionType = exports.AudioMixModeType = exports.AudioOutputType = exports.AudioConfiguration = exports.AudioOutputNameArray = exports.UsbConnectorNameArray = exports.AudioOutputName = exports.UsbConnectorName = exports.AudioMappingType = exports.AudioModeType = exports.AudioOutputSelectionType = exports.ImageOrientationType = exports.ColorSpaceType = exports.ImageModeType = exports.ViewModeType = exports.LanguageKeyType = exports.LanguageType = exports.UdpAddressType = exports.GraphicsZOrderType = exports.TouchCursorDisplayModeType = exports.DeviceWebPageDisplay = exports.MonitorOverscanType = exports.MonitorOrientationType = exports.VideoConnectorType = exports.VideoDecoderSize = exports.VideoDecoderName = exports.VideoDecoderMode = exports.VideoZoneLayerType = exports.ZoneLayerType = exports.ZoneType = exports.bscGetContentItemTypeForMediaType = exports.ContentItemType = exports.PlayableMediaTypes = exports.MediaType = void 0;
 var assets_1 = __webpack_require__(4);
 var isNil = __webpack_require__(0);
 var MediaType = (function () {
@@ -1231,6 +1232,8 @@ var ContentItemType = (function () {
     ContentItemType.EventHandler = 'EventHandler';
     ContentItemType.PlayFile = 'PlayFile';
     ContentItemType.MediaList = 'MediaList';
+    ContentItemType.LocalPlaylist = 'LocalPlaylist';
+    ContentItemType.LocalPlaylistItem = 'LocalPlaylistItem';
     ContentItemType.LiveText = 'LiveText';
     ContentItemType.SuperState = 'SuperState';
     ContentItemType.Invalid = 'Invalid';
@@ -2266,6 +2269,7 @@ module.exports = isString;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscGetBsnFirmwareKeyForPlayerModel = exports.bscPlayerModelToPlayerFamily = exports.bscSerialToPlayerFamily = exports.AllModels = exports.Series2Models = exports.Series3Models = exports.Series4Models = exports.MonacoModels = exports.PumaModels = exports.PantherModels = exports.CheetahModels = exports.BobcatModels = exports.LynxModels = exports.SebringModels = exports.TigerModels = exports.PanteraModels = exports.ImpalaModels = exports.PaganiHDModels = exports.PaganiModels = exports.MalibuModels = exports.PlayerModel = exports.PlayerMachineNameSuffix = exports.PlayerFamily = void 0;
 var PlayerFamily = (function () {
     function PlayerFamily() {
     }
@@ -2598,11 +2602,12 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscGetBscFileTypeInfo = exports.BsAllFileBasedAssetTypes = exports.bscGetAssetItemFileTypeInfo = exports.styleSheetFileSuffixes = exports.fontFileSuffixes = exports.htmlSiteFileSuffixes = exports.projectBpfFileSuffixes = exports.scheduleFileSuffixes = exports.projectFileFragmentSuffixes = exports.projectFileSuffixes = exports.bscGetFileProjectFragmentExtension = exports.bscGetFileProjectFragmentType = exports.bscStripFileExtension = exports.bscIsAssetItemPlayableContent = exports.bscIsMediaTypePlayable = exports.bscGetFileMediaType = exports.textFileSuffixes = exports.audioFileSuffixes = exports.videoFileSuffixes = exports.imageFileSuffixes = exports.bscIsDefaultAssetItem = exports.bscGetDefaultAssetItem = exports.bscIsNullAssetItem = exports.bscGetNullAssetItem = exports.bscGetBsnAssetLocatorKey = exports.bscGetFtpAssetLocatorKey = exports.bscGetLocalAssetLocatorKey = exports.bscGenerateAssetLocatorKey = exports.bscAssetItemFromBasicAssetInfo = exports.bscGetAssetSpecification = exports.bscAssetLocatorForLocalAsset = exports.bscGetAssetFullPath = exports.bscGetAssetExtension = exports.bscGetAssetName = exports.bscAssetLocatorForBsnAsset = exports.bscAssetLocatorFromAssetItem = exports.bscAssetItemFromAssetLocator = exports.bscAssetItemIsBsnDataFeed = exports.bscIsAssetItem = exports.bscIsAssetLocator = exports.bscIsLocalAssetThumbnail = exports.bscCreateNetworkAssetThumbnail = exports.bscCreateLocalAssetThumbnail = exports.BsProjectFragmentType = exports.bscConvertProbeDataToAvMetadata = exports.bscIsImageData = exports.bscIsAudioData = exports.bscIsVideoData = exports.FtpObjectPermissionGroup = exports.BseChildAssetType = exports.AssetType = exports.AssetLocation = exports.bscIsValidAssetId = exports.BsAssetIdNone = void 0;
 var metadata_1 = __webpack_require__(1);
-var isomorphic_path_1 = __webpack_require__(24);
+var isomorphic_path_1 = __webpack_require__(25);
 var isNil = __webpack_require__(0);
 var isString = __webpack_require__(2);
-var isUndefined = __webpack_require__(23);
+var isUndefined = __webpack_require__(24);
 exports.BsAssetIdNone = '0';
 function bscIsValidAssetId(id) {
     return typeof id === 'string' && id.length >= 8;
@@ -3207,6 +3212,7 @@ exports.bscGetBscFileTypeInfo = bscGetBscFileTypeInfo;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.IrRemoteModel = void 0;
 var IrRemoteModel = (function () {
     function IrRemoteModel() {
     }
@@ -3234,6 +3240,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscPlayerModelToPlayerMachineName = exports.bscPlayerModelHasFeature = exports.ModelFeature = void 0;
 var playerModel_1 = __webpack_require__(3);
 var ModelFeature = (function () {
     function ModelFeature() {
@@ -3527,6 +3534,7 @@ exports.bscPlayerModelToPlayerMachineName = bscPlayerModelToPlayerMachineName;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ProbePlayableStatus = exports.ImagePlayableStatus = exports.DecoderName = exports.ProbeContentResolutionType = void 0;
 var ProbeContentResolutionType = (function () {
     function ProbeContentResolutionType() {
     }
@@ -3592,6 +3600,7 @@ Object.freeze(ProbePlayableStatus);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BsRectFull = exports.bscGetPercentageRectForWidthAndHeight = exports.bscGetPercentageRectForVideoMode = exports.bscGetAbsoluteRectForWidthAndHeight = exports.bscGetAbsoluteRectForVideoMode = exports.bscScaleAbsoluteRect = exports.bscCreateAbsoluteRect = exports.bscCreatePercentageRect = void 0;
 var main_1 = __webpack_require__(9);
 function bscCreatePercentageRect(x, y, width, height) {
     return { x: x, y: y, width: width, height: height, pct: true };
@@ -3661,29 +3670,37 @@ Object.freeze(exports.BsRectFull);
 
 "use strict";
 
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(1));
-__export(__webpack_require__(3));
-__export(__webpack_require__(6));
-__export(__webpack_require__(17));
-__export(__webpack_require__(21));
-__export(__webpack_require__(8));
-__export(__webpack_require__(4));
-__export(__webpack_require__(19));
-__export(__webpack_require__(7));
-__export(__webpack_require__(18));
-__export(__webpack_require__(11));
-__export(__webpack_require__(10));
-__export(__webpack_require__(14));
-__export(__webpack_require__(12));
-__export(__webpack_require__(13));
-__export(__webpack_require__(16));
-__export(__webpack_require__(20));
-__export(__webpack_require__(5));
-__export(__webpack_require__(15));
+__exportStar(__webpack_require__(1), exports);
+__exportStar(__webpack_require__(3), exports);
+__exportStar(__webpack_require__(6), exports);
+__exportStar(__webpack_require__(17), exports);
+__exportStar(__webpack_require__(22), exports);
+__exportStar(__webpack_require__(18), exports);
+__exportStar(__webpack_require__(8), exports);
+__exportStar(__webpack_require__(4), exports);
+__exportStar(__webpack_require__(20), exports);
+__exportStar(__webpack_require__(7), exports);
+__exportStar(__webpack_require__(19), exports);
+__exportStar(__webpack_require__(11), exports);
+__exportStar(__webpack_require__(10), exports);
+__exportStar(__webpack_require__(14), exports);
+__exportStar(__webpack_require__(12), exports);
+__exportStar(__webpack_require__(13), exports);
+__exportStar(__webpack_require__(16), exports);
+__exportStar(__webpack_require__(21), exports);
+__exportStar(__webpack_require__(5), exports);
+__exportStar(__webpack_require__(15), exports);
 
 
 /***/ }),
@@ -3693,6 +3710,7 @@ __export(__webpack_require__(15));
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BDeploySortType = void 0;
 var BDeploySortType = (function () {
     function BDeploySortType() {
     }
@@ -3729,6 +3747,7 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscIsTaggedListSpecification = exports.bscCreateTaggedListSpecification = exports.bscIsTagSortSpecification = exports.bscCreateTagSortSpecification = exports.bscIsBsnFilterSpecification = exports.bscCreateBsnFilterSpecification = exports.bscIsValidBsnFilterComponent = exports.bscCreateTagFilterComponent = exports.bscGetBsnFilterTypeForTagDataType = exports.bscCreateFilterComponent = exports.bscIsTimeSpanFilterParam = exports.BsnFilterCombineType = exports.bscGetOperatorListForTagDataType = exports.bscGetOperatorListForFilterType = exports.BsnArrayFilterOperator = exports.BsnBooleanFilterOperator = exports.BsnDateFilterOperator = exports.BsnNumberFilterOperator = exports.BsnStringFilterOperator = exports.BsnTimeUnits = exports.BsnFilterType = exports.bscIsBsnObjectUserPermission = exports.bscCreateBsnObjectUserPermission = exports.bscIsBsnObjectRolePermission = exports.bscCreateBsnObjectRolePermission = exports.BsnObjectPermissionType = exports.BsnPresentationReferenceType = exports.BsnPresentationStatus = exports.BsnPresentationType = exports.BsnTagType = exports.BsnTagDataType = exports.BsnTaggedPlaylistItemStatus = void 0;
 var isNil = __webpack_require__(0);
 var isString = __webpack_require__(2);
 var BsnTaggedPlaylistItemStatus = (function () {
@@ -4147,6 +4166,7 @@ exports.bscIsTaggedListSpecification = bscIsTaggedListSpecification;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DeviceSetupProperties = exports.BsDsLwsConfiguration = exports.TimeZone = exports.UnitNamingMethod = exports.DeviceNetworkingConfiguration = void 0;
 var DeviceNetworkingConfiguration = (function () {
     function DeviceNetworkingConfiguration() {
     }
@@ -4375,9 +4395,10 @@ Object.freeze(DeviceSetupProperties);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscValidateSerialNumber = void 0;
 var isString = __webpack_require__(2);
 var isNil = __webpack_require__(0);
-var isNaN = __webpack_require__(22);
+var isNaN = __webpack_require__(23);
 var convertFromBase31 = function (codePoint) {
     codePoint = codePoint % 31;
     if (codePoint < 10) {
@@ -4474,6 +4495,7 @@ exports.bscValidateSerialNumber = bscValidateSerialNumber;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscCreatePublishFirmware = exports.bscGetFirmwareSourceUrl = exports.bscGetFirmwareFileName = exports.bscGetFirmwareUpdateTargetFileName = exports.FirmwareUpdateType = exports.FirmwareUpdateSource = void 0;
 var isNil = __webpack_require__(0);
 var FirmwareUpdateSource = (function () {
     function FirmwareUpdateSource() {
@@ -4617,6 +4639,7 @@ exports.bscCreatePublishFirmware = bscCreatePublishFirmware;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscGetIrRemoteControl = void 0;
 var irRemoteModel_1 = __webpack_require__(5);
 function bscGetIrRemoteControl(irRemoteModel) {
     var _a, _b;
@@ -4712,6 +4735,7 @@ exports.bscGetIrRemoteControl = bscGetIrRemoteControl;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscIsUsbHidCommunicationDevice = exports.bscIsUsbNetworkedDevice = exports.bscIsUsbAudioDevice = exports.bscDisplayUsbPortNames = exports.EolType = exports.CommandLibrarySupportType = exports.BMapProtocolType = exports.TapProtocolType = void 0;
 var isNil = __webpack_require__(0);
 var isString = __webpack_require__(2);
 var TapProtocolType = (function () {
@@ -4783,6 +4807,7 @@ exports.bscIsUsbHidCommunicationDevice = bscIsUsbHidCommunicationDevice;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscGetPlayerCapabilities = void 0;
 var playerModel_1 = __webpack_require__(3);
 var metadata_1 = __webpack_require__(1);
 var probe_1 = __webpack_require__(7);
@@ -4996,6 +5021,16 @@ exports.bscGetPlayerCapabilities = bscGetPlayerCapabilities;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PublishDataKeys = exports.StorageSpaceLimitUnits = exports.ScheduleRecurrencePattern = void 0;
 var ScheduleRecurrencePattern = (function () {
     function ScheduleRecurrencePattern() {
     }
@@ -5028,12 +5063,13 @@ exports.PublishDataKeys = [
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscGetMimeTypeForFileExtension = exports.bscGetFileExtensionForMimeType = exports.bscIsLocalFileBuffer = exports.bscCreateLocalFileBuffer = exports.BsUploadItemStatus = void 0;
 var BsUploadItemStatus = (function () {
     function BsUploadItemStatus() {
     }
@@ -5130,12 +5166,13 @@ exports.bscGetMimeTypeForFileExtension = bscGetMimeTypeForFileExtension;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscIsNumericArray = exports.bscImageOrientationToRotationType = exports.bscTimeSpanStringFromSeconds = exports.bscTimeSpanStringToSeconds = exports.bscReplaceTimeZoneWithUTC = void 0;
 var metadata_1 = __webpack_require__(1);
 var isString = __webpack_require__(2);
 var isNil = __webpack_require__(0);
@@ -5206,12 +5243,13 @@ exports.bscIsNumericArray = bscIsNumericArray;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bscIsFullResGraphicScalingNeeded = exports.bscScaleRectangleFromFullResolutionCoordinates = exports.bscScaleRectangleToFullResolutionCoordinates = exports.bscGetGraphicsResolution = exports.bscIsFullResGraphicsSupported = exports.bscIsHDVideoResolutionOrSmaller = exports.bscParseVideoModeResolutionAndRate = exports.bscParseVideoModeComponents = exports.bscIsValidFrameRate = exports.bscIsValidResolution = exports.bscGetFrameRates = exports.bscGetPlayerVideoModeSpecs = exports.bscIsValidConnectorType = exports.bscGetPlayerVideoConnectorTypes = exports.HdmiVideoConnectorTypeSpec = exports.AllVideoConnectorTypeSpec = exports.BobcatVgaVideoModeSpec = exports.BobcatComponentVideoModeSpec = exports.BobcatHdmiVideoModeSpec = exports.LynxVgaVideoModeSpec = exports.LynxComponentVideoModeSpec = exports.LynxHdmiVideoModeSpec = exports.PanteraVideoModeSpec = exports.FourKVideoModeSpec = exports.bscGetVideoMode = exports.VideoMode = exports.VideoFrameRate = exports.VideoResolution = void 0;
 var playerModel_1 = __webpack_require__(3);
 var playerFeature_1 = __webpack_require__(6);
 var metadata_1 = __webpack_require__(1);
@@ -5867,7 +5905,7 @@ exports.bscIsFullResGraphicScalingNeeded = bscIsFullResGraphicScalingNeeded;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 /**
@@ -5983,7 +6021,7 @@ module.exports = isNaN;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 /**
@@ -6019,7 +6057,7 @@ module.exports = isUndefined;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = __webpack_require__(47);
@@ -11022,16 +11060,18 @@ function getExifData(fullPath) {
                     orientation: bscore_1.RotationType.rot0,
                     colorSpace: bscore_1.ColorSpaceType.RGB,
                 };
-                if (exifData
-                    && typeof exifData.exif.ExifImageWidth === 'number'
-                    && typeof exifData.exif.ExifImageHeight === 'number') {
-                    imageData.size.width = exifData.exif.ExifImageWidth;
-                    imageData.size.height = exifData.exif.ExifImageHeight;
-                }
-                else {
+                try {
                     var dimensions = sizeOf(fullPath);
                     imageData.size.height = dimensions.height;
                     imageData.size.width = dimensions.width;
+                }
+                catch (error) {
+                    if (exifData
+                        && typeof exifData.exif.ExifImageWidth === 'number'
+                        && typeof exifData.exif.ExifImageHeight === 'number') {
+                        imageData.size.width = exifData.exif.ExifImageWidth;
+                        imageData.size.height = exifData.exif.ExifImageHeight;
+                    }
                 }
                 if (exifData && typeof exifData.image.Orientation !== 'undefined') {
                     switch (exifData.image.Orientation) {
@@ -11227,7 +11267,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -109052,7 +109092,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(64);

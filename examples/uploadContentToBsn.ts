@@ -61,7 +61,7 @@ async function doUploadLocalFile() {
       console.log(inspect(fileResult, {depth: null, colors: true}));
       // Delete file
       console.log('Deleting file ...');
-      await bsnGetSession().deleteContentItem(fileResult.assetItem.networkId as number);
+      await bsnGetSession().deleteContentItem(fileResult.assetItem!.networkId as number);
       // Shut down worker processes
       await cmShutdown();
     }

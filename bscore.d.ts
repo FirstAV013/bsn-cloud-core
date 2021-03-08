@@ -1,73 +1,73 @@
 /** @module Core:player */
-export class PlayerFamily {
-    static Unknown: string;
-    static Malibu: string;
-    static Pagani: string;
-    static Impala: string;
-    static Pantera: string;
-    static Tiger: string;
-    static Sebring: string;
-    static Lynx: string;
-    static Bobcat: string;
-    static Cheetah: string;
-    static Panther: string;
-    static Puma: string;
-    static Monaco: string;
+export enum PlayerFamily {
+    Unknown = "Unknown",
+    Malibu = "Malibu",
+    Pagani = "Pagani",
+    Impala = "Impala",
+    Pantera = "Pantera",
+    Tiger = "Tiger",
+    Sebring = "Sebring",
+    Lynx = "Lynx",
+    Bobcat = "Bobcat",
+    Cheetah = "Cheetah",
+    Panther = "Panther",
+    Puma = "Puma",
+    Monaco = "Monaco"
 }
 export type PlayerFamilyName = keyof (PlayerFamily);
-export class PlayerMachineNameSuffix {
-    static SingleDecoder: string;
-    static No4K: string;
+export enum PlayerMachineNameSuffix {
+    SingleDecoder = "Single_Decoder",
+    No4K = "No4K"
 }
-export class PlayerModel {
-    static Unknown: string;
-    static XD1034: string;
-    static XD234: string;
-    static XT1144: string;
-    static XT244: string;
-    static HD1024: string;
-    static HD224: string;
-    static HS144: string;
-    static LS424: string;
-    static HS124: string;
-    static XD1033: string;
-    static XD233: string;
-    static XT1043: string;
-    static XT1143: string;
-    static XT243: string;
-    static HD1023: string;
-    static HD223: string;
-    static HS123: string;
-    static HO523: string;
-    static LS423: string;
-    static FK1142: string;
-    static FK1042: string;
-    static FK242: string;
-    static AU325: string;
-    static AU335: string;
-    static XD1132: string;
-    static XD1032: string;
-    static XD232: string;
-    static HD1022: string;
-    static HD222: string;
-    static HD972: string;
-    static HD922: string;
-    static XD1230: string;
-    static XD1030: string;
-    static XD230: string;
-    static HD1020: string;
-    static HD220: string;
-    static HD120: string;
-    static LS422: string;
-    static LS322: string;
-    static AU320: string;
-    static HD970: string;
-    static HD920: string;
-    static A915: string;
-    static HD917: string;
-    static HD210: string;
-    static HD1010: string;
-    static TD1012: string;
+export enum PlayerModel {
+    Unknown = "Unknown",
+    XD1034 = "XD1034",
+    XD234 = "XD234",
+    XT1144 = "XT1144",
+    XT244 = "XT244",
+    HD1024 = "HD1024",
+    HD224 = "HD224",
+    HS144 = "HS144",
+    LS424 = "LS424",
+    HS124 = "HS124",
+    XD1033 = "XD1033",
+    XD233 = "XD233",
+    XT1043 = "XT1043",
+    XT1143 = "XT1143",
+    XT243 = "XT243",
+    HD1023 = "HD1023",
+    HD223 = "HD223",
+    HS123 = "HS123",
+    HO523 = "HO523",
+    LS423 = "LS423",
+    FK1142 = "4K1142",
+    FK1042 = "4K1042",
+    FK242 = "4K242",
+    AU325 = "AU325",
+    AU335 = "AU335",
+    XD1132 = "XD1132",
+    XD1032 = "XD1032",
+    XD232 = "XD232",
+    HD1022 = "HD1022",
+    HD222 = "HD222",
+    HD972 = "HD972",
+    HD922 = "HD922",
+    XD1230 = "XD1230",
+    XD1030 = "XD1030",
+    XD230 = "XD230",
+    HD1020 = "HD1020",
+    HD220 = "HD220",
+    HD120 = "HD120",
+    LS422 = "LS422",
+    LS322 = "LS322",
+    AU320 = "AU320",
+    HD970 = "HD970",
+    HD920 = "HD920",
+    A915 = "A915",
+    HD917 = "HD917",
+    HD210 = "HD210",
+    HD1010 = "HD1010",
+    TD1012 = "TD1012"
 }
 export const MalibuModels: Set<PlayerModel>;
 export const PaganiModels: Set<PlayerModel>;
@@ -106,59 +106,59 @@ export function bscPlayerModelToPlayerFamily(model: PlayerModel): PlayerFamily;
 export function bscGetBsnFirmwareKeyForPlayerModel(model: PlayerModel): string | null;
 
 /** @module Core:playerFeature */
-export class ModelFeature {
-    static Gpio: string;
-    static Networking: string;
-    static SingleAnalogVolumeLimitation: string;
-    static Hdmi: string;
-    static HdmiEArc: string;
-    static VideoStreaming: string;
-    static AudioStreaming: string;
-    static AudioMixer: string;
-    static Audio: string;
-    static EnhancedAudio: string;
-    static Images: string;
-    static Video: string;
-    static Clock: string;
-    static GraphicsZOrdering: string;
-    static VideoZOrdering: string;
-    static Html5: string;
-    static Html5Camera: string;
-    static AudioOutputControl: string;
-    static Spdif: string;
-    static IrOut: string;
-    static Usb: string;
-    static Bp: string;
-    static Serial: string;
-    static Blc400: string;
-    static HdmiIn: string;
-    static EnhancedSynchronization: string;
-    static Pronto: string;
-    static ScrollingTicker: string;
-    static TenBitColor: string;
-    static FourKImages: string;
-    static FullResGraphics: string;
-    static FullResGraphicsHiFR: string;
-    static DualDecoder: string;
-    static MosaicMode: string;
-    static Bluetooth: string;
-    static AudioConfiguration: string;
-    static DedicatedIr: string;
-    static DolbyVision: string;
-    static UsbTap: string;
-    static ButtonsByGpio: string;
-    static LightsByGpio: string;
-    static BroadcomSupport: string;
-    static RfTuner: string;
-    static AudioDetect: string;
-    static ExternalAudioDetect: string;
-    static SingleOnBoardAnalogChannel: string;
-    static ThreeOnBoardAnalogChannels: string;
-    static UsbAudio: string;
-    static PumaUsbAudio: string;
-    static BoseUsb: string;
-    static AudioIn: string;
-    static AudioDownMix: string;
+export enum ModelFeature {
+    Gpio = "gpio",
+    Networking = "net",
+    SingleAnalogVolumeLimitation = "1audVol",
+    Hdmi = "hdmi",
+    HdmiEArc = "hdmiEArc",
+    VideoStreaming = "vstrm",
+    AudioStreaming = "astrm",
+    AudioMixer = "amix",
+    Audio = "aud",
+    EnhancedAudio = "enhaud",
+    Images = "img",
+    Video = "vid",
+    Clock = "clk",
+    GraphicsZOrdering = "grfZ",
+    VideoZOrdering = "vidZ",
+    Html5 = "html5",
+    Html5Camera = "htmlCam",
+    AudioOutputControl = "aoctl",
+    Spdif = "spdif",
+    IrOut = "ir",
+    Usb = "usb",
+    Bp = "bp",
+    Serial = "ser",
+    Blc400 = "blc400",
+    HdmiIn = "hdmiIn",
+    EnhancedSynchronization = "enhsync",
+    Pronto = "pronto",
+    ScrollingTicker = "scrlTic",
+    TenBitColor = "10bit",
+    FourKImages = "4kimg",
+    FullResGraphics = "fullResGfx",
+    FullResGraphicsHiFR = "fullResGfxHiFR",
+    DualDecoder = "2dec",
+    MosaicMode = "mosaic",
+    Bluetooth = "btle",
+    AudioConfiguration = "acnf",
+    DedicatedIr = "dedir",
+    DolbyVision = "dolby",
+    UsbTap = "usbTap",
+    ButtonsByGpio = "buttonsByGpio",
+    LightsByGpio = "lightsByGpio",
+    BroadcomSupport = "BroadcomSupport",
+    RfTuner = "tun",
+    AudioDetect = "auddet",
+    ExternalAudioDetect = "extAudDet",
+    SingleOnBoardAnalogChannel = "1aud",
+    ThreeOnBoardAnalogChannels = "3aud",
+    UsbAudio = "usbAud",
+    PumaUsbAudio = "pumaAud",
+    BoseUsb = "boseUsb",
+    AudioIn = "audIn",
+    AudioDownMix = "audDMix"
 }
 export function bscPlayerModelHasFeature(model: PlayerModel, feature: ModelFeature): boolean;
 export function bscPlayerModelToPlayerMachineName(model: PlayerModel): string;
@@ -180,176 +180,177 @@ export function bscGetPlayerCapabilities(model: PlayerModel): PlayerCapabilities
 /**
  * @enum VideoResolution
  */
-export class VideoResolution {
-    static v4096x2160: string;
-    static v3840x2160: string;
-    static v3840x1080: string;
-    static v3840x600: string;
-    static v3440x1440: string;
-    static v2560x1600: string;
-    static v2560x1440: string;
-    static v2560x1080: string;
-    static v2560x960: string;
-    static v2376x288: string;
-    static v2048x1152: string;
-    static v1920x1920: string;
-    static v1920x1200: string;
-    static v1920x1080: string;
-    static v1920x540: string;
-    static v1792x1344: string;
-    static v1680x1050: string;
-    static v1600x1200: string;
-    static v1600x900: string;
-    static v1440x1088: string;
-    static v1440x1080: string;
-    static v1440x900: string;
-    static v1400x1050: string;
-    static v1366x768: string;
-    static v1360x768: string;
-    static v1280x1024: string;
-    static v1280x960: string;
-    static v1280x800: string;
-    static v1280x768: string;
-    static v1280x720: string;
-    static v1200x1920: string;
-    static v1024x768: string;
-    static v960x960: string;
-    static v848x480: string;
-    static v800x1280: string;
-    static v800x600: string;
-    static v720x576: string;
-    static v720x480: string;
-    static v640x480: string;
-    static vNtscComponent: string;
-    static vNtscM: string;
-    static vNtscMJpn: string;
-    static vPalComponent: string;
-    static vPalI: string;
-    static vPalBG: string;
-    static vPalN: string;
-    static vPalNC: string;
-    static vPalM: string;
-    static vSecam: string;
-    static None: string;
+export enum VideoResolution {
+    v4096x2160 = "4096x2160",
+    v3840x2160 = "3840x2160",
+    v3840x1080 = "3840x1080",
+    v3840x600 = "3840x600",
+    v3440x1440 = "3440x1440",
+    v2560x1600 = "2560x1600",
+    v2560x1440 = "2560x1440",
+    v2560x1080 = "2560x1080",
+    v2560x960 = "2560x960",
+    v2376x288 = "2376x288",
+    v2048x1152 = "2048x1152",
+    v1920x1920 = "1920x1920",
+    v1920x1200 = "1920x1200",
+    v1920x1080 = "1920x1080",
+    v1920x540 = "1920x540",
+    v1792x1344 = "1792x1344",
+    v1680x1050 = "1680x1050",
+    v1600x1200 = "1600x1200",
+    v1600x900 = "1600x900",
+    v1440x1088 = "1440x1088",
+    v1440x1080 = "1440x1080",
+    v1440x900 = "1440x900",
+    v1400x1050 = "1400x1050",
+    v1366x768 = "1366x768",
+    v1360x768 = "1360x768",
+    v1280x1024 = "1280x1024",
+    v1280x960 = "1280x960",
+    v1280x800 = "1280x800",
+    v1280x768 = "1280x768",
+    v1280x720 = "1280x720",
+    v1200x1920 = "1200x1920",
+    v1024x768 = "1024x768",
+    v960x960 = "960x960",
+    v848x480 = "848x480",
+    v800x1280 = "800x1280",
+    v800x600 = "800x600",
+    v720x576 = "720x576",
+    v720x480 = "720x480",
+    v640x480 = "640x480",
+    vNtscComponent = "NTSC-COMPONENT",
+    vNtscM = "NTSC-M",
+    vNtscMJpn = "NTSC-M-JPN",
+    vPalComponent = "PAL-COMPONENT",
+    vPalI = "PAL-I",
+    vPalBG = "PAL-BG",
+    vPalN = "PAL-N",
+    vPalNC = "PAL-NC",
+    vPalM = "PAL-M",
+    vSecam = "SECAM",
+    None = "0x0"
 }
 /**
  * @enum VideoFrameRate
  */
-export class VideoFrameRate {
-    static r75p: string;
-    static r60p: string;
-    static r59p: string;
-    static r57p: string;
-    static r50p: string;
-    static r30p: string;
-    static r29p: string;
-    static r25p: string;
-    static r24p: string;
-    static r23p: string;
-    static r60i: string;
-    static r59i: string;
-    static r50i: string;
-    static None: string;
+export enum VideoFrameRate {
+    r75p = "75p",
+    r60p = "60p",
+    r59p = "59.94p",
+    r57p = "57p",
+    r50p = "50p",
+    r30p = "30p",
+    r29p = "29.97p",
+    r25p = "25p",
+    r24p = "24p",
+    r23p = "23.976p",
+    r60i = "60i",
+    r59i = "59.94i",
+    r50i = "50i",
+    None = "0p"
 }
 /**
  * @enum VideoMode
  */
-export class VideoMode {
-    static v4096x2160x60p: string;
-    static v4096x2160x59p: string;
-    static v4096x2160x50p: string;
-    static v4096x2160x30p: string;
-    static v4096x2160x29p: string;
-    static v4096x2160x25p: string;
-    static v4096x2160x24p: string;
-    static v4096x2160x23p: string;
-    static v3840x2160x60p: string;
-    static v3840x2160x59p: string;
-    static v3840x2160x50p: string;
-    static v3840x2160x30p: string;
-    static v3840x2160x29p: string;
-    static v3840x2160x25p: string;
-    static v3840x2160x24p: string;
-    static v3840x2160x23p: string;
-    static v3840x1080x60p: string;
-    static v3840x1080x50p: string;
-    static v3840x1080x30p: string;
-    static v3840x1080x25p: string;
-    static v3840x600x60p: string;
-    static v3440x1440x60p: string;
-    static v3440x1440x50p: string;
-    static v3440x1440x30p: string;
-    static v2560x1600x60p: string;
-    static v2560x1440x60p: string;
-    static v2560x1440x30p: string;
-    static v2560x1080x60p: string;
-    static v2560x960x60p: string;
-    static v2376x288x60p: string;
-    static v2048x1152x60p: string;
-    static v1920x1920x60p: string;
-    static v1920x1200x60p: string;
-    static v1920x1200x50p: string;
-    static v1920x1080x60p: string;
-    static v1920x1080x59p: string;
-    static v1920x1080x50p: string;
-    static v1920x1080x30p: string;
-    static v1920x1080x29p: string;
-    static v1920x1080x25p: string;
-    static v1920x1080x24p: string;
-    static v1920x1080x23p: string;
-    static v1920x1080x60i: string;
-    static v1920x1080x59i: string;
-    static v1920x1080x50i: string;
-    static v1920x540x60p: string;
-    static v1792x1344x60p: string;
-    static v1680x1050x60p: string;
-    static v1600x1200x60p: string;
-    static v1600x900x60p: string;
-    static v1440x1088x57p: string;
-    static v1440x1080x60p: string;
-    static v1440x900x75p: string;
-    static v1440x900x60p: string;
-    static v1400x1050x75p: string;
-    static v1400x1050x60p: string;
-    static v1366x768x60p: string;
-    static v1360x768x60p: string;
-    static v1280x1024x75p: string;
-    static v1280x1024x60p: string;
-    static v1280x960x60p: string;
-    static v1280x800x75p: string;
-    static v1280x800x60p: string;
-    static v1280x768x60p: string;
-    static v1280x720x60p: string;
-    static v1280x720x59p: string;
-    static v1280x720x50p: string;
-    static v1280x720x25p: string;
-    static v1280x720x24p: string;
-    static v1280x720x23p: string;
-    static v1200x1920x60p: string;
-    static v1024x768x75p: string;
-    static v1024x768x60p: string;
-    static v960x960x60p: string;
-    static v848x480x60p: string;
-    static v800x1280x60p: string;
-    static v800x600x75p: string;
-    static v800x600x60p: string;
-    static v720x576x50p: string;
-    static v720x576x50i: string;
-    static v720x480x60p: string;
-    static v720x480x59p: string;
-    static v720x480x60i: string;
-    static v640x480x60p: string;
-    static vNtscComponent: string;
-    static vNtscM: string;
-    static vNtscMJpn: string;
-    static vPalComponent: string;
-    static vPalI: string;
-    static vPalBG: string;
-    static vPalN: string;
-    static vPalNC: string;
-    static vPalM: string;
-    static vSecam: string;
-    static None: string;
+export enum VideoMode {
+    v4096x2160x60p = "4096x2160x60p",
+    v4096x2160x59p = "4096x2160x59.94p",
+    v4096x2160x50p = "4096x2160x50p",
+    v4096x2160x30p = "4096x2160x30p",
+    v4096x2160x29p = "4096x2160x29.97p",
+    v4096x2160x25p = "4096x2160x25p",
+    v4096x2160x24p = "4096x2160x24p",
+    v4096x2160x23p = "4096x2160x23.976p",
+    v3840x2160x60p = "3840x2160x60p",
+    v3840x2160x59p = "3840x2160x59.94p",
+    v3840x2160x50p = "3840x2160x50p",
+    v3840x2160x30p = "3840x2160x30p",
+    v3840x2160x29p = "3840x2160x29.97p",
+    v3840x2160x25p = "3840x2160x25p",
+    v3840x2160x24p = "3840x2160x24p",
+    v3840x2160x23p = "3840x2160x23.976p",
+    v3840x1080x60p = "3840x1080x60p",
+    v3840x1080x50p = "3840x1080x50p",
+    v3840x1080x30p = "3840x1080x30p",
+    v3840x1080x25p = "3840x1080x25p",
+    v3840x600x60p = "3840x600x60p",
+    v3440x1440x60p = "3440x1440x60p",
+    v3440x1440x50p = "3440x1440x50p",
+    v3440x1440x30p = "3440x1440x30p",
+    v2560x1600x60p = "2560x1600x60p",
+    v2560x1440x60p = "2560x1440x60p",
+    v2560x1440x30p = "2560x1440x30p",
+    v2560x1080x60p = "2560x1080x60p",
+    v2560x960x60p = "2560x960x60p",
+    v2376x288x60p = "2376x288x60p",
+    v2048x1152x60p = "2048x1152x60p",
+    v2048x1152x50p = "2048x1152x50p",
+    v1920x1920x60p = "1920x1920x60p",
+    v1920x1200x60p = "1920x1200x60p",
+    v1920x1200x50p = "1920x1200x50p",
+    v1920x1080x60p = "1920x1080x60p",
+    v1920x1080x59p = "1920x1080x59.94p",
+    v1920x1080x50p = "1920x1080x50p",
+    v1920x1080x30p = "1920x1080x30p",
+    v1920x1080x29p = "1920x1080x29.97p",
+    v1920x1080x25p = "1920x1080x25p",
+    v1920x1080x24p = "1920x1080x24p",
+    v1920x1080x23p = "1920x1080x23.976p",
+    v1920x1080x60i = "1920x1080x60i",
+    v1920x1080x59i = "1920x1080x59.94i",
+    v1920x1080x50i = "1920x1080x50i",
+    v1920x540x60p = "1920x540x60p",
+    v1792x1344x60p = "1792x1344x60p",
+    v1680x1050x60p = "1680x1050x60p",
+    v1600x1200x60p = "1600x1200x60p",
+    v1600x900x60p = "1600x900x60p",
+    v1440x1088x57p = "1440x1088x57p",
+    v1440x1080x60p = "1440x1080x60p",
+    v1440x900x75p = "1440x900x75p",
+    v1440x900x60p = "1440x900x60p",
+    v1400x1050x75p = "1400x1050x75p",
+    v1400x1050x60p = "1400x1050x60p",
+    v1366x768x60p = "1366x768x60p",
+    v1360x768x60p = "1360x768x60p",
+    v1280x1024x75p = "1280x1024x75p",
+    v1280x1024x60p = "1280x1024x60p",
+    v1280x960x60p = "1280x960x60p",
+    v1280x800x75p = "1280x800x75p",
+    v1280x800x60p = "1280x800x60p",
+    v1280x768x60p = "1280x768x60p",
+    v1280x720x60p = "1280x720x60p",
+    v1280x720x59p = "1280x720x59.94p",
+    v1280x720x50p = "1280x720x50p",
+    v1280x720x25p = "1280x720x25p",
+    v1280x720x24p = "1280x720x24p",
+    v1280x720x23p = "1280x720x23.976p",
+    v1200x1920x60p = "1200x1920x60p",
+    v1024x768x75p = "1024x768x75p",
+    v1024x768x60p = "1024x768x60p",
+    v960x960x60p = "960x960x60p",
+    v848x480x60p = "848x480x60p",
+    v800x1280x60p = "800x1280x60p",
+    v800x600x75p = "800x600x75p",
+    v800x600x60p = "800x600x60p",
+    v720x576x50p = "720x576x50p",
+    v720x576x50i = "720x576x50i",
+    v720x480x60p = "720x480x60p",
+    v720x480x59p = "720x480x59.94p",
+    v720x480x60i = "720x480x60i",
+    v640x480x60p = "640x480x60p",
+    vNtscComponent = "NTSC-COMPONENT",
+    vNtscM = "NTSC-M",
+    vNtscMJpn = "NTSC-M-JPN",
+    vPalComponent = "PAL-COMPONENT",
+    vPalI = "PAL-I",
+    vPalBG = "PAL-BG",
+    vPalN = "PAL-N",
+    vPalNC = "PAL-NC",
+    vPalM = "PAL-M",
+    vSecam = "SECAM",
+    None = "0x0x0p"
 }
 /**
  * An object containing a {@link VideoResolution} value with a list of all supported {@link VideoFrameRate} values
@@ -588,15 +589,15 @@ export function bscIsFullResGraphicScalingNeeded(mode: VideoMode, fullResGraphic
  * @property Auxiliary
  * @property Other
  */
-export class MediaType {
-    static Video: string;
-    static Audio: string;
-    static Image: string;
-    static Text: string;
-    static Font: string;
-    static Css: string;
-    static Auxiliary: string;
-    static Other: string;
+export enum MediaType {
+    Video = "Video",
+    Audio = "Audio",
+    Image = "Image",
+    Text = "Text",
+    Font = "Font",
+    Css = "Css",
+    Auxiliary = "Auxiliary",
+    Other = "Other"
 }
 /**
  * Set of all mediaType values representing files that can be played on a player. This excludes 'accessory'
@@ -626,28 +627,30 @@ export const PlayableMediaTypes: Set<MediaType>;
  * @property SuperState
  * @property Invalid - denotes an invalid ContentType
  */
-export class ContentItemType {
-    static Video: string;
-    static Image: string;
-    static Audio: string;
-    static Html: string;
-    static LiveVideo: string;
-    static DataFeed: string;
-    static MrssFeed: string;
-    static TwitterFeed: string;
-    static Text: string;
-    static UserVariable: string;
-    static VideoStream: string;
-    static AudioStream: string;
-    static MjpegStream: string;
-    static Time: string;
-    static Date: string;
-    static EventHandler: string;
-    static PlayFile: string;
-    static MediaList: string;
-    static LiveText: string;
-    static SuperState: string;
-    static Invalid: string;
+export enum ContentItemType {
+    Video = "Video",
+    Image = "Image",
+    Audio = "Audio",
+    Html = "Html",
+    LiveVideo = "LiveVideo",
+    DataFeed = "DataFeed",
+    MrssFeed = "MrssFeed",
+    TwitterFeed = "TwitterFeed",
+    Text = "Text",
+    UserVariable = "UserVariable",
+    VideoStream = "VideoStream",
+    AudioStream = "AudioStream",
+    MjpegStream = "MjpegStream",
+    Time = "Time",
+    Date = "Date",
+    EventHandler = "EventHandler",
+    PlayFile = "PlayFile",
+    MediaList = "MediaList",
+    LocalPlaylist = "LocalPlaylist",
+    LocalPlaylistItem = "LocalPlaylistItem",
+    LiveText = "LiveText",
+    SuperState = "SuperState",
+    Invalid = "Invalid"
 }
 /**
  * Return ContentItemType for a given MediaType.
@@ -668,16 +671,16 @@ export function bscGetContentItemTypeForMediaType(type: MediaType): ContentItemT
  * @property BackgroundImage
  * @property Control
  */
-export class ZoneType {
-    static VideoOrImages: string;
-    static VideoOnly: string;
-    static Images: string;
-    static AudioOnly: string;
-    static EnhancedAudio: string;
-    static Ticker: string;
-    static Clock: string;
-    static BackgroundImage: string;
-    static Control: string;
+export enum ZoneType {
+    VideoOrImages = "VideoOrImages",
+    VideoOnly = "VideoOnly",
+    Images = "Images",
+    AudioOnly = "AudioOnly",
+    EnhancedAudio = "EnhancedAudio",
+    Ticker = "Ticker",
+    Clock = "Clock",
+    BackgroundImage = "BackgroundImage",
+    Control = "Control"
 }
 /**
  *  Specifies ZoneLayer type.
@@ -687,11 +690,11 @@ export class ZoneType {
  * @property Images
  * @property Invisible
  */
-export class ZoneLayerType {
-    static Video: string;
-    static Audio: string;
-    static Graphics: string;
-    static Invisible: string;
+export enum ZoneLayerType {
+    Video = "Video",
+    Audio = "Audio",
+    Graphics = "Graphics",
+    Invisible = "Invisible"
 }
 /**
  *  Specifies VideoZoneLayer type.
@@ -699,22 +702,22 @@ export class ZoneLayerType {
  * @property FourK
  * @property HD
  */
-export class VideoZoneLayerType {
-    static FourK: string;
-    static HD: string;
+export enum VideoZoneLayerType {
+    FourK = "FourK",
+    HD = "HD"
 }
-export class VideoDecoderMode {
-    static Regular: string;
-    static Mosaic: string;
+export enum VideoDecoderMode {
+    Regular = "Regular",
+    Mosaic = "Mosaic"
 }
-export class VideoDecoderName {
-    static FourKFirstDecoder: string;
-    static FourKSecondDecoder: string;
-    static HDDecoder: string;
+export enum VideoDecoderName {
+    FourKFirstDecoder = "4K",
+    FourKSecondDecoder = "4K2",
+    HDDecoder = "Hd"
 }
-export class VideoDecoderSize {
-    static FourK: string;
-    static HD: string;
+export enum VideoDecoderSize {
+    FourK = "FourK",
+    HD = "HD"
 }
 /**
  * Specifies the type of video connector - this is normally used to specify the video output
@@ -725,11 +728,11 @@ export class VideoDecoderSize {
  * @property Component
  * @property None
  */
-export class VideoConnectorType {
-    static Hdmi: string;
-    static Vga: string;
-    static Component: string;
-    static None: string;
+export enum VideoConnectorType {
+    Hdmi = "HDMI",
+    Vga = "VGA",
+    Component = "Component",
+    None = "None"
 }
 /**
  *  Specifies monitor orientation.
@@ -739,11 +742,11 @@ export class VideoConnectorType {
  * @property PortraitBottomRight - used for some BrightWall configurations
  * @property None - video not supported
  */
-export class MonitorOrientationType {
-    static Landscape: string;
-    static PortraitBottomLeft: string;
-    static PortraitBottomRight: string;
-    static None: string;
+export enum MonitorOrientationType {
+    Landscape = "Landscape",
+    PortraitBottomLeft = "PortraitBottomLeft",
+    PortraitBottomRight = "PortraitBottomRight",
+    None = "None"
 }
 /**
  *  Specifies monitor overscan.
@@ -752,10 +755,10 @@ export class MonitorOrientationType {
  * @property OverscanActionSafeArea
  * @property OverscanTitleSafeArea
  */
-export class MonitorOverscanType {
-    static NoOverscan: string;
-    static OverscanActionSafeArea: string;
-    static OverscanTitleSafeArea: string;
+export enum MonitorOverscanType {
+    NoOverscan = "NoOverscan",
+    OverscanActionSafeArea = "OverscanActionSafeArea",
+    OverscanTitleSafeArea = "OverscanTitleSafeArea"
 }
 /**
  *  Specifies the device web page type.
@@ -764,10 +767,10 @@ export class MonitorOverscanType {
  * @property Standard - the standard device web page (with user variables) is displayed
  * @property Custom - the presentation specifies a custom device web page
  */
-export class DeviceWebPageDisplay {
-    static None: string;
-    static Standard: string;
-    static Custom: string;
+export enum DeviceWebPageDisplay {
+    None = "None",
+    Standard = "Standard",
+    Custom = "Custom"
 }
 /**
  *  Specifies the cursor display mode for a touch enabled monitor.
@@ -776,10 +779,10 @@ export class DeviceWebPageDisplay {
  * @property Auto - the cursor is always displayed
  * @property Display - the cursor display is determined automatically
  */
-export class TouchCursorDisplayModeType {
-    static Disabled: string;
-    static Auto: string;
-    static Display: string;
+export enum TouchCursorDisplayModeType {
+    Disabled = "Disabled",
+    Auto = "Auto",
+    Display = "Display"
 }
 /**
  *  Specifies the position of the graphics plane in relation to the video plane(s).
@@ -788,10 +791,10 @@ export class TouchCursorDisplayModeType {
  * @property Middle - the graphics plane is between the video plane(s)
  * @property Front - the graphics plane is in front of the video plane(s)
  */
-export class GraphicsZOrderType {
-    static Back: string;
-    static Middle: string;
-    static Front: string;
+export enum GraphicsZOrderType {
+    Back = "Back",
+    Middle = "Middle",
+    Front = "Front"
 }
 /**
  *  Specifies the address format of the given UDP address, which is a separate metadata string.
@@ -801,11 +804,11 @@ export class GraphicsZOrderType {
  * @property Ethernet
  * @property Wireless
  */
-export class UdpAddressType {
-    static IPAddress: string;
-    static LocalSubnet: string;
-    static Ethernet: string;
-    static Wireless: string;
+export enum UdpAddressType {
+    IPAddress = "IPAddress",
+    LocalSubnet = "LocalSubnet",
+    Ethernet = "Ethernet",
+    Wireless = "Wireless"
 }
 /**
  *  Specifies the language for the presentation. String values for this type are the full language name string,
@@ -819,14 +822,14 @@ export class UdpAddressType {
  * @property Dutch - 'Dutch'
  * @property Swedish - 'Swedish'
  */
-export class LanguageType {
-    static English: string;
-    static French: string;
-    static German: string;
-    static Spanish: string;
-    static Italian: string;
-    static Dutch: string;
-    static Swedish: string;
+export enum LanguageType {
+    English = "English",
+    French = "French",
+    German = "German",
+    Spanish = "Spanish",
+    Italian = "Italian",
+    Dutch = "Dutch",
+    Swedish = "Swedish"
 }
 /**
  *  Specifies the language for the presentation, for use where the three letter language key is required.
@@ -840,14 +843,14 @@ export class LanguageType {
  * @property Dutch - 'dut'
  * @property Swedish - 'swe'
  */
-export class LanguageKeyType {
-    static English: string;
-    static French: string;
-    static German: string;
-    static Spanish: string;
-    static Italian: string;
-    static Dutch: string;
-    static Swedish: string;
+export enum LanguageKeyType {
+    English = "eng",
+    French = "fre",
+    German = "ger",
+    Spanish = "spa",
+    Italian = "ita",
+    Dutch = "dut",
+    Swedish = "swe"
 }
 /**
  *  Specifies view mode for Video content.
@@ -856,10 +859,10 @@ export class LanguageKeyType {
  * @property Letterboxed - 'Letterboxed and Centered'
  * @property FillAndCenter - 'Fill Screen and Centered'
  */
-export class ViewModeType {
-    static ScaleToFill: string;
-    static Letterboxed: string;
-    static FillAndCenter: string;
+export enum ViewModeType {
+    ScaleToFill = "Scale to Fill",
+    Letterboxed = "Letterboxed and Centered",
+    FillAndCenter = "Fill Screen and Centered"
 }
 /**
  *  Specifies image mode for Image content.
@@ -870,11 +873,11 @@ export class ViewModeType {
  *  parts of image may be cropped
  * @property ScaleToFill - 'Scale to Fill' - image is scaled to fill screen - aspect ratio may not be maintained
  */
-export class ImageModeType {
-    static CenterImage: string;
-    static ScaleToFit: string;
-    static FillAndCrop: string;
-    static ScaleToFill: string;
+export enum ImageModeType {
+    CenterImage = "Center Image",
+    ScaleToFit = "Scale to Fit",
+    FillAndCrop = "Scale to Fill and Crop",
+    ScaleToFill = "Scale to Fill"
 }
 /**
  * Specifies the color space of an image.
@@ -883,41 +886,41 @@ export class ImageModeType {
  * @property RGB
  * @property CMYK
  */
-export class ColorSpaceType {
-    static Unknown: string;
-    static CMY: string;
-    static CMYK: string;
-    static Gray: string;
-    static HCL: string;
-    static HCLp: string;
-    static HSB: string;
-    static HSI: string;
-    static HSL: string;
-    static HSV: string;
-    static HWB: string;
-    static Lab: string;
-    static LCH: string;
-    static LCHab: string;
-    static LCHuv: string;
-    static Log: string;
-    static LMS: string;
-    static Luv: string;
-    static OHTA: string;
-    static Rec601YCbCr: string;
-    static Rec709YCbCr: string;
-    static RGB: string;
-    static scRGB: string;
-    static sRGB: string;
-    static Transparent: string;
-    static XyV: string;
-    static XYZ: string;
-    static YCbCr: string;
-    static YCC: string;
-    static YDbDr: string;
-    static YIQ: string;
-    static YPbPr: string;
-    static YUV: string;
-    static LinearGray: string;
+export enum ColorSpaceType {
+    Unknown = "Unknown",
+    CMY = "CMY",
+    CMYK = "CMYK",
+    Gray = "Gray",
+    HCL = "HCL",
+    HCLp = "HCLp",
+    HSB = "HSB",
+    HSI = "HSI",
+    HSL = "HSL",
+    HSV = "HSV",
+    HWB = "HWB",
+    Lab = "Lab",
+    LCH = "LCH",
+    LCHab = "LCHab",
+    LCHuv = "LCHuv",
+    Log = "Log",
+    LMS = "LMS",
+    Luv = "Luv",
+    OHTA = "OHTA",
+    Rec601YCbCr = "Rec601YCbCr",
+    Rec709YCbCr = "Rec709YCbCr",
+    RGB = "RGB",
+    scRGB = "scRGB",
+    sRGB = "sRGB",
+    Transparent = "Transparent",
+    XyV = "XyV",
+    XYZ = "XYZ",
+    YCbCr = "YCbCr",
+    YCC = "YCC",
+    YDbDr = "YDbDr",
+    YIQ = "YIQ",
+    YPbPr = "YPbPr",
+    YUV = "YUV",
+    LinearGray = "LinearGray"
 }
 /**
  * Specifies the orientation value of an image.
@@ -933,16 +936,16 @@ export class ColorSpaceType {
  * @property RightBottom (EXIF value 7 - reversed, rotated +90)
  * @property LeftBottom (EXIF value 8 - rotated +90)
  */
-export class ImageOrientationType {
-    static Undefined: string;
-    static TopLeft: string;
-    static TopRight: string;
-    static BottomRight: string;
-    static BottomLeft: string;
-    static LeftTop: string;
-    static RightTop: string;
-    static RightBottom: string;
-    static LeftBottom: string;
+export enum ImageOrientationType {
+    Undefined = "Undefined",
+    TopLeft = "TopLeft",
+    TopRight = "TopRight",
+    BottomRight = "BottomRight",
+    BottomLeft = "BottomLeft",
+    LeftTop = "LeftTop",
+    RightTop = "RightTop",
+    RightBottom = "RightBottom",
+    LeftBottom = "LeftBottom"
 }
 /**
  *  Specifies audio output.
@@ -953,12 +956,12 @@ export class ImageOrientationType {
  * @property DigitalAc3 - corresponds to 'SPDIF Audio, Raw Multichannel' in BA Classic
  * @property AnalogHdmiAc3 - corresponds to 'Analog Audio with Raw Multichannel on SPDIF' in BA Classic
  */
-export class AudioOutputSelectionType {
-    static Analog: string;
-    static Usb: string;
-    static DigitalPcm: string;
-    static DigitalAc3: string;
-    static AnalogHdmiAc3: string;
+export enum AudioOutputSelectionType {
+    Analog = "Analog",
+    Usb = "Usb",
+    DigitalPcm = "DigitalPcm",
+    DigitalAc3 = "DigitalAc3",
+    AnalogHdmiAc3 = "AnalogHdmiAc3"
 }
 /**
  *  Specifies audio mode.
@@ -969,12 +972,12 @@ export class AudioOutputSelectionType {
  * @property Left - corresponds to 'Mono Left Mixdown' in BA Classic
  * @property Right - corresponds to 'Mono Right Mixdown' in BA Classic
  */
-export class AudioModeType {
-    static Surround: string;
-    static Stereo: string;
-    static NoAudio: string;
-    static Left: string;
-    static Right: string;
+export enum AudioModeType {
+    Surround = "Surround",
+    Stereo = "Stereo",
+    NoAudio = "NoAudio",
+    Left = "Left",
+    Right = "Right"
 }
 /**
  *  Specifies audio mapping.
@@ -984,14 +987,17 @@ export class AudioModeType {
  * @property Audio3
  * @property AudioAll
  */
-export class AudioMappingType {
-    static Audio1: string;
-    static Audio2: string;
-    static Audio3: string;
-    static AudioAll: string;
+export enum AudioMappingType {
+    Audio1 = "Audio1",
+    Audio2 = "Audio2",
+    Audio3 = "Audio3",
+    AudioAll = "AudioAll"
 }
 /**
- *  Specifies a physical usb connector.
+ * Specifies a physical usb connector.
+ * We use the static class method for this 'enum' so that it can be extended to the AudioOutputName class.
+ * Our code uses this association extensively, and Typescript (as of version 4.0) does not allow
+ *  extensions of enum definitions.
  */
 export class UsbConnectorName {
     static UsbA: string;
@@ -1015,7 +1021,10 @@ export class UsbConnectorName {
     static Usb_6: string;
 }
 /**
- *  Specifies a physical audio output.
+ * Specifies a physical audio output.
+ * We use the static class method for this 'enum' so that it can be extended from the UsbConnectorName class.
+ * Our code uses this association extensively, and Typescript (as of version 4.0) does not allow
+ *  extensions of enum definitions.
  */
 export class AudioOutputName extends UsbConnectorName {
     static Analog1: string;
@@ -1041,10 +1050,10 @@ export const AudioOutputNameArray: string[];
  * @property MixedAudioPCMCompressed
  * @property FixedAudio
  */
-export class AudioConfiguration {
-    static MixedAudioPCMOnly: string;
-    static MixedAudioPCMCompressed: string;
-    static FixedAudio: string;
+export enum AudioConfiguration {
+    MixedAudioPCMOnly = "MixedAudioPCMOnly",
+    MixedAudioPCMCompressed = "MixedAudioPCMCompressed",
+    FixedAudio = "FixedAudio"
 }
 /**
  *  Specifies audio output.
@@ -1054,11 +1063,11 @@ export class AudioConfiguration {
  * @property Multichannel
  * @property None
  */
-export class AudioOutputType {
-    static Pcm: string;
-    static Passthrough: string;
-    static Multichannel: string;
-    static None: string;
+export enum AudioOutputType {
+    Pcm = "Pcm",
+    Passthrough = "Passthrough",
+    Multichannel = "Multichannel",
+    None = "None"
 }
 /**
  *  Specifies audio mix mode.
@@ -1067,10 +1076,10 @@ export class AudioOutputType {
  * @property Left
  * @property Right
  */
-export class AudioMixModeType {
-    static Stereo: string;
-    static Left: string;
-    static Right: string;
+export enum AudioMixModeType {
+    Stereo = "Stereo",
+    Left = "Left",
+    Right = "Right"
 }
 /**
  *  Specifies maximum resolution for Mosaic mode.
@@ -1082,13 +1091,13 @@ export class AudioMixModeType {
  * @property HD
  * @property 4K
  */
-export class MosaicMaxContentResolutionType {
-    static NotApplicable: string;
-    static QCIF: string;
-    static CIF: string;
-    static SD: string;
-    static HD: string;
-    static FK: string;
+export enum MosaicMaxContentResolutionType {
+    NotApplicable = "NotApplicable",
+    QCIF = "QCIF",
+    CIF = "CIF",
+    SD = "SD",
+    HD = "HD",
+    FK = "4K"
 }
 /**
  *  Specifies video display mode. Names have leading 'm', but strings values do not.
@@ -1097,10 +1106,10 @@ export class MosaicMaxContentResolutionType {
  * @property m3DTOB '3DTOB'
  * @property m3DSBS '3DSBS'
  */
-export class VideoDisplayModeType {
-    static m2D: string;
-    static m3DTOB: string;
-    static m3DSBS: string;
+export enum VideoDisplayModeType {
+    m2D = "2D",
+    m3DTOB = "3DTOB",
+    m3DSBS = "3DSBS"
 }
 /**
  *  Specifies rotation. Names have leading 'rot', but strings values do not.
@@ -1110,11 +1119,11 @@ export class VideoDisplayModeType {
  * @property rot180 '180'
  * @property rot270 '270'
  */
-export class RotationType {
-    static rot0: string;
-    static rot90: string;
-    static rot180: string;
-    static rot270: string;
+export enum RotationType {
+    rot0 = "0",
+    rot90 = "90",
+    rot180 = "180",
+    rot270 = "270"
 }
 /**
  *  Specifies horizontal text alignment.
@@ -1123,10 +1132,10 @@ export class RotationType {
  * @property Center
  * @property Right
  */
-export class TextHAlignmentType {
-    static Left: string;
-    static Center: string;
-    static Right: string;
+export enum TextHAlignmentType {
+    Left = "Left",
+    Center = "Center",
+    Right = "Right"
 }
 /**
  *  Specifies text scrolling method (for ticker).
@@ -1135,10 +1144,10 @@ export class TextHAlignmentType {
  * @property StaticText - No scrolling
  * @property Scrolling - Classic 'crawl'
  */
-export class TextScrollingMethodType {
-    static Animated: string;
-    static StaticText: string;
-    static Scrolling: string;
+export enum TextScrollingMethodType {
+    Animated = "Animated",
+    StaticText = "StaticText",
+    Scrolling = "Scrolling"
 }
 /**
  *  Specifies type of an Event.
@@ -1170,47 +1179,47 @@ export class TextScrollingMethodType {
  * @property Bmap
  * @property BmapHex
  */
-export class EventType {
-    static MediaEnd: string;
-    static Timer: string;
-    static MediaEndOrTimer: string;
-    static MediaListEnd: string;
-    static Keyboard: string;
-    static Remote: string;
-    static Usb: string;
-    static Synchronize: string;
-    static ZoneMessage: string;
-    static InternalSynchronize: string;
-    static Success: string;
-    static Fail: string;
-    static Serial: string;
-    static TimeClock: string;
-    static Gps: string;
-    static AudioTimeCode: string;
-    static VideoTimeCode: string;
-    static RectangularTouch: string;
-    static Gpio: string;
-    static Bp: string;
-    static PluginMessage: string;
-    static Udp: string;
-    static InteractiveMenu: string;
-    static WssEvent: string;
-    static Button: string;
-    static Bmap: string;
-    static BmapHex: string;
+export enum EventType {
+    MediaEnd = "MediaEnd",
+    Timer = "Timer",
+    MediaEndOrTimer = "MediaEndOrTimer",
+    MediaListEnd = "MediaListEnd",
+    Keyboard = "Keyboard",
+    Remote = "Remote",
+    Usb = "Usb",
+    Synchronize = "Synchronize",
+    ZoneMessage = "ZoneMessage",
+    InternalSynchronize = "InternalSynchronize",
+    Success = "Success",
+    Fail = "Fail",
+    Serial = "Serial",
+    TimeClock = "TimeClock",
+    Gps = "Gps",
+    AudioTimeCode = "AudioTimeCode",
+    VideoTimeCode = "VideoTimeCode",
+    RectangularTouch = "RectangularTouch",
+    Gpio = "Gpio",
+    Bp = "Bp",
+    PluginMessage = "PluginMessage",
+    Udp = "Udp",
+    InteractiveMenu = "InteractiveMenu",
+    WssEvent = "WssEvent",
+    Button = "Button",
+    Bmap = "Bmap",
+    BmapHex = "BmapHex"
 }
-export class EventIntrinsicAction {
-    static None: string;
-    static SequenceForward: string;
-    static SequenceBackward: string;
-    static ReturnToPriorState: string;
-    static StopPlayback: string;
-    static StopPlaybackAndClearScreen: string;
+export enum EventIntrinsicAction {
+    None = "None",
+    SequenceForward = "SeqFwd",
+    SequenceBackward = "SeqBack",
+    ReturnToPriorState = "ReturnToPriorState",
+    StopPlayback = "StopPlayback",
+    StopPlaybackAndClearScreen = "StopPlaybackAndClearScreen"
 }
-export class BpType {
-    static Bp200: string;
-    static Bp900: string;
-    static Gpio: string;
+export enum BpType {
+    Bp200 = "bp200",
+    Bp900 = "bp900",
+    Gpio = "gpio"
 }
 /**
  *  Specifies GPIO signal direction.
@@ -1218,15 +1227,15 @@ export class BpType {
  * @property Input
  * @property Output
  */
-export class GpioType {
-    static Input: string;
-    static Output: string;
+export enum GpioType {
+    Input = "input",
+    Output = "output"
 }
-export class BpIndex {
-    static A: string;
-    static B: string;
-    static C: string;
-    static D: string;
+export enum BpIndex {
+    A = "a",
+    B = "b",
+    C = "c",
+    D = "d"
 }
 /**
  *  Specifies a Button Panel instance.
@@ -1240,15 +1249,15 @@ export class BpIndex {
  * @property Bp200c
  * @property Bp200d
  */
-export class ButtonPanelName {
-    static Bp900a: string;
-    static Bp900b: string;
-    static Bp900c: string;
-    static Bp900d: string;
-    static Bp200a: string;
-    static Bp200b: string;
-    static Bp200c: string;
-    static Bp200d: string;
+export enum ButtonPanelName {
+    Bp900a = "bp900a",
+    Bp900b = "bp900b",
+    Bp900c = "bp900c",
+    Bp900d = "bp900d",
+    Bp200a = "bp200a",
+    Bp200b = "bp200b",
+    Bp200c = "bp200c",
+    Bp200d = "bp200d"
 }
 /**
  * Array of all possible ButtonPanelName values
@@ -1261,9 +1270,9 @@ export const ButtonPanelNameArray: string[];
  * @property Down
  * @property Up
  */
-export class ButtonDirection {
-    static Down: string;
-    static Up: string;
+export enum ButtonDirection {
+    Down = "Down",
+    Up = "Up"
 }
 /**
  * Specifies ir receiver source
@@ -1272,11 +1281,11 @@ export class ButtonDirection {
  * @property GPIO
  * @property Iguana
  */
-export class IrReceiverSource {
-    static IrIn: string;
-    static GPIO: string;
-    static Iguana: string;
-    static None: string;
+export enum IrReceiverSource {
+    IrIn = "Ir-in",
+    GPIO = "GPIO",
+    Iguana = "Iguana",
+    None = "None"
 }
 /**
  * Specifies ir receiver encodings
@@ -1284,9 +1293,9 @@ export class IrReceiverSource {
  * @property NEC
  * @property RC5
  */
-export class IrReceiverEncodings {
-    static NEC: string;
-    static RC5: string;
+export enum IrReceiverEncodings {
+    NEC = "NEC",
+    RC5 = "RC5"
 }
 /**
  * Specifies ir transmitter destination
@@ -1294,10 +1303,10 @@ export class IrReceiverEncodings {
  * @property IrOut
  * @property Iguana
  */
-export class IrTransmitterDestination {
-    static IrOut: string;
-    static Iguana: string;
-    static None: string;
+export enum IrTransmitterDestination {
+    IrOut = "Ir-out",
+    Iguana = "Iguana",
+    None = "None"
 }
 /**
  * Specifies the direction of movement into or out of a region, such as a GPS based location
@@ -1305,9 +1314,9 @@ export class IrTransmitterDestination {
  * @property Enter
  * @property Exit
  */
-export class RegionDirection {
-    static Enter: string;
-    static Exit: string;
+export enum RegionDirection {
+    Enter = "Enter",
+    Exit = "Exit"
 }
 /**
  * Specifies preferred units for distance
@@ -1315,9 +1324,9 @@ export class RegionDirection {
  * @property Miles
  * @property Kilometers
  */
-export class DistanceUnits {
-    static Miles: string;
-    static Kilometers: string;
+export enum DistanceUnits {
+    Miles = "Miles",
+    Kilometers = "Kilometers"
 }
 /**
  *  Specifies type of a Transition.
@@ -1343,28 +1352,28 @@ export class DistanceUnits {
  * @property SlideFromLeft 'Slide from left'
  * @property SlideFromRight 'Slide from right'
  */
-export class TransitionType {
-    static None: string;
-    static NoEffect: string;
-    static WipeTop: string;
-    static WipeBottom: string;
-    static WipeLeft: string;
-    static WipeRight: string;
-    static ExplodeFromCenter: string;
-    static ExplodeTopLeft: string;
-    static ExplodeTopRight: string;
-    static ExplodeBottomLeft: string;
-    static ExplodeBottomRight: string;
-    static BlindsVertical: string;
-    static BlindsHorizontal: string;
-    static CombVertical: string;
-    static CombHorizontal: string;
-    static FadeToBackground: string;
-    static Fade: string;
-    static SlideFromTop: string;
-    static SlideFromBottom: string;
-    static SlideFromLeft: string;
-    static SlideFromRight: string;
+export enum TransitionType {
+    None = "None",
+    NoEffect = "No effect",
+    WipeTop = "Image wipe from top",
+    WipeBottom = "Image wipe from bottom",
+    WipeLeft = "Image wipe from left",
+    WipeRight = "Image wipe from right",
+    ExplodeFromCenter = "Explode from center",
+    ExplodeTopLeft = "Explode top left",
+    ExplodeTopRight = "Explode top right",
+    ExplodeBottomLeft = "Explode bottom left",
+    ExplodeBottomRight = "Explode bottom right",
+    BlindsVertical = "Venetian blinds - vertical",
+    BlindsHorizontal = "Venetian blinds - horizontal",
+    CombVertical = "Comb effect - vertical",
+    CombHorizontal = "Comb effect - horizontal",
+    FadeToBackground = "Fade to background color",
+    Fade = "Fade to new image",
+    SlideFromTop = "Slide from top",
+    SlideFromBottom = "Slide from bottom",
+    SlideFromLeft = "Slide from left",
+    SlideFromRight = "Slide from right"
 }
 /**
  *  Specifies a compare operator for use in conditional transitions.
@@ -1377,130 +1386,130 @@ export class TransitionType {
  * @property LT - less than
  * @property LTE - less than or equal
  */
-export class CompareOperator {
-    static EQ: string;
-    static NEQ: string;
-    static BTW: string;
-    static GT: string;
-    static GTE: string;
-    static LT: string;
-    static LTE: string;
+export enum CompareOperator {
+    EQ = "EQ",
+    NEQ = "NEQ",
+    BTW = "BTW",
+    GT = "GT",
+    GTE = "GTE",
+    LT = "LT",
+    LTE = "LTE"
 }
 /**
  *  Specifies the type of a command operation.
  */
-export class CommandType {
-    static SendBpOutput: string;
-    static SetAllAudioOutputs: string;
-    static SetAudioMode: string;
-    static ConfigureAudioResources: string;
-    static SetConnectorVolume: string;
-    static IncrementConnectorVolume: string;
-    static DecrementConnectorVolume: string;
-    static MuteAudioOutputs: string;
-    static UnmuteAudioOutputs: string;
-    static SetZoneVolume: string;
-    static IncrementZoneVolume: string;
-    static DecrementZoneVolume: string;
-    static SetZoneChannelVolume: string;
-    static IncrementZoneChannelVolume: string;
-    static DecrementZoneChannelVolume: string;
-    static SendZoneMessage: string;
-    static SendUdp: string;
-    static SendUdpBytes: string;
-    static SendIRRemote: string;
-    static SendProntoIRRemote: string;
-    static SerialSendString: string;
-    static SerialSendByte: string;
-    static SerialSendBytes: string;
-    static SendPluginMessage: string;
-    static Synchronize: string;
-    static InternalSynchronize: string;
-    static GpioOn: string;
-    static GpioOff: string;
-    static GpioSetState: string;
-    static PauseVideo: string;
-    static ResumeVideo: string;
-    static EnablePowerSaveMode: string;
-    static DisablePowerSaveMode: string;
-    static CecDisplayOn: string;
-    static CecDisplayOff: string;
-    static CecSetSourceToBrightSign: string;
-    static CecSendString: string;
-    static CecPhilipsSetVolume: string;
-    static BeaconStart: string;
-    static BeaconStop: string;
-    static Pause: string;
-    static Resume: string;
-    static SetVariable: string;
-    static IncrementVariable: string;
-    static DecrementVariable: string;
-    static ResetVariable: string;
-    static ResetVariables: string;
-    static SwitchPresentation: string;
-    static UpdateDataFeed: string;
-    static ResizeZone: string;
-    static HideZone: string;
-    static ShowZone: string;
-    static PauseZonePlayback: string;
-    static ResumeZonePlayback: string;
-    static Reboot: string;
-    static SendBLC400Output: string;
-    static SendWss: string;
-    static LightOn: string;
-    static LightOff: string;
-    static SendBmap: string;
-    static SendBmapHex: string;
+export enum CommandType {
+    SendBpOutput = "sendBpOutput",
+    SetAllAudioOutputs = "setAllAudioOutputs",
+    SetAudioMode = "setAudioMode",
+    ConfigureAudioResources = "configureAudioResources",
+    SetConnectorVolume = "setConnectorVolume",
+    IncrementConnectorVolume = "incrementConnectorVolume",
+    DecrementConnectorVolume = "decrementConnectorVolume",
+    MuteAudioOutputs = "muteAudioOutputs",
+    UnmuteAudioOutputs = "unmuteAudioOutputs",
+    SetZoneVolume = "setZoneVolume",
+    IncrementZoneVolume = "incrementZoneVolume",
+    DecrementZoneVolume = "decrementZoneVolume",
+    SetZoneChannelVolume = "setZoneChannelVolume",
+    IncrementZoneChannelVolume = "incrementZoneChannelVolume",
+    DecrementZoneChannelVolume = "decrementZoneChannelVolume",
+    SendZoneMessage = "sendZoneMessage",
+    SendUdp = "sendUdp",
+    SendUdpBytes = "sendUdpBytes",
+    SendIRRemote = "sendIRRemote",
+    SendProntoIRRemote = "sendProntoIRRemote",
+    SerialSendString = "serialSendString",
+    SerialSendByte = "serialSendByte",
+    SerialSendBytes = "serialSendBytes",
+    SendPluginMessage = "sendPluginMessage",
+    Synchronize = "synchronize",
+    InternalSynchronize = "internalSynchronize",
+    GpioOn = "gpioOn",
+    GpioOff = "gpioOff",
+    GpioSetState = "gpioSetState",
+    PauseVideo = "pauseVideo",
+    ResumeVideo = "resumeVideo",
+    EnablePowerSaveMode = "enablePowerSaveMode",
+    DisablePowerSaveMode = "disablePowerSaveMode",
+    CecDisplayOn = "cecDisplayOn",
+    CecDisplayOff = "cecDisplayOff",
+    CecSetSourceToBrightSign = "cecSetSourceToBrightSign",
+    CecSendString = "cecSendString",
+    CecPhilipsSetVolume = "cecPhilipsSetVolume",
+    BeaconStart = "beaconStart",
+    BeaconStop = "beaconStop",
+    Pause = "pause",
+    Resume = "resume",
+    SetVariable = "setVariable",
+    IncrementVariable = "incrementVariable",
+    DecrementVariable = "decrementVariable",
+    ResetVariable = "resetVariable",
+    ResetVariables = "resetVariables",
+    SwitchPresentation = "switchPresentation",
+    UpdateDataFeed = "updateDataFeed",
+    ResizeZone = "resizeZone",
+    HideZone = "hideZone",
+    ShowZone = "showZone",
+    PauseZonePlayback = "pauseZonePlayback",
+    ResumeZonePlayback = "resumeZonePlayback",
+    Reboot = "reboot",
+    SendBLC400Output = "sendBLC400Output",
+    SendWss = "sendWss",
+    LightOn = "lightOn",
+    LightOff = "lightOff",
+    SendBmap = "sendBmap",
+    SendBmapHex = "sendBmapHex"
 }
-export class CommandSequenceType {
-    static StateEntry: string;
-    static StateExit: string;
-    static Event: string;
-    static Transition: string;
-    static SequenceItemNext: string;
-    static SequenceItemPrevious: string;
+export enum CommandSequenceType {
+    StateEntry = "StateEntry",
+    StateExit = "StateExit",
+    Event = "Event",
+    Transition = "Transition",
+    SequenceItemNext = "ItemNext",
+    SequenceItemPrevious = "ItemPrev"
 }
-export class BpAction {
-    static Off: string;
-    static On: string;
-    static FastBlink: string;
-    static MediumBlink: string;
-    static SlowBlink: string;
+export enum BpAction {
+    Off = "Off",
+    On = "On",
+    FastBlink = "FastBlink",
+    MediumBlink = "MediumBlink",
+    SlowBlink = "SlowBlink"
 }
-export class BlcIndex {
-    static A: string;
-    static B: string;
-    static C: string;
+export enum BlcIndex {
+    A = "a",
+    B = "b",
+    C = "c"
 }
-export class BlcEffect {
-    static Intensity: string;
-    static Blink: string;
-    static Breathe: string;
-    static Strobe: string;
-    static Marquee: string;
+export enum BlcEffect {
+    Intensity = "Intensity",
+    Blink = "Blink",
+    Breathe = "Breathe",
+    Strobe = "Strobe",
+    Marquee = "Marquee"
 }
-export class BlcBlink {
-    static FastBlink: string;
-    static MediumBlink: string;
-    static SlowBlink: string;
+export enum BlcBlink {
+    FastBlink = "FastBlink",
+    MediumBlink = "MediumBlink",
+    SlowBlink = "SlowBlink"
 }
-export class BlcPlaybackMode {
-    static Loop: string;
-    static BackAndForth: string;
-    static PlayOnce: string;
-    static Random: string;
+export enum BlcPlaybackMode {
+    Loop = "Loop",
+    BackAndForth = "BackAndForth",
+    PlayOnce = "PlayOnce",
+    Random = "Random"
 }
-export class BlcTransitionMode {
-    static HardOnOff: string;
-    static SmoothDelay: string;
-    static SmoothFullOverlap: string;
-    static SmoothPartialOverlap: string;
+export enum BlcTransitionMode {
+    HardOnOff = "HardOnOff",
+    SmoothDelay = "SmoothDelay",
+    SmoothFullOverlap = "SmoothFullOverlap",
+    SmoothPartialOverlap = "SmoothPartialOverlap"
 }
-export class BlcChannels {
-    static A: string;
-    static B: string;
-    static C: string;
-    static D: string;
+export enum BlcChannels {
+    A = "A",
+    B = "B",
+    C = "C",
+    D = "D"
 }
 /**
  *  Specifies the access permissions for User variables.
@@ -1508,9 +1517,9 @@ export class BlcChannels {
  * @property Private - the user variables can be accessed only by the current presentation
  * @property Shared - the user variables can be accessed by other presentations
  */
-export class AccessType {
-    static Private: string;
-    static Shared: string;
+export enum AccessType {
+    Private = "Private",
+    Shared = "Shared"
 }
 /**
  *  Used with DmParameterizedString - this specifies the type of a parameterized string component.
@@ -1522,10 +1531,10 @@ export class AccessType {
  *  to a User Variable ID referencing a User Variable in the project state before saving the project state.
  *  The UserVariableName type is intended to be used only during the authoring process as a temporary placeholder.
  */
-export class StringParameterType {
-    static Text: string;
-    static UserVariable: string;
-    static UserVariableName: string;
+export enum StringParameterType {
+    Text = "Text",
+    UserVariable = "UserVariable",
+    UserVariableName = "UserVariableName"
 }
 /**
  *  Used with DmParameterizedNumber - this specifies the type of a parameterized number component.
@@ -1537,41 +1546,42 @@ export class StringParameterType {
  *  to a User Variable ID referencing a User Variable in the project state before saving the project state.
  *  The UserVariableName type is intended to be used only during the authoring process as a temporary placeholder.
  */
-export class NumberParameterType {
-    static Number: string;
-    static UserVariable: string;
-    static UserVariableName: string;
+export enum NumberParameterType {
+    Number = "Number",
+    UserVariable = "UserVariable",
+    UserVariableName = "UserVariableName"
 }
 /**
  * Specifies one of the available 'system' user variables.
  */
-export class SystemVariableType {
-    static SerialNumber: string;
-    static IPAddressWired: string;
-    static IPAddressWireless: string;
-    static FirmwareVersion: string;
-    static ScriptVersion: string;
-    static EdidMonitorSerialNumber: string;
-    static EdidYearOfManufacture: string;
-    static EdidMonitorName: string;
-    static EdidManufacturer: string;
-    static EdidUnspecifiedText: string;
-    static EdidSerialNumber: string;
-    static EdidManufacturerProductCode: string;
-    static EdidWeekOfManufacture: string;
-    static ActivePresentation: string;
+export enum SystemVariableType {
+    SerialNumber = "SerialNumber",
+    IPAddressWired = "IPAddressWired",
+    IPAddressWireless = "IPAddressWireless",
+    FirmwareVersion = "FirmwareVersion",
+    ScriptVersion = "ScriptVersion",
+    EdidMonitorSerialNumber = "EdidMonitorSerialNumber",
+    EdidYearOfManufacture = "EdidYearOfManufacture",
+    EdidMonitorName = "EdidMonitorName",
+    EdidManufacturer = "EdidManufacturer",
+    EdidUnspecifiedText = "EdidUnspecifiedText",
+    EdidSerialNumber = "EdidSerialNumber",
+    EdidManufacturerProductCode = "EdidManufacturerProductCode",
+    EdidWeekOfManufacture = "EdidWeekOfManufacture",
+    ActivePresentation = "ActivePresentation",
+    BrightAuthorVersion = "BrightAuthorVersion"
 }
 /**
  * Specifies playback strategy for MediaList states
  */
-export class MediaListPlaybackType {
-    static FromBeginning: string;
-    static NextInList: string;
-    static FromIndex: string;
+export enum MediaListPlaybackType {
+    FromBeginning = "FromBeginning",
+    NextInList = "NextInList",
+    FromIndex = "FromIndex"
 }
-export class PlayFileTriggerType {
-    static ByEventData: string;
-    static ByUserVariable: string;
+export enum PlayFileTriggerType {
+    ByEventData = "ByEventData",
+    ByUserVariable = "ByUserVariable"
 }
 /**
  *  Specifies the type of an HTML site.
@@ -1579,9 +1589,9 @@ export class PlayFileTriggerType {
  * @property Hosted - the site is hosted by the BrightSign player, and must be loaded as a content asset
  * @property Remote - the site is on a remote server, specified by the URL
  */
-export class HtmlSiteType {
-    static Hosted: string;
-    static Remote: string;
+export enum HtmlSiteType {
+    Hosted = "Hosted",
+    Remote = "Remote"
 }
 /**
  *  Specifies the type of data feed represented by the object.
@@ -1592,12 +1602,12 @@ export class HtmlSiteType {
  * @property BSNDynamicPlaylist - a BSN based dynamic playlist feed
  * @property BSNTaggedPlaylist - a BSN based tagged playlist feed
  */
-export class DataFeedType {
-    static URLDataFeed: string;
-    static BSNDataFeed: string;
-    static BSNMediaFeed: string;
-    static BSNDynamicPlaylist: string;
-    static BSNTaggedPlaylist: string;
+export enum DataFeedType {
+    URLDataFeed = "URLDataFeed",
+    BSNDataFeed = "BSNDataFeed",
+    BSNMediaFeed = "BSNMediaFeed",
+    BSNDynamicPlaylist = "BSNDynamicPlaylist",
+    BSNTaggedPlaylist = "BSNTaggedPlaylist"
 }
 /**
  *  Specifies the usage for the data feed.
@@ -1608,11 +1618,11 @@ export class DataFeedType {
  *  but the media requires a 4K capable video player
  * @property Content - the feed is an RSS feed where the title/description pairs specify content
  */
-export class DataFeedUsageType {
-    static Text: string;
-    static Mrss: string;
-    static MrssWith4K: string;
-    static Content: string;
+export enum DataFeedUsageType {
+    Text = "Text",
+    Mrss = "MRSS",
+    MrssWith4K = "MRSSWith4K",
+    Content = "Content"
 }
 /**
  * Specifies the match type for Media and Player tags in a tagged playlist.
@@ -1624,11 +1634,11 @@ export class DataFeedUsageType {
  * @property MatchAnyPlayerAndMediaTags - As long as a media file has one tag name and value in common with the player,
  *  it will be played.
  */
-export class PlayerTagMatchingType {
-    static DoNotMatchTags: string;
-    static MatchAllMediaTagsToPlayerTags: string;
-    static MatchAllPlayerTagsToMediaTags: string;
-    static MatchAnyPlayerAndMediaTags: string;
+export enum PlayerTagMatchingType {
+    DoNotMatchTags = "DoNotMatchTags",
+    MatchAllMediaTagsToPlayerTags = "MatchAllMediaTagsToPlayerTags",
+    MatchAllPlayerTagsToMediaTags = "MatchAllPlayerTagsToMediaTags",
+    MatchAnyPlayerAndMediaTags = "MatchAnyPlayerAndMediaTags"
 }
 /**
  * Specifies the type of restriction to use when displaying tweets from a Twitter feed
@@ -1636,10 +1646,10 @@ export class PlayerTagMatchingType {
  * @property ByCount - Only a given number of recent tweets are displayed
  * @property ByRecentDays - Tweets from a given number of recent days are displayed
  */
-export class TwitterFeedRestrictionType {
-    static None: string;
-    static ByCount: string;
-    static ByRecentDays: string;
+export enum TwitterFeedRestrictionType {
+    None = "None",
+    ByCount = "ByCount",
+    ByRecentDays = "ByRecentDays"
 }
 /**
  * @interface BsColor
@@ -1808,25 +1818,25 @@ export const BsRectFull: {
  */
 export type BsAssetId = string;
 export const BsAssetIdNone = "0";
+/**
+ * Type guard to determine if ID is a valid BsAssetId (generally, they should be GUIDs.)
+ * @param id
+ */
 export function bscIsValidAssetId(id: any): id is BsAssetId;
 /**
  * Specifies the location of the asset (local, cloud storage, etc.)
- * @enum AssetLocation {string}
- *
  * @property Local - Asset is in local file system
  * @property Bsn - Asset is located on BrightSign network
  * @property Blob - Asset is held in a temporary in-memory Blob pending upload
  */
-export class AssetLocation {
-    static Local: string;
-    static Bsn: string;
-    static Ftp: string;
-    static Blob: string;
+export enum AssetLocation {
+    Local = "Local",
+    Bsn = "Bsn",
+    Ftp = "Ftp",
+    Blob = "Blob"
 }
 /**
  * Specifies the type of the asset
- * @enum AssetType {string}
- *
  * @property Content - Media content file
  * @property Project - Project file (bpfx)
  * @property ProjectBpf - Legacy Project file (bpf)
@@ -1840,39 +1850,41 @@ export class AssetLocation {
  * @property DynamicPlaylist - DynamicPlaylist file (XML extended MRSS format)
  * @property TaggedPlaylist - TaggedPlaylist file (XML format)
  */
-export class AssetType {
-    static Content: string;
-    static Project: string;
-    static ProjectBpf: string;
-    static ProjectFragment: string;
-    static Schedule: string;
-    static BrightScript: string;
-    static HtmlSite: string;
-    static DeviceHtmlSite: string;
-    static Folder: string;
-    static BSNDataFeed: string;
-    static BSNMediaFeed: string;
-    static BSNDynamicPlaylist: string;
-    static BSNTaggedPlaylist: string;
-    static Other: string;
+export enum AssetType {
+    Content = "Content",
+    Project = "Project",
+    ProjectBpf = "ProjectBpf",
+    ProjectFragment = "ProjectFragment",
+    Schedule = "Schedule",
+    BrightScript = "BrightScript",
+    HtmlSite = "HtmlSite",
+    DeviceHtmlSite = "DeviceHtmlSite",
+    Folder = "Folder",
+    BSNDataFeed = "BSNDataFeed",
+    BSNMediaFeed = "BSNMediaFeed",
+    BSNDynamicPlaylist = "BSNDynamicPlaylist",
+    BSNTaggedPlaylist = "BSNTaggedPlaylist",
+    Other = "Other"
 }
-export type BsnDataFeedAssetType = 'BSNDataFeed' | 'BSNMediaFeed' | 'BSNDynamicPlaylist' | 'BSNTaggedPlaylist';
+export type BsnDataFeedAssetType = AssetType.BSNDataFeed | AssetType.BSNMediaFeed | AssetType.BSNDynamicPlaylist | AssetType.BSNTaggedPlaylist;
 /**
- * Specifies the AssetType(s) of the assets within an AssetContainer. An asset container is an object that
- *  contains a list of assets and/or additional containers.
- * ChildAssetTypes may be most any of the standard AssetTypes, plus several additional system types
- *  that represent type designations for the contents of system level containers (e.g., 'pseudo-folders')
- * @enum BseChildAssetType {string}
- *
+ * Type designations for the contents of system level containers (e.g., 'pseudo-folders')
  * @property Asset - the container child assets can be of any type.
  * @property Component - the container contains 'Component' containers that serve as the root for non-media assets.
  *  Non-media assets represent assets that define higher level compositions, which includes assetTypes such as
  *  dataFeeds, project, plugins, HtmlSites, etc.
  */
-export class BseChildAssetType extends AssetType {
-    static Asset: string;
-    static Component: string;
+export enum BseContainerAssetType {
+    Asset = "Asset",
+    Component = "Component"
 }
+/**
+ * Specifies the AssetType(s) of the assets within an AssetContainer. An asset container is an object that
+ *  contains a list of assets and/or additional containers.
+ * ChildAssetTypes may be most any of the standard AssetTypes, plus several additional system types
+ *  that represent type designations for the contents of system level containers (e.g., 'pseudo-folders')
+ */
+export type BseChildAssetType = AssetType | BseContainerAssetType;
 /**
  * Interface containing the essential data necessary for searching for a
  *  file based asset item used in BrightSign authoring tasks.
@@ -1899,8 +1911,10 @@ export interface BsAssetSpecification {
  * @property scope {string} - a string identifying the system or network on which the asset is located
  *  For BSN based assets, this contains the network name. For local assets, this identifies the local system
  *  on which the asset path is known to be valid.
- * @property [childAssetType] {BseChildAssetType} - the type of contained assets (or containers,) if this asset
- *  represents a container (e.g., a folder)
+ * @property [mediaType] {MediaType} - media type for Content assets - may be included for Content AssetType
+ *  to be used for informational purposes in special situations.
+ * @property [childAssetType] {BseChildAssetType | null} - the type of contained assets (or containers,) if this asset
+ *  represents a container (e.g., a folder.) If this value is null, the folder may contain any assetType.
  * @property [origin] {string} - unparsed absolute path to original asset from source scope
  */
 export interface BsAssetLocator {
@@ -1910,9 +1924,25 @@ export interface BsAssetLocator {
     location: AssetLocation;
     assetType: AssetType;
     scope: string;
-    childAssetType?: BseChildAssetType;
+    mediaType?: MediaType;
+    childAssetType?: BseChildAssetType | null;
     origin?: string;
 }
+/**
+ * A BsAssetContainerLocator is any BsAssetLocator with AssetType === Folder.
+ * For BSN asset containers, childAssetType must be defined.
+ */
+export interface BsAssetContainerLocator extends BsAssetLocator {
+    assetType: AssetType.Folder;
+}
+/**
+ * Type guard - test is BsAssetLocator is a BsAssetContainerLocator.
+ * BSN container locators must have a childAssetType.
+ * Local containers do not need a childAssetType - a null or undefined value is interpreted to
+ *  mean that contained assets may be of any type.
+ * @param assetLocator
+ */
+export function bscIsAssetContainerLocator(assetLocator: BsAssetLocator | null | undefined): assetLocator is BsAssetContainerLocator;
 export enum FtpObjectPermissionGroup {
     Owner = 0,
     Group = 1,
@@ -1959,9 +1989,9 @@ export interface BsAssetItem extends BsAssetLocator {
     locator: string;
     mediaType?: MediaType;
     fileSize?: number;
-    fileHash?: string;
-    fileUrl?: string;
-    thumbUrl?: string;
+    fileHash?: string | null;
+    fileUrl?: string | null;
+    thumbUrl?: string | null;
     creationDate?: Date;
     lastModifiedDate?: Date;
     uploadDate?: Date;
@@ -1969,7 +1999,7 @@ export interface BsAssetItem extends BsAssetLocator {
     hasSubFolders?: boolean;
     hasFiles?: boolean;
     projectFragmentType?: BsProjectFragmentType;
-    assetData?: BsAssetData;
+    assetData?: BsAssetData | null;
     assetUsage?: BsAssetUsage;
     tags?: BsnTagSpecification[];
     permissions?: BsAssetPermission[];
@@ -2049,7 +2079,7 @@ export interface BsAudioDataProperties {
     transport?: string | null;
     packetLen?: number | null;
     indexed?: boolean | null;
-    audioCodec?: string;
+    audioCodec?: string | null;
     audioPid?: number | null;
     audioChannelCount?: number | null;
     audioSampleRate?: number | null;
@@ -2107,13 +2137,13 @@ export type BsContentAssetData = BsnMediaFeedItemProperties | BsnDynamicPlaylist
  * @property UserVariableCopySet
  * @property UserDefinedEventSet
  */
-export class BsProjectFragmentType {
-    static None: string;
-    static MediaStateCopySet: string;
-    static CommandCopySet: string;
-    static LiveTextItemCopySet: string;
-    static UserVariableCopySet: string;
-    static UserDefinedEventSet: string;
+export enum BsProjectFragmentType {
+    None = "None",
+    MediaStateCopySet = "MediaStateCopySet",
+    CommandCopySet = "CommandCopySet",
+    LiveTextItemCopySet = "LiveTextItemCopySet",
+    UserVariableCopySet = "UserVariableCopySet",
+    UserDefinedEventSet = "UserDefinedEventSet"
 }
 /**
  * Interface for an object containing information for a thumbnail image generated
@@ -2204,7 +2234,9 @@ export function bscAssetItemIsBsnDataFeed(item: BsAssetItem): boolean;
  */
 export function bscAssetItemFromAssetLocator(assetLocator: BsAssetLocator): BsAssetItem;
 /**
- * Generate a minimal BsAssetLocator from BsAssetItem
+ * Generate a minimal BsAssetLocator from BsAssetItem.
+ * Note: mediaType is not included in BsAssetLocator here - this property can be added separately in situations
+ *  where it is needed.
  * @param {BsAssetItem} assetItem
  * @returns {BsAssetLocator}
  */
@@ -2281,6 +2313,20 @@ export function bscGetAssetSpecification(location: AssetLocation, assetType: Ass
  */
 export function bscAssetItemFromBasicAssetInfo(assetType: AssetType, fileName: string, fileDirPath?: string | null, bsnId?: number | null, mediaType?: MediaType | null, scope?: string | null, origin?: string | null): BsAssetItem | null;
 /**
+ * Return a string representing the root path for the given assetLocation. If the assetLocation
+ *  is the local machine, the root path will depend on the host OS.
+ * @param location {AssetLocation}
+ * @returns {string}
+ */
+export function bscGetAssetRootPath(location: AssetLocation): string;
+/**
+ * Return a string representing the path separator for the given assetLocation. If the assetLocation
+ *  is the local machine, the separator will depend on the host OS.
+ * @param location {AssetLocation}
+ * @returns {string}
+ */
+export function bscGetAssetPathSeparator(location: AssetLocation): string;
+/**
  * Generate locator key string based on AssetLocation, name, path, and networkId.
  * The locator key is intended to be a unique representation of the assets location.
  *
@@ -2323,7 +2369,7 @@ export function bscGetBsnAssetLocatorKey(bsnId: number, assetType: AssetType, na
  * @param {MediaType} [mediaType]
  * @return {BsAssetItem}
  */
-export function bscGetNullAssetItem(assetType: AssetType, assetLocation?: string, mediaType?: MediaType): BsAssetItem;
+export function bscGetNullAssetItem(assetType: AssetType, assetLocation?: AssetLocation, mediaType?: MediaType): BsAssetItem;
 /**
  * Return true if given assetItem is a NULL asset item.
  * @param {BsAssetItem} assetItem
@@ -2341,7 +2387,7 @@ export function bscIsNullAssetItem(assetItem: BsAssetItem): boolean;
  * @param {string} [scope]
  * @return {BsAssetItem}
  */
-export function bscGetDefaultAssetItem(assetType: AssetType, assetLocation?: string, mediaType?: MediaType, name?: string, path?: string, scope?: string): BsAssetItem;
+export function bscGetDefaultAssetItem(assetType: AssetType, assetLocation?: AssetLocation, mediaType?: MediaType, name?: string, path?: string, scope?: string): BsAssetItem;
 /**
  * Return true if given assetItem is a Default asset item.
  * @param {BsAssetItem} assetItem
@@ -2487,13 +2533,13 @@ export function bscGetBscFileTypeInfo(pathOrFileName: string): BscFileTypeInfo;
 
 /** @module Core:upload */
 /// <reference types="node" />
-export class BsUploadItemStatus {
-    static Pending: string;
-    static Uploading: string;
-    static Uploaded: string;
-    static Matched: string;
-    static Cancelled: string;
-    static Failed: string;
+export enum BsUploadItemStatus {
+    Pending = "Pending",
+    Uploading = "Uploading",
+    Uploaded = "Uploaded",
+    Matched = "Matched",
+    Cancelled = "Cancelled",
+    Failed = "Failed"
 }
 /**
  * Interface or result object for a file upload.
@@ -2501,7 +2547,8 @@ export class BsUploadItemStatus {
  * @property sourceFileName {string} - the original name of the source file being uploaded
  * @property sourceFilePath {string} - if the file is being sourced from a local file system, this is the local path
  *  for the file. If the source is a File object (in a browser) or a Buffer, this is a blank string.
- * @property assetItem {BsAssetItem} - the assetItem for the uploaded file on BSN
+ * @property assetItem {BsAssetItem | null} - the assetItem for the uploaded file on BSN, or null if reporting
+ *  a failure or upload cancelled
  * @property status {BsUploadItemStatus}
  * @property [error]] {Error} - the error details if the upload failed
  */
@@ -2509,7 +2556,7 @@ export interface BsUploadItemResult {
     readonly jobIndex: number;
     readonly sourceFileName: string;
     readonly sourceFilePath: string;
-    readonly assetItem: BsAssetItem;
+    readonly assetItem: BsAssetItem | null;
     readonly status: BsUploadItemStatus;
     readonly error?: Error;
 }
@@ -2611,7 +2658,7 @@ export interface BsUploadFile {
  * @property targetName {string} - the name to be used for the file on BSN (usually the same as the given file name,
  *  but it may be changed to resolve duplicate name issue)
  * @property destinationPath {string} - destination BSN path for file
- * @property [existingAsset] {BsAssetLocator} - if specified, determines an existingAsset on BSN which will be
+ * @property [existingAsset] {BsAssetLocator | null} - if specified, determines an existingAsset on BSN which will be
  *  replaced by this upload
  * @property [parentAssetType] {AssetType} - if file is being uploaded for a composite asset, such as a presentation,
  *  dynamic playlist, etc. - the AssetType of the composite asset
@@ -2623,7 +2670,7 @@ export interface BsUploadFileItemSpec {
     fileSpec: FileSpec;
     targetName: string;
     destinationPath: string;
-    existingAsset?: BsAssetLocator;
+    existingAsset?: BsAssetLocator | null;
     parentAssetType?: AssetType;
     parentAssetNames?: string[];
 }
@@ -2680,8 +2727,8 @@ export interface BsUploadWebPage {
  *  each of the web page asset files.
  *  The destinationPath for each of these specifications defines the relative path of the asset in relation to the
  *  main index file.
- * @property [existingAsset] {BsAssetLocator} - if specified, this represent the AssetLocator of an existing web site
- *  to be updated. The name of the associated web site must match the siteName in this structure.
+ * @property [existingAsset] {BsAssetLocator | null} - if specified, this represent the AssetLocator of an
+ *  existing web site to be updated. The name of the associated web site must match the siteName in this structure.
  * @property [presentationNames] {string[]} - if Html site is being uploaded as part of a presentation upload job,
  *  the names of the presentations in which the asset is used.
  */
@@ -2691,7 +2738,7 @@ export interface BsUploadWebPageSessionSpec {
     targetName: string;
     indexUploadFile: BsUploadFileItemSpec;
     assetUploadFiles: BsUploadFileItemSpec[];
-    existingAsset?: BsAssetLocator;
+    existingAsset?: BsAssetLocator | null;
     presentationNames?: string[];
 }
 export interface BsUploadWebPageResult {
@@ -2893,11 +2940,11 @@ export interface BsnDynamicPlaylistItemProperties {
     validityStartDate: Date | null;
     validityEndDate: Date | null;
 }
-export class BsnTaggedPlaylistItemStatus {
-    static Approved: string;
-    static PendingAddition: string;
-    static PendingDeletion: string;
-    static Pending: string;
+export enum BsnTaggedPlaylistItemStatus {
+    Approved = "Approved",
+    PendingAddition = "PendingAddition",
+    PendingDeletion = "PendingDeletion",
+    Pending = "Pending"
 }
 export interface BsnTaggedPlaylistItemProperties extends BsnDynamicPlaylistItemProperties {
     state: BsnTaggedPlaylistItemStatus;
@@ -2930,19 +2977,19 @@ export interface BsnDataFeedReference {
     id: number;
     name: string;
 }
-export class BsnTagDataType {
-    static String: string;
-    static Number: string;
-    static Boolean: string;
-    static DateTime: string;
-    static NumericArray: string;
-    static StringArray: string;
+export enum BsnTagDataType {
+    String = "string",
+    Number = "number",
+    Boolean = "boolean",
+    DateTime = "dateTime",
+    NumericArray = "numericArray",
+    StringArray = "stringArray"
 }
-export class BsnTagType {
-    static SystemDevice: string;
-    static SystemContent: string;
-    static Device: string;
-    static Content: string;
+export enum BsnTagType {
+    SystemDevice = "[sys].[Device]",
+    SystemContent = "[sys].[Content]",
+    Device = "[Device]",
+    Content = "[Content]"
 }
 export interface BsnTagKeyPatternSpecification {
     type?: BsnTagType;
@@ -2971,9 +3018,9 @@ export interface BsnTagValuePatternSpecification extends BsnTagKeyPatternSpecifi
  *  These presentations typically have been created with BrightAuthor. There are some cases of Complete presentations
  *  without a project file, most notably the 'Disabled Players' presentation that is loaded to every BSN account.
  */
-export class BsnPresentationType {
-    static Simple: string;
-    static Complete: string;
+export enum BsnPresentationType {
+    Simple = "Simple",
+    Complete = "Complete"
 }
 /**
  * Specifies the status of BSN presentation
@@ -2983,9 +3030,9 @@ export class BsnPresentationType {
  *  files and assets for publishing may not have been uploaded to BSN yet.
  * @property Complete - Presentation is complete and ready to publish, or already published.
  */
-export class BsnPresentationStatus {
-    static Draft: string;
-    static Published: string;
+export enum BsnPresentationStatus {
+    Draft = "Draft",
+    Published = "Published"
 }
 export interface BsnPlayerFirmwareSpecification {
     version: string;
@@ -3042,9 +3089,9 @@ export interface BsnPresentationProperties {
     groups: BsnGroupItem[];
     permissions: BsnObjectPermission[];
 }
-export class BsnPresentationReferenceType {
-    static Presentation: string;
-    static BrightWallPresentation: string;
+export enum BsnPresentationReferenceType {
+    Presentation = "Presentation",
+    BrightWallPresentation = "BrightWallPresentation"
 }
 export interface BsnPresentationReference {
     id: number;
@@ -3064,7 +3111,7 @@ export interface BsnHtmlSiteProperties {
     name: string;
     uploadDate: Date;
     indexFile: BsnHtmlSiteAssetItem;
-    assets?: BsnHtmlSiteAssetItem[];
+    assets?: BsnHtmlSiteAssetItem[] | null;
     permissions: BsnObjectPermission[];
 }
 export interface BsnDeviceRegistrationTokenEntity {
@@ -3078,19 +3125,19 @@ export interface BsnRoleOperationPermission {
     isAllowed: boolean;
 }
 export type BsRoleOperationPermission = BsnRoleOperationPermission;
-export class BsnObjectPermissionType {
-    static Role: string;
-    static User: string;
+export enum BsnObjectPermissionType {
+    Role = "Role",
+    User = "User"
 }
 export interface BsnObjectPermission extends BsnRoleOperationPermission {
     type: BsnObjectPermissionType;
 }
 export interface BsnObjectRolePermission extends BsnObjectPermission {
-    type: 'Role';
+    type: BsnObjectPermissionType.Role;
     roleName: string;
 }
 export interface BsnObjectUserPermission extends BsnObjectPermission {
-    type: 'User';
+    type: BsnObjectPermissionType.User;
     login: string;
 }
 export function bscCreateBsnObjectRolePermission(roleName: string, operationUid: string, isAllowed: boolean): BsnObjectRolePermission;
@@ -3137,19 +3184,19 @@ export interface BsnServerConfiguration {
     bsnRestApiEndpoint: string;
     bsnUploadApiEndpoint: string;
 }
-export class BsnFilterType {
-    static string: string;
-    static enum: string;
-    static number: string;
-    static dateTime: string;
-    static boolean: string;
-    static stringArray: string;
-    static numericArray: string;
+export enum BsnFilterType {
+    string = "string",
+    enum = "enum",
+    number = "number",
+    dateTime = "dateTime",
+    boolean = "boolean",
+    stringArray = "stringArray",
+    numericArray = "numericArray"
 }
-export class BsnTimeUnits {
-    static years: string;
-    static months: string;
-    static days: string;
+export enum BsnTimeUnits {
+    years = "years",
+    months = "months",
+    days = "days"
 }
 export interface BsnTimeSpanFilter {
     units: BsnTimeUnits;
@@ -3162,47 +3209,47 @@ export type BsnDateFilterParams = Date | Date[] | BsnTimeSpanFilter;
 export type BsnBooleanFilterParams = 'TRUE' | 'FALSE';
 export type BsnFilterParams = BsnStringFilterParams | BsnNumberFilterParams | BsnDateFilterParams | BsnBooleanFilterParams;
 export type BsnFilterParamArrays = string[] | number[] | Date[];
-export class BsnStringFilterOperator {
-    static Is: string;
-    static IsNot: string;
-    static BeginsWith: string;
-    static EndsWith: string;
-    static Contains: string;
-    static ContainsAll: string;
-    static ContainsAny: string;
-    static DoesNotContain: string;
-    static IsIn: string;
-    static IsNotIn: string;
+export enum BsnStringFilterOperator {
+    Is = "IS",
+    IsNot = "IS NOT",
+    BeginsWith = "BEGINS WITH",
+    EndsWith = "ENDS WITH",
+    Contains = "CONTAINS",
+    ContainsAll = "CONTAINS ALL",
+    ContainsAny = "CONTAINS ANY",
+    DoesNotContain = "DOES NOT CONTAIN",
+    IsIn = "IS IN",
+    IsNotIn = "IS NOT IN"
 }
-export class BsnNumberFilterOperator {
-    static Is: string;
-    static IsNot: string;
-    static IsGreaterThan: string;
-    static IsLessThan: string;
-    static IsInTheRange: string;
-    static IsNotInTheRange: string;
-    static IsIn: string;
-    static IsNotIn: string;
+export enum BsnNumberFilterOperator {
+    Is = "IS",
+    IsNot = "IS NOT",
+    IsGreaterThan = "IS GREATER THAN",
+    IsLessThan = "IS LESS THAN",
+    IsInTheRange = "IS IN THE RANGE",
+    IsNotInTheRange = "IS NOT IN THE RANGE",
+    IsIn = "IS IN",
+    IsNotIn = "IS NOT IN"
 }
-export class BsnDateFilterOperator {
-    static Is: string;
-    static IsNot: string;
-    static IsAfter: string;
-    static IsBefore: string;
-    static InTheLast: string;
-    static NotInTheLast: string;
-    static IsInTheRange: string;
-    static IsNotInTheRange: string;
-    static IsIn: string;
-    static IsNotIn: string;
+export enum BsnDateFilterOperator {
+    Is = "IS",
+    IsNot = "IS NOT",
+    IsAfter = "IS AFTER",
+    IsBefore = "IS BEFORE",
+    InTheLast = "IN THE LAST",
+    NotInTheLast = "NOT IN THE LAST",
+    IsInTheRange = "IS IN THE RANGE",
+    IsNotInTheRange = "IS NOT IN THE RANGE",
+    IsIn = "IS IN",
+    IsNotIn = "IS NOT IN"
 }
-export class BsnBooleanFilterOperator {
-    static Is: string;
+export enum BsnBooleanFilterOperator {
+    Is = "IS"
 }
-export class BsnArrayFilterOperator {
-    static Contains: string;
-    static ContainsAll: string;
-    static ContainsAny: string;
+export enum BsnArrayFilterOperator {
+    Contains = "CONTAINS",
+    ContainsAll = "CONTAINS ALL",
+    ContainsAny = "CONTAINS ANY"
 }
 export type BsnFilterOperator = BsnStringFilterOperator | BsnNumberFilterOperator | BsnDateFilterOperator | BsnBooleanFilterOperator | BsnArrayFilterOperator;
 /**
@@ -3217,9 +3264,9 @@ export function bscGetOperatorListForFilterType(type: BsnFilterType): BsnFilterO
  * @returns {BsnFilterOperator[]}
  */
 export function bscGetOperatorListForTagDataType(dataType: BsnTagDataType): BsnFilterOperator[];
-export class BsnFilterCombineType {
-    static All: string;
-    static Any: string;
+export enum BsnFilterCombineType {
+    All = "AND",
+    Any = "OR"
 }
 export interface BsnFilterComponent {
     type: BsnFilterType;
@@ -3253,6 +3300,12 @@ export function bscCreateFilterComponent(type: BsnFilterType, property: string, 
  * @returns {BsnFilterType}
  */
 export function bscGetBsnFilterTypeForTagDataType(dataType: BsnTagDataType): BsnFilterType;
+/**
+ * Return BsnTagDataType for a tag filter corresponding to a given filter type.
+ * @param filterType {BsnFilterType}
+ * @returns {BsnTagDataType}
+ */
+export function bscGetBsnTagDataTypeForFilterType(filterType: BsnFilterType): BsnTagDataType;
 /**
  * Create a BsnFilterComponent for a tag filter for the given BsnTagKeySpecification.
  * This will return null if specified operator is not valid for the tag dataType.
@@ -3295,9 +3348,9 @@ export interface BDeployPageFilter {
     pageNum: number;
     pageSize: number;
 }
-export class BDeploySortType {
-    static ASC: number;
-    static DESC: number;
+export enum BDeploySortType {
+    ASC = 1,
+    DESC = -1
 }
 export interface BDeploySetupQueryFilter {
     networkName?: string;
@@ -3752,6 +3805,8 @@ export interface BDeployDevice {
 export interface BDeployApplication {
     url: string;
     name: string;
+    partnerLogoUrl: string;
+    sortOrder: number;
 }
 
 /** @module Core:deviceValidation */
@@ -3923,6 +3978,18 @@ export function bscImageOrientationToRotationType(orientation: ImageOrientationT
  * @returns {boolean}
  */
 export function bscIsNumericArray(strArray: string[]): boolean;
+/**
+ * Returns the formatted file size
+ * @param size
+ * @returns {string}
+ */
+export const bscGetFormattedFileSize: (size: number) => string;
+/**
+ * Returns the formatted date string
+ * @param date
+ * @returns {string}
+ */
+export const bscGetDateToFormattedString: (date?: Date) => string;
 
 /** @module Core:remote */
 export class IrRemoteModel {

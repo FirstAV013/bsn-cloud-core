@@ -6,6 +6,7 @@ Sub Main()
   ' Script to read the relevant information from a sync spec and write it to the registry
   ' this setup script is used specifically for the case where the user wants to first display pre positioned content then download new content from bsn
   version = "8.0.0.1"
+
   debugParams = EnableDebugging("localToBSN-sync.json")
 
   sysFlags = {}
@@ -28,8 +29,6 @@ Sub Main()
     stop
   end if
   
-  ClearRegistryKeys(registrySection)
-
   msgPort = CreateObject("roMessagePort")
   ' create setup splash screen
   ' only set splash screen if device supports video
@@ -47,6 +46,22 @@ Sub Main()
     stop
   end if
   setupParams = ParseAutoplay(current_sync)
+  WriteRegistryVersion(registrySection, setupParams.version)
+
+  ClearRegistryKeys(registrySection, setupParams.inheritNetworkProperties)
+
+  if setupParams.inheritNetworkProperties then
+    registrySection.Write("inp", "yes")
+  end if
+
+  registrationRequired = RegistrationReset(registrySection)
+
+  ' BSN.cloud
+  SetBsnCloudParameters(setupParams, registrySection)
+
+  if registrationRequired then
+    TriggerRegistrationRequest(registrySection, msgPort)
+  end if
 
   ' indicate setup type
   ' it will be a BSN device
@@ -54,9 +69,6 @@ Sub Main()
   
   ' indicate version number
   registrySection.Write("v", "1")
-  
-  ' BSN.cloud
-  SetBsnCloudParameters(setupParams, registrySection)
   
   ' write identifying data to registry
   ' TODO - enableUnsafeAuthentication?'
@@ -80,59 +92,66 @@ Sub Main()
     registrySection.Write("hrs", GetNumericStringFromNumber(setupParams.heartbeatsRangeStart%))
     registrySection.Write("hrl", GetNumericStringFromNumber(setupParams.heartbeatsRangeLength%))
   end if
-  
-  ' network host parameters
-  proxySpec$ = GetProxy(setupParams, registrySection)
-  bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
-  
-  registrySection.Write("ts", setupParams.timeServer$)
-  print "time server in localSetup.brs = ";setupParams.timeServer$
-  
-  ' Hostname
-  SetHostname(setupParams.specifyHostname, setupParams.hostName$)
-  
-  ' write networkHosts string to registry
-  if proxySpec$ <> "" then
-    networkHosts$ = FormatJson(setupParams.networkHosts)
-    registrySection.Write("bph", networkHosts$)
-  else
-    registrySection.Write("bph", "")
-  end if
-  
+
   ' Wireless parameters
   useWireless = SetWirelessParameters(setupParams, registrySection, modelSupportsWifi)
   
   ' Wired parameters
   SetWiredParameters(setupParams, registrySection, useWireless)
-  
+
   ' Network configurations
   if setupParams.useWireless then
     if modelSupportsWifi then
-      wifiNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "2")
+      wifiNetworkingParameters = SetNetworkConfiguration(1, setupParams, registrySection, "", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "2")
     else
       ' if the user specified wireless but the system doesn't support it, use the parameters specified for wired (the secondary parameters)
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "")
     end if
   else
-    ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
+    ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "", "")
   end if
   
-  ' Network connection priorities
-  networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
-  networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
-  
-  ' configure ethernet
-  ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  
-  ' configure wifi if specified and device supports wifi
-  if useWireless
-    ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  end if
-  
-  ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
-  if not useWireless and modelSupportsWifi then
-    DisableWireless()
+  ' BCN-6317
+  if setupParams.inheritNetworkProperties then
+    registrySection.Write("inp", "yes")
+    WriteTimeServer(setupParams, registrySection)
+    GetProxy(setupParams, registrySection)
+  else
+    ' network host parameters
+    proxySpec$ = GetProxy(setupParams, registrySection)
+    bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
+    
+    'Timer server
+    WriteTimeServer(setupParams, registrySection)
+    
+    ' Hostname
+    SetHostname(setupParams.specifyHostname, setupParams.hostName$)
+    
+    ' write networkHosts string to registry
+    if proxySpec$ <> "" then
+      networkHosts$ = FormatJson(setupParams.networkHosts)
+      registrySection.Write("bph", networkHosts$)
+    else
+      registrySection.Write("bph", "")
+    end if
+
+    ' Network connection priorities
+    networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
+    networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
+    
+    ' configure ethernet
+    ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    
+    ' configure wifi if specified and device supports wifi
+    if useWireless
+      ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    end if
+    
+    ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
+    if not useWireless and modelSupportsWifi then
+      DisableWireless()
+    end if
   end if
   
   ' diagnostic web server
@@ -189,6 +208,8 @@ Sub Main()
   ' overwrite setup script with standard autorun. restart to play local content
   MoveFile("pending-autorun.brs", "autorun.brs")
   
+  registrySection.Delete("registration_in_progress")
+  registrySection.Flush()
   ' restart
   RestartIfNecessary(setupParams, true)
   

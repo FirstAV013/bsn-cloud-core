@@ -52,11 +52,26 @@ Sub Main()
   end if
   oldBsnce = supervisorRegistrySection.Read("bsnce")
   ClearBsnce(supervisorRegistrySection, setupParams.bsnCloudEnabled)
-  ClearRegistryKeys(supervisorRegistrySection)
-  ClearRegistryKeys(registrySection)
+  ClearRegistryKeys(registrySection, setupParams.inheritNetworkProperties)
+
+  if setupParams.inheritNetworkProperties then
+    registrySection.Write("inp", "yes")
+  end if
+
+  registrationRequired = RegistrationReset(registrySection)
+  
+  WriteRegistryVersion(registrySection, setupParams.version)
+
+  ' BSN.cloud
+  SetBsnCloudParameters(setupParams, registrySection)
+
+  msgPort = CreateObject("roMessagePort")
+
+  if registrationRequired then
+    TriggerRegistrationRequest(registrySection, msgPort)
+  end if
 
   ' create setup splash screen
-  msgPort = CreateObject("roMessagePort")
   ' If no setup type in sync spec, use the classic logic to determine setup type
   if setupParams.setupType = "" then
     if setupParams.lwsConfig$ = "content" then
@@ -76,12 +91,11 @@ Sub Main()
 
   ' Create datagram socket to wait for bootstrap messages
   dgSocket = CreateDatagramSocket(setupParams, msgPort, registrySection)
+
+  SendStatusPayload(dgSocket, version, setupParams.wsUdpSocketPort%)
   
   ' retrieve and parse featureMinRevs.json
   featureMinRevs = ParseFeatureMinRevs()
-  
-  ' BSN.cloud
-  SetBsnCloudParameters(setupParams, registrySection)
   
   ' write identifying data to registry
   registrySection.Write("tz", setupParams.timezone$)
@@ -92,51 +106,57 @@ Sub Main()
   if Len(setupParams.configVersion$) > 0 then
     registrySection.Write("cfv", setupParams.configVersion$)
   end if
-  
-  ' network host parameters
-  proxySpec$ = GetProxy(setupParams, registrySection)
-  bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
-  
-  registrySection.Write("ts", setupParams.timeServer$)
-  diagnostics.printDebug("time server in localSetup.brs = " + setupParams.timeServer$)
-  
-  ' Hostname
-  SetHostname(setupParams.specifyHostname, setupParams.hostName$)
-  
+
   ' Wireless parameters
   useWireless = SetWirelessParameters(setupParams, registrySection, modelSupportsWifi)
-  
+    
   ' Wired parameters
   SetWiredParameters(setupParams, registrySection, useWireless)
-  
+
   ' Network configurations
   if setupParams.useWireless then
     if modelSupportsWifi then
-      wifiNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "2")
+      wifiNetworkingParameters = SetNetworkConfiguration(1, setupParams, registrySection, "", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "2")
     else
       ' if the user specified wireless but the system doesn't support it, use the parameters specified for wired (the secondary parameters)
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "")
     end if
   else
-    ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
+    ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "", "")
   end if
+
+  ' BCN-6317
+  if setupParams.inheritNetworkProperties then
+    WriteTimeServer(setupParams, registrySection)
+    GetProxy(setupParams, registrySection)
+  else
+    ' network host parameters
+    proxySpec$ = GetProxy(setupParams, registrySection)
+    bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
+
+    'Timer server
+    WriteTimeServer(setupParams, registrySection)
+    
+    ' Hostname
+    SetHostname(setupParams.specifyHostname, setupParams.hostName$)
   
-  ' Network connection priorities
-  networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
-  networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
+    ' Network connection priorities
+    networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
+    networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
   
-  ' configure ethernet
-  ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  
-  ' configure wifi if specified and device supports wifi
-  if useWireless
-    ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  end if
-  
-  ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
-  if not useWireless and modelSupportsWifi then
-    DisableWireless()
+    ' configure ethernet
+    ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    
+    ' configure wifi if specified and device supports wifi
+    if useWireless
+      ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    end if
+    
+    ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
+    if not useWireless and modelSupportsWifi then
+      DisableWireless()
+    end if
   end if
   
   ' set the time zone
@@ -210,6 +230,7 @@ Sub Main()
     
     registrySection.Write("sut", "LFN")
     registrySection.Write("susse", "True")
+    registrySection.Delete("registration_in_progress")
     registrySection.Flush()
     
     if registrySection.Read("ru") = "" then
@@ -225,6 +246,7 @@ Sub Main()
     
   else if localToStandaloneSyncSpec then
     registrySection.Write("sut", "Standalone")
+    registrySection.Delete("registration_in_progress")
     registrySection.Flush()
   
     MoveFile("pending-autorun.brs", "autorun.brs")
@@ -235,6 +257,7 @@ Sub Main()
     
   else if setupType = "partnerapplication" then
     registrySection.Write("sut", "PartnerApplication")
+    registrySection.Delete("registration_in_progress")
     registrySection.Flush()
 
     if registrySection.Read("ru") <> "" then
@@ -266,6 +289,9 @@ Sub Main()
     if type(videoMode) = "roVideoMode" then
       deviceSetupSplashScreen = SetDeviceSplashScreenMessageByType(deviceSetupSplashScreen, "standalone_complete", msgPort)
     end if
+
+    registrySection.Delete("registration_in_progress")
+    registrySection.Flush()
     
     while true
       wait(0, msgPort)
@@ -280,6 +306,9 @@ Sub Main()
       msgType = "unknown_type_"+setupType
       deviceSetupSplashScreen = SetDeviceSplashScreenMessageByType(deviceSetupSplashScreen, msgType, msgPort)
     end if
+
+    registrySection.Delete("registration_in_progress")
+    registrySection.Flush()
 
     while true
       wait(0, msgPort)

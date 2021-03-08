@@ -13,26 +13,27 @@ export class FsFolderEnumerator {
     /**
      * Update content directory from local file system and resolve with list of content names
      *
-     * @param [directoryPath] {string} - local path of directory to resolve, relative to defaultRootPath.
+     * @param [directoryPath] {string | null} - local path of directory to resolve, relative to defaultRootPath.
      *  If path is blank or undefined, the root path is assumed.
-     * @param [assetTypes] {AssetType[]} - array of asset types to include. If undefined or empty, all files
-     *  and folders are included.
-     * @param [mediaTypes] {MediaType | MediaType[]} - if present and assetTypes includes AssetType.Content,
+     * @param [assetTypes] {AssetType | AssetType[] | null} - array of asset types to include.
+     *  If undefined or empty, all files and folders are included.
+     * @param [mediaTypes] {MediaType | MediaType[] | null} - if present and assetTypes includes AssetType.Content,
      *  enumeration will be limited to the specified mediaTypes.
      * @returns {Promise<BsAssetItem[]>} - Promise that resolves with an array of assetItems
      */
-    update(directoryPath?: string, assetTypes?: AssetType | AssetType[], mediaTypes?: MediaType | MediaType[]): Promise<BsAssetItem[]>;
+    update(directoryPath?: string | null, assetTypes?: AssetType | AssetType[] | null, mediaTypes?: MediaType | MediaType[] | null): Promise<BsAssetItem[]>;
     /**
      * Get count of file/folder items in given directory matching the given asset types.
-     * @param [directoryPath] {string} - local path of directory to count, relative to defaultRootPath.
-     * @param [assetTypes] {AssetType | AssetType[]} - array of asset types to include. If undefined or empty, all files
-     *  and folders are counted.
-     * @param [mediaTypes] {MediaType | MediaType[]} - if present and assetTypes includes AssetType.Content,
+     * @param [directoryPath] {string | null} - local path of directory to count, relative to defaultRootPath.
+     * @param [assetTypes] {AssetType | AssetType[] | null} - array of asset types to include.
+     *  If undefined or empty, all files and folders are counted.
+     * @param [mediaTypes] {MediaType | MediaType[] | null} - if present and assetTypes includes AssetType.Content,
      *  count will be limited to the specified mediaTypes.
      */
-    getCount(directoryPath?: string, assetTypes?: AssetType | AssetType[], mediaTypes?: MediaType | MediaType[]): Promise<number>;
+    getCount(directoryPath?: string | null, assetTypes?: AssetType | AssetType[] | null, mediaTypes?: MediaType | MediaType[] | null): Promise<number>;
 }
 
+/// <reference types="node" />
 /**
  * Return SHA1 hash for given file on either file system.
  * @param file {FileSpec} - If a File, a File object. If a string, the full local file path for the file.
@@ -40,6 +41,7 @@ export class FsFolderEnumerator {
  * @returns {Promise<string>} returns a Promise that resolves to the hash value
  */
 export function fsGetFileSha1(file: FileSpec): Promise<string>;
+export function fsGetDataSha1AsArray(data: string | Buffer): Uint8Array;
 /**
  * Return SHA1 hash for given file
  * @param file {string | BsAssetItem} - path to file, or a BsAssetItem for a local file
@@ -48,10 +50,12 @@ export function fsGetFileSha1(file: FileSpec): Promise<string>;
 export function fsGetLocalFileSha1(file: string | BsAssetItem): Promise<string>;
 export function fsGetObjectFileSha1(file: File): Promise<string>;
 export function fsGetDataSha1(data: Uint8Array): string;
+export function fsGetDataSha1AsBuffer(data: Buffer): Buffer;
 export function fsEncryptRsa(text: string, publicKey: string): string;
 export function fsDecryptRsa(base64Cipher: string, privateKey: string): string;
 
 /// <reference types="node" />
+export function fsGetLocalFileAsString(fullPath: string): Promise<string>;
 export function fsGetLocalJsonFileAsObject(fullPath: string): Promise<object>;
 export function fsGetLocalFileAsArrayBuffer(fullPath: string): Promise<ArrayBuffer>;
 export function fsGetLocalFileSize(fullPath: string): Promise<number>;
@@ -84,7 +88,9 @@ export function fsRemoveDirectory(dirPath: string): Promise<void>;
 export function fsDeleteDirectory(dirPath: string): Promise<void>;
 export function fsGetAssetItemFromFile(fullPath: string, scope?: string): BsAssetItem | null;
 export function fsGetAssetItemForFileBlob(file: File, scope?: string, origin?: string): BsAssetItem | null;
-export function fsGetAssetItemFromFileWithSubFolderCheck(fullPath: string): Promise<BsAssetItem | null>;
+export function fsGetAssetItemFromFileWithFileAndFolderCheck(fullPath: string): Promise<BsAssetItem | null>;
+/** @deprecated renamed to fsGetAssetItemFromFileWithFileAndFolderCheck */
+export const fsGetAssetItemFromFileWithSubFolderCheck: typeof fsGetAssetItemFromFileWithFileAndFolderCheck;
 export function fsCheckFolderForSubFolders(dirPath: string): Promise<boolean>;
 export function fsCheckFolderForFiles(dirPath: string): Promise<boolean>;
 export function fsGetLocalAssetThumbnailFromFile(file: FileSpec): Promise<BsLocalAssetThumbnail>;
@@ -124,7 +130,7 @@ export interface FsHtmlSiteSessionFileSpec {
  * @returns {Promise<FsHtmlSiteSessionFileSpec>} The promise resolves with an object conforming tp
  *  FsHtmlSiteSessionFileSpec, which specifies the index files and all site asset files
  */
-export function fsGetLocalHtmlSiteSessionSpecForIndexFile(indexFile: string | BsAssetItem, destinationPath?: string): Promise<FsHtmlSiteSessionFileSpec>;
+export function fsGetLocalHtmlSiteSessionSpecForIndexFile(indexFile: string | BsAssetItem, destinationPath?: string | null): Promise<FsHtmlSiteSessionFileSpec>;
 /**
  * Return an object that implements the BsUploadWebPageSessionSpec interface for an Html Site on the local file system.
  *  The index file can specified with a string representing the local path or a BsAssetItem.
@@ -137,7 +143,7 @@ export function fsGetLocalHtmlSiteSessionSpecForIndexFile(indexFile: string | Bs
  * @param [destinationPath] {string} - If supported, the target destination path for the Html Site.
  * @return {Promise<BsUploadWebPageSessionSpec | null>}
  */
-export function fsGetUploadHtmlSiteSessionSpec(siteName: string, indexFile: string | BsAssetItem, siteType?: AssetType, destinationPath?: string): Promise<BsUploadWebPageSessionSpec | null>;
+export function fsGetUploadHtmlSiteSessionSpec(siteName: string, indexFile: string | BsAssetItem, siteType?: AssetType, destinationPath?: string | null): Promise<BsUploadWebPageSessionSpec | null>;
 
 /**
  * Created by gostosh on 11/21/2017.
@@ -203,9 +209,6 @@ export function fsGetUploadObjectFileSource(file: File): BsUploadFileSource | nu
  */
 export function fsGetFileSpecBaseName(file: FileSpec): string;
 
-/**
- * Created by jimsugg on 5/26/17.
- */
 /**
  * Generate a FileThumbnail for the given asset file. Asset file must be a video or an image file
  * @param assetItem {BsAssetItem} - asset item for which to generate thumbnail

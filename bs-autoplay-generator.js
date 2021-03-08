@@ -94,7 +94,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertParameterizedString = exports.convertParameterizedNumber = exports.bsagGenerateAutoplay = exports.bsagConfigBsConsumerKey = void 0;
+exports.convertParameterizedString = exports.convertParameterizedNumber = exports.bsagGenerateAutoplay = exports.bsagSetBaconVersion = exports.bsagConfigBsConsumerKey = void 0;
 var isomorphic_path_1 = __webpack_require__(11);
 var lodash_1 = __webpack_require__(3);
 var redux_1 = __webpack_require__(12);
@@ -107,6 +107,7 @@ var string_decoder = __webpack_require__(13);
 var error_1 = __webpack_require__(7);
 var commandGenerator_1 = __webpack_require__(6);
 var BSConsumerKey = 'NotOurRealKey';
+var BaconVersion = '';
 var _zoneAutorunMediaStatesByZoneId = {};
 var _zoneAutorunMediaStatesByMediaStateIdByZoneId = {};
 var _stateDataFeedIdToUniqueDataFeedId = {};
@@ -114,6 +115,10 @@ function bsagConfigBsConsumerKey(bsConsumerKey) {
     BSConsumerKey = bsConsumerKey;
 }
 exports.bsagConfigBsConsumerKey = bsagConfigBsConsumerKey;
+function bsagSetBaconVersion(baconVersion) {
+    BaconVersion = baconVersion;
+}
+exports.bsagSetBaconVersion = bsagSetBaconVersion;
 function bsagGenerateAutoplay(bsdm) {
     var store = redux_1.createStore(bsdatamodel_1.bsDmReducer, redux_1.applyMiddleware(redux_thunk_1.default));
     store.dispatch(bsdatamodel_1.dmOpenSign(bsdm));
@@ -194,7 +199,7 @@ exports.bsagGenerateAutoplay = bsagGenerateAutoplay;
 function getBrightAuthorMetadata() {
     var BrightAuthor = {
         version: 1,
-        BrightAuthorConnectedVersion: '0.0.1',
+        BrightAuthorConnectedVersion: BaconVersion,
         type: 'publish',
     };
     return BrightAuthor;
@@ -213,6 +218,13 @@ function getBsdmSignPartnerProducts(bsdm) {
 }
 function getBsdmSignIRRemoteControl(bsdm) {
     return bsdatamodel_1.dmGetSignIrRemoteControl(bsdm);
+}
+function getBsdmWssDeviceSpec(bsdm) {
+    var wssDeviceSpec = bsdatamodel_1.dmGetSignWssDeviceSpec(bsdm);
+    if (!lodash_1.isEmpty(wssDeviceSpec)) {
+        return wssDeviceSpec;
+    }
+    return null;
 }
 function getBsdmSignScriptPlugins(bsdm) {
     var autorunScriptPlugins = [];
@@ -298,7 +310,6 @@ function getBsdmSignMetadata(bsdm) {
     var serialPortConfigurations = [];
     bsdmSerialPortConfigurationList.forEach(function (bsdmSerialPortConfiguration) {
         var autorunSerialPortConfiguration = lodash_1.cloneDeep(bsdmSerialPortConfiguration);
-        autorunSerialPortConfiguration.parity = convertParity(autorunSerialPortConfiguration.parity);
         serialPortConfigurations.push(autorunSerialPortConfiguration);
     });
     var autorunSignMetadata;
@@ -320,15 +331,6 @@ function getBsdmSignMetadata(bsdm) {
     }
     autorunSignMetadata.backgroundScreenColor.a = 0;
     return autorunSignMetadata;
-}
-function convertParity(bsdmParity) {
-    if (bsdmParity === bsdatamodel_1.SerialParity.Even) {
-        return 'E';
-    }
-    else if (bsdmParity === bsdatamodel_1.SerialParity.Odd) {
-        return 'O';
-    }
-    return 'N';
 }
 function getBsdmCustomDeviceWebPage(bsdm) {
     var deviceWebPageMode = bsdatamodel_1.dmGetSignPresentationWebPageDisplayMode(bsdm);
@@ -647,10 +649,10 @@ function getBsdmSignDataFeeds(bsdm) {
             var fileUrl = bsnDataFeedAssetItem.fileUrl;
             switch (playerTagMatching) {
                 case bscore_1.PlayerTagMatchingType.MatchAllMediaTagsToPlayerTags:
-                    fileUrl += '&mode=matchPlayerTags';
+                    fileUrl += '&mode=matchAllMediaTags';
                     break;
                 case bscore_1.PlayerTagMatchingType.MatchAllPlayerTagsToMediaTags:
-                    fileUrl += '&mode=matchAllMediaTags';
+                    fileUrl += '&mode=matchAllPlayerTags';
                     break;
                 case bscore_1.PlayerTagMatchingType.MatchAnyPlayerAndMediaTags:
                     fileUrl += '&mode=matchAnyPlayerTags';
@@ -745,6 +747,7 @@ function getSignMetadata(bsdm) {
     appSignMetadata.dataFeedSources = getBsdmSignDataFeedSources(bsdm);
     appSignMetadata.partnerProducts = getBsdmSignPartnerProducts(bsdm);
     appSignMetadata.irRemoteControl = getBsdmSignIRRemoteControl(bsdm);
+    appSignMetadata.wssDeviceSpec = getBsdmWssDeviceSpec(bsdm);
     return getBsdmLinkedPresentations(bsdm)
         .then(function (presentationIdentifiers) {
         appSignMetadata.presentationIdentifiers = presentationIdentifiers;
@@ -1077,21 +1080,21 @@ function getStateFromARMediaState(bsdm, zone, autorunMediaState) {
             break;
         }
         case bscore_1.ContentItemType.VideoStream: {
-            autorunMediaItem = buildVideoStreamItem(autorunMediaState.name, autorunMediaState.contentItem);
+            autorunMediaItem = buildVideoStreamItem(bsdm, autorunMediaState.name, autorunMediaState.contentItem);
             state = {
                 videoStreamItem: autorunMediaItem,
             };
             break;
         }
         case bscore_1.ContentItemType.AudioStream: {
-            autorunMediaItem = buildAudioStreamItem(autorunMediaState.name, autorunMediaState.contentItem);
+            autorunMediaItem = buildAudioStreamItem(bsdm, autorunMediaState.name, autorunMediaState.contentItem);
             state = {
                 audioStreamItem: autorunMediaItem,
             };
             break;
         }
         case bscore_1.ContentItemType.MjpegStream: {
-            autorunMediaItem = buildMjpegStreamItem(autorunMediaState.name, autorunMediaState.contentItem);
+            autorunMediaItem = buildMjpegStreamItem(bsdm, autorunMediaState.name, autorunMediaState.contentItem);
             autorunMediaItem.rotation = bscore_1.RotationType.rot0;
             state = {
                 mjpegStreamItem: autorunMediaItem,
@@ -1864,24 +1867,24 @@ function buildLiveVideoItem(stateName, liveVideoContentItem) {
     };
     return liveVideoItem;
 }
-function buildVideoStreamItem(stateName, videoStreamContentItem) {
+function buildVideoStreamItem(bsdm, stateName, videoStreamContentItem) {
     var videoStreamItem = {
         stateName: stateName,
-        url: videoStreamContentItem.url,
+        url: convertParameterizedString(bsdm, videoStreamContentItem.url),
     };
     return videoStreamItem;
 }
-function buildAudioStreamItem(stateName, audioStreamContentItem) {
+function buildAudioStreamItem(bsdm, stateName, audioStreamContentItem) {
     var audioStreamItem = {
         stateName: stateName,
-        url: audioStreamContentItem.url,
+        url: convertParameterizedString(bsdm, audioStreamContentItem.url),
     };
     return audioStreamItem;
 }
-function buildMjpegStreamItem(stateName, mjpegStreamContentItem) {
+function buildMjpegStreamItem(bsdm, stateName, mjpegStreamContentItem) {
     var mjpegStreamItem = {
         stateName: stateName,
-        url: mjpegStreamContentItem.url,
+        url: convertParameterizedString(bsdm, mjpegStreamContentItem.url),
         rotation: mjpegStreamContentItem.rotation,
     };
     return mjpegStreamItem;
@@ -1950,6 +1953,13 @@ function getArEventDataFromBsdmEventData(bsdm, event) {
         case bscore_1.EventType.Udp: {
             eventData.data = fixWildcardEventData(eventData.data, '<any>');
             break;
+        }
+        case bscore_1.EventType.WssEvent: {
+            if (!lodash_1.isNil(eventData.wssEventParameter) &&
+                lodash_1.isString(eventData.wssEventParameter.parameterValue)) {
+                eventData.wssEventParameter.parameterValue =
+                    fixWildcardEventData(eventData.wssEventParameter.parameterValue, '<*>');
+            }
         }
     }
     if (event.type === bscore_1.EventType.TimeClock) {
@@ -2554,7 +2564,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(0), exports);
@@ -2895,6 +2905,9 @@ function getBsCommandParameterValueItems(bsdm, commandType, dmCommandData) {
         case bscore_1.CommandType.PauseZonePlayback:
         case bscore_1.CommandType.ResumeZonePlayback:
             pvItems = getZoneCommandData(bsdm, dmCommandData);
+            break;
+        case bscore_1.CommandType.SendWss:
+            pvItems = getWssCommandData(bsdm, dmCommandData);
             break;
         case bscore_1.CommandType.SendBLC400Output:
             pvItems = getBlc400CommandData(bsdm, dmCommandData);
@@ -3347,20 +3360,26 @@ function getSwitchPresentationCommandData(bsdm, dmCommandData) {
     var pvItems = [];
     var switchPresentationData = dmCommandData;
     var presentationId = switchPresentationData.presentationId, userVariableId = switchPresentationData.userVariableId;
-    var useUserVariable = (userVariableId !== null && userVariableId !== bsdatamodel_1.BsDmIdNone) ? 'true' : 'false';
+    var useUserVariable = (userVariableId !== null && userVariableId !== bsdatamodel_1.BsDmIdNone);
     pvItems.push({
         useUserVariable: [
             {
                 type: 'text',
-                value: useUserVariable,
+                value: useUserVariable ? 'true' : 'false',
             },
         ],
     });
-    var linkedPresentationName = bsdatamodel_1.dmGetLinkedPresentationNameForId(bsdm, { id: presentationId });
-    if (!lodash_1.isString(linkedPresentationName)) {
-        linkedPresentationName = '';
+    var ps;
+    if (useUserVariable) {
+        ps = bsdatamodel_1.dmGetParameterizedStringFromUserVariable(userVariableId);
     }
-    var ps = bsdatamodel_1.dmGetParameterizedStringFromString(linkedPresentationName);
+    else {
+        var linkedPresentationName = bsdatamodel_1.dmGetLinkedPresentationNameForId(bsdm, { id: presentationId });
+        if (!lodash_1.isString(linkedPresentationName)) {
+            linkedPresentationName = '';
+        }
+        ps = bsdatamodel_1.dmGetParameterizedStringFromString(linkedPresentationName);
+    }
     var presentationNameParameterValueItems = autoplayGenerator_1.convertParameterizedString(bsdm, ps);
     pvItems.push({
         presentationName: presentationNameParameterValueItems,
@@ -3404,6 +3423,51 @@ function getZoneCommandData(bsdm, dmCommandData) {
             },
         ],
     });
+    return pvItems;
+}
+function getWssCommandData(bsdm, dmCommandData) {
+    var _a, _b;
+    var pvItems = [];
+    var wssCommandData = dmCommandData;
+    var wssCommandName = wssCommandData.wssCommandName, port = wssCommandData.port, wssParameter = wssCommandData.wssParameter;
+    pvItems.push({
+        wssCommand: [
+            {
+                type: 'text',
+                value: wssCommandName,
+            },
+        ],
+    });
+    pvItems.push({
+        port: [
+            {
+                type: 'text',
+                value: port,
+            },
+        ],
+    });
+    if (lodash_1.isObject(wssParameter)) {
+        var parameterName = wssParameter.parameterName;
+        var pv = wssParameter.parameterValue.params[0];
+        var pvType = 'text';
+        if (pv.type === 'UserVariable') {
+            var userVariablePs = bsdatamodel_1.dmGetParameterizedStringFromUserVariable(pv.value);
+            var wssParameterValueItems = autoplayGenerator_1.convertParameterizedString(bsdm, userVariablePs);
+            pvItems.push((_a = {},
+                _a[parameterName] = wssParameterValueItems,
+                _a));
+        }
+        else {
+            pvItems.push((_b = {},
+                _b[parameterName] = [
+                    {
+                        type: pvType,
+                        value: pv.value,
+                    },
+                ],
+                _b));
+        }
+    }
     return pvItems;
 }
 function getBlc400CommandData(bsdm, dmCommandData) {
@@ -3556,7 +3620,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {

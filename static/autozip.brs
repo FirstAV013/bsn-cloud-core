@@ -4,8 +4,7 @@ Sub Main()
   Notify("Unzipping the setup files")
   package.Unpack(device)
   MoveFile(device + "autorun.zip", device + "autorun.zip_invalid")
-  ' RebootSystem()
-  RestartScript()
+  RestartApplication()
 end Sub
 
 Function GetMountedDevice() As String
@@ -34,10 +33,12 @@ end Function
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Sub Notify(message As String)
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-	print message
+  print message
   gaa =  GetGlobalAA()
 	If gaa.tw = invalid Then
-  	videoMode = CreateObject("roVideoMode")
+        videoMode = CreateObject("roVideoMode")
+        if not type(videoMode) = "roVideoMode" then return
+
 		resX = videoMode.GetResX()
 		resY = videoMode.GetResY()
 

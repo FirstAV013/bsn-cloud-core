@@ -92,7 +92,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -171,7 +171,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(6), exports);
@@ -205,7 +205,7 @@ function plDmCheckForInvalidPlDmPlaylistState(state) {
         return new plDmError_1.PlDmError(plDmError_1.PlDmErrorType.invalidSign, 'PlDmState structure is invalid');
     }
 }
-exports.plDmFilterBaseState = function (state) {
+var plDmFilterBaseState = function (state) {
     if (state.hasOwnProperty('bspl') && (plDmCheckForInvalidPlDmPlaylistState(state.bspl) === null)) {
         return state.bspl;
     }
@@ -217,7 +217,8 @@ exports.plDmFilterBaseState = function (state) {
         throw new plDmError_1.PlDmError(plDmError_1.PlDmErrorType.invalidParameters, exceptionMessage);
     }
 };
-exports.plDmGetBaseStateForUniversalTimeZone = function (state) {
+exports.plDmFilterBaseState = plDmFilterBaseState;
+var plDmGetBaseStateForUniversalTimeZone = function (state) {
     var baseState = lodash_1.cloneDeep(exports.plDmFilterBaseState(state));
     baseState.contentItems.allContentItems.forEach(function (id) {
         var contentItem = baseState.contentItems.contentItemsById[id];
@@ -228,9 +229,11 @@ exports.plDmGetBaseStateForUniversalTimeZone = function (state) {
     });
     return baseState;
 };
-exports.plDmGetBaseState = function (state) {
+exports.plDmGetBaseStateForUniversalTimeZone = plDmGetBaseStateForUniversalTimeZone;
+var plDmGetBaseState = function (state) {
     return exports.plDmFilterBaseState(state);
 };
+exports.plDmGetBaseState = plDmGetBaseState;
 
 
 /***/ }),
@@ -409,13 +412,15 @@ exports.plDmFilterPlDmState = plDmFilterPlDmState;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createNextDefaultCustomFieldName = exports.createDefaultLiveMediaFeedProperties = exports.createDefaultPlaylistProperties = exports.isValidPlDmId = exports.newPlDmId = void 0;
 var uuid_1 = __webpack_require__(35);
-exports.newPlDmId = function () { return uuid_1.v4(); };
+var newPlDmId = function () { return uuid_1.v4(); };
+exports.newPlDmId = newPlDmId;
 var reValidId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-exports.isValidPlDmId = function (id) {
+var isValidPlDmId = function (id) {
     var ret = id.match(reValidId);
     return ret && id === ret[0];
 };
-exports.createDefaultPlaylistProperties = function (id, name, supportsAudio, supportsVideo, supportsImages, shuffle) {
+exports.isValidPlDmId = isValidPlDmId;
+var createDefaultPlaylistProperties = function (id, name, supportsAudio, supportsVideo, supportsImages, shuffle) {
     return {
         id: id,
         name: name,
@@ -426,7 +431,8 @@ exports.createDefaultPlaylistProperties = function (id, name, supportsAudio, sup
         lastModifiedDate: null,
     };
 };
-exports.createDefaultLiveMediaFeedProperties = function (id, name, ttl) {
+exports.createDefaultPlaylistProperties = createDefaultPlaylistProperties;
+var createDefaultLiveMediaFeedProperties = function (id, name, ttl) {
     if (ttl === void 0) { ttl = 300; }
     return {
         id: id,
@@ -435,7 +441,8 @@ exports.createDefaultLiveMediaFeedProperties = function (id, name, ttl) {
         lastModifiedDate: null,
     };
 };
-exports.createNextDefaultCustomFieldName = function (currentCustomFieldNames) {
+exports.createDefaultLiveMediaFeedProperties = createDefaultLiveMediaFeedProperties;
+var createNextDefaultCustomFieldName = function (currentCustomFieldNames) {
     if (currentCustomFieldNames === void 0) { currentCustomFieldNames = {}; }
     var index = 1;
     var validName = false;
@@ -456,6 +463,7 @@ exports.createNextDefaultCustomFieldName = function (currentCustomFieldNames) {
         }
     }
 };
+exports.createNextDefaultCustomFieldName = createNextDefaultCustomFieldName;
 
 
 /***/ }),
@@ -603,7 +611,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(3), exports);
@@ -784,9 +792,10 @@ exports.ADD_CONTENT_ITEM_FOR_LOAD = 'PLDM_ADD_CONTENT_ITEM_FOR_LOAD';
 exports.UPDATE_CONTENT_ITEM = 'PLDM_UPDATE_CONTENT_ITEM';
 exports.DELETE_CONTENT_ITEM = 'PLDM_DELETE_CONTENT_ITEM';
 exports.UPDATE_CONTENT_ITEM_ORDER = 'PLDM_UPDATE_CONTENT_ITEM_ORDER';
-exports.plDmContentIsAssetItem = function (content) {
+var plDmContentIsAssetItem = function (content) {
     return bscore_1.bscIsAssetItem(content);
 };
+exports.plDmContentIsAssetItem = plDmContentIsAssetItem;
 exports.plDmAddContentItem = plDmAddDynamicPlaylistContentItem;
 function plDmAddDynamicPlaylistContentItem(items, index) {
     return function (dispatch, getState) {
@@ -1200,9 +1209,10 @@ var isValidContentItemsState = function (state) {
         && Array.isArray(state.allContentItems)
         && state.allContentItems.length === Object.keys(state.contentItemsById).length;
 };
-exports.plDmGetContentItemsState = function (state) {
+var plDmGetContentItemsState = function (state) {
     return getContentItemsState(state);
 };
+exports.plDmGetContentItemsState = plDmGetContentItemsState;
 var getContentItemsState = reselect_1.createSelector(base_1.plDmGetBaseState, function (state) {
     if (isValidContentItemsState(state.contentItems)) {
         return state.contentItems;
@@ -1268,9 +1278,10 @@ var isValidCustomFieldsState = function (state) {
         && Array.isArray(state.customFieldsOrder)
         && state.customFieldsOrder.length === Object.keys(state.customFieldsNameById).length;
 };
-exports.plDmGetCustomFieldsState = function (state) {
+var plDmGetCustomFieldsState = function (state) {
     return getCustomFieldsState(state);
 };
+exports.plDmGetCustomFieldsState = plDmGetCustomFieldsState;
 var getCustomFieldsState = reselect_1.createSelector(base_1.plDmGetBaseState, function (state) {
     if (isValidCustomFieldsState(state.customFields)) {
         return state.customFields;
@@ -1302,7 +1313,7 @@ var getCustomFieldsNameMap = reselect_1.createSelector(exports.plDmGetCustomFiel
     return state.customFieldsNameById;
 });
 function plDmGetCustomFieldsDerivedCollectionByContentItemId(state, props) {
-    return getCustomFieldsDerivedCollectionByContentItemId(state, props);
+    return getCustomFieldsDerivedCollectionByContentItemId(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetCustomFieldsDerivedCollectionByContentItemId = plDmGetCustomFieldsDerivedCollectionByContentItemId;
 var getCustomFieldsDerivedCollectionByContentItemId = reselect_1.createSelector(function (state, props) { return selectorContentItems_1.plDmGetContentItemStateById(state, props); }, function (state) { return plDmGetCustomFieldsOrder(state); }, function (state) { return plDmGetCustomFieldsCollectionMap(state); }, function (state) { return plDmGetCustomFieldsNameMap(state); }, function (contentItem, order, collectionMap, nameMap) {
@@ -1331,7 +1342,7 @@ function plDmGetFieldIdByName(state, fieldName) {
 }
 exports.plDmGetFieldIdByName = plDmGetFieldIdByName;
 function plDmGetCustomFieldValueByFieldName(state, props) {
-    return getCustomFieldValueByFieldName(state, props);
+    return getCustomFieldValueByFieldName(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetCustomFieldValueByFieldName = plDmGetCustomFieldValueByFieldName;
 var getCustomFieldValueByFieldName = reselect_1.createSelector(function (state, props) {
@@ -1347,7 +1358,7 @@ var getCustomFieldValueByFieldName = reselect_1.createSelector(function (state, 
     return plDmGetCustomFieldValue(state, newProps);
 });
 function plDmGetCustomFieldValue(state, props) {
-    return getCustomFieldValue(state, props);
+    return getCustomFieldValue(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetCustomFieldValue = plDmGetCustomFieldValue;
 var getCustomFieldValue = reselect_1.createSelector(function (state, props) {
@@ -1355,7 +1366,7 @@ var getCustomFieldValue = reselect_1.createSelector(function (state, props) {
     return customFields[props.id];
 }, function (_, props) { return props; }, function (state, props) { return state[props.nameId]; });
 function plDmGetCustomFieldNameById(state, props) {
-    return getCustomFieldNameById(state, props);
+    return getCustomFieldNameById(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetCustomFieldNameById = plDmGetCustomFieldNameById;
 var getCustomFieldNameById = reselect_1.createSelector(function (_, props) { return props; }, function (state) { return plDmGetCustomFieldsNameMap(state); }, function (props, state) {
@@ -1545,18 +1556,21 @@ exports.UPDATE_PLAYLIST_MODIFIED_TIME = 'PLDM_UPDATE_PLAYLIST_MODIFIED_TIME';
 function plDmNewPlaylist(name, supportsAudio, supportsVideo, supportsImages, shuffle) {
     return {
         type: exports.NEW_PLAYLIST,
-        payload: utils_1.createDefaultPlaylistProperties(utils_1.newPlDmId(), name, supportsAudio, supportsVideo, supportsImages, shuffle),
+        payload: utils_1.createDefaultPlaylistProperties(utils_1.newPlDmId(), name.trim(), supportsAudio, supportsVideo, supportsImages, shuffle),
     };
 }
 exports.plDmNewPlaylist = plDmNewPlaylist;
 function plDmNewLiveMediaFeed(name, ttl) {
     return {
         type: exports.NEW_PLAYLIST,
-        payload: utils_1.createDefaultLiveMediaFeedProperties(utils_1.newPlDmId(), name, ttl),
+        payload: utils_1.createDefaultLiveMediaFeedProperties(utils_1.newPlDmId(), name.trim(), ttl),
     };
 }
 exports.plDmNewLiveMediaFeed = plDmNewLiveMediaFeed;
 function plDmUpdatePlaylistProperties(params) {
+    if (!lodash_1.isNil(params.name)) {
+        params.name = params.name.trim();
+    }
     return {
         type: exports.UPDATE_PLAYLIST,
         payload: params,
@@ -1564,6 +1578,9 @@ function plDmUpdatePlaylistProperties(params) {
 }
 exports.plDmUpdatePlaylistProperties = plDmUpdatePlaylistProperties;
 function plDmUpdateLiveMediaFeedPlaylistProperties(params) {
+    if (!lodash_1.isNil(params.name)) {
+        params.name = params.name.trim();
+    }
     return {
         type: exports.UPDATE_PLAYLIST,
         payload: params,
@@ -1755,9 +1772,10 @@ var assetById = function (state, action) {
     return state;
 };
 exports.assetMapReducer = assetById;
-exports.isValidAssetMapState = function (state) {
+var isValidAssetMapState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidAssetMapState = isValidAssetMapState;
 
 
 /***/ }),
@@ -1881,7 +1899,7 @@ var allContentItems = function (state, action) {
 };
 var contentItems = redux_1.combineReducers({ contentItemsById: contentItemsById, allContentItems: allContentItems });
 exports.contentItemsReducer = contentItems;
-exports.isValidContentItemsState = function (state) {
+var isValidContentItemsState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('contentItemsById')
         && typeof state.contentItemsById === 'object'
@@ -1889,6 +1907,7 @@ exports.isValidContentItemsState = function (state) {
         && Array.isArray(state.allContentItems)
         && state.allContentItems.length === Object.keys(state.contentItemsById).length;
 };
+exports.isValidContentItemsState = isValidContentItemsState;
 
 
 /***/ }),
@@ -2041,7 +2060,7 @@ var customFields = redux_1.combineReducers({ customFieldsOrder: customFieldsOrde
     customFieldsNameById: customFieldsNameById,
     contentItemCustomFields: contentItemCustomFields });
 exports.customFieldsReducer = customFields;
-exports.isValidCustomFieldsState = function (state) {
+var isValidCustomFieldsState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('customFieldsNameById')
         && typeof state.customFieldsNameById === 'object'
@@ -2051,6 +2070,7 @@ exports.isValidCustomFieldsState = function (state) {
         && Array.isArray(state.customFieldsOrder)
         && state.customFieldsOrder.length === Object.keys(state.customFieldsNameById).length;
 };
+exports.isValidCustomFieldsState = isValidCustomFieldsState;
 
 
 /***/ }),
@@ -2082,12 +2102,14 @@ var modifiedTime = function (state, action) {
     return state;
 };
 exports.modifiedTimeReducer = modifiedTime;
-exports.isValidModifiedTimeState = function (state) {
+var isValidModifiedTimeState = function (state) {
     return typeof state === 'string';
 };
-exports.getLastModifiedTime = function (state) {
+exports.isValidModifiedTimeState = isValidModifiedTimeState;
+var getLastModifiedTime = function (state) {
     return state !== undefined ? state : (new Date()).toISOString();
 };
+exports.getLastModifiedTime = getLastModifiedTime;
 
 
 /***/ }),
@@ -2123,11 +2145,12 @@ var playlist = function (state, _a) {
     return state;
 };
 exports.playlistReducer = playlist;
-exports.isValidPlaylistState = function (state) {
+var isValidPlaylistState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('id')
         && state.hasOwnProperty('name');
 };
+exports.isValidPlaylistState = isValidPlaylistState;
 
 
 /***/ }),
@@ -2216,7 +2239,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(21), exports);
@@ -2267,9 +2290,10 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.plDmResetDefaultPropertyValues = exports.plDmGetDefaultImageContentItemData = exports.plDmGetDefaultAudioContentItemData = exports.plDmGetDefaultVideoContentItemData = void 0;
 __exportStar(__webpack_require__(2), exports);
 __exportStar(__webpack_require__(9), exports);
 __exportStar(__webpack_require__(18), exports);
@@ -2352,9 +2376,10 @@ var plDmError_1 = __webpack_require__(1);
 var isValidAssetMapState = function (state) {
     return typeof state === 'object';
 };
-exports.plDmGetAssetMapState = function (state) {
+var plDmGetAssetMapState = function (state) {
     return getAssetMapState(state);
 };
+exports.plDmGetAssetMapState = plDmGetAssetMapState;
 var getAssetMapState = reselect_1.createSelector(base_1.plDmGetBaseState, function (state) {
     if (isValidAssetMapState(state.assetMap)) {
         return state.assetMap;
@@ -2364,7 +2389,7 @@ var getAssetMapState = reselect_1.createSelector(base_1.plDmGetBaseState, functi
         throw new plDmError_1.PlDmError(plDmError_1.PlDmErrorType.invalidParameters, exceptionMessage);
     }
 });
-exports.plDmGetAssetIdByLocator = function (state, props) {
+var plDmGetAssetIdByLocator = function (state, props) {
     var subState = exports.plDmGetAssetMapState(state);
     var assetId = null;
     var locator = props.locator;
@@ -2376,6 +2401,7 @@ exports.plDmGetAssetIdByLocator = function (state, props) {
     });
     return assetId;
 };
+exports.plDmGetAssetIdByLocator = plDmGetAssetIdByLocator;
 function plDmGetAssetItemById(state, props) {
     var subState = exports.plDmGetAssetMapState(state);
     var asset = subState[props.id];
@@ -2404,8 +2430,9 @@ var getAssetItemIdsForPlaylist = reselect_1.createSelector(exports.plDmGetAssetM
     return Object.keys(state);
 });
 function plDmGetBlobAssetItemList(state) {
-    return Object.keys(state.assetMap).reduce(function (acc, assetId) {
-        var assetItem = state.assetMap[assetId];
+    var assetMap = base_1.plDmGetBaseState(state).assetMap;
+    return Object.keys(assetMap).reduce(function (acc, assetId) {
+        var assetItem = assetMap[assetId];
         if (assetItem.location === bscore_1.AssetLocation.Blob) {
             acc.push(assetItem);
         }
@@ -2416,8 +2443,9 @@ exports.plDmGetBlobAssetItemList = plDmGetBlobAssetItemList;
 function plDmGetBsnPlaylistAssetItemList(state) {
     var assetItemArray = [];
     var hasLocalAsset = false;
-    Object.keys(state.assetMap).some(function (id) {
-        var assetItem = state.assetMap[id];
+    var assetMap = base_1.plDmGetBaseState(state).assetMap;
+    Object.keys(assetMap).some(function (id) {
+        var assetItem = assetMap[id];
         if (assetItem.location !== bscore_1.AssetLocation.Bsn) {
             hasLocalAsset = true;
             return true;
@@ -2447,9 +2475,10 @@ var plDmError_1 = __webpack_require__(1);
 var isValidModifiedTimeState = function (state) {
     return typeof state === 'string';
 };
-exports.plDmGetModifiedTimeState = function (state) {
+var plDmGetModifiedTimeState = function (state) {
     return getModifiedTimeState(state);
 };
+exports.plDmGetModifiedTimeState = plDmGetModifiedTimeState;
 var getModifiedTimeState = reselect_1.createSelector(base_1.plDmGetBaseState, function (state) {
     if (isValidModifiedTimeState(state.modifiedTime)) {
         return state.modifiedTime;
@@ -2485,9 +2514,10 @@ var isValidPlaylistState = function (state) {
         && state.hasOwnProperty('id')
         && state.hasOwnProperty('name');
 };
-exports.plDmGetPlaylistState = function (state) {
+var plDmGetPlaylistState = function (state) {
     return getPlaylistState(state);
 };
+exports.plDmGetPlaylistState = plDmGetPlaylistState;
 var getPlaylistState = reselect_1.createSelector(base_1.plDmGetBaseState, function (state) {
     if (isValidPlaylistState(state.playlist)) {
         return state.playlist;
@@ -2548,6 +2578,7 @@ var getPlaylistSupports = reselect_1.createSelector(exports.plDmGetPlaylistState
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.plDmGetLiveMediaContentItemById = exports.getLiveMediaContentItemStateById = exports.plDmGetContentItemById = exports.plDmGetDynamicPlaylistContentItemById = exports.getDynamicPlaylistContentItemStateById = void 0;
 var reselect_1 = __webpack_require__(4);
+var base_1 = __webpack_require__(3);
 var plDmClasses_1 = __webpack_require__(16);
 var plDmContentItems_1 = __webpack_require__(8);
 var selectorContentItems_1 = __webpack_require__(13);
@@ -2564,13 +2595,10 @@ var createContentItemObject = function (contentItem, assetMap) {
 };
 exports.getDynamicPlaylistContentItemStateById = reselect_1.createSelector(function (state, props) { return selectorContentItems_1.plDmGetContentItemStateById(state, props); }, function (state) { return state.assetMap; }, createContentItemObject);
 function plDmGetDynamicPlaylistContentItemById(state, props) {
-    return exports.getDynamicPlaylistContentItemStateById(state, props);
+    return exports.getDynamicPlaylistContentItemStateById(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetDynamicPlaylistContentItemById = plDmGetDynamicPlaylistContentItemById;
-function plDmGetContentItemById(state, props) {
-    return exports.getDynamicPlaylistContentItemStateById(state, props);
-}
-exports.plDmGetContentItemById = plDmGetContentItemById;
+exports.plDmGetContentItemById = plDmGetDynamicPlaylistContentItemById;
 var createLiveMediaContentItemObject = function (contentItem, assetMap, customFields) {
     if (contentItem) {
         var assetItem = void 0;
@@ -2585,7 +2613,7 @@ var createLiveMediaContentItemObject = function (contentItem, assetMap, customFi
 };
 exports.getLiveMediaContentItemStateById = reselect_1.createSelector(function (state, props) { return selectorContentItems_1.plDmGetContentItemStateById(state, props); }, function (state) { return state.assetMap; }, function (state, props) { return selectorCustomFields_1.plDmGetCustomFieldsDerivedCollectionByContentItemId(state, props); }, createLiveMediaContentItemObject);
 function plDmGetLiveMediaContentItemById(state, props) {
-    return exports.getLiveMediaContentItemStateById(state, props);
+    return exports.getLiveMediaContentItemStateById(base_1.plDmGetBaseState(state), props);
 }
 exports.plDmGetLiveMediaContentItemById = plDmGetLiveMediaContentItemById;
 

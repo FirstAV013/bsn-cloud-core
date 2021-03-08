@@ -90,7 +90,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(6), exports);
@@ -109,7 +109,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -236,12 +236,13 @@ function dfDmCheckForDuplicateFieldName(state) {
     }
 }
 exports.dfDmCheckForDuplicateFieldName = dfDmCheckForDuplicateFieldName;
-exports.isValidDataFeedState = function (state) {
+var isValidDataFeedState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('id')
         && state.hasOwnProperty('name');
 };
-exports.isValidFieldsState = function (state) {
+exports.isValidDataFeedState = isValidDataFeedState;
+var isValidFieldsState = function (state) {
     return typeof state === 'object'
         && state.hasOwnProperty('fieldsValue')
         && typeof state.fieldsValue === 'object'
@@ -251,9 +252,11 @@ exports.isValidFieldsState = function (state) {
         && Array.isArray(state.fieldsOrder)
         && state.fieldsOrder.length === Object.keys(state.fieldsTitleById).length;
 };
-exports.isValidModifiedTimeState = function (state) {
+exports.isValidFieldsState = isValidFieldsState;
+var isValidModifiedTimeState = function (state) {
     return typeof state === 'string';
 };
+exports.isValidModifiedTimeState = isValidModifiedTimeState;
 
 
 /***/ }),
@@ -278,7 +281,7 @@ function dfDmCheckForInvalidDfDmState(state) {
         return new dfDmError_1.DfDmError(dfDmError_1.DfDmErrorType.invalidDataFeed, 'DfDmState structure is invalid');
     }
 }
-exports.dfDmGetBaseStateForUniversalTimeZone = function (state) {
+var dfDmGetBaseStateForUniversalTimeZone = function (state) {
     var baseState = lodash_1.cloneDeep(exports.dfDmFilterBaseState(state));
     baseState.fields.fieldsOrder.forEach(function (id) {
         var fieldsValue = baseState.fields.fieldsValue[id];
@@ -289,7 +292,8 @@ exports.dfDmGetBaseStateForUniversalTimeZone = function (state) {
     });
     return baseState;
 };
-exports.dfDmFilterBaseState = function (state) {
+exports.dfDmGetBaseStateForUniversalTimeZone = dfDmGetBaseStateForUniversalTimeZone;
+var dfDmFilterBaseState = function (state) {
     if (state.hasOwnProperty('bsdfdm') && (dfDmCheckForInvalidDfDmState(state.bsdfdm) === null)) {
         return state.bsdfdm;
     }
@@ -301,9 +305,11 @@ exports.dfDmFilterBaseState = function (state) {
         throw new dfDmError_1.DfDmError(dfDmError_1.DfDmErrorType.invalidParameters, exceptionMessage);
     }
 };
-exports.dfDmGetBaseState = function (state) {
+exports.dfDmFilterBaseState = dfDmFilterBaseState;
+var dfDmGetBaseState = function (state) {
     return exports.dfDmFilterBaseState(state);
 };
+exports.dfDmGetBaseState = dfDmGetBaseState;
 
 
 /***/ }),
@@ -375,11 +381,14 @@ exports.UPDATE_FEED_MODIFIED_TIME = 'DFDM_UPDATE_FEED_MODIFIED_TIME';
 function dfDmNewDataFeed(name) {
     return {
         type: exports.NEW_DATAFEED,
-        payload: utils_1.createDefaultDataFeedProperties(dfDmInterfaces_1.DfDmIdNone, name),
+        payload: utils_1.createDefaultDataFeedProperties(dfDmInterfaces_1.DfDmIdNone, name.trim()),
     };
 }
 exports.dfDmNewDataFeed = dfDmNewDataFeed;
 function dfDmUpdateDataFeedProperties(params) {
+    if (!lodash_1.isNil(params.name)) {
+        params.name = params.name.trim();
+    }
     return {
         type: exports.UPDATE_DATAFEED,
         payload: params,
@@ -519,20 +528,23 @@ exports.dfDmDeleteField = dfDmDeleteField;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createDefaultFieldObject = exports.createDefaultDataFeedProperties = exports.isValidDfDmId = exports.newDfDmId = void 0;
 var uuid_1 = __webpack_require__(25);
-exports.newDfDmId = function () { return uuid_1.v4(); };
+var newDfDmId = function () { return uuid_1.v4(); };
+exports.newDfDmId = newDfDmId;
 var reValidId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-exports.isValidDfDmId = function (id) {
+var isValidDfDmId = function (id) {
     var ret = id.match(reValidId);
     return ret && id === ret[0];
 };
-exports.createDefaultDataFeedProperties = function (id, name) {
+exports.isValidDfDmId = isValidDfDmId;
+var createDefaultDataFeedProperties = function (id, name) {
     return {
         id: id,
         name: name,
         lastModifiedDate: null,
     };
 };
-exports.createDefaultFieldObject = function () {
+exports.createDefaultDataFeedProperties = createDefaultDataFeedProperties;
+var createDefaultFieldObject = function () {
     return {
         id: exports.newDfDmId(),
         value: '',
@@ -541,6 +553,7 @@ exports.createDefaultFieldObject = function () {
         validityEndDate: null,
     };
 };
+exports.createDefaultFieldObject = createDefaultFieldObject;
 
 
 /***/ }),
@@ -688,7 +701,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(3), exports);
@@ -891,9 +904,10 @@ var modifiedTime = function (state, action) {
     return state;
 };
 exports.dfModifiedTimeReducer = modifiedTime;
-exports.getLastModifiedTime = function (state) {
+var getLastModifiedTime = function (state) {
     return state !== undefined ? state : (new Date()).toISOString();
 };
+exports.getLastModifiedTime = getLastModifiedTime;
 
 
 /***/ }),
@@ -988,7 +1002,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(21), exports);
@@ -1031,7 +1045,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(0), exports);
@@ -1084,9 +1098,10 @@ var reselect_1 = __webpack_require__(10);
 var base_1 = __webpack_require__(3);
 var dfDmStateValidate_1 = __webpack_require__(2);
 var dfDmError_1 = __webpack_require__(1);
-exports.dfDmGetDataFeedState = function (state) {
+var dfDmGetDataFeedState = function (state) {
     return getDataFeedState(state);
 };
+exports.dfDmGetDataFeedState = dfDmGetDataFeedState;
 var getDataFeedState = reselect_1.createSelector(base_1.dfDmGetBaseState, function (state) {
     if (dfDmStateValidate_1.isValidDataFeedState(state.dataFeed)) {
         return state.dataFeed;
@@ -1128,9 +1143,10 @@ var reselect_1 = __webpack_require__(10);
 var base_1 = __webpack_require__(3);
 var dfDmStateValidate_1 = __webpack_require__(2);
 var dfDmError_1 = __webpack_require__(1);
-exports.dfDmGetFieldsState = function (state) {
+var dfDmGetFieldsState = function (state) {
     return getFieldsState(state);
 };
+exports.dfDmGetFieldsState = dfDmGetFieldsState;
 var getFieldsState = reselect_1.createSelector(base_1.dfDmGetBaseState, function (state) {
     if (dfDmStateValidate_1.isValidFieldsState(state.fields)) {
         return state.fields;
@@ -1198,9 +1214,10 @@ var reselect_1 = __webpack_require__(10);
 var base_1 = __webpack_require__(3);
 var dfDmError_1 = __webpack_require__(1);
 var dfDmStateValidate_1 = __webpack_require__(2);
-exports.dfDmGetModifiedTimeState = function (state) {
+var dfDmGetModifiedTimeState = function (state) {
     return getModifiedTimeState(state);
 };
+exports.dfDmGetModifiedTimeState = dfDmGetModifiedTimeState;
 var getModifiedTimeState = reselect_1.createSelector(base_1.dfDmGetBaseState, function (state) {
     if (dfDmStateValidate_1.isValidModifiedTimeState(state.modifiedTime)) {
         return state.modifiedTime;

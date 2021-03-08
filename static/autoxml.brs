@@ -3,7 +3,7 @@ Library "autoplugins.brs"
 'region Main
 Sub Main()
   
-  autorunVersion$ = "10.0.49" 'Bacon in development
+  autorunVersion$ = "10.0.58" 'Bacon in development
   customAutorunVersion$ = "10.0.0"
   
   debugParams = EnableDebugging()
@@ -79,29 +79,27 @@ Sub Main()
   ' check to see whether or not the current firmware meets the minimum compatibility requirements
   versionNumber% = modelObject.GetVersionNumber()
   
-  'TEDTODO - update for bacon
   if sysInfo.deviceFamily$ = "pantera" then
-    minVersionNumber% = 393761
-    minVersion$ = "6.2.33"
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
   else if sysInfo.deviceFamily$ = "pagani" then
-    minVersionNumber% = 459275
-    minVersion$ = "7.2.11"
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
   else if sysInfo.deviceFamily$ = "impala" then
-    minVersionNumber% = 393761
-    minVersion$ = "6.2.33"
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
   else if sysInfo.deviceFamily$ = "malibu" then
-    minVersionNumber% = 459041
-    minVersion$ = "7.1.33"
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
   else if sysInfo.deviceFamily$ = "tiger" then
-    minVersionNumber% = 327952
-    minVersion$ = "5.1.16"
-  else if sysInfo.deviceFamily$ = "lynx" then
-    minVersionNumber% = 327952
-    minVersion$ = "5.1.16"
-    ' TODO Bacon'
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
+  else if sysInfo.deviceFamily$ = "sebring" then
+    minVersionNumber% = 524817
+    minVersion$ = "8.2.17.3"
   else ' no supported devices should hit this else
-    minVersionNumber% = 393761
-    minVersion$ = "6.2.33"
+    minVersionNumber% = 524407
+    minVersion$ = "8.0.119"
   end if
   
   if versionNumber% < minVersionNumber% then
@@ -132,7 +130,7 @@ Sub Main()
   end if
   
   diagnosticCodes = newDiagnosticCodes()
-  
+
   RunBsp(sysFlags, sysInfo, diagnosticCodes, systemTime)
   
 end sub
@@ -481,6 +479,9 @@ Sub ReadCachedRegistrySettings()
   
   m.registrySettings.setupType = m.registrySection.Read("sut")
 
+  ' BCN-6317. If inheritNetworkProperties is yes, do not apply network settings
+  m.registrySettings.inheritNetworkProperties = m.registrySection.Read("inp")
+
 end sub
 
 
@@ -819,7 +820,9 @@ Sub RunBsp(sysFlags as object, sysInfo as object, diagnosticCodes as object, sys
     end if
     
   end if
-  
+
+  BSP.cellularModemActive = IsCellularModemActive()
+
   ' networking is considered active if current-sync.json is present.
   networkedCurrentSyncValid = false
   networkedCurrentSync = CreateObject("roSyncSpec")
@@ -867,7 +870,7 @@ Sub RunBsp(sysFlags as object, sysInfo as object, diagnosticCodes as object, sys
     end if
     
     BSP.SetPerFileEncryptionStatus(networkedCurrentSync)
-    
+
     BSP.networkingHSM.Initialize()
     
   else
@@ -1063,7 +1066,12 @@ Sub GetSupportedFeatures()
   featureMinRevsFilePath$ = GetPoolFilePath(m.assetPoolFiles, "featureMinRevs.json")
   m.featureMinRevs = ParseFeatureMinRevs(featureMinRevsFilePath$)
   
-  m.setSyncDomainSupported = true
+  videoMode = CreateObject("roVideoMode")
+  if type(videoMode) = "roVideoMode" then
+    m.setSyncDomainSupported = true
+  else
+    m.setSyncDomainSupported = false
+  endif
   m.forceResolutionSupported = true
   m.showHideVideoZoneSupported = true
   m.bypassProxySupported = true
@@ -1076,6 +1084,43 @@ Sub GetSupportedFeatures()
   m.fullResolutionGraphicsSupported = true
   
 end sub
+
+
+Function IsCellularModemActive() as boolean
+
+  supervisorSupport = GetSupervisorSupport()
+  
+  if supervisorSupport = invalid then
+    return false
+  endif
+
+  cellularModemActive = false
+  if type(supervisorSupport) = "roAssociativeArray" then
+    if type(supervisorSupport.data) = "roAssociativeArray" then
+      if type(supervisorSupport.data.result) = "roAssociativeArray" then
+        cellularModemActive = supervisorSupport.data.result.LookupCi("cellularModemActive")
+        if cellularModemActive = invalid then
+          cellularModemActive = false
+        endif
+      endif
+    endif
+  endif
+
+  return cellularModemActive
+
+end function
+
+
+Function GetSupervisorSupport() as object
+  supervisorSupportUrlXfer = CreateObject("roUrlTransfer")
+  supervisorSupportUrlXfer.SetUrl("http://localhost/api/v1/system")
+  supervisorSupportStr = supervisorSupportUrlXfer.GetToString()
+  if IsString(supervisorSupportStr) and len(supervisorSupportStr) > 0 then
+    return ParseJson(supervisorSupportStr)
+  else
+    return invalid
+  endif
+end function
 
 
 Sub SetPerFileEncryptionStatus(syncSpec as object)
@@ -1119,134 +1164,124 @@ Function ParseFeatureMinRevs(path$ as string)
 end function
 
 
-Sub SetPoolSizes(syncSpec as object) as object
+Function GetRequestedBrowserStorageSpace(storageSpaceLimits as object) as integer
 
-  limitStorageSpace = syncSpecValueTrue(syncSpec.LookupMetadata("client", "limitStorageSpace"))
-  if limitStorageSpace then
-    spaceLimitedByAbsoluteSize = syncSpecValueTrue(syncSpec.LookupMetadata("client", "spaceLimitedByAbsoluteSize"))
-    publishedDataSizeLimitMB = syncSpec.LookupMetadata("client", "publishedDataSizeLimitMB")
-    publishedDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "publishedDataSizeLimitPercentage")
-    dynamicDataSizeLimitMB = syncSpec.LookupMetadata("client", "dynamicDataSizeLimitMB")
-    dynamicDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "dynamicDataSizeLimitPercentage")
-    htmlDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlDataSizeLimitPercentage")
-    htmlDataSizeLimitMB = syncSpec.LookupMetadata("client", "htmlDataSizeLimitMB")
-    htmlLocalStorageSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlLocalStorageSizeLimitPercentage")
-    htmlLocalStorageSizeLimitMB = syncSpec.LookupMetadata("client", "htmlLocalStorageSizeLimitMB")
-    htmlIndexedDBSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlIndexedDBSizeLimitPercentage")
-    htmlIndexedDBSizeLimitMB = syncSpec.LookupMetadata("client", "htmlIndexedDBSizeLimitMB")
+  browser_storage% = 0
+
+  if storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% > 0 then
+    if storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% >= 2048 then
+      storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% = 2047
+    end if
+    browser_storage% = browser_storage% + storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB%
   end if
-  
-  if limitStorageSpace then
+
+  if storageSpaceLimits.maximumHTMLDataPoolSizeMB% > 0 then
+    if storageSpaceLimits.maximumHTMLDataPoolSizeMB% >= 2048 then
+      storageSpaceLimits.maximumHTMLDataPoolSizeMB% = 2047
+    end if
+    browser_storage% = browser_storage% + storageSpaceLimits.maximumHTMLDataPoolSizeMB%
+  end if
+
+  if storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% > 0 then
+    if storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% >= 2048 then
+      storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% = 2047
+    end if
+    browser_storage% = browser_storage% + storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB%
+  end if
+
+  browser_storage% = browser_storage% * 1024 * 1024
+
+  return browser_storage%
+
+end function
+
+
+Function GetStorageSpaceLimits(syncSpec as object) as object
+
+  spaceLimitedByAbsoluteSize = syncSpecValueTrue(syncSpec.LookupMetadata("client", "spaceLimitedByAbsoluteSize"))
+  publishedDataSizeLimitMB = syncSpec.LookupMetadata("client", "publishedDataSizeLimitMB")
+  publishedDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "publishedDataSizeLimitPercentage")
+  dynamicDataSizeLimitMB = syncSpec.LookupMetadata("client", "dynamicDataSizeLimitMB")
+  dynamicDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "dynamicDataSizeLimitPercentage")
+  htmlDataSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlDataSizeLimitPercentage")
+  htmlDataSizeLimitMB = syncSpec.LookupMetadata("client", "htmlDataSizeLimitMB")
+  htmlLocalStorageSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlLocalStorageSizeLimitPercentage")
+  htmlLocalStorageSizeLimitMB = syncSpec.LookupMetadata("client", "htmlLocalStorageSizeLimitMB")
+  htmlIndexedDBSizeLimitPercentage = syncSpec.LookupMetadata("client", "htmlIndexedDBSizeLimitPercentage")
+  htmlIndexedDBSizeLimitMB = syncSpec.LookupMetadata("client", "htmlIndexedDBSizeLimitMB")
+
+  storageSpaceLimits = {}
+
+  if not spaceLimitedByAbsoluteSize then
     
-    if not spaceLimitedByAbsoluteSize then
-      
-      ' convert from percentage settings to absolute settings
-      du = CreateObject("roStorageInfo", "./")
-      totalCardSizeMB% = du.GetSizeInMegabytes()
-      
-      ' pool size for published data
-      publishedDataSizeLimitPercentage% = int(val(publishedDataSizeLimitPercentage))
-      maximumPublishedDataPoolSizeMB% = publishedDataSizeLimitPercentage% * totalCardSizeMB% / 100
-      
-      ' pool size for dynamic data
-      dynamicDataSizeLimitPercentage% = int(val(dynamicDataSizeLimitPercentage))
-      maximumDynamicDataPoolSizeMB% = dynamicDataSizeLimitPercentage% * totalCardSizeMB% / 100
-      
-      ' size for html data
-      htmlDataSizeLimitPercentage% = int(val(htmlDataSizeLimitPercentage))
-      maximumHTMLDataPoolSizeMB% = htmlDataSizeLimitPercentage% * totalCardSizeMB% / 100
-      
-      ' size for html local storage
-      htmlLocalStorageSizeLimitPercentage% = 0
-      maximumHTMLLocalStoragePoolSizeMB% = 0
-      if htmlLocalStorageSizeLimitPercentage <> "" then
-        htmlLocalStorageSizeLimitPercentage% = int(val(htmlLocalStorageSizeLimitPercentage))
-        maximumHTMLLocalStoragePoolSizeMB% = htmlLocalStorageSizeLimitPercentage% * totalCardSizeMB% / 100
-      end if
-      
-      ' size for html indexed db
-      htmlIndexedDBSizeLimitPercentage% = 0
-      maximumHTMLIndexedDBPoolSizeMB% = 0
-      if htmlIndexedDBSizeLimitPercentage <> "" then
-        htmlIndexedDBSizeLimitPercentage% = int(val(htmlIndexedDBSizeLimitPercentage))
-        maximumHTMLIndexedDBPoolSizeMB% = htmlIndexedDBSizeLimitPercentage% * totalCardSizeMB% / 100
-      end if
-      
-    else
-      
-      maximumPublishedDataPoolSizeMB% = int(val(publishedDataSizeLimitMB))
-      maximumDynamicDataPoolSizeMB% = int(val(dynamicDataSizeLimitMB))
-      maximumHTMLDataPoolSizeMB% = int(val(htmlDataSizeLimitMB))
-      
-      maximumHTMLLocalStoragePoolSizeMB% = 0
-      if htmlLocalStorageSizeLimitMB <> "" then
-        maximumHTMLLocalStoragePoolSizeMB% = int(val(htmlLocalStorageSizeLimitMB))
-      end if
-      
-      maximumHTMLIndexedDBPoolSizeMB% = 0
-      if htmlIndexedDBSizeLimitMB <> "" then
-        maximumHTMLIndexedDBPoolSizeMB% = int(val(htmlIndexedDBSizeLimitMB))
-      end if
-      
+    ' convert from percentage settings to absolute settings
+    du = CreateObject("roStorageInfo", "./")
+    totalCardSizeMB% = du.GetSizeInMegabytes()
+    
+    ' pool size for published data
+    publishedDataSizeLimitPercentage% = int(val(publishedDataSizeLimitPercentage))
+    storageSpaceLimits.maximumPublishedDataPoolSizeMB% = publishedDataSizeLimitPercentage% * totalCardSizeMB% / 100
+    
+    ' pool size for dynamic data
+    dynamicDataSizeLimitPercentage% = int(val(dynamicDataSizeLimitPercentage))
+    storageSpaceLimits.maximumDynamicDataPoolSizeMB% = dynamicDataSizeLimitPercentage% * totalCardSizeMB% / 100
+    
+    ' size for html data
+    htmlDataSizeLimitPercentage% = int(val(htmlDataSizeLimitPercentage))
+    storageSpaceLimits.maximumHTMLDataPoolSizeMB% = htmlDataSizeLimitPercentage% * totalCardSizeMB% / 100
+    
+    ' size for html local storage
+    htmlLocalStorageSizeLimitPercentage% = 0
+    storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% = 0
+    if htmlLocalStorageSizeLimitPercentage <> "" then
+      htmlLocalStorageSizeLimitPercentage% = int(val(htmlLocalStorageSizeLimitPercentage))
+      storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% = htmlLocalStorageSizeLimitPercentage% * totalCardSizeMB% / 100
     end if
     
-    ok = m.assetPool.SetMaximumPoolSizeMegabytes(maximumPublishedDataPoolSizeMB%)
-    ' if not ok ??
-    
-    ok = m.feedPool.SetMaximumPoolSizeMegabytes(maximumDynamicDataPoolSizeMB%)
-    ' if not ok ??
-    
-    if maximumHTMLDataPoolSizeMB% > 0 then
-      ' max int is  2147483647 => <2048 MB
-      if maximumHTMLDataPoolSizeMB% >= 2048 then
-        maximumHTMLDataPoolSizeMB% = 2047
-      end if
-      r = CreateObject("roRectangle", 0, 0, 0, 0)
-      htmlWidget = CreateObject("roHtmlWidget", r)
-      if type(htmlWidget) = "roHtmlWidget" then
-        ok = htmlWidget.SetAppCacheSize(maximumHTMLDataPoolSizeMB% * 1024.0 * 1024.0)
-        ok = htmlWidget.SetAppCacheDir("/HTMLAppCache")
-        htmlWidget = invalid
-      end if
-    end if
-    
-    if maximumHTMLLocalStoragePoolSizeMB% > 0 then
-      
-      ' max int is  2147483647 => <2048 MB
-      if maximumHTMLLocalStoragePoolSizeMB% >= 2048 then
-        maximumHTMLLocalStoragePoolSizeMB% = 2047
-      end if
-      r = CreateObject("roRectangle", 0, 0, 0, 0)
-      htmlWidget = CreateObject("roHtmlWidget", r)
-      if type(htmlWidget) = "roHtmlWidget" then
-        ok = htmlWidget.SetLocalStorageDir("localstorage")
-        ok = htmlWidget.SetLocalStorageQuota(maximumHTMLLocalStoragePoolSizeMB% * 1024 * 1024)
-        htmlWidget = invalid
-      end if
-    end if
-    
-    if maximumHTMLIndexedDBPoolSizeMB% > 0 then
-      
-      ' max int is  2147483647 => <2048 MB
-      if maximumHTMLIndexedDBPoolSizeMB% >= 2048 then
-        maximumHTMLIndexedDBPoolSizeMB% = 2047
-      end if
-      r = CreateObject("roRectangle", 0, 0, 0, 0)
-      htmlWidget = CreateObject("roHtmlWidget", r)
-      if type(htmlWidget) = "roHtmlWidget" then
-        ok = htmlWidget.SetWebDatabaseDir("IndexedDB")
-        ok = htmlWidget.SetWebDatabaseQuota(maximumHTMLIndexedDBPoolSizeMB% * 1024 * 1024)
-        htmlWidget = invalid
-      end if
+    ' size for html indexed db
+    htmlIndexedDBSizeLimitPercentage% = 0
+    storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% = 0
+    if htmlIndexedDBSizeLimitPercentage <> "" then
+      htmlIndexedDBSizeLimitPercentage% = int(val(htmlIndexedDBSizeLimitPercentage))
+      storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% = htmlIndexedDBSizeLimitPercentage% * totalCardSizeMB% / 100
     end if
     
   else
-    ' clear prior settings
-    ok = m.assetPool.SetMaximumPoolSizeMegabytes( - 1)
-    ' if not ok ??
-    ok = m.feedPool.SetMaximumPoolSizeMegabytes( - 1)
-    ' if not ok ??
     
+    storageSpaceLimits.maximumPublishedDataPoolSizeMB% = int(val(publishedDataSizeLimitMB))
+    storageSpaceLimits.maximumDynamicDataPoolSizeMB% = int(val(dynamicDataSizeLimitMB))
+    
+    storageSpaceLimits.maximumHTMLDataPoolSizeMB% = int(val(htmlDataSizeLimitMB))
+    
+    storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% = 0
+    if htmlLocalStorageSizeLimitMB <> "" then
+      storageSpaceLimits.maximumHTMLLocalStoragePoolSizeMB% = int(val(htmlLocalStorageSizeLimitMB))
+    end if
+    
+    storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% = 0
+    if htmlIndexedDBSizeLimitMB <> "" then
+      storageSpaceLimits.maximumHTMLIndexedDBPoolSizeMB% = int(val(htmlIndexedDBSizeLimitMB))
+    end if
+    
+  end if
+
+  return storageSpaceLimits
+    
+end function
+
+
+Sub SetPoolSizes(syncSpec as object) as object
+
+  limitStorageSpace = syncSpecValueTrue(syncSpec.LookupMetadata("client", "limitStorageSpace"))
+  
+  if limitStorageSpace then
+    storageSpaceLimits = GetStorageSpaceLimits(syncSpec)    
+    ok = m.assetPool.SetMaximumPoolSizeMegabytes(storageSpaceLimits.maximumPublishedDataPoolSizeMB%)
+    ok = m.feedPool.SetMaximumPoolSizeMegabytes(storageSpaceLimits.maximumDynamicDataPoolSizeMB%)
+  else
+    ' clear prior settings
+    ok = m.assetPool.SetMaximumPoolSizeMegabytes(-1)
+    ok = m.feedPool.SetMaximumPoolSizeMegabytes(-1)    
   end if
   
 end sub
@@ -1304,8 +1339,12 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
   end function
   
   
-  Function GetBinding(wiredTransferEnabled as boolean, wirelessTransferEnabled as boolean) as integer
+  Function GetBinding(wiredTransferEnabled as boolean, wirelessTransferEnabled as boolean, cellularModemActive as boolean) as integer
     
+    if cellularModemActive then
+      return 2
+    endif
+
     binding% = -1
     if wiredTransferEnabled <> wirelessTransferEnabled then
       if wiredTransferEnabled then
@@ -1553,6 +1592,8 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
 
     ' json functions
     BSP.jsonAutoschedule = jsonAutoschedule
+
+    BSP.SendStatusPayload = SendStatusPayload
     
     return BSP
     
@@ -1565,7 +1606,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
     
     mVar = userData.mVar
     
-    '	print "respond to GetConfigurationPage request"
     e.AddResponseHeader("Content-type", "text/html; charset=utf-8")
     
     if type(mVar.sign) = "roAssociativeArray" and mVar.sign.deviceWebPageDisplay$ = "None" then
@@ -1603,7 +1643,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
     for each key in args
       value = args[key]
       mVar.udpSender.Send(value)
-      ''     print "sendUDP key: "+key+" value: "+value
     next
     if not e.SendResponse(200) then
       stop
@@ -1655,13 +1694,10 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
   
   
   Sub SetValues(userData as object, e as object)
-    
-    '	print "respond to SetValues request"
-    
+       
     mVar = userData.mVar
     
     args = e.GetFormData()
-    '   print args
     
     userVariables = mVar.currentUserVariables
     
@@ -1849,8 +1885,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
     
     mVar = userData.mVar
     
-    '    print "respond to GetID request"
-    
     root = CreateObject("roXMLElement")
     root.SetName("BrightSignID")
     
@@ -1886,8 +1920,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
   Sub GetRemoteData(userData as object, e as object)
     
     mVar = userData.mVar
-    
-    '    print "respond to GetRemoteData request"
     
     root = CreateObject("roXMLElement")
     root.SetName("BrightSignRemoteData")
@@ -2081,8 +2113,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
     
     mVar = userData.mVar
     
-    '    print "respond to GetCurrentStatus request"
-    
     root = CreateObject("roXMLElement")
     root.SetName("BrightSignStatus")
     
@@ -2202,8 +2232,6 @@ Sub CheckBLCStatus(controlPort as object, channel% as integer)
   end sub
   
   Sub FilePosted(userData as object, e as object)
-    
-    '    print "respond to FilePosted request"
     
     destinationFilename = e.GetRequestHeader("Destination-Filename")
     
@@ -2477,8 +2505,6 @@ end function
 
 Function GetBSNStatus(userData as object, e as object) as object
   
-  print "respond to GetBSNStatus request"
-  
   mVar = userData.mVar
   
   root = CreateObject("roXMLElement")
@@ -2501,8 +2527,6 @@ end function
 
 
 Function SetBSNOverride(userData as object, e as object) as object
-  
-  print "respond to SetBSNOverride request"
   
   mVar = userData.mVar
   
@@ -2528,8 +2552,6 @@ end function
 
 
 Function CancelBSNOverride(userData as object, e as object) as object
-  
-  print "respond to CancelBSNOverride request"
   
   mVar = userData.mVar
   
@@ -2739,8 +2761,6 @@ Sub SyncSpecPosted(userData as object, e as object)
   
   mVar = userData.mVar
   
-  '    print "respond to SyncSpecPosted request"
-  
   newSyncFileName$ = "new-sync.json"
   
   if ReadAsciiFile("local-sync.json") <> "" then
@@ -2763,13 +2783,6 @@ Sub SyncSpecPosted(userData as object, e as object)
   
   oldSyncSpecScriptsOnly = oldSync.FilterFiles("download", { group: "script" })
   newSyncSpecScriptsOnly = newSync.FilterFiles("download", { group: "script" })
-  
-  '	listOfDownloadFiles = newSyncSpecScriptsOnly.GetFileList("download")
-  '    for each downloadFile in listOfDownloadFiles
-  '		print "name = ";downloadFile.name
-  '		print "size = ";downloadFile.size
-  '		print "hash = ";downloadFile.hash
-  '	next
   
   mVar.diagnostics.PrintTimestamp()
   mVar.diagnostics.PrintDebug("### LWS DOWNLOAD COMPLETE")
@@ -2963,6 +2976,15 @@ Function getParserPlugin(bsp as object, parserPluginName as object) as object
 end function
 
 
+Function newNodeApp(bsp as object, nodeAppDescription as object) as object
+  nodeApp = { }
+  nodeApp.name$ = nodeAppDescription.name$
+  nodeApp.prefix$ = nodeAppDescription.prefix$
+  nodeApp.filePath$ = nodeAppDescription.filePath$
+  return nodeApp
+End Function
+
+
 Function newHTMLSite(bsp as object, htmlSiteDescription as object) as object
   
   htmlSite = { }
@@ -3131,6 +3153,7 @@ Sub Restart(presentationName$ as string)
   m.currentUserVariables = { }
   m.liveDataFeeds = { }
   m.presentations = { }
+  m.nodeApps = { }
   m.htmlSites = { }
   m.beacons = { }
   m.scriptPlugins = []
@@ -3193,7 +3216,8 @@ Sub Restart(presentationName$ as string)
     m.diagnostics.PrintDebug("### create sign object from autoplay")
     
     version% = GetAutoplayVersion(brightAuthor)
-    
+    m.sysInfo.baconVersion$ = GetBaconVersion(brightAuthor)
+
     sign = newSign(brightAuthor, m.globalVariables, m, m.msgPort, m.controlPort, version%)
     
     m.LogActivePresentation()
@@ -3435,6 +3459,9 @@ Sub Restart(presentationName$ as string)
   
   userVariables = m.currentUserVariables
   
+    ' by default, process roStreamEnd events - initialize value here and give plugin a chance to override this behaviour.
+  m.pluginProcessesStreamEndEvent = false
+
   ' if there are script plugins associated with this sign, initialize them here
   
   ERR_NORMAL_END = &hFC
@@ -3516,10 +3543,105 @@ Sub Restart(presentationName$ as string)
     end if
     
   end if
+
+  plugins = CreateObject("roArray", 1, true)
+  ' plugun info should only get from current running presentation, not all presentations
+  ' TODO: construct plugin payload once scripts are redesigned to load for each presentation
+  if type(m.sign) = "roAssociativeArray" and type(currentSync) = "roSyncSpec" then
+    ' Construct status payload to send to bootstrap
+    scriptFiles = currentSync.FilterFiles("download", { group: "script" })
+    scriptDownloadSection = scriptFiles.getFileList("download")
+
+    for each scriptFile in scriptDownloadSection
+      fileName = scriptFile.name
+      if fileName <> "" and fileName <> "autoplugins.brs" and fileName <> "autorun.brs" then
+        pluginFile = CreateObject("roAssociativeArray")
+        pluginFile.AddReplace("fileName",fileName)
+        pluginFile.AddReplace("fileSize",scriptFile.size)
+        pluginFile.AddReplace("fileHash",scriptFile.hash)
+        plugins.push(pluginFile)
+      end if
+    next
+  end if
+
+  m.SendStatusPayload(plugins, presentationName$)
   
+  syncSpec = ReadSyncSpec()
+  assetCollection = syncSpec.GetAssets("download")
+  m.view = CreateObject("roAssetCollectionView", m.assetPool, assetCollection)
+
+  if type(m.nodeJsObjects) = "roArray" then
+    for i% = 0 to m.nodeJsObjects.Count() - 1
+      m.nodeJsObjects[i%] = invalid
+    next
+  endif
+
+  m.nodeJsObjects = []
+
+  ' Launch node apps
+  for each nodeAppName in m.nodeApps
+    nodeApp = m.nodeApps.Lookup(nodeAppName)
+    syncSpecFileName$ = nodeApp.prefix$ + nodeApp.filePath$
+    m.nodeJsObjects.push(CreateObject("roNodeJs", m.view.getpath() + nodeApp.prefix$ + nodeApp.filePath$, {}))
+  next
+
   ' Notify controlling devices we have started playback
   m.SendUDPNotification("startPlayback")
   
+end sub
+
+
+Sub SendStatusPayload(plugins as object, presentationName as string)
+
+  if m.dgSocket <> invalid then
+    ' use the same format as websocket messages
+    ' Constructing jsonArray.payload.body.script
+    script = CreateObject("roAssociativeArray")
+    scriptType$ = "Autorun"
+    version$ = m.sysInfo.autorunVersion$
+    ' autorun version use the same logic as firmware version
+    ' reuse the function CompareFirmwareVersions
+    autorunVsCustomAutorunVersion% = CompareFirmwareVersions(m.sysInfo.autorunVersion$, m.sysInfo.customAutorunVersion$)
+    if autorunVsCustomAutorunVersion% <= 0 then
+      scriptType$ = "Custom"
+      version$ = m.sysInfo.customAutorunVersion$
+    end if
+    
+    script.AddReplace("type", scriptType$)
+    script.AddReplace("version", version$)
+
+    ' Constructing jsonArray.payload.body.script.plugins
+    if type(plugins) = "roArray" and plugins.count() > 0 then
+      script.AddReplace("plugins", plugins)
+    end if
+
+    ' Constructing jsonArray.payload.body
+    body = CreateObject("roAssociativeArray")
+    body.AddReplace("script", script)
+
+    ' Constructing jsonArray.payload.body.presentation
+    if presentationName <> invalid and presentationName <> "" then
+      presentation = CreateObject("roAssociativeArray")
+      ' Hardcode presentation type to "Regular" until BrightWall feature is in place
+      presentation.AddReplace("type", "Regular")
+      presentation.AddReplace("name", presentationName)
+      body.AddReplace("presentation", presentation)
+    end if
+
+    ' Constructing jsonArray.payload
+    payload = CreateObject("roAssociativeArray")
+    payload.AddReplace("route", "/v1/script-status")
+    payload.AddReplace("body", body)
+    
+    ' Constructing jsonArray
+    jsonArray = CreateObject("roAssociativeArray")
+    jsonArray.AddReplace("payload", payload)
+
+    jsonString = FormatJson(jsonArray)
+
+    result = m.dgSocket.SendTo("127.0.0.1", m.registrySettings.wsUdpSocketPort%, jsonString)
+  end if
+
 end sub
 
 
@@ -3535,7 +3657,7 @@ end function
 
 Function getMediumFromMimeType(mimeType as string) as string
 
-  if mimeType = "audio/mpeg" or mimeType = "audio/ogg" or mimeType = "audio/flac" or mimeType = "audio/aac" or mimeType = "audio/mp4" then
+  if mimeType = "audio/mpeg" or mimeType = "audio/ogg" or mimeType = "audio/flac" or mimeType = "audio/aac" or mimeType = "audio/mp4" or mimeType = "audio/ac3" or mimeType = "audio/eac3" then
     return "audio"
   endif
 
@@ -3561,6 +3683,10 @@ Function GetMimeTypeByExtension(ext as string) as string
     return "audio/aac"
   else if ext = "m4a"
     return "audio/mp4"
+  else if ext = "ac3"
+    return "audio/ac3"
+  else if ext = "eac3"
+    return "audio/eac3"
     
     ' now image types '
   else if ext = "gif"
@@ -3914,14 +4040,11 @@ end function
 
 
 Function MatchFixedWssBodyProperties(wssCommunicationSpecEventBodyProperties as object, webSocketEventBodyProperties as object) as boolean
-  
-  print "MatchFixedWssBodyProperties - entry"
-  
+    
   for i% = 0 to webSocketEventBodyProperties.Count() - 1
     
     webSocketEventPropertyAA = webSocketEventBodyProperties[i%]
     eventBodyPropertyName = webSocketEventPropertyAa.name
-    print "eventBodyPropertyName: " + eventBodyPropertyName
     
     eventBodyPropertyNameValue = webSocketEventPropertyAa.value
     
@@ -4006,40 +4129,32 @@ Function MatchFixedWssHeaders(wssCommunicationSpecEvent as object, webSocketEven
 end function
 
 
-Function GetMatchedParameter(webSocketEvent as object, wssCommunicationSpecEvent as object, wssEventProperties as object, wssEventTransitionEventSpec as object, specifiedEventPropertyName as string) as object
+Function GetMatchedParameter(webSocketEvent as object, wssCommunicationSpecEvent as object, wssEventParameter as object, wssEventTransitionEventSpec as object, specifiedEventPropertyName as string) as object
   
   paramAttrs = { }
   paramAttrs.propertyNameBreadcrumbs = []
   
-  ' find property to match against, if any
-  wssEventProperties.Reset()
-  propertyName = wssEventProperties.Next()
-  
   ' if there is no parameter and everything to this point matched, then this is a match
-  if propertyName = invalid then
+  if type(wssEventParameter) <> "roAssociativeArray" then
     paramAttrs.matchFound = true
     return paramAttrs
   end if
   
   matchedPropertyName$ = ""
-  for each propertyName in wssEventProperties
-    property = wssEventProperties.Lookup(propertyName)
-    if property.MatchParameter and propertyName = specifiedEventPropertyName then
-      matchedPropertyName$ = propertyName
-      exit for
-    end if
-  next
-  if matchedPropertyName$ = "" then
+  propertyName = wssEventParameter.parameterName
+  if propertyName = specifiedEventPropertyName then
+    matchedPropertyName$ = propertyName
+  else
     paramAttrs.matchFound = false
     return paramAttrs
-  end if
+  endif
+
+  'properties = wssEventProperties.Lookup(matchedPropertyName$)
   
-  properties = wssEventProperties.Lookup(matchedPropertyName$)
+  'propertyName$ = properties.PropertyName
+  'uniqueName$ = properties.UniqueName
   
-  propertyName$ = properties.PropertyName
-  uniqueName$ = properties.UniqueName
-  
-  paramAttrs.matchFound = MatchToUniqueParameterName(wssCommunicationSpecEvent, uniqueName$, paramAttrs.propertyNameBreadcrumbs)
+  paramAttrs.matchFound = MatchToUniqueParameterName(wssCommunicationSpecEvent, wssEventParameter.uniqueName, paramAttrs.propertyNameBreadcrumbs)
   
   if paramAttrs.matchFound then
     propertyValue = webSocketEvent
@@ -4064,9 +4179,9 @@ Function GetMatchedParameter(webSocketEvent as object, wssCommunicationSpecEvent
       end if
     next
     
-    paramAttrs.parameterValue$ = properties.ParameterValue ' this is the specified value. (but isn't currently correct for keyPresses)
+    paramAttrs.parameterValue$ = wssEventParameter.parameterValue ' this is the specified value. (but isn't currently correct for keyPresses)
     paramAttrs.propertyValue = propertyValue ' this is the value from the actual webSocket event
-    paramAttrs.transition = wssEventTransitionEventSpec.Lookup(properties.ParameterValue)
+    paramAttrs.transition = wssEventTransitionEventSpec.Lookup(wssEventParameter.parameterValue)
     
   end if
   
@@ -4075,14 +4190,14 @@ Function GetMatchedParameter(webSocketEvent as object, wssCommunicationSpecEvent
 end function
 
 
-Function MatchWssEvent(wssCommunicationSpecEvent as object, webSocketEvent as object, wssEventProperties as object, wssEventTransitionEventSpec as object, specifiedEventPropertyName as string) as object
+Function MatchWssEvent(wssCommunicationSpecEvent as object, webSocketEvent as object, wssEventParameter as object, wssEventTransitionEventSpec as object, specifiedEventPropertyName as string) as object
   
   autoplayEvent = { }
   
   ' endpoint for this event
   resource = webSocketEvent.header.resource
   
-  paramAttrs = GetMatchedParameter(webSocketEvent, wssCommunicationSpecEvent, wssEventProperties, wssEventTransitionEventSpec, specifiedEventPropertyName)
+  paramAttrs = GetMatchedParameter(webSocketEvent, wssCommunicationSpecEvent, wssEventParameter, wssEventTransitionEventSpec, specifiedEventPropertyName)
   
   if paramAttrs.matchFound = false then
     return paramAttrs
@@ -4186,13 +4301,10 @@ Sub ParseWssEvents(wssEvents as object) as object
 end sub
 
 
-Sub ParseBoseWssCommunicationSpec(path$ as string) as object
+Sub ParseBoseWssCommunicationSpec(wss as object) as object
   
   ' TODO - should this log file always be enabled?
   getGlobalAA().eddieDumpFile = CreateObject("roAppendFile", "eddie.json")
-  
-  json$ = ReadAsciiFile(path$)
-  wss = ParseJson(json$)
   
   wssSpec = { }
   wssSpec.name = wss.Name
@@ -4361,9 +4473,6 @@ Function GetActiveScheduledEvent(scheduledEvents as object) as object
         
         activeScheduledEvent = scheduledEvent
         activeScheduledEvent.dateTime = eventTodayStartTime
-        
-        '                print "at end, eventDateTime = ";eventDateTime.GetString()
-        '                print "at end, currentDateTime = ";currentDateTime.GetString()
         
         exit for
         
@@ -5640,7 +5749,8 @@ gaa = GetGlobalAA()
 
 ' parse boseProduct section - information about Bose products in use in this presentation
 Sign.boseProducts = meta.boseProducts
-Sign.boseProductsByConnector = Sign.BuildBoseProductsByConnector(bsp)
+
+Sign.boseProductsByConnector = Sign.BuildBoseProductsByConnector(bsp, meta)
 
 ' Get the USB topology of the device and create a mapping of Bose port names in the presentation to USB device names
 bsp.replaceUSB700_1_with_USB_C = false
@@ -5887,6 +5997,11 @@ end if
 ' assign system variables to user variables
 bsp.AssignSystemVariablesToUserVariables()
 
+for each nodeAppDescription in meta.nodeAppDescriptions
+  nodeApp = newNodeApp(bsp, nodeAppDescription)
+  bsp.nodeApps.AddReplace(nodeApp.name$, nodeApp)
+next
+
 for each htmlSiteDescription in meta.htmlSiteDescriptions
   htmlSite = newHTMLSite(bsp, htmlSiteDescription)
   bsp.htmlSites.AddReplace(htmlSite.name$, htmlSite)
@@ -5910,7 +6025,7 @@ return Sign
 end function
 
 
-Function BuildBoseProductsByConnector(bsp as object)
+Function BuildBoseProductsByConnector(bsp as object, meta as object)
   
   gaa = GetGlobalAA()
   
@@ -5923,14 +6038,10 @@ Function BuildBoseProductsByConnector(bsp as object)
     boseProduct.port$ = boseProductInPresentation.port
     boseProductSpec = bsp.GetBoseProductSpec(boseProduct.productName$)
     
-    ' BACONTODO - not sure wssCommunicationSpec is getting set / published
-    wssCommunicationSpecName = boseProductInPresentation.wssCommunicationSpec
-    if (isString(wssCommunicationSpecName) and wssCommunicationSpecName <> "") then
-      wssCommunicationSpecFileName$ = boseProductInPresentation.wssCommunicationSpecFileName
-      wssCommunicationPath$ = GetPoolFilePath(bsp.assetPoolFiles, wssCommunicationSpecFileName$)
-      boseProduct.wssCommunicationSpec = ParseBoseWssCommunicationSpec(wssCommunicationPath$)
-    end if
-    
+    if type(meta.wssDeviceSpec) = "roAssociativeArray" then
+      boseProduct.wssCommunicationSpec = ParseBoseWssCommunicationSpec(meta.wssDeviceSpec)
+    endif
+
     boseProduct.isAudioDevice = boseProductSpec.isAudioDevice
     boseProduct.usbNetInterfaceIndex$ = boseProductSpec.usbNetInterfaceIndex$
     boseProduct.usbInternalHub$ = boseProductSpec.usbInternalHub$
@@ -6861,6 +6972,8 @@ Sub AssignSystemVariableToUserVariables(userVariable as object)
     else
       userVariable.SetCurrentValue("", false)
     end if
+  else if userVariable.systemVariable$ = "brightAuthorVersion" then
+    userVariable.SetCurrentValue(m.sysInfo.baconVersion$, false)
   end if
   
 end sub
@@ -7293,57 +7406,49 @@ Sub newTransition(bsp as object, zoneHSM as object, sign as object, transitionSp
       bsState.wssEvents = { }
     end if
     
-    port$ = GetRuntimeUsbConnector(userEventData.port)
+    port$ = userEventData.port
 
     wssEvents = bsState.wssEvents
     if type(wssEvents[port$]) <> "roAssociativeArray" then
       wssEvents[port$] = { }
     end if
     
-    wssEvent = transitionspec.userevent.data.wssEventSpec
-    
-    eventId$ = wssEvent.Id
-    
+    wssEventData = transitionspec.userevent.data
+    wssEventId = wssEventData.wssEventId
+    wssEventName = wssEventData.wssEventName
+    wssEventParameter = wssEventData.wssEventParameter
+
     wssPortEvents = wssEvents[port$]
     
-    if type(wssPortEvents[eventId$]) <> "roAssociativeArray" then
-      wssPortEvents[eventId$] = { }
+    if type(wssPortEvents[wssEventId]) <> "roAssociativeArray" then
+      wssPortEvents[wssEventId] = { }
     end if
     
-    wssPortEvents[eventId$].properties = wssEvent.properties
-    wssPortEvents[eventId$].friendlyId = wssEvent.friendlyId
+    wssPortEvents[wssEventId].wssEventId = wssEventId
+    wssPortEvents[wssEventId].wssEventName = wssEventName
+    wssPortEvents[wssEventId].wssEventParameter = wssEventParameter
     
-    if type(wssPortEvents[eventId$].wssEventTransitionEventSpecs) <> "roAssociativeArray" then
-      wssPortEvents[eventId$].wssEventTransitionEventSpecs = { }
+    if type(wssPortEvents[wssEventId].wssEventTransitionEventSpecs) <> "roAssociativeArray" then
+      wssPortEvents[wssEventId].wssEventTransitionEventSpecs = { }
     end if
     
-    wssEventTransitionEventSpecs = wssPortEvents[eventId$].wssEventTransitionEventSpecs
-    
-    ' for each property where matchParameter === true, set up an associative array of mapping from event parameter values to transitions
-    for each propertyName in wssEvent.properties
-      
-      property = wssEvent.properties[propertyName]
-      
-      if property.matchParameter then
-        
-        if not wssEventTransitionEventSpecs.DoesExist(propertyName) then
-          wssEventTransitionEventSpecs.AddReplace(propertyName, { })
-        end if
-        wssEventTransitionSpecByPropertyName = wssEventTransitionEventSpecs.Lookup(propertyName)
-        
-        keyPropertyValue = wssEvent.Properties.Lookup(propertyName).ParameterValue
-        
-        wssEventTransitionSpecByPropertyName.AddReplace(keyPropertyValue, transition)
-        
+    wssEventTransitionEventSpecs = wssPortEvents[wssEventId].wssEventTransitionEventSpecs
+
+    if type(wssEventParameter) = "roAssociativeArray" then
+      propertyName = wssEventParameter.parameterName
+      if not wssEventTransitionEventSpecs.DoesExist(propertyName) then
+        wssEventTransitionEventSpecs.AddReplace(propertyName, { })
       end if
-      
-    next
-    
+      wssEventTransitionSpecByPropertyName = wssEventTransitionEventSpecs.Lookup(propertyName)
+      keyPropertyValue = wssEventParameter.parameterValue
+      wssEventTransitionSpecByPropertyName.AddReplace(keyPropertyValue, transition)
+    endif
+
     if wssEventTransitionEventSpecs.IsEmpty() then
       wssEventTransitionSpec = { }
       wssEventTransitionSpec.transition = transition
-      wssEventTransitionSpec.wssEvent = wssEvent
-      wssPortEvents[eventId$] = wssEventTransitionSpec
+      wssEventTransitionSpec.wssEventData = wssEventData
+      wssPortEvents[wssEventId] = wssEventTransitionSpec
     end if
     
   else if userEventName$ = "timeClockEvent" then
@@ -9939,7 +10044,7 @@ Function GetUsbPort(usbConnectorName as string, usbInternalHub as string, fid as
     gaa.usbConnectorNameToUsbSpec.AddReplace(UsbConnectorName, usbSpec)
   endif
 
-  if category = "HID" then
+  if category = "HID" or category = "NET" then
     usbSpec.hidOutputSpec = spec
   else
     usbSpec.audioOutputSpec = spec
@@ -9964,7 +10069,7 @@ Sub GetConnectedUSBDeviceName(bsp as object, model as string, connectedUSBDevice
       fid = connectedUSBDevice.fid
       category = connectedUSBDevice.category
 
-      if fid <> "" and ucase(category) = "HID" or ucase(category) = "AUDIO" then
+      if fid <> "" and (ucase(category) = "HID" or ucase(category) = "AUDIO" or ucase(category) = "NET")  then
 
         usbDeviceFound = GetUsbPort(usbConnectorName, usbInternalHub, fid, ucase(category), usbTypeATargetFid)
 
@@ -10186,8 +10291,6 @@ Function ExecuteChangeConnectorVolume(audioOutputSpec as string, newVolume% as i
     end if
     audioOutput.SetVolume(newVolume%)
   end if
-  
-  ' print "ExecuteChangeConnectorVolume - connector = ";connector$;", volume = ";newVolume%
   
   return newVolume%
   
@@ -10697,6 +10800,7 @@ Function GetNextStateName(transition as object) as object
   nextState = { }
   
   if type(transition.conditionalTransitions) = "roArray" then
+
     for each conditionalTransition in transition.conditionalTransitions
       
       matchFound = false
@@ -10941,6 +11045,7 @@ Sub SetMediaItemEventHandlers(state as object)
   state.SerialStreamLineEventHandler = SerialStreamLineEventHandler
   state.GpsEventHandler = GpsEventHandler
   state.RemoteDownEventHandler = RemoteDownEventHandler
+  state.WssEventHandler = WssEventHandler
 end sub
 
 
@@ -11317,6 +11422,119 @@ Function KeyboardPressEventHandler(event as object, stateData as object) as stri
 end function
 
 
+Function WssEventHandler(event as object, stateData as object, pluginMessage$ as string) as string
+
+  if pluginMessage$ = "webSocketEvent" and type(event["WebsocketEvent"]) = "roAssociativeArray" then
+    
+    if type(m.wssEvents) = "roAssociativeArray" then
+      
+      webSocketEvent = event["WebsocketEvent"] ' event from Eddie
+      
+      rivieraPort$ = ""
+      
+      globalAA = getGlobalAA()
+      ' globalAA.eddieDumpFile.sendLine(event["WebsocketEvent"])
+      
+      m.bsp.diagnostics.PrintDebug("WEBSOCKET EVENT:")
+      m.bsp.diagnostics.PrintDebug("header")
+      m.bsp.diagnostics.PrintDebug(formatJson(event["WebsocketEvent"].header))
+      
+      m.bsp.diagnostics.PrintDebug("body")
+      m.bsp.diagnostics.PrintDebug(formatJson(event["WebsocketEvent"].body))
+      ' print "AUTORUN RECEIVED EVENT:"
+      ' eventDateTime = m.bsp.systemTime.GetLocalDateTime()
+      ' print eventDateTime.GetString()
+      'print formatJson(event["WebsocketEvent"].body)
+      'dumpJsonBody(event["WebsocketEvent"].body)
+      'globalAA.eddieDumpFile.sendLine("**** NEW WebSocketEvent")
+      'dumpJsonBody(globalAA.eddieDumpFile, event["WebsocketEvent"])
+      ' find USB device that corresponds to this webSocketEvent
+      
+      ' eventFid$ = "USB " + webSocketEvent.fid
+
+      for each usbConnector in m.bsp.sign.boseProductsByConnector
+        boseProduct = m.bsp.sign.boseProductsByConnector[usbConnector]
+        if type(boseProduct.usbSpec) = "roAssociativeArray" then
+          outputSpec = boseProduct.usbSpec.hidOutputSpec
+          fid$ = mid(outputSpec, 5)
+'                port$ = boseProduct.port$
+'                fid$ = port$ + "." + boseProduct.usbNetInterfaceIndex$
+          if webSocketEvent.fid = fid$ then
+            rivieraPort$ = usbConnector
+            exit for
+          endif
+        end if
+      next
+      
+      ' if fid specified in webSocketEvent doesn't match USB connector specified in bpf, discard event
+      if rivieraPort$ <> "" then
+        
+        resource = webSocketEvent.header.resource ' event end point - definitely needs to be matched
+        
+        wssPortEvents = m.wssEvents[rivieraPort$] ' wss events for this state for this port
+        
+        if type(wssPortEvents) = "roAssociativeArray" and wssPortEvents.DoesExist(resource) then ' is this state waiting for an event from this resource?
+        
+          wssEventInfo = wssPortEvents.Lookup(resource)
+        
+          if type(wssEventInfo) = "roAssociativeArray"  then
+            if type(wssEventInfo.wsseventdata) = "roAssociativeArray" then
+              print "FriendlyId=" + wssEventInfo.wssEventData.wssEventName
+            else
+              print "FriendlyId=" + wssEventInfo.wssEventName
+            endif
+          end if
+
+          boseProduct = m.bsp.sign.boseProductsByConnector[rivieraPort$]
+          wssCommunicationSpec = boseProduct.wssCommunicationSpec
+          wssCommunicationSpecEvent = GetWssCommunicationSpecEventFromWebSocketEvent(wssCommunicationSpec, webSocketEvent)
+
+          if wssCommunicationSpecEvent <> invalid then
+            
+            wssEventInfo = wssPortEvents.Lookup(resource) ' if yes, get the additional parameters for this event (from the autoplay)
+            
+            ' Look for a match
+            if type(wssEventInfo.wssEventTransitionEventSpecs) = "roAssociativeArray" then
+              ' multiple transitions exist for this state / event - see if the event matches one of them
+              ' look for a match for the event and any of the event/transition pairs for this state'
+              for each propertyName in wssEventInfo.wssEventTransitionEventSpecs
+                
+                ' check for an exact match
+                wssEventTransitionEventSpec = wssEventInfo.wssEventTransitionEventSpecs[propertyName]
+' BrightScript Debugger> ?wssEventInfo
+' wsseventtransitioneventspecs: <Component: roAssociativeArray>
+' wsseventparameter: <Component: roAssociativeArray>
+' wsseventid: /demo
+' wsseventname: Get Demo Mode Response                  
+                paramAttrs = m.MatchWssEvent(wssCommunicationSpecEvent, webSocketEvent, wssEventInfo.wssEventParameter, wssEventTransitionEventSpec, propertyName)
+                if paramAttrs.matchFound then
+                  return m.ExecuteTransition(paramAttrs.transition, stateData, event.PluginMessage)
+                end if
+                
+              next
+              
+            else
+              ' **** is it necessary to do additional matching at this point?
+              transition = wssEventInfo.transition
+              return m.ExecuteTransition(transition, stateData, event.PluginMessage)
+            end if
+          
+          end if
+          
+        end if
+        
+      end if
+      
+    end if
+            
+  end if
+
+  stateData.nextState = m.superState
+  return "SUPER"
+
+end function
+
+
 Function MediaItemEventHandler(event as object, stateData as object) as object
   
   if type(event) = "roControlDown" and IsControlPort(m.bsp.controlPort) and type(m.auxDisconnectEvents) = "roAssociativeArray" and stri(event.GetSourceIdentity()) = stri(m.bsp.controlPort.GetIdentity()) then
@@ -11430,6 +11648,36 @@ Function MediaItemEventHandler(event as object, stateData as object) as object
     end if
     m.bsp.logging.WriteEventLogEntry(m.stateMachine, m.id$, "touch", touchIndex$, "0")
     
+  else if type(event) = "roStreamEndEvent" then
+
+    port$ = event.GetUserData()
+    
+    m.bsp.diagnostics.PrintDebug("roStreamEndEvent received on port " + port$)
+    m.bsp.logging.WriteEventLogEntry(m.stateMachine, m.id$, "streamEnd", port$, "0")
+    m.bsp.logging.WriteDiagnosticLogEntry(m.bsp.diagnosticCodes.EVENT_STREAM_END, port$)
+    
+    if not m.bsp.pluginProcessesStreamEndEvent then
+
+      m.bsp.diagnostics.PrintDebug("process roStreamEndEvent")
+
+      outputOnly = false
+      
+      if type(m.bsp.serial) = "roAssociativeArray" and m.bsp.serial.DoesExist(port$) then
+        m.bsp.serial[port$] = invalid
+      end if
+      
+      if type(m.bsp.serialOutputOnlySpec) = "roAssociativeArray" and m.bsp.serialOutputOnlySpec.DoesExist(port$) then
+        outputOnly = m.bsp.serialOutputOnlySpec[port$]
+      end if
+      
+      m.bsp.ScheduleRetryCreateSerial(port$, outputOnly)
+    
+    else
+
+      m.bsp.diagnostics.PrintDebug("ignore roStreamEndEvent")
+
+    endif
+      
   else if type(event) = "roStreamLineEvent" then
     
     return m.SerialStreamLineEventHandler(event, stateData)
@@ -11499,7 +11747,7 @@ Function MediaItemEventHandler(event as object, stateData as object) as object
     end if
     
   ' Set user data to distinguish between presentation udp messages and bootstrap udp messages
-  else if type(event) = "roDatagramEvent" and event.GetUserData() = "receiver" then
+  else if type(event) = "roDatagramEvent" and IsString(event.getUserData()) and event.GetUserData() = "receiver" then
     
     return m.DatagramEventHandler(event, stateData)
     
@@ -11601,103 +11849,9 @@ Function MediaItemEventHandler(event as object, stateData as object) as object
         
         if pluginName$ = "initNode" then
           
-          if pluginMessage$ = "webSocketEvent" and type(event["WebsocketEvent"]) = "roAssociativeArray" then
-            
-            if type(m.wssEvents) = "roAssociativeArray" then
-              
-              webSocketEvent = event["WebsocketEvent"] ' event from Eddie
-              
-              rivieraPort$ = ""
-              
-              globalAA = getGlobalAA()
-              ' globalAA.eddieDumpFile.sendLine(event["WebsocketEvent"])
-              
-              m.bsp.diagnostics.PrintDebug("WEBSOCKET EVENT:")
-              m.bsp.diagnostics.PrintDebug("header")
-              m.bsp.diagnostics.PrintDebug(formatJson(event["WebsocketEvent"].header))
-              
-              m.bsp.diagnostics.PrintDebug("body")
-              m.bsp.diagnostics.PrintDebug(formatJson(event["WebsocketEvent"].body))
-              ' print "AUTORUN RECEIVED EVENT:"
-              ' eventDateTime = m.bsp.systemTime.GetLocalDateTime()
-              ' print eventDateTime.GetString()
-              'print formatJson(event["WebsocketEvent"].body)
-              'dumpJsonBody(event["WebsocketEvent"].body)
-              'globalAA.eddieDumpFile.sendLine("**** NEW WebSocketEvent")
-              'dumpJsonBody(globalAA.eddieDumpFile, event["WebsocketEvent"])
-              ' find USB device that corresponds to this webSocketEvent
-              for each usbConnector in m.bsp.sign.boseProductsByConnector
-                boseProduct = m.bsp.sign.boseProductsByConnector[usbConnector]
-                port$ = boseProduct.port$
-                fid$ = port$ + "." + boseProduct.usbNetInterfaceIndex$
-                eventFid$ = "USB " + webSocketEvent.fid
-                if eventFid$ = fid$ then
-                  rivieraPort$ = usbConnector
-                  exit for
-                end if
-              next
-              
-              ' if fid specified in webSocketEvent doesn't match USB connector specified in bpf, discard event
-              if rivieraPort$ <> "" then
-                
-                resource = webSocketEvent.header.resource ' event end point - definitely needs to be matched
-                
-                
-                wssPortEvents = m.wssEvents[rivieraPort$] ' wss events for this state for this port
-                
-                if type(wssPortEvents) = "roAssociativeArray" and wssPortEvents.DoesExist(resource) then ' is this state waiting for an event from this resource?
-                
-                wssEventInfo = wssPortEvents.Lookup(resource)
-                if type(wssEventInfo) = "roAssociativeArray" and type(wssEventInfo.wssEvent) = "roAssociativeArray" then
-                  print "FriendlyId=" + wssEventInfo.wssevent.FriendlyId
-                end if
-                
-                boseProduct = m.bsp.sign.boseProductsByConnector[rivieraPort$]
-                wssCommunicationSpec = boseProduct.wssCommunicationSpec
-                
-                wssCommunicationSpecEvent = GetWssCommunicationSpecEventFromWebSocketEvent(wssCommunicationSpec, webSocketEvent)
-                
-                if wssCommunicationSpecEvent <> invalid then
-                  
-                  wssEventInfo = wssPortEvents.Lookup(resource) ' if yes, get the additional parameters for this event (from the autoplay)
-                  
-                  ' Look for a match
-                  if type(wssEventInfo.wssEventTransitionEventSpecs) = "roAssociativeArray" then
-                    ' multiple transitions exist for this state / event - see if the event matches one of them
-                    ' look for a match for the event and any of the event/transition pairs for this state'
-                    for each propertyName in wssEventInfo.wssEventTransitionEventSpecs
-                      
-                      ' check for an exact match
-                      wssEventTransitionEventSpec = wssEventInfo.wssEventTransitionEventSpecs[propertyName]
-                      
-                      paramAttrs = m.MatchWssEvent(wssCommunicationSpecEvent, webSocketEvent, wssEventInfo.properties, wssEventTransitionEventSpec, propertyName)
-                      
-                      if paramAttrs.matchFound then
-                        return m.ExecuteTransition(paramAttrs.transition, stateData, event.PluginMessage)
-                      end if
-                      
-                    next
-                    
-                  else
-                    ' **** is it necessary to do additional matching at this point?
-                    transition = wssEventInfo.transition
-                    return m.ExecuteTransition(transition, stateData, event.PluginMessage)
-                  end if
-                  
-                end if
-                
-              end if
-              
-            end if
-            
-          end if
+          return m.WssEventHandler(event, stateData, pluginMessage$)
           
         end if
-        
-        stateData.nextState = m.superState
-        return "SUPER"
-        
-      end if
       
       key$ = pluginName$ + pluginMessage$
       
@@ -11999,19 +12153,13 @@ Sub LaunchTimeClockEventTimer(state as object, timeClockEvent as object)
     
     withinWindow = TimeWithinWindow(currentTime%, startTime%, endTime%)
     
-    '		print "currentDateTime = ";currentDateTime.GetString()
-    '		print "currentTime% = ";currentTime%
-    '		print "withinWindow = ";withinWindow
-    
     if not withinWindow then
       ' set timer for next start time
       hours% = startTime% / 60
       minutes% = startTime% - (hours% * 60)
       timer.SetTime(hours%, minutes%, 0, 0)
       timer.SetDate( - 1, - 1, - 1)
-      '			print "set time to ";hours%;" hours, ";minutes%;" minutes"
     else
-      ' set timer for next appropriate time
       if currentTime% > startTime% then
         minutesSinceStartTime% = currentTime% - startTime%
       else
@@ -12848,7 +12996,7 @@ Function STMjpegPlayingEventHandler(event as object, stateData as object) as obj
       m.stateMachine.mjpegUrl.SetProxy("")
       
       if type(m.stateMachine.mjpegMimeStream) <> "roMimeStream" then
-        binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+        binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
         m.bsp.diagnostics.PrintDebug("### Binding for mjpegMimeStream is " + stri(binding%))
         ok = m.stateMachine.mjpegUrl.BindToInterface(binding%)
         if not ok then stop
@@ -13762,10 +13910,11 @@ Sub PlayVideo(executeEntryCmds as boolean, disableLoopMode as boolean)
     videoMode = invalid
   end if
   
-  loopMode% = 1
-  if disableLoopMode or (type(m.videoItem.automaticallyLoop) = "roBoolean" and (not m.videoItem.automaticallyLoop)) or type(m.videoEndEvent) = "roAssociativeArray" or type(m.synchronizeEvents) = "roAssociativeArray" or type(m.internalSynchronizeEvents) = "roAssociativeArray" then loopMode% = 0
-  
-  m.stateMachine.videoPlayer.SetLoopMode(loopMode%)
+  loopMode$ = "AlwaysLoop"
+  if disableLoopMode or (type(m.videoItem.automaticallyLoop) = "roBoolean" and (not m.videoItem.automaticallyLoop)) or type(m.videoEndEvent) = "roAssociativeArray" or type(m.synchronizeEvents) = "roAssociativeArray" or type(m.internalSynchronizeEvents) = "roAssociativeArray" then loopMode$ = "NoLoop"
+  ' Support seamless looping during synchronization - overwrite loopMode as necessary
+  if (type(m.videoItem.automaticallyLoop) = "roBoolean" and m.videoItem.automaticallyLoop) and (type(m.synchronizeEvents) = "roAssociativeArray" or type(m.internalSynchronizeEvents) = "roAssociativeArray") then loopMode$ = "SeamlessLoopOrNotAtAll"
+  m.stateMachine.videoPlayer.SetLoopMode(loopMode$)
   
   file$ = m.videoItem.fileName$
   if type(m.videoItem.filePath$) = "roString" then
@@ -14377,18 +14526,30 @@ return "SUPER"
 end function
 
 
-Sub SetUserAgentForHtmlWidget(bsp as object, htmlWidget as object)
-  if type(htmlWidget) = "roHtmlWidget" then
-    ua$ = htmlWidget.GetUserAgent()
-    ' Prepend custom user agent string on to standard Html Widget string
-    p% = instr(1, ua$, ")")
-    if p% > 0 then
-      ua$ = bsp.userAgent$ + mid(ua$, p% + 1)
-      htmlWidget.SetUserAgent(ua$)
+Sub SetUserAgentForHtmlWidget(bsp as object, htmlWidget as object, aa as object)
+  if type(aa) = "roAssociativeArray" then
+    isLocalHtmlWidget = false
+    if htmlWidget = invalid then
+      r = CreateObject("roRectangle", 0, 0, 0, 0)
+      h = CreateObject("roHtmlWidget", r)
+      isLocalHtmlWidget = true
+    else
+      h = htmlWidget
+    end if
+    if type(h) = "roHtmlWidget" then
+      ua$ = h.GetUserAgent()
+      ' Prepend custom user agent string on to standard Html Widget string
+      p% = instr(1, ua$, ")")
+      if p% > 0 then
+        ua$ = bsp.userAgent$ + mid(ua$, p% + 1)
+        aa.user_agent = ua$
+      end if
+      if isLocalHtmlWidget then
+        h = invalid
+      end if
     end if
   end if
-end sub
-
+End Sub
 
 Function GetInterstitialHtmlToLaunchHtml() as string
   interstitialHtml$ = ""
@@ -14526,8 +14687,17 @@ Sub LoadHtmlWidgetStaticInitialization()
 
     aa.url = m.url$
     
+    SetUserAgentForHtmlWidget(m.bsp, m.stateMachine.loadingHtmlWidget, aa)
+
+    limitStorageSpace = syncSpecValueTrue(syncSpec.LookupMetadata("client", "limitStorageSpace"))
+  
+    if limitStorageSpace then
+      storageSpaceLimits = GetStorageSpaceLimits(syncSpec)
+      aa.storage_path = "browser_storage"
+      aa.storage_quota = GetRequestedBrowserStorageSpace(storageSpaceLimits)
+    endif
+
     m.stateMachine.loadingHtmlWidget = CreateObject("roHtmlWidget", m.stateMachine.rectangle, aa)
-    SetUserAgentForHtmlWidget(m.bsp, m.stateMachine.loadingHtmlWidget)
     
   end sub
   
@@ -15824,6 +15994,8 @@ Sub BuildTemplateItems()
         else
           text["text"] = ""
         end if
+      else if templateItem.systemVariableType$ = "BrightAuthorVersion" then
+        text["text"] = m.bsp.sysInfo.baconVersion$
       end if
       
       m.BuildTextTemplateItem(templateItem, text)
@@ -17022,28 +17194,31 @@ Sub DisplayMRSSItem(displayItem as object, filePath$ as string)
     
   else if isHtml(displayItem)
     
-    m.stateMachine.loadingHtmlWidget = CreateObject("roHtmlWidget", m.stateMachine.rectangle)
-    SetUserAgentForHtmlWidget(m.bsp, m.stateMachine.loadingHtmlWidget)
+    aa = { }
+    
+    if m.bsp.sign.htmlEnableJavascriptConsole then
+      aa.inspector_server = { port: 2999 }
+    end if
+    
+    if IsPortraitBottomLeft(m.bsp.sign.monitorOrientation) then
+      aa.transform = "rot90"
+    else if IsPortraitBottomRight(m.bsp.sign.monitorOrientation) then
+      aa.transform = "rot270"
+    end if
+
+    aa.port = m.bsp.msgPort
+    
+    aa.url = filePath$
+    'print "Loading MRSS HTML path: ";filePath$
+    ' ?? call LaunchTimer here to handle load timeout ??
+
+    SetUserAgentForHtmlWidget(m.bsp, m.stateMachine.loadingHtmlWidget, aa)
+
+    m.stateMachine.loadingHtmlWidget = CreateObject("roHtmlWidget", m.stateMachine.rectangle, aa)
     
     userData = { }
     userData.stateId$ = m.id$
     m.stateMachine.loadingHtmlWidget.SetUserData(userData)
-    
-    if m.bsp.sign.htmlEnableJavascriptConsole then
-      m.stateMachine.loadingHtmlWidget.StartInspectorServer(2999)
-    end if
-    
-    if IsPortraitBottomLeft(m.bsp.sign.monitorOrientation) then
-      m.stateMachine.loadingHtmlWidget.SetPortrait(true)
-    else if IsPortraitBottomRight(m.bsp.sign.monitorOrientation) then
-      m.stateMachine.loadingHtmlWidget.SetTransform("rot270")
-    end if
-    
-    m.stateMachine.loadingHtmlWidget.SetPort(m.bsp.msgPort)
-    
-    m.stateMachine.loadingHtmlWidget.SetUrl(filePath$)
-    'print "Loading MRSS HTML path: ";filePath$
-    ' ?? call LaunchTimer here to handle load timeout ??
     
     if type(m.imageTimeoutTimer) = "roTimer" then
       m.imageTimeoutTimer.Stop()
@@ -17968,7 +18143,7 @@ end function
 
 
 Sub InitiateRemoteSnapshotTimer()
-  
+
   m.remoteSnapshotTimer = CreateObject("roTimer")
   m.remoteSnapshotTimer.SetPort(m.msgPort)
   m.remoteSnapshotTimer.SetElapsed(m.globalAA.remoteSnapshotInterval, 0)
@@ -18569,6 +18744,18 @@ else if type(event) = "roStorageAttached" then
     end if
   end if
   
+else if type(event) = "roDatagramEvent" and IsString(event.getUserData()) and event.GetUserData() = "bootstrap" then
+
+  if IsString(event.getUserData()) and event.GetUserData() = "bootstrap" then
+    payload = ParseJson(event.GetString())
+    if type(payload) = "roAssociativeArray" then
+      if payload.message = "cellular-status" and payload.version = "1.0.0" then
+        globalAA = GetGlobalAA()
+        globalAA.cellularModemActive = payload.value
+      end if
+    end if
+  endif
+
 else if type(event) = "roBtEvent" then
   
   m.bsp.btManager.HandleEvent(event)
@@ -20433,8 +20620,6 @@ Function GenerateOAuthSignature(urlTransfer as object, authenticationData as obj
   end if
   sigBase$ = sigBase$ + urlTransfer.Escape(normUrl$) + "&" + urlTransfer.Escape(normParams$)
   
-  'print "OAuth base string: " + sigBase$
-  
   hashGen = CreateObject("roHashGenerator", "SHA1")
   hashGen.SetObfuscatedHmacKey(authenticationData.EncryptedTwitterSecrets)
   ' get hash - we will NOT escape this here - that will be done when we generate the header
@@ -20458,8 +20643,6 @@ Function GetOAuthAuthorizationHeader(urlTransfer as object, authenticationData a
   s = s + "oauth_timestamp=" + chr(34) + timestamp + chr(34) + ","
   s = s + "oauth_token=" + chr(34) + urlTransfer.Escape(authenticationData.AuthToken) + chr(34) + ","
   s = s + "oauth_version=" + chr(34) + "1.0" + chr(34)
-  
-  'print "Auth header: " + s
   
   return s
   
@@ -20564,7 +20747,7 @@ Sub RetrieveLiveDataFeed(liveDataFeeds as object, liveDataFeed as object)
     end if
   end if
   
-  binding% = GetBinding(m.textFeedsXfersEnabledWired, m.textFeedsXfersEnabledWireless)
+  binding% = GetBinding(m.textFeedsXfersEnabledWired, m.textFeedsXfersEnabledWireless, m.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for RetrieveLiveDataFeed is " + stri(binding%))
   ok = liveDataFeed.rssURLXfer.BindToInterface(binding%)
   if not ok then stop
@@ -20789,9 +20972,15 @@ Function InitializeNetworkingStateMachine() as object
     m.enableBasicAuthentication = false
   end if
   
-  useWireless$ = m.currentSync.LookupMetadata("client", "useWireless")
-  if not m.modelSupportsWifi then useWireless$ = "no"
-  
+  inheritNetworkProperties = m.bsp.registrySettings.inheritNetworkProperties
+
+  if inheritNetworkProperties = "yes" then
+    useWireless$ = m.bsp.registrySettings.useWireless$
+  else
+    useWireless$ = m.currentSync.LookupMetadata("client", "useWireless")
+    if not m.modelSupportsWifi then useWireless$ = "no"
+  end if
+
   if useWireless$ = "yes" then
     m.useWireless = true
   else
@@ -21260,7 +21449,7 @@ Sub UploadDeviceDownloadProgressItems()
   m.AddUploadHeaders(m.deviceDownloadProgressUploadURL, contentDisposition$)
   m.deviceDownloadProgressUploadURL.AddHeader("updateDeviceLastDownload", "true")
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadDeviceDownloadProgressItems is " + stri(binding%))
   ok = m.deviceDownloadProgressUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -21425,7 +21614,7 @@ Sub UploadDeviceDownload()
   contentDisposition$ = GetContentDisposition("UploadDeviceDownload.xml")
   m.AddUploadHeaders(m.deviceDownloadUploadURL, contentDisposition$)
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadDeviceDownload is " + stri(binding%))
   ok = m.deviceDownloadUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -21485,7 +21674,7 @@ Sub UploadLogFiles()
   listOfLogFiles = MatchFiles("/" + m.uploadLogFolder, "*.log")
   if listOfLogFiles.Count() = 0 then return
   
-  binding% = GetBinding(m.bsp.logUploadsXfersEnabledWired, m.bsp.logUploadsXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.logUploadsXfersEnabledWired, m.bsp.logUploadsXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadLogFiles is " + stri(binding%))
   ok = m.uploadLogFileURLXfer.BindToInterface(binding%)
   
@@ -21586,7 +21775,7 @@ Function UploadTrafficDownload(contentDownloaded# as double) as boolean
   
   m.lastContentDownloaded# = contentDownloaded#
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadTrafficDownload is " + stri(binding%))
   ok = m.trafficDownloadUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -21629,7 +21818,7 @@ Function UploadMRSSTrafficDownload(contentDownloaded# as double) as boolean
   m.pendingMRSSContentDownloaded# = 0
   m.lastMRSSContentDownloaded# = contentDownloaded#
   
-  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadMRSSTrafficDownload is " + stri(binding%))
   ok = m.mrssTrafficDownloadUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -21757,7 +21946,7 @@ Sub UploadEvent()
   contentDisposition$ = GetContentDisposition("UploadEvent.xml")
   m.AddUploadHeaders(m.eventUploadURL, contentDisposition$)
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadEvent is " + stri(binding%))
   ok = m.eventUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -21829,7 +22018,7 @@ Sub UploadDeviceError()
   contentDisposition$ = GetContentDisposition("UploadDeviceError.xml")
   m.AddUploadHeaders(m.deviceErrorUploadURL, contentDisposition$)
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.diagnostics.PrintDebug("### Binding for UploadDeviceError is " + stri(binding%))
   ok = m.deviceErrorUploadURL.BindToInterface(binding%)
   if not ok then stop
@@ -22362,7 +22551,7 @@ Function STWaitForTimeoutEventHandler(event as object, stateData as object) as o
     end if
 
   ' Set user data to distinguish between presentation udp messages and bootstrap udp messages
-  else if type(event) = "roDatagramEvent" and event.GetUserData() = "bootstrap" then
+  else if type(event) = "roDatagramEvent" and IsString(event.getUserData()) and event.GetUserData() = "bootstrap" then
 
     jsonobject = ParseJson(event.GetString())
 
@@ -22538,7 +22727,7 @@ Sub StartSync(syncType$ as string)
     end if
   end if
   
-  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.contentXfersEnabledWired, m.bsp.contentXfersEnabledWireless, m.bsp.cellularModemActive)
   m.bsp.diagnostics.PrintDebug("### Binding for StartSync is " + stri(binding%))
   ok = m.xfer.BindToInterface(binding%)
   if not ok then stop
@@ -23360,8 +23549,9 @@ Sub SetBASParameters(syncSpec as object, setURLSFromSyncSpec as boolean, setRegi
       m.bsp.remoteSnapshotTimer.SetElapsed(m.bsp.globalAA.remoteSnapshotInterval, 0)
       m.bsp.remoteSnapshotTimer.Start()
     else ' remote snapshots were on; turn them off
-      if type(m.remoteSnapshotTimer) = "roTimer" then
-        m.remoteSnapshotTimer.Stop()
+      if type(m.bsp.remoteSnapshotTimer) = "roTimer" then
+        m.bsp.remoteSnapshotTimer.Stop()
+        m.bsp.remoteSnapshotTimer = invalid
       end if
     end if
   end if
@@ -23615,7 +23805,7 @@ Function StartSyncListDownload() as object
   m.stateMachine.assetFetcher.AddHeader("DeviceFamily", m.stateMachine.deviceFamily$)
   m.stateMachine.assetFetcher.SetFileProgressIntervalSeconds(15)
   
-  binding% = GetBinding(m.stateMachine.bsp.contentXfersEnabledWired, m.stateMachine.bsp.contentXfersEnabledWireless)
+  binding% = GetBinding(m.stateMachine.bsp.contentXfersEnabledWired, m.stateMachine.bsp.contentXfersEnabledWireless, m.stateMachine.bsp.cellularModemActive)
   m.bsp.diagnostics.PrintDebug("### Binding for assetFetcher is " + stri(binding%))
   ok = m.stateMachine.assetFetcher.BindToInterface(binding%)
   if not ok then stop
@@ -24479,23 +24669,14 @@ end function
 
 
 Sub ExecuteSendWssCommand(parameters as object)
-  
+
   gaa = GetGlobalAA()
   
-  port$ = parameters["port"].getCurrentParameterValue()
+  specifiedPort$ = parameters["port"].getCurrentParameterValue()
+  runtimePort$ = m.GetRuntimeUsbConnector(specifiedPort$)
   
-  speakerFound = false
-  
-  for each key in gaa.usbDevicesByConnector
-    usbDeviceName = gaa.usbDevicesByConnector[key]
-    if usbDeviceName = port$ then
-      speakerFound = true
-      exit for
-    end if
-  next
-  
-  if not speakerFound then
-    m.diagnostics.PrintDebug("ExecuteSendWssCommand: speaker not found at connector: " + port$)
+  if not gaa.usbConnectorNameToUsbSpec.DoesExist(runtimePort$) then
+    m.diagnostics.PrintDebug("ExecuteSendWssCommand: speaker not found at connector: " + runtimePort$)
     return
   end if
   
@@ -24507,14 +24688,16 @@ Sub ExecuteSendWssCommand(parameters as object)
   
   speakerDiscovered = false
   
+  speakerSpec$ = gaa.usbConnectorNameToUsbSpec[runtimePort$].hidOutputSpec
+
   for i% = 0 to m.bose.speakers.Count() - 1
     
     speaker = m.bose.speakers[i%]
     if speaker.fid <> invalid then
       
       speakerFid$ = speaker.fid
-      
-      index = instr(1, speakerFid$, mid(port$, 5))
+
+      index = instr(1, speaker.fid, mid(speakerSpec$, 5))
       if index = 1 then
         speakerDiscovered = true
         exit for
@@ -24525,7 +24708,7 @@ Sub ExecuteSendWssCommand(parameters as object)
   next
   
   if not speakerDiscovered then
-    m.diagnostics.PrintDebug("ExecuteSendWssCommand: speaker not discovered at connector: " + port$)
+    m.diagnostics.PrintDebug("ExecuteSendWssCommand: speaker not discovered at connector: " + runtimePort$)
     return
   end if
   
@@ -24534,7 +24717,8 @@ Sub ExecuteSendWssCommand(parameters as object)
   
   ' command data from wssCommunicationSpec
   
-  boseProduct = m.sign.boseProductsByConnector[port$]
+  boseProduct = m.sign.boseProductsByConnector[specifiedPort$]
+  
   wssCommunicationSpec = boseProduct.wssCommunicationSpec
   commands = wssCommunicationSpec.commands
   
@@ -24606,7 +24790,6 @@ end sub
 
 
 ' m is bsp
-
 Sub ExecuteGpioOnCommand(zoneHSM as object, command$ as string, parameters as object)
   
   gpioNumberParameter = parameters["gpioNumber"]
@@ -24706,7 +24889,7 @@ Sub ExecuteSendSerialByteCommand(zoneHSM as object, command$ as string, paramete
   
   port$ = zoneHSM.bsp.GetRuntimeUsbConnector(port$)
 
-  byteValueParameter = parameters["byteValue"]
+  byteValueParameter = parameters["message"]
   byteValue$ = byteValueParameter.GetCurrentParameterValue()
   
   m.diagnostics.PrintDebug("sendSerialByteCommand " + byteValue$ + " to port " + port$)
@@ -24727,7 +24910,7 @@ Sub ExecuteSendSerialBytesCommand(zoneHSM as object, command$ as string, paramet
   
   port$ = zoneHSM.bsp.GetRuntimeUsbConnector(port$)
 
-  byteValueParameter = parameters["byteValues"]
+  byteValueParameter = parameters["message"]
   byteValues$ = byteValueParameter.GetCurrentParameterValue()
   m.diagnostics.PrintDebug("sendSerialBytesCommand " + byteValues$ + " to port " + port$)
   
@@ -25147,6 +25330,7 @@ Sub ExecuteSendPluginMessageCommand(zoneHSM as object, command$ as string, param
   sendPluginMessageParameter$ = pluginMessageParameter.GetCurrentParameterValue()
   ' send ZoneMessage message
   pluginMessageCmd = { }
+
   pluginMessageCmd["EventType"] = "SEND_PLUGIN_MESSAGE"
   pluginMessageCmd["PluginName"] = pluginName$
   pluginMessageCmd["PluginMessage"] = sendPluginMessageParameter$
@@ -26595,11 +26779,6 @@ Sub HSMInitialize()
         s = m.activeState
         status$ = s.HStateEventHandler(event, stateData)
         m.activeState = stateData.nextState
-        'if type(m.activeState) = "roAssociativeArray" then
-        '    print "m.activeState set to " + m.activeState.id$ + "0"
-        'else
-        '    print "m.activeState set to invalid 0"
-        'endif
       end while
       
       if (status$ = "TRANSITION")
@@ -26707,8 +26886,6 @@ end while
 
 t = path[0] ' stick the target into register */
 m.activeState = t ' update the current state */
-'print "m.activeState set to " + m.activeState.id$ + "1"
-
 
 ' drill into the target hierarchy...
 status$ = t.HStateEventHandler(initEvent, stateData)
@@ -26718,16 +26895,13 @@ while (status$ = "TRANSITION")
   path[0] = m.activeState
   status$ = m.activeState.HStateEventHandler(emptyEvent, stateData) ' find superstate
   m.activeState = stateData.nextState
-  'print "m.activeState set to " + m.activeState.id$ + "2"
   while (m.activeState.id$ <> t.id$)
     ip = ip + 1
     path[ip] = m.activeState
     status$ = m.activeState.HStateEventHandler(emptyEvent, stateData) ' find superstate
     m.activeState = stateData.nextState
-    'print "m.activeState set to " + m.activeState.id$ + "3"
   end while
   m.activeState = path[0]
-  'print "m.activeState set to " + m.activeState.id$ + "4"
   
   while (ip >= 0)
     status$ = path[ip].HStateEventHandler(entryEvent, stateData)
@@ -26743,7 +26917,6 @@ end while
 end if
 
 m.activeState = t ' set the new state or restore the current state
-'print "m.activeState set to " + m.activeState.id$ + "5"
 
 end sub
 
@@ -26829,7 +27002,7 @@ end sub
 
 
 Sub PrintDebug(debugStr$ as string)
-  
+
   if type(m) <> "roAssociativeArray" then stop
   
   if m.debug then
@@ -27506,7 +27679,7 @@ Sub DownloadMRSSContent()
   m.assetFetcher.SetFileProgressIntervalSeconds(5)
   m.assetFetcher.SetUserData(m.id$)
   
-  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless, m.bsp.cellularModemActive)
   m.bsp.diagnostics.PrintDebug("### Binding for assetFetcher is " + stri(binding%))
   ok = m.assetFetcher.BindToInterface(binding%)
   if not ok then stop
@@ -28157,7 +28330,7 @@ Sub DownloadLiveFeedContent()
   m.assetFetcher.SetFileProgressIntervalSeconds(5)
   m.assetFetcher.SetUserData(m.id$)
   
-  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless)
+  binding% = GetBinding(m.bsp.mediaFeedsXfersEnabledWired, m.bsp.mediaFeedsXfersEnabledWireless, m.bsp.cellularModemActive)
   m.bsp.diagnostics.PrintDebug("### Binding for assetFetcher is " + stri(binding%))
   ok = m.assetFetcher.BindToInterface(binding%)
   if not ok then stop
@@ -29109,11 +29282,22 @@ Function GetAutoplay(autoplayPath$)
 end function
 
 
-Function GetAutoplayVersion(autoplay)
+Function GetAutoplayVersion(autoplay) as integer
   
   version% = autoplay.version
   return version%
   
+end function
+
+
+Function GetBaconVersion(autoplay) as string
+
+  if IsString(autoplay.BrightAuthorConnectedVersion) then
+    return autoplay.BrightAuthorConnectedVersion
+  end if
+
+  return "unknown"
+
 end function
 
 
@@ -29434,7 +29618,14 @@ Sub jsonParseAutoplay(BrightAuthor as object, meta as object, bsp as object)
     meta.liveDataFeedDescriptions.push(liveDataFeedDescription)
   next
   meta.resetVariablesOnPresentationStart = BrightAuthor.meta.resetVariablesOnPresentationStart
-  
+
+  ' parse Node apps
+  meta.nodeAppDescriptions = []
+  for each nodeAppJson in BrightAuthor.meta.nodeApps
+    nodeAppDescription = jsonParseNodeApp(bsp, nodeAppJson)
+    meta.nodeAppDescriptions.push(nodeAppDescription)
+  next
+
   ' parse HTML sites
   meta.htmlSiteDescriptions = []
   for each htmlSiteJson in BrightAuthor.meta.htmlSites
@@ -29462,7 +29653,8 @@ Sub jsonParseAutoplay(BrightAuthor as object, meta as object, bsp as object)
   end if
   
   meta.boseProducts = BrightAuthor.meta.partnerProducts
-  
+  meta.wssDeviceSpec = BrightAuthor.meta.wssDeviceSpec
+
   meta.udpReceivePort = BrightAuthor.meta.udpReceiverPort
   meta.udpSendPort = BrightAuthor.meta.udpDestinationPort
   meta.udpAddressType = BrightAuthor.meta.udpDestinationAddressType 'BACONTODO - check case'
@@ -29744,6 +29936,18 @@ Function jsonParseZoneSpec(zoneSpec as object, sign as object)
 end function
 
 
+Function jsonParseNodeApp(bsp as object, nodeAppJson as object) as object
+
+  nodeAppDescription = { }
+  nodeAppDescription.name$ = nodeAppJson.name
+  nodeAppDescription.prefix$ = nodeAppJson.prefix
+  nodeAppDescription.filePath$ = nodeAppJson.fileName
+  
+  return nodeAppDescription
+  
+end function
+
+
 Function jsonParseHtmlSite(bsp as object, htmlSiteJson as object) as object
   
   htmlSiteDescription = { }
@@ -29792,7 +29996,7 @@ end function
 
 Function jsonParseStreamItem(streamItemSpec as object)
   
-  streamItemSpec.url = jsonParseParameterValue(streamItemSpec.url.params)
+  streamItemSpec.url = jsonParseParameterValue(streamItemSpec.url)
   return streamItemSpec
   
 end function
@@ -30150,8 +30354,6 @@ Function GetSynchronizerFilesToTransfer(userData as object, e as object)
   
   mVar = userData.mVar
   
-  print "respond to GetSynchronizerFilesToTransfer request"
-  
   MoveFile(e.GetRequestBodyFile(), "filesInSite.json")
   
   filesToTransfer = GetDifferentOrMissingFiles()
@@ -30167,7 +30369,7 @@ Sub SynchronizerFilePosted(userData as object, e as object)
   mVar = userData.mVar
   
   destinationFilename = e.GetRequestHeader("Destination-Filename")
-  print "File posted to ";destinationFileName
+
   ok = MoveFile(e.GetRequestBodyFile(), destinationFilename)
   if not ok then
     regex = CreateObject("roRegEx", "/", "i")
@@ -31285,7 +31487,6 @@ Sub PopulateCardSizeLimitsJson(mVar as object) as object
 end sub
 
 Sub GetCardSizeLimitsJson(userData as object, e as object)
-  print "respond to GetCardSizeLimitsJson request"
   
   mVar = userData.mVar
   
@@ -31442,8 +31643,6 @@ Sub PostFileJson(userData as object, e as object)
 end sub
 
 Sub PostSyncSpecJson(userData as object, e as object)
-  
-  print "respond to SyncSpecPostedJson request"
   
   if e.GetRequestBodyFile() = invalid then
     e.SendResponse(400) ' TODO check with Ted, add fallback for invalid request params instead of player crash

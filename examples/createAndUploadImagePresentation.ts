@@ -116,7 +116,7 @@ async function doUploadExample() {
       console.log(inspect(uploadResult.presentationStateBsn, {depth: null, colors: true}));
       console.log('');
       console.log('Presentation assetItem:');
-      console.log(inspect(uploadResult.presentationAsset.assetItem, {depth: null, colors: true}));
+      console.log(inspect(uploadResult.presentationAsset!.assetItem, {depth: null, colors: true}));
       console.log('');
 
       // Delete the presentation

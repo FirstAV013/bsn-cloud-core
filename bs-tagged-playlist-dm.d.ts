@@ -1,5 +1,5 @@
 /* tslint:disable:quotemark max-line-length trailing-comma */
-import {BsnFilterComponent, BsnFilterCombineType, ContentItemType, MediaType, BsAssetItem, BsnTaggedListSpecification, BsnTaggedPlaylistItemStatus, BsnFilterSpecification, BsnTaggedPlaylistProperties, BsAssetId} from './bscore';
+import {BsnFilterComponent, BsnFilterCombineType, ContentItemType, MediaType, BsAssetItem, BsnTaggedListSpecification, BsnTaggedPlaylistItemStatus, BsnFilterSpecification, BsnTaggedPlaylistProperties, BsAssetLocator, BsAssetId} from './bscore';
 export const TplDefaultSortTagName = "FileName";
 
 export interface TplDmState {
@@ -152,7 +152,8 @@ export enum TplDmErrorType {
     invalidParameters = 2,
     invalidOperation = 3,
     invalidState = 4,
-    apiError = 5
+    apiError = 5,
+    assetNotFound = 6
 }
 export class TplDmError extends Error {
     name: string;
@@ -262,7 +263,21 @@ export function tplDmUpdateContentItem(params: TplDmUpdateContentItemParams): Tp
 export function tplDmRemoveContentItemsWithAssetItems(ids: string | string[]): TplDmThunkAction<string[]>;
 export function tplDmUpdateContentItemsPosition(params: TplDmUpdateContentItemsPositionParams): TplDmUpdateContentItemsPositionAction;
 
+export interface TplDmAssetItemUpdateParams {
+    assetItem: BsAssetItem;
+}
+export type TplDmAssetItemUpdateAction = TplDmAction<TplDmAssetItemUpdateParams>;
 export function tplDmPrepareAssetItem(state: TplDmState, assetItem: BsAssetItem, action?: TplDmBaseAction): BsAssetItem;
+/**
+ * Substitute assetItem information for an asset in the assetMap. The asset for which the substitution
+ *  is to be made is identified by the currentLocator parameter. If not asset is found in the assetMap
+ *  corresponding to the currentLocator, an exception is thrown.
+ *
+ * @param {BsAssetLocator} currentLocator
+ * @param {BsAssetItem} newAssetItem
+ * @returns {TplDmThunkAction<TplDmAssetItemUpdateParams>}
+ */
+export function tplDmUpdateAssetLocation(currentLocator: BsAssetLocator, newAssetItem: BsAssetItem): TplDmThunkAction<TplDmAssetItemUpdateParams>;
 
 import { Reducer } from 'redux';
 export type TplDmReducer = Reducer<TplDmState>;

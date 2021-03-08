@@ -26,6 +26,9 @@ export interface DfDmState {
     fields: DfDmFieldsState;
     modifiedTime: string;
 }
+export interface DfDmProjectState {
+    bsdfdm: DfDmState;
+}
 export interface DfDmDataFeed {
     id: string;
     name: string;
@@ -71,35 +74,35 @@ export function dfDmCheckForDuplicateFieldName(state: DfDmState): DfDmError | nu
  */
 export const dfDmGetBaseStateForUniversalTimeZone: (state: any) => DfDmState;
 export const dfDmFilterBaseState: (state: any) => DfDmState;
-export const dfDmGetBaseState: (state: any) => DfDmState;
+export const dfDmGetBaseState: (state: DfDmProjectState | DfDmState) => DfDmState;
 
-export const dfDmGetDataFeedState: (state: DfDmState) => DfDmDataFeed;
-export function dfDmGetDataFeedName(state: DfDmState): string;
+export const dfDmGetDataFeedState: (state: DfDmState | DfDmProjectState) => DfDmDataFeed;
+export function dfDmGetDataFeedName(state: DfDmState | DfDmProjectState): string;
 
-export const dfDmGetFieldsState: (state: DfDmState) => DfDmFieldsState;
-export function dfDmGetFieldsOrder(state: DfDmState): string[];
-export function dfDmGetFieldsTitleMap(state: DfDmState): DfDmFieldsTitleMap;
-export function dfDmGetFieldsValueMap(state: DfDmState): DfDmFieldsValueMap;
-export function dfDmGetFieldTitleById(state: DfDmState, props: DfDmIdParam): string | null;
-export function dfDmGetFieldValueObjectById(state: DfDmState, props: DfDmIdParam): DfDmFieldObject | null;
-export function dfDmGetFieldValueEntityById(state: DfDmState, props: DfDmIdParam): DfDmFieldEntity | null;
+export const dfDmGetFieldsState: (state: DfDmState | DfDmProjectState) => DfDmFieldsState;
+export function dfDmGetFieldsOrder(state: DfDmState | DfDmProjectState): string[];
+export function dfDmGetFieldsTitleMap(state: DfDmState | DfDmProjectState): DfDmFieldsTitleMap;
+export function dfDmGetFieldsValueMap(state: DfDmState | DfDmProjectState): DfDmFieldsValueMap;
+export function dfDmGetFieldTitleById(state: DfDmState | DfDmProjectState, props: DfDmIdParam): string | null;
+export function dfDmGetFieldValueObjectById(state: DfDmState | DfDmProjectState, props: DfDmIdParam): DfDmFieldObject | null;
+export function dfDmGetFieldValueEntityById(state: DfDmState | DfDmProjectState, props: DfDmIdParam): DfDmFieldEntity | null;
 /**
  * This returns all DfDmFieldEntity.
  *
- * @param {DfDmState} state
+ * @param {DfDmState | DfDmProjectState} state
  * @returns {DfDmFieldEntity[]}
  */
-export function dfDmGetAllFieldValueEntities(state: DfDmState): DfDmFieldEntity[];
+export function dfDmGetAllFieldValueEntities(state: DfDmState | DfDmProjectState): DfDmFieldEntity[];
 
-export const dfDmGetModifiedTimeState: (state: DfDmState) => string;
+export const dfDmGetModifiedTimeState: (state: DfDmState | DfDmProjectState) => string;
 /**
  * Return dataFeed last modified time.
  * Nearly an alias for dfDmGetModifiedTimeState() - was add for compatibility reasons.
  *
- * @param {DfDmState} state
+ * @param {DfDmState | DfDmProjectState} state
  * @returns {Date}
  */
-export function dfDmGetDataFeedLastModifiedTime(state: DfDmState): Date;
+export function dfDmGetDataFeedLastModifiedTime(state: DfDmState | DfDmProjectState): Date;
 
 import { Reducer } from 'redux';
 export type DfDmReducer = Reducer<DfDmState>;

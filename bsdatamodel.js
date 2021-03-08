@@ -7,7 +7,7 @@
 		exports["bsDataModel"] = factory(require("lodash"), require("./bscore"), require("re-reselect"), require("reselect"), require("redux"), require("base64-js"), require("redux-thunk"), require("uuid"));
 	else
 		root["bsDataModel"] = factory(root["lodash"], root["./bscore"], root["re-reselect"], root["reselect"], root["redux"], root["base64-js"], root["redux-thunk"], root["uuid"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_17__, __WEBPACK_EXTERNAL_MODULE_27__, __WEBPACK_EXTERNAL_MODULE_30__, __WEBPACK_EXTERNAL_MODULE_74__, __WEBPACK_EXTERNAL_MODULE_110__, __WEBPACK_EXTERNAL_MODULE_111__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_18__, __WEBPACK_EXTERNAL_MODULE_27__, __WEBPACK_EXTERNAL_MODULE_30__, __WEBPACK_EXTERNAL_MODULE_75__, __WEBPACK_EXTERNAL_MODULE_110__, __WEBPACK_EXTERNAL_MODULE_111__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 83);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -95,74 +95,63 @@ module.exports = require("./bscore");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RssTextElementName = exports.LiveTextEntityType = exports.LiveTextItemType = exports.DmPartnerCommandLibraryType = exports.DmTapProtocolType = exports.SerialConnectedDeviceType = exports.SerialEol = exports.SerialProtocol = exports.SerialParity = exports.DmDefaultFontName = exports.DmInvisibleLayerId = exports.DmAudioLayerId = exports.DmGraphicsLayerId = exports.DmVideoLayer2Id = exports.DmVideoLayer1Id = exports.DmVideoLayerId = exports.MediaStateContainerType = exports.DmParameterizedNumberCommandPropertyNames = exports.DmParameterizedStringCommandPropertyNames = exports.DmTimeClockEventType = exports.DmKeyboardEventSpecialCharCodeSet = exports.DmKeyboardEventSpecialCharCodes = exports.DmSuperStateContentItemDataNameArray = exports.DmLiveTextContentItemDataNameArray = exports.DmEventHandlerContentItemDataNameArray = exports.DmPlayFileItemDataNameArray = exports.DmPlayFileContentItemDataNameArray = exports.DmMediaListContentItemDataNameArray = exports.DmMjpegStreamContentItemDataNameArray = exports.DmStreamContentItemDataNameArray = exports.DmLiveVideoContentItemDataNameArray = exports.DmTwitterFeedContentItemDataNameArray = exports.DmMrssDataFeedContentItemDataNameArray = exports.DmHtmlContentItemDataNameArray = exports.DmImageContentItemDataNameArray = exports.DmAudioContentItemDataNameArray = exports.DmVideoContentItemDataNameArray = exports.DmCopySetContentType = exports.DmEntityContainerType = exports.DmEntityType = exports.BsDmStateVersion = exports.BsDmIdNone = void 0;
-var bsDmVersion_1 = __webpack_require__(57);
+exports.RssTextElementName = exports.LiveTextEntityType = exports.LiveTextItemType = exports.DmPartnerCommandLibraryType = exports.DmTapProtocolType = exports.SerialConnectedDeviceType = exports.SerialEol = exports.SerialProtocol = exports.SerialParity = exports.DmDefaultFontName = exports.DmInvisibleLayerId = exports.DmAudioLayerId = exports.DmGraphicsLayerId = exports.DmVideoLayer2Id = exports.DmVideoLayer1Id = exports.DmVideoLayerId = exports.MediaStateContainerType = exports.DmParameterizedNumberCommandPropertyNames = exports.DmParameterizedStringCommandPropertyNames = exports.DmTimeClockEventType = exports.DmKeyboardEventSpecialCharCodeSet = exports.DmKeyboardEventSpecialCharCodes = exports.DmSuperStateContentItemDataNameArray = exports.DmLiveTextContentItemDataNameArray = exports.DmEventHandlerContentItemDataNameArray = exports.DmPlayFileItemDataNameArray = exports.DmPlayFileContentItemDataNameArray = exports.DmLocalPlaylistItemDataNameArray = exports.DmLocalPlaylistContentItemDataNameArray = exports.DmMediaListContentItemDataNameArray = exports.DmMjpegStreamContentItemDataNameArray = exports.DmStreamContentItemDataNameArray = exports.DmLiveVideoContentItemDataNameArray = exports.DmTwitterFeedContentItemDataNameArray = exports.DmMrssDataFeedContentItemDataNameArray = exports.DmHtmlContentItemDataNameArray = exports.DmImageContentItemDataNameArray = exports.DmAudioContentItemDataNameArray = exports.DmVideoContentItemDataNameArray = exports.DmCopySetContentType = exports.DmEntityContainerType = exports.DmEntityType = exports.BsDmStateVersion = exports.BsDmIdNone = void 0;
+var bsDmVersion_1 = __webpack_require__(58);
 exports.BsDmIdNone = '0';
 exports.BsDmStateVersion = bsDmVersion_1.version;
-var DmEntityType = (function () {
-    function DmEntityType() {
-    }
-    DmEntityType.Sign = 'Sign';
-    DmEntityType.Zone = 'Zone';
-    DmEntityType.MediaState = 'MediaState';
-    DmEntityType.Event = 'Event';
-    DmEntityType.Transition = 'Transition';
-    DmEntityType.Command = 'Command';
-    DmEntityType.DataFeed = 'DataFeed';
-    DmEntityType.DataFeedSource = 'DataFeedSource';
-    DmEntityType.HtmlSite = 'HtmlSite';
-    DmEntityType.NodeApp = 'NodeApp';
-    DmEntityType.UserVariable = 'UserVariable';
-    DmEntityType.LiveText = 'LiveText';
-    DmEntityType.Plugin = 'Plugin';
-    DmEntityType.ScriptPlugin = 'ScriptPlugin';
-    DmEntityType.ParserPlugin = 'ParserPlugin';
-    DmEntityType.DeviceWebPage = 'DeviceWebPage';
-    DmEntityType.LinkedPresentation = 'LinkedPresentation';
-    DmEntityType.AuxiliaryFile = 'AuxiliaryFile';
-    DmEntityType.PartnerProduct = 'PartnerProduct';
-    DmEntityType.LiveTextItem = 'LiveTextItem';
-    return DmEntityType;
-}());
-exports.DmEntityType = DmEntityType;
-Object.freeze(DmEntityType);
-var DmEntityContainerType = (function () {
-    function DmEntityContainerType() {
-    }
-    DmEntityContainerType.ZoneSet = 'ZoneSet';
-    DmEntityContainerType.MediaStateSet = 'MSSet';
-    DmEntityContainerType.MediaStateItemSet = 'ItemSet';
-    DmEntityContainerType.EventSet = 'EvSet';
-    DmEntityContainerType.TransitionSequence = 'TranS';
-    DmEntityContainerType.CommandSequence = 'CmdS';
-    DmEntityContainerType.CommandSequenceStateEntry = 'CmdSEntry';
-    DmEntityContainerType.CommandSequenceStateExit = 'CmdSExit';
-    DmEntityContainerType.CommandSequenceItemEntry = 'CmdSItemEntry';
-    DmEntityContainerType.CommandSequenceItemExit = 'CmdSItemExit';
-    DmEntityContainerType.LiveTextItemSet = 'LiveTextSet';
-    DmEntityContainerType.UserVariableSet = 'UserVariableSet';
-    DmEntityContainerType.ScriptPluginSet = 'ScriptPluginSet';
-    DmEntityContainerType.ParserPluginSet = 'ParserPluginSet';
-    DmEntityContainerType.LinkedPresentationSet = 'LinkedPresSet';
-    DmEntityContainerType.SystemDataFeedSet = 'SysDataFeeds';
-    DmEntityContainerType.AuxiliaryFileSet = 'AuxFiles';
-    return DmEntityContainerType;
-}());
-exports.DmEntityContainerType = DmEntityContainerType;
-Object.freeze(DmEntityContainerType);
-var DmCopySetContentType = (function () {
-    function DmCopySetContentType() {
-    }
-    DmCopySetContentType.Playlist = 'Playlist';
-    DmCopySetContentType.Interactive = 'Interactive';
-    DmCopySetContentType.MediaItemList = 'MediaItemList';
-    DmCopySetContentType.LiveText = 'LiveText';
-    DmCopySetContentType.Command = 'Command';
-    DmCopySetContentType.UserVariable = 'UserVariable';
-    return DmCopySetContentType;
-}());
-exports.DmCopySetContentType = DmCopySetContentType;
-Object.freeze(DmCopySetContentType);
+var DmEntityType;
+(function (DmEntityType) {
+    DmEntityType["Sign"] = "Sign";
+    DmEntityType["Zone"] = "Zone";
+    DmEntityType["MediaState"] = "MediaState";
+    DmEntityType["Event"] = "Event";
+    DmEntityType["Transition"] = "Transition";
+    DmEntityType["Command"] = "Command";
+    DmEntityType["DataFeed"] = "DataFeed";
+    DmEntityType["DataFeedSource"] = "DataFeedSource";
+    DmEntityType["HtmlSite"] = "HtmlSite";
+    DmEntityType["NodeApp"] = "NodeApp";
+    DmEntityType["UserVariable"] = "UserVariable";
+    DmEntityType["LiveText"] = "LiveText";
+    DmEntityType["Plugin"] = "Plugin";
+    DmEntityType["ScriptPlugin"] = "ScriptPlugin";
+    DmEntityType["ParserPlugin"] = "ParserPlugin";
+    DmEntityType["DeviceWebPage"] = "DeviceWebPage";
+    DmEntityType["LinkedPresentation"] = "LinkedPresentation";
+    DmEntityType["AuxiliaryFile"] = "AuxiliaryFile";
+    DmEntityType["PartnerProduct"] = "PartnerProduct";
+    DmEntityType["LiveTextItem"] = "LiveTextItem";
+})(DmEntityType = exports.DmEntityType || (exports.DmEntityType = {}));
+var DmEntityContainerType;
+(function (DmEntityContainerType) {
+    DmEntityContainerType["ZoneSet"] = "ZoneSet";
+    DmEntityContainerType["MediaStateSet"] = "MSSet";
+    DmEntityContainerType["MediaStateItemSet"] = "ItemSet";
+    DmEntityContainerType["EventSet"] = "EvSet";
+    DmEntityContainerType["TransitionSequence"] = "TranS";
+    DmEntityContainerType["CommandSequence"] = "CmdS";
+    DmEntityContainerType["CommandSequenceStateEntry"] = "CmdSEntry";
+    DmEntityContainerType["CommandSequenceStateExit"] = "CmdSExit";
+    DmEntityContainerType["CommandSequenceItemEntry"] = "CmdSItemEntry";
+    DmEntityContainerType["CommandSequenceItemExit"] = "CmdSItemExit";
+    DmEntityContainerType["LiveTextItemSet"] = "LiveTextSet";
+    DmEntityContainerType["UserVariableSet"] = "UserVariableSet";
+    DmEntityContainerType["ScriptPluginSet"] = "ScriptPluginSet";
+    DmEntityContainerType["ParserPluginSet"] = "ParserPluginSet";
+    DmEntityContainerType["LinkedPresentationSet"] = "LinkedPresSet";
+    DmEntityContainerType["SystemDataFeedSet"] = "SysDataFeeds";
+    DmEntityContainerType["AuxiliaryFileSet"] = "AuxFiles";
+    DmEntityContainerType["NodeAppSet"] = "NodeAppSet";
+})(DmEntityContainerType = exports.DmEntityContainerType || (exports.DmEntityContainerType = {}));
+var DmCopySetContentType;
+(function (DmCopySetContentType) {
+    DmCopySetContentType["Playlist"] = "Playlist";
+    DmCopySetContentType["Interactive"] = "Interactive";
+    DmCopySetContentType["MediaItemList"] = "MediaItemList";
+    DmCopySetContentType["LiveText"] = "LiveText";
+    DmCopySetContentType["Command"] = "Command";
+    DmCopySetContentType["UserVariable"] = "UserVariable";
+})(DmCopySetContentType = exports.DmCopySetContentType || (exports.DmCopySetContentType = {}));
 exports.DmVideoContentItemDataNameArray = ['volume', 'videoDisplayMode', 'automaticallyLoop'];
 exports.DmAudioContentItemDataNameArray = ['volume'];
 exports.DmImageContentItemDataNameArray = [
@@ -188,6 +177,8 @@ exports.DmMediaListContentItemDataNameArray = ['playbackType', 'shuffle', 'suppo
     'sendMediaZoneMessage', 'transition', 'transitionDuration', 'autoTransitions',
     'inactivityTimeout', 'inactivityTime',
     'startIndex', 'useDataFeed', 'dataFeedId'];
+exports.DmLocalPlaylistContentItemDataNameArray = ['defaultDataFeedId'];
+exports.DmLocalPlaylistItemDataNameArray = ['serialNumber'];
 exports.DmPlayFileContentItemDataNameArray = ['triggerType', 'useDefaultMedia',
     'userVariableIdOrName', 'useDataFeed', 'dataFeedId'];
 exports.DmPlayFileItemDataNameArray = ['name', 'key', 'exportKey'];
@@ -200,17 +191,13 @@ exports.DmKeyboardEventSpecialCharCodes = [
     'in', 'ho', 'ed', 'cl', 'mu', 'vd', 'vu', 'nt', 'pt', 'pp', 'sm', 'sb', 'pwr', 'bk', 'fw', 'rf', 'any',
 ];
 exports.DmKeyboardEventSpecialCharCodeSet = new Set(exports.DmKeyboardEventSpecialCharCodes);
-var DmTimeClockEventType = (function () {
-    function DmTimeClockEventType() {
-    }
-    DmTimeClockEventType.DateTime = 'timeClockDateTime';
-    DmTimeClockEventType.ByUserVariable = 'timeClockDateTimeByUserVariable';
-    DmTimeClockEventType.DailyOnce = 'timeClockDailyOnce';
-    DmTimeClockEventType.DailyPeriodic = 'timeClockDailyPeriodic';
-    return DmTimeClockEventType;
-}());
-exports.DmTimeClockEventType = DmTimeClockEventType;
-Object.freeze(DmTimeClockEventType);
+var DmTimeClockEventType;
+(function (DmTimeClockEventType) {
+    DmTimeClockEventType["DateTime"] = "timeClockDateTime";
+    DmTimeClockEventType["ByUserVariable"] = "timeClockDateTimeByUserVariable";
+    DmTimeClockEventType["DailyOnce"] = "timeClockDailyOnce";
+    DmTimeClockEventType["DailyPeriodic"] = "timeClockDailyPeriodic";
+})(DmTimeClockEventType = exports.DmTimeClockEventType || (exports.DmTimeClockEventType = {}));
 exports.DmParameterizedStringCommandPropertyNames = ['messageData', 'beaconName', 'userVariableValue', 'hexString'];
 exports.DmParameterizedNumberCommandPropertyNames = ['volume', 'pauseTime'];
 var MediaStateContainerType;
@@ -219,6 +206,7 @@ var MediaStateContainerType;
     MediaStateContainerType[MediaStateContainerType["MediaList"] = 1] = "MediaList";
     MediaStateContainerType[MediaStateContainerType["PlayFile"] = 2] = "PlayFile";
     MediaStateContainerType[MediaStateContainerType["SuperState"] = 3] = "SuperState";
+    MediaStateContainerType[MediaStateContainerType["LocalPlaylist"] = 4] = "LocalPlaylist";
 })(MediaStateContainerType = exports.MediaStateContainerType || (exports.MediaStateContainerType = {}));
 exports.DmVideoLayerId = 'videoLayerId';
 exports.DmVideoLayer1Id = 'videoLayer1Id';
@@ -227,105 +215,69 @@ exports.DmGraphicsLayerId = 'graphicsLayerId';
 exports.DmAudioLayerId = 'audioLayerId';
 exports.DmInvisibleLayerId = 'invisibleLayerId';
 exports.DmDefaultFontName = 'System';
-var SerialParity = (function () {
-    function SerialParity() {
-    }
-    SerialParity.None = 'none';
-    SerialParity.Even = 'even';
-    SerialParity.Odd = 'odd';
-    return SerialParity;
-}());
-exports.SerialParity = SerialParity;
-Object.freeze(SerialParity);
-var SerialProtocol = (function () {
-    function SerialProtocol() {
-    }
-    SerialProtocol.Ascii = 'ASCII';
-    SerialProtocol.Binary = 'Binary';
-    return SerialProtocol;
-}());
-exports.SerialProtocol = SerialProtocol;
-Object.freeze(SerialProtocol);
-var SerialEol = (function () {
-    function SerialEol() {
-    }
-    SerialEol.CR = 'CR';
-    SerialEol.LF = 'LF';
-    SerialEol.CRLF = 'CRLF';
-    return SerialEol;
-}());
-exports.SerialEol = SerialEol;
-Object.freeze(SerialEol);
-var SerialConnectedDeviceType = (function () {
-    function SerialConnectedDeviceType() {
-    }
-    SerialConnectedDeviceType.None = 'None';
-    SerialConnectedDeviceType.Gps = 'GPS';
-    return SerialConnectedDeviceType;
-}());
-exports.SerialConnectedDeviceType = SerialConnectedDeviceType;
-Object.freeze(SerialConnectedDeviceType);
-var DmTapProtocolType = (function () {
-    function DmTapProtocolType() {
-    }
-    DmTapProtocolType.Serial = 'Serial';
-    DmTapProtocolType.Cdc = 'CDC';
-    DmTapProtocolType.Hid = 'HID';
-    return DmTapProtocolType;
-}());
-exports.DmTapProtocolType = DmTapProtocolType;
-Object.freeze(DmTapProtocolType);
-var DmPartnerCommandLibraryType = (function () {
-    function DmPartnerCommandLibraryType() {
-    }
-    DmPartnerCommandLibraryType.None = 'None';
-    DmPartnerCommandLibraryType.Riviera = 'Riviera';
-    return DmPartnerCommandLibraryType;
-}());
-exports.DmPartnerCommandLibraryType = DmPartnerCommandLibraryType;
-Object.freeze(DmPartnerCommandLibraryType);
-var LiveTextItemType = (function () {
-    function LiveTextItemType() {
-    }
-    LiveTextItemType.StaticText = 'StaticText';
-    LiveTextItemType.SystemVariable = 'SystemVariable';
-    LiveTextItemType.MediaCounter = 'MediaCounter';
-    LiveTextItemType.UserVariable = 'UserVariable';
-    LiveTextItemType.SimpleRss = 'SimpleRss';
-    LiveTextItemType.MediaRssText = 'MediaRssText';
-    LiveTextItemType.MediaRssMedia = 'MediaRssMedia';
-    LiveTextItemType.Image = 'Image';
-    LiveTextItemType.IndexedDataFeed = 'IndexedDataFeed';
-    LiveTextItemType.TitledDataFeed = 'TitledDataFeed';
-    return LiveTextItemType;
-}());
-exports.LiveTextItemType = LiveTextItemType;
-Object.freeze(LiveTextItemType);
-var LiveTextEntityType = (function () {
-    function LiveTextEntityType() {
-    }
-    LiveTextEntityType.StaticText = LiveTextItemType.StaticText;
-    LiveTextEntityType.SystemVariable = LiveTextItemType.SystemVariable;
-    LiveTextEntityType.MediaCounter = LiveTextItemType.MediaCounter;
-    LiveTextEntityType.UserVariable = LiveTextItemType.UserVariable;
-    LiveTextEntityType.Image = LiveTextItemType.Image;
-    LiveTextEntityType.SimpleRss = LiveTextItemType.SimpleRss;
-    LiveTextEntityType.MediaRss = 'MediaRss';
-    LiveTextEntityType.DataFeed = 'DataFeed';
-    return LiveTextEntityType;
-}());
-exports.LiveTextEntityType = LiveTextEntityType;
-Object.freeze(LiveTextEntityType);
-var RssTextElementName = (function () {
-    function RssTextElementName() {
-    }
-    RssTextElementName.Title = 'Title';
-    RssTextElementName.Description = 'Description';
-    RssTextElementName.Custom = 'Custom';
-    return RssTextElementName;
-}());
-exports.RssTextElementName = RssTextElementName;
-Object.freeze(RssTextElementName);
+var SerialParity;
+(function (SerialParity) {
+    SerialParity["None"] = "N";
+    SerialParity["Even"] = "E";
+    SerialParity["Odd"] = "O";
+})(SerialParity = exports.SerialParity || (exports.SerialParity = {}));
+var SerialProtocol;
+(function (SerialProtocol) {
+    SerialProtocol["Ascii"] = "ASCII";
+    SerialProtocol["Binary"] = "Binary";
+})(SerialProtocol = exports.SerialProtocol || (exports.SerialProtocol = {}));
+var SerialEol;
+(function (SerialEol) {
+    SerialEol["CR"] = "CR";
+    SerialEol["LF"] = "LF";
+    SerialEol["CRLF"] = "CRLF";
+})(SerialEol = exports.SerialEol || (exports.SerialEol = {}));
+var SerialConnectedDeviceType;
+(function (SerialConnectedDeviceType) {
+    SerialConnectedDeviceType["None"] = "None";
+    SerialConnectedDeviceType["Gps"] = "GPS";
+})(SerialConnectedDeviceType = exports.SerialConnectedDeviceType || (exports.SerialConnectedDeviceType = {}));
+var DmTapProtocolType;
+(function (DmTapProtocolType) {
+    DmTapProtocolType["Serial"] = "Serial";
+    DmTapProtocolType["Cdc"] = "CDC";
+    DmTapProtocolType["Hid"] = "HID";
+})(DmTapProtocolType = exports.DmTapProtocolType || (exports.DmTapProtocolType = {}));
+var DmPartnerCommandLibraryType;
+(function (DmPartnerCommandLibraryType) {
+    DmPartnerCommandLibraryType["None"] = "None";
+    DmPartnerCommandLibraryType["Riviera"] = "Riviera";
+})(DmPartnerCommandLibraryType = exports.DmPartnerCommandLibraryType || (exports.DmPartnerCommandLibraryType = {}));
+var LiveTextItemType;
+(function (LiveTextItemType) {
+    LiveTextItemType["StaticText"] = "StaticText";
+    LiveTextItemType["SystemVariable"] = "SystemVariable";
+    LiveTextItemType["MediaCounter"] = "MediaCounter";
+    LiveTextItemType["UserVariable"] = "UserVariable";
+    LiveTextItemType["SimpleRss"] = "SimpleRss";
+    LiveTextItemType["MediaRssText"] = "MediaRssText";
+    LiveTextItemType["MediaRssMedia"] = "MediaRssMedia";
+    LiveTextItemType["Image"] = "Image";
+    LiveTextItemType["IndexedDataFeed"] = "IndexedDataFeed";
+    LiveTextItemType["TitledDataFeed"] = "TitledDataFeed";
+})(LiveTextItemType = exports.LiveTextItemType || (exports.LiveTextItemType = {}));
+var LiveTextEntityType;
+(function (LiveTextEntityType) {
+    LiveTextEntityType["StaticText"] = "StaticText";
+    LiveTextEntityType["SystemVariable"] = "SystemVariable";
+    LiveTextEntityType["MediaCounter"] = "MediaCounter";
+    LiveTextEntityType["UserVariable"] = "UserVariable";
+    LiveTextEntityType["Image"] = "Image";
+    LiveTextEntityType["SimpleRss"] = "SimpleRss";
+    LiveTextEntityType["MediaRss"] = "MediaRss";
+    LiveTextEntityType["DataFeed"] = "DataFeed";
+})(LiveTextEntityType = exports.LiveTextEntityType || (exports.LiveTextEntityType = {}));
+var RssTextElementName;
+(function (RssTextElementName) {
+    RssTextElementName["Title"] = "Title";
+    RssTextElementName["Description"] = "Description";
+    RssTextElementName["Custom"] = "Custom";
+})(RssTextElementName = exports.RssTextElementName || (exports.RssTextElementName = {}));
 
 
 /***/ }),
@@ -353,24 +305,27 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.audioOutputAssignmentsHaveActiveAudio = exports.getUniqueNameForNameMap = exports.moveIdsInSequence = exports.deepUpdate = exports.isValidHexString = exports.isValidBsDmIdValue = exports.isValidGuidBsDmId = exports.isValidBsDmId = exports.newBsDmId = void 0;
+exports.audioOutputAssignmentsHaveActiveAudio = exports.getUniqueNameForNameMap = exports.reSequenceIds = exports.moveIdsInSequence = exports.deepUpdate = exports.isValidHexString = exports.isValidBsDmIdValue = exports.isValidGuidBsDmId = exports.isValidBsDmId = exports.newBsDmId = void 0;
 var uuid_1 = __webpack_require__(111);
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
-exports.newBsDmId = function () { return uuid_1.v4(); };
+var newBsDmId = function () { return uuid_1.v4(); };
+exports.newBsDmId = newBsDmId;
 var reValidId = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-exports.isValidBsDmId = function (id) {
+var isValidBsDmId = function (id) {
     return !lodash_1.isNil(id) && id !== bsDmInterfaces_1.BsDmIdNone && id !== '';
 };
-exports.isValidGuidBsDmId = function (id) {
+exports.isValidBsDmId = isValidBsDmId;
+var isValidGuidBsDmId = function (id) {
     if (lodash_1.isString(id)) {
         var ret = id.match(reValidId);
         return !lodash_1.isNil(ret) && id === ret[0];
     }
     return false;
 };
-exports.isValidBsDmIdValue = function (id) {
+exports.isValidGuidBsDmId = isValidGuidBsDmId;
+var isValidBsDmIdValue = function (id) {
     if (lodash_1.isString(id)) {
         if (id === bsDmInterfaces_1.BsDmIdNone) {
             return true;
@@ -380,15 +335,17 @@ exports.isValidBsDmIdValue = function (id) {
     }
     return false;
 };
+exports.isValidBsDmIdValue = isValidBsDmIdValue;
 var reValidHexString = /^[0-9a-f]+$/i;
-exports.isValidHexString = function (val) {
+var isValidHexString = function (val) {
     if (lodash_1.isString(val)) {
         var ret = val.match(reValidHexString);
         return !lodash_1.isNil(ret) && val === ret[0];
     }
     return false;
 };
-exports.deepUpdate = function (target, partial) {
+exports.isValidHexString = isValidHexString;
+var deepUpdate = function (target, partial) {
     var updatedTarget = __assign({}, target);
     Object.keys(partial).forEach(function (propName) {
         if (!lodash_1.isNil(partial[propName]) && typeof partial[propName] === 'object') {
@@ -400,7 +357,8 @@ exports.deepUpdate = function (target, partial) {
     });
     return updatedTarget;
 };
-exports.moveIdsInSequence = function (sequence, indices, targetIndex) {
+exports.deepUpdate = deepUpdate;
+var moveIdsInSequence = function (sequence, indices, targetIndex) {
     if (targetIndex < 0 || targetIndex >= sequence.length) {
         targetIndex = sequence.length - 1;
     }
@@ -423,6 +381,13 @@ exports.moveIdsInSequence = function (sequence, indices, targetIndex) {
     }
     return sequence;
 };
+exports.moveIdsInSequence = moveIdsInSequence;
+var reSequenceIds = function (sequence, indices) {
+    var filteredIndices = lodash_1.uniq(indices)
+        .filter(function (index) { return index >= 0 && index < sequence.length; });
+    return filteredIndices.map(function (index) { return sequence[index]; });
+};
+exports.reSequenceIds = reSequenceIds;
 var reNameParts = /^(.+?)(?: \((\d+)\))?$/i;
 function getUniqueNameForNameMap(proposedName, nameMap) {
     var uniqueName = proposedName;
@@ -455,7 +420,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -477,7 +442,7 @@ var __assign = (this && this.__assign) || function () {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmInitializeValidationResult = exports.dmIsBsDmError = exports.BsDmError = exports.DmErrorType = void 0;
+exports.dmInitializeValidationResult = exports.dmIsBsDmError = exports.BsDmError = exports.dmGetErrorMessage = exports.DmErrorType = void 0;
 var lodash_1 = __webpack_require__(0);
 var DmErrorType;
 (function (DmErrorType) {
@@ -492,47 +457,49 @@ var DmErrorType;
     DmErrorType[DmErrorType["userVariableNameNotFound"] = 8] = "userVariableNameNotFound";
     DmErrorType[DmErrorType["assetNotFound"] = 9] = "assetNotFound";
     DmErrorType[DmErrorType["eventNotCompatibleWithContentType"] = 10] = "eventNotCompatibleWithContentType";
-    DmErrorType[DmErrorType["eventDuplicated"] = 11] = "eventDuplicated";
-    DmErrorType[DmErrorType["eventNotCompatibleWithPlayerModel"] = 12] = "eventNotCompatibleWithPlayerModel";
-    DmErrorType[DmErrorType["eventCannotBeAddedToMediaSequenceItem"] = 13] = "eventCannotBeAddedToMediaSequenceItem";
-    DmErrorType[DmErrorType["eventActionIsIncompatible"] = 14] = "eventActionIsIncompatible";
-    DmErrorType[DmErrorType["synchronizeEventNotCompatibleWithContentType"] = 15] = "synchronizeEventNotCompatibleWithContentType";
-    DmErrorType[DmErrorType["synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled"] = 16] = "synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled";
-    DmErrorType[DmErrorType["pluginEventRequiresDefinedPlugins"] = 17] = "pluginEventRequiresDefinedPlugins";
-    DmErrorType[DmErrorType["gpioEventRequiresGpioInput"] = 18] = "gpioEventRequiresGpioInput";
-    DmErrorType[DmErrorType["commandNotCompatibleWithPlayerModel"] = 19] = "commandNotCompatibleWithPlayerModel";
-    DmErrorType[DmErrorType["gpioCommandRequiresGpioOutput"] = 20] = "gpioCommandRequiresGpioOutput";
-    DmErrorType[DmErrorType["gpioConfigurationChangeCreatesInvalidEventsOrCommands"] = 21] = "gpioConfigurationChangeCreatesInvalidEventsOrCommands";
-    DmErrorType[DmErrorType["irRemoteChangeCreatesInvalidEventsOrCommands"] = 22] = "irRemoteChangeCreatesInvalidEventsOrCommands";
-    DmErrorType[DmErrorType["nameNotSpecified"] = 23] = "nameNotSpecified";
-    DmErrorType[DmErrorType["valueNotSpecifiedOrInvalid"] = 24] = "valueNotSpecifiedOrInvalid";
-    DmErrorType[DmErrorType["duplicateNameNotAllowed"] = 25] = "duplicateNameNotAllowed";
-    DmErrorType[DmErrorType["eventDataMissing"] = 26] = "eventDataMissing";
-    DmErrorType[DmErrorType["stringDataValueIsEmpty"] = 27] = "stringDataValueIsEmpty";
-    DmErrorType[DmErrorType["keyboardEventDataFormatIsIncorrect"] = 28] = "keyboardEventDataFormatIsIncorrect";
-    DmErrorType[DmErrorType["remoteEventDataFormatIsIncorrect"] = 29] = "remoteEventDataFormatIsIncorrect";
-    DmErrorType[DmErrorType["byteStringCommandDataIsIncorrect"] = 30] = "byteStringCommandDataIsIncorrect";
-    DmErrorType[DmErrorType["userVariableNotSpecified"] = 31] = "userVariableNotSpecified";
-    DmErrorType[DmErrorType["userVariableIdInvalid"] = 32] = "userVariableIdInvalid";
-    DmErrorType[DmErrorType["userVariableNameNotDefined"] = 33] = "userVariableNameNotDefined";
-    DmErrorType[DmErrorType["userVariableInputStringFormatIsIncorrect"] = 34] = "userVariableInputStringFormatIsIncorrect";
-    DmErrorType[DmErrorType["switchPresentationTargetNotSpecified"] = 35] = "switchPresentationTargetNotSpecified";
-    DmErrorType[DmErrorType["dataFeedNotSpecified"] = 36] = "dataFeedNotSpecified";
-    DmErrorType[DmErrorType["invalidDataFeedSource"] = 37] = "invalidDataFeedSource";
-    DmErrorType[DmErrorType["invalidHexString"] = 38] = "invalidHexString";
-    DmErrorType[DmErrorType["invalidUrlString"] = 39] = "invalidUrlString";
-    DmErrorType[DmErrorType["linkedPresentationIdInvalid"] = 40] = "linkedPresentationIdInvalid";
-    DmErrorType[DmErrorType["invalidContainerForPaste"] = 41] = "invalidContainerForPaste";
-    DmErrorType[DmErrorType["invalidPlugin"] = 42] = "invalidPlugin";
-    DmErrorType[DmErrorType["invalidCustomPresentationWebPage"] = 43] = "invalidCustomPresentationWebPage";
-    DmErrorType[DmErrorType["superStateInitialStateInvalid"] = 44] = "superStateInitialStateInvalid";
-    DmErrorType[DmErrorType["superStateInitialStateCannotBeOnDemand"] = 45] = "superStateInitialStateCannotBeOnDemand";
-    DmErrorType[DmErrorType["noAudioDecodersAvailable"] = 46] = "noAudioDecodersAvailable";
-    DmErrorType[DmErrorType["contentTypeNotCompatibleWithZone"] = 47] = "contentTypeNotCompatibleWithZone";
-    DmErrorType[DmErrorType["irRemoteEventRequiresIrInSource"] = 48] = "irRemoteEventRequiresIrInSource";
-    DmErrorType[DmErrorType["videoModePluginFunctionNameInUse"] = 49] = "videoModePluginFunctionNameInUse";
-    DmErrorType[DmErrorType["nodeAppNameInUse"] = 50] = "nodeAppNameInUse";
-    DmErrorType[DmErrorType["invalidNodeApp"] = 51] = "invalidNodeApp";
+    DmErrorType[DmErrorType["eventNotAllowedWithTarget"] = 11] = "eventNotAllowedWithTarget";
+    DmErrorType[DmErrorType["eventDuplicated"] = 12] = "eventDuplicated";
+    DmErrorType[DmErrorType["eventNotCompatibleWithPlayerModel"] = 13] = "eventNotCompatibleWithPlayerModel";
+    DmErrorType[DmErrorType["eventCannotBeAddedToMediaSequenceItem"] = 14] = "eventCannotBeAddedToMediaSequenceItem";
+    DmErrorType[DmErrorType["eventActionIsIncompatible"] = 15] = "eventActionIsIncompatible";
+    DmErrorType[DmErrorType["synchronizeEventNotCompatibleWithContentType"] = 16] = "synchronizeEventNotCompatibleWithContentType";
+    DmErrorType[DmErrorType["synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled"] = 17] = "synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled";
+    DmErrorType[DmErrorType["pluginEventRequiresDefinedPlugins"] = 18] = "pluginEventRequiresDefinedPlugins";
+    DmErrorType[DmErrorType["gpioEventRequiresGpioInput"] = 19] = "gpioEventRequiresGpioInput";
+    DmErrorType[DmErrorType["commandNotCompatibleWithPlayerModel"] = 20] = "commandNotCompatibleWithPlayerModel";
+    DmErrorType[DmErrorType["gpioCommandRequiresGpioOutput"] = 21] = "gpioCommandRequiresGpioOutput";
+    DmErrorType[DmErrorType["gpioConfigurationChangeCreatesInvalidEventsOrCommands"] = 22] = "gpioConfigurationChangeCreatesInvalidEventsOrCommands";
+    DmErrorType[DmErrorType["irRemoteChangeCreatesInvalidEventsOrCommands"] = 23] = "irRemoteChangeCreatesInvalidEventsOrCommands";
+    DmErrorType[DmErrorType["nameNotSpecified"] = 24] = "nameNotSpecified";
+    DmErrorType[DmErrorType["valueNotSpecifiedOrInvalid"] = 25] = "valueNotSpecifiedOrInvalid";
+    DmErrorType[DmErrorType["duplicateNameNotAllowed"] = 26] = "duplicateNameNotAllowed";
+    DmErrorType[DmErrorType["eventDataMissing"] = 27] = "eventDataMissing";
+    DmErrorType[DmErrorType["stringDataValueIsEmpty"] = 28] = "stringDataValueIsEmpty";
+    DmErrorType[DmErrorType["keyboardEventDataFormatIsIncorrect"] = 29] = "keyboardEventDataFormatIsIncorrect";
+    DmErrorType[DmErrorType["remoteEventDataFormatIsIncorrect"] = 30] = "remoteEventDataFormatIsIncorrect";
+    DmErrorType[DmErrorType["byteStringCommandDataIsIncorrect"] = 31] = "byteStringCommandDataIsIncorrect";
+    DmErrorType[DmErrorType["userVariableNotSpecified"] = 32] = "userVariableNotSpecified";
+    DmErrorType[DmErrorType["userVariableIdInvalid"] = 33] = "userVariableIdInvalid";
+    DmErrorType[DmErrorType["userVariableNameNotDefined"] = 34] = "userVariableNameNotDefined";
+    DmErrorType[DmErrorType["userVariableInputStringFormatIsIncorrect"] = 35] = "userVariableInputStringFormatIsIncorrect";
+    DmErrorType[DmErrorType["switchPresentationTargetNotSpecified"] = 36] = "switchPresentationTargetNotSpecified";
+    DmErrorType[DmErrorType["dataFeedNotSpecified"] = 37] = "dataFeedNotSpecified";
+    DmErrorType[DmErrorType["invalidDataFeedSource"] = 38] = "invalidDataFeedSource";
+    DmErrorType[DmErrorType["invalidHexString"] = 39] = "invalidHexString";
+    DmErrorType[DmErrorType["invalidUrlString"] = 40] = "invalidUrlString";
+    DmErrorType[DmErrorType["linkedPresentationIdInvalid"] = 41] = "linkedPresentationIdInvalid";
+    DmErrorType[DmErrorType["invalidContainerForPaste"] = 42] = "invalidContainerForPaste";
+    DmErrorType[DmErrorType["invalidPlugin"] = 43] = "invalidPlugin";
+    DmErrorType[DmErrorType["invalidCustomPresentationWebPage"] = 44] = "invalidCustomPresentationWebPage";
+    DmErrorType[DmErrorType["superStateInitialStateInvalid"] = 45] = "superStateInitialStateInvalid";
+    DmErrorType[DmErrorType["superStateInitialStateCannotBeOnDemand"] = 46] = "superStateInitialStateCannotBeOnDemand";
+    DmErrorType[DmErrorType["noAudioDecodersAvailable"] = 47] = "noAudioDecodersAvailable";
+    DmErrorType[DmErrorType["contentTypeNotCompatibleWithZone"] = 48] = "contentTypeNotCompatibleWithZone";
+    DmErrorType[DmErrorType["irRemoteEventRequiresIrInSource"] = 49] = "irRemoteEventRequiresIrInSource";
+    DmErrorType[DmErrorType["videoModePluginFunctionNameInUse"] = 50] = "videoModePluginFunctionNameInUse";
+    DmErrorType[DmErrorType["nodeAppNameInUse"] = 51] = "nodeAppNameInUse";
+    DmErrorType[DmErrorType["invalidNodeApp"] = 52] = "invalidNodeApp";
+    DmErrorType[DmErrorType["invalidVolume"] = 53] = "invalidVolume";
 })(DmErrorType = exports.DmErrorType || (exports.DmErrorType = {}));
 var bsnErrorMessage = (_a = {},
     _a[DmErrorType.unknownError] = 'Unknown error',
@@ -547,6 +514,7 @@ var bsnErrorMessage = (_a = {},
     _a[DmErrorType.userVariableNameNotFound] = 'User variable name is not defined',
     _a[DmErrorType.assetNotFound] = 'The asset was not found in the asset list',
     _a[DmErrorType.eventNotCompatibleWithContentType] = 'The event type is not compatible with the media state content',
+    _a[DmErrorType.eventNotAllowedWithTarget] = 'For time code events, target state is not allowed',
     _a[DmErrorType.eventDuplicated] = 'The event is a duplicate of another event already assigned to the media state',
     _a[DmErrorType.eventNotCompatibleWithPlayerModel] = 'The event is not compatible with the current BrightSign player model',
     _a[DmErrorType.eventCannotBeAddedToMediaSequenceItem] = 'Events cannot be added to MediaList or PlayFile items',
@@ -585,7 +553,12 @@ var bsnErrorMessage = (_a = {},
     _a[DmErrorType.videoModePluginFunctionNameInUse] = 'Video Mode plugin function name can only be used once',
     _a[DmErrorType.nodeAppNameInUse] = 'Node.js file name can only be used once',
     _a[DmErrorType.invalidNodeApp] = 'The Node.js App is not valid',
+    _a[DmErrorType.invalidVolume] = 'Invalid volume range',
     _a);
+function dmGetErrorMessage(type) {
+    return bsnErrorMessage[type];
+}
+exports.dmGetErrorMessage = dmGetErrorMessage;
 var BsDmError = (function (_super) {
     __extends(BsDmError, _super);
     function BsDmError(type, reason, details) {
@@ -776,34 +749,34 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(__webpack_require__(39), exports);
-__exportStar(__webpack_require__(66), exports);
+__exportStar(__webpack_require__(67), exports);
 __exportStar(__webpack_require__(26), exports);
 __exportStar(__webpack_require__(106), exports);
 __exportStar(__webpack_require__(35), exports);
-__exportStar(__webpack_require__(67), exports);
-__exportStar(__webpack_require__(45), exports);
-__exportStar(__webpack_require__(58), exports);
+__exportStar(__webpack_require__(68), exports);
+__exportStar(__webpack_require__(40), exports);
 __exportStar(__webpack_require__(59), exports);
 __exportStar(__webpack_require__(60), exports);
 __exportStar(__webpack_require__(61), exports);
-__exportStar(__webpack_require__(73), exports);
-__exportStar(__webpack_require__(68), exports);
+__exportStar(__webpack_require__(47), exports);
+__exportStar(__webpack_require__(74), exports);
 __exportStar(__webpack_require__(62), exports);
+__exportStar(__webpack_require__(63), exports);
 __exportStar(__webpack_require__(107), exports);
 __exportStar(__webpack_require__(69), exports);
-__exportStar(__webpack_require__(46), exports);
-__exportStar(__webpack_require__(47), exports);
+__exportStar(__webpack_require__(48), exports);
+__exportStar(__webpack_require__(49), exports);
 __exportStar(__webpack_require__(108), exports);
 __exportStar(__webpack_require__(109), exports);
-__exportStar(__webpack_require__(48), exports);
+__exportStar(__webpack_require__(41), exports);
 __exportStar(__webpack_require__(36), exports);
-__exportStar(__webpack_require__(16), exports);
+__exportStar(__webpack_require__(17), exports);
 __exportStar(__webpack_require__(70), exports);
-__exportStar(__webpack_require__(40), exports);
+__exportStar(__webpack_require__(42), exports);
 __exportStar(__webpack_require__(105), exports);
 
 
@@ -825,17 +798,21 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmScaleSignRectangles = exports.dmVerifyAndOpenSign = exports.dmOpenSign = exports.dmClearSignWssDeviceSpec = exports.dmUpdateSignWssDeviceSpec = exports.dmUpdateSignAudioPropertyMap = exports.dmUpdateSignIrRemoteControl = exports.dmUpdateSignIrOutConfiguration = exports.dmUpdateSignIrInConfiguration = exports.dmUpdateSignButtonPanelMap = exports.dmUpdateSignGpio = exports.dmUpdateSignSerialPorts = exports.dmUpdateSignProperties = exports.dmNewSign = exports.SCALE_RECTANGLES = exports.OPEN_SIGN = exports.CLEAR_SIGN_WSS_DEVICE_SPEC = exports.UPDATE_SIGN_WSS_DEVICE_SPEC = exports.UPDATE_SIGN_AUDIO_CONFIG = exports.UPDATE_SIGN_IR_REMOTE_CONTROL = exports.UPDATE_SIGN_IR_OUT_CONFIG = exports.UPDATE_SIGN_IR_IN_CONFIG = exports.UPDATE_SIGN_BPMAP = exports.UPDATE_SIGN_GPIO = exports.UPDATE_SIGN_SERIAL_PORTS = exports.UPDATE_SIGN_PROPS = exports.NEW_SIGN = void 0;
+exports.dmUpdateVideoMode = exports.dmScaleSignRectangles = exports.dmVerifyAndOpenSign = exports.dmOpenSign = exports.dmClearSignWssDeviceSpec = exports.dmUpdateSignWssDeviceSpec = exports.dmUpdateSignAudioPropertyMap = exports.dmUpdateSignIrRemoteControl = exports.dmUpdateSignIrOutConfiguration = exports.dmUpdateSignIrInConfiguration = exports.dmUpdateSignButtonPanelMap = exports.dmUpdateSignGpio = exports.dmUpdateSignSerialPorts = exports.dmUpdateSignProperties = exports.dmNewSign = exports.SCALE_RECTANGLES = exports.OPEN_SIGN = exports.CLEAR_SIGN_WSS_DEVICE_SPEC = exports.UPDATE_SIGN_WSS_DEVICE_SPEC = exports.UPDATE_SIGN_AUDIO_CONFIG = exports.UPDATE_SIGN_IR_REMOTE_CONTROL = exports.UPDATE_SIGN_IR_OUT_CONFIG = exports.UPDATE_SIGN_IR_IN_CONFIG = exports.UPDATE_SIGN_BPMAP = exports.UPDATE_SIGN_GPIO = exports.UPDATE_SIGN_SERIAL_PORTS = exports.UPDATE_SIGN_PROPS = exports.NEW_SIGN = void 0;
+var bscore_1 = __webpack_require__(1);
+var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmSign_1 = __webpack_require__(56);
+var bsDmSign_1 = __webpack_require__(57);
 var bsDmZone_1 = __webpack_require__(31);
-var bsDmValidate_1 = __webpack_require__(49);
-var bsDmStateUpdate_1 = __webpack_require__(82);
+var bsDmValidate_1 = __webpack_require__(50);
+var bsDmStateUpdate_1 = __webpack_require__(83);
 var actionBase_1 = __webpack_require__(8);
 var actionCommand_1 = __webpack_require__(33);
 var actionEvent_1 = __webpack_require__(20);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
+var main_1 = __webpack_require__(73);
+var actionZone_1 = __webpack_require__(14);
 exports.NEW_SIGN = 'DM_NEW_SIGN';
 exports.UPDATE_SIGN_PROPS = 'DM_UPDATE_SIGN_PROPS';
 exports.UPDATE_SIGN_SERIAL_PORTS = 'DM_UPDATE_SIGN_SERIAL_PORTS';
@@ -854,7 +831,7 @@ function dmNewSign(name, mode, model) {
     return {
         type: exports.NEW_SIGN,
         payload: {
-            signMetadata: bsDmSign_1.createDefaultSignState(utils_1.newBsDmId(), name, mode, model),
+            signMetadata: bsDmSign_1.createDefaultSignState(utils_1.newBsDmId(), name.trim(), mode, model),
             zoneLayerMap: zoneLayerMap,
             zoneLayerSequence: bsDmZone_1.dmCreateDefaultSignZoneLayerSequence(zoneLayerMap),
         },
@@ -862,6 +839,9 @@ function dmNewSign(name, mode, model) {
 }
 exports.dmNewSign = dmNewSign;
 function dmUpdateSignProperties(params) {
+    if (!lodash_1.isNil(params.name)) {
+        params.name = params.name.trim();
+    }
     var payload = params;
     if (params.hasOwnProperty('id') && !utils_1.isValidGuidBsDmId(params.id)) {
         payload = __assign(__assign({}, params), { id: utils_1.newBsDmId() });
@@ -1042,6 +1022,31 @@ function dmScaleSignRectangles(increase, scaleFactorX, scaleFactorY) {
     };
 }
 exports.dmScaleSignRectangles = dmScaleSignRectangles;
+function dmUpdateVideoMode(targetVideoMode) {
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var model = main_1.dmGetSignPlayerModel(dmState);
+        if (main_1.dmCanChangeVideoMode(dmState, { videoMode: targetVideoMode })) {
+            var batchedActions = [];
+            var zoneUpdateAction = actionZone_1.dmGetZoneUpdateVideoModeAction(targetVideoMode, dmState);
+            if (!lodash_1.isNil(zoneUpdateAction)) {
+                batchedActions.push(zoneUpdateAction);
+            }
+            var fullResGraphicsEnabled = main_1.dmIsFullResGraphicsEnabled(dmState);
+            if (!bscore_1.bscIsFullResGraphicsSupported(model, targetVideoMode)) {
+                fullResGraphicsEnabled = false;
+            }
+            var mainAction = dmUpdateSignProperties({ id: bsDmInterfaces_1.BsDmIdNone, videoMode: targetVideoMode, fullResGraphicsEnabled: fullResGraphicsEnabled });
+            batchedActions.push(mainAction);
+            dispatch(actionBase_1.dmBatchActions(batchedActions));
+            return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
+        }
+        else {
+            throw new main_1.BsDmError(main_1.DmErrorType.invalidOperation, "UpdateVideoMode: Cannot update video mode for this model");
+        }
+    };
+}
+exports.dmUpdateVideoMode = dmUpdateVideoMode;
 
 
 /***/ }),
@@ -1087,29 +1092,759 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmCreateLiveTextContentItem = exports.dmContentItemIsEventHandlerContentItem = exports.dmCreateEventHandlerContentItem = exports.dmContentItemIsMediaListOrPlayFileContentItem = exports.dmContentItemIsPlayFileContentItem = exports.dmCreatePlayFileContentItem = exports.dmContentItemIsLocalPlaylistItem = exports.dmContentItemIsLocalPlaylistContentItem = exports.dmCreateLocalPlaylistContentItem = exports.dmCreateLocalPlaylistItem = exports.dmContentItemIsMediaListContentItem = exports.dmCreateMediaListContentItem = exports.dmContentItemIsStreamContentItem = exports.dmContentItemIsMjpegStreamContentItem = exports.dmCreateMjpegStreamContentItem = exports.dmContentItemIsAudioStreamContentItem = exports.dmCreateAudioStreamContentItem = exports.dmContentItemIsVideoStreamContentItem = exports.dmCreateVideoStreamContentItem = exports.dmContentItemIsUserVariableContentItem = exports.dmCreateUserVariableContentItem = exports.dmContentItemIsTwitterFeedContentItem = exports.dmCreateTwitterFeedContentItem = exports.dmContentItemIsAnyDataFeedContentItem = exports.dmContentItemIsMrssDataFeedContentItem = exports.dmCreateMrssDataFeedContentItem = exports.dmContentItemIsTextFeedContentItem = exports.dmCreateDataFeedContentItem = exports.dmContentItemIsLiveVideoContentItem = exports.dmCreateLiveVideoContentItem = exports.dmContentItemIsHtmlContentItem = exports.dmCreateHtmlContentItem = exports.dmContentItemIsImageContentItem = exports.dmCreateImageContentItem = exports.dmContentItemIsAudioContentItem = exports.dmCreateAudioContentItem = exports.dmContentItemIsVideoContentItem = exports.dmCreateVideoContentItem = exports.dmContentItemIsMediaSequenceContentItem = exports.dmContentItemIsMediaContentItem = exports.MediaContentItemTypeSet = exports.dmCreatePlayFileItemFromMediaContentItem = exports.dmCreateMediaContentItem = exports.dmIsContentItem = exports.dmGetWidgetCustomFontAssetId = exports.dmCreateAssetItemFromLocalFile = exports.dmIsMediaStateBasedContainer = exports.dmIsMediaSequenceContainer = exports.dmGetMediaStateContainer = exports.dmGetZoneMediaStateContainer = void 0;
+exports.dmFilterPlayFileItemContentItemData = exports.dmFilterContentItemData = exports.dmIsValidContentItemTypeForPlaylistChangeZoneType = exports.dmIsValidContentItemTypeForMediaListOrPlayFile = exports.dmIsValidContentItemTypeForPlaylist = exports.dmIsValidContentItemForPlaylist = exports.dmIsValidContentItemTypeForMosaicZone = exports.dmIsValidContentItemTypeForZone = exports.dmIsValidContentItemForZone = exports.dmContentItemIsSuperStateContentItem = exports.dmCreateSuperStateContentItem = exports.dmContentItemIsDateContentItem = exports.dmCreateDateContentItem = exports.dmContentItemIsTimeContentItem = exports.dmCreateTimeContentItem = exports.dmContentItemIsLiveTextContentItem = void 0;
+var bscore_1 = __webpack_require__(1);
+var bsDmInterfaces_1 = __webpack_require__(2);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
+var bsDmDefaults_1 = __webpack_require__(19);
+var lodash_1 = __webpack_require__(0);
+function dmGetZoneMediaStateContainer(zoneId) {
+    return {
+        id: zoneId,
+        type: bsDmInterfaces_1.MediaStateContainerType.Zone,
+    };
+}
+exports.dmGetZoneMediaStateContainer = dmGetZoneMediaStateContainer;
+function dmGetMediaStateContainer(id, type) {
+    return { id: id, type: type };
+}
+exports.dmGetMediaStateContainer = dmGetMediaStateContainer;
+function dmIsMediaSequenceContainer(container) {
+    return container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList
+        || container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile
+        || container.type === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist;
+}
+exports.dmIsMediaSequenceContainer = dmIsMediaSequenceContainer;
+function dmIsMediaStateBasedContainer(container) {
+    return container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList
+        || container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile
+        || container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState
+        || container.type === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist;
+}
+exports.dmIsMediaStateBasedContainer = dmIsMediaStateBasedContainer;
+function dmCreateAssetItemFromLocalFile(fullPath, id, mediaType, assetType) {
+    if (id === void 0) { id = bscore_1.BsAssetIdNone; }
+    if (mediaType === void 0) { mediaType = null; }
+    if (assetType === void 0) { assetType = null; }
+    var name = fullPath.replace(/^.*[\\\/]/, '');
+    var path = fullPath.substr(0, fullPath.length - name.length);
+    var fileTypeInfo;
+    if (mediaType) {
+        fileTypeInfo = { assetType: bscore_1.AssetType.Content, mediaType: mediaType };
+    }
+    else {
+        fileTypeInfo = bscore_1.bscGetBscFileTypeInfo(name);
+    }
+    var assetItem = {
+        id: id,
+        name: name,
+        path: path,
+        networkId: 0,
+        location: bscore_1.AssetLocation.Local,
+        locator: bscore_1.bscGetLocalAssetLocatorKey(fullPath),
+        assetType: assetType ? assetType : fileTypeInfo.assetType,
+        scope: '',
+    };
+    if (assetItem.assetType === bscore_1.AssetType.Content) {
+        assetItem.mediaType = fileTypeInfo.mediaType;
+    }
+    return assetItem;
+}
+exports.dmCreateAssetItemFromLocalFile = dmCreateAssetItemFromLocalFile;
+function dmGetWidgetCustomFontAssetId(widget) {
+    return !lodash_1.isNil(widget) && !lodash_1.isNil(widget.font)
+        && widget.font !== bsDmInterfaces_1.DmDefaultFontName && bscore_1.bscIsValidAssetId(widget.font) ? widget.font : null;
+}
+exports.dmGetWidgetCustomFontAssetId = dmGetWidgetCustomFontAssetId;
+function dmIsContentItem(value) {
+    return typeof value === 'object'
+        && value.hasOwnProperty('name')
+        && value.hasOwnProperty('type');
+}
+exports.dmIsContentItem = dmIsContentItem;
+function dmCreateMediaContentItem(name, assetId, mediaType, props) {
+    switch (mediaType) {
+        case bscore_1.MediaType.Video:
+            return dmCreateVideoContentItem(name, assetId, props);
+        case bscore_1.MediaType.Audio:
+            return dmCreateAudioContentItem(name, assetId, props);
+        case bscore_1.MediaType.Image:
+            return dmCreateImageContentItem(name, assetId, props);
+        case bscore_1.MediaType.Text:
+            return {
+                name: name,
+                type: bscore_1.ContentItemType.Text,
+                assetId: assetId,
+            };
+        default:
+            return null;
+    }
+}
+exports.dmCreateMediaContentItem = dmCreateMediaContentItem;
+function dmCreatePlayFileItemFromMediaContentItem(mediaContentItem, key, exportKey, name) {
+    if (key === void 0) { key = null; }
+    if (exportKey === void 0) { exportKey = true; }
+    if (!lodash_1.isNil(mediaContentItem)) {
+        if (lodash_1.isNil(key)) {
+            key = bscore_1.bscStripFileExtension(mediaContentItem.name);
+        }
+        var label = lodash_1.isNil(name) ? mediaContentItem.name : name;
+        switch (mediaContentItem.type) {
+            case bscore_1.ContentItemType.Video:
+                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
+            case bscore_1.ContentItemType.Image:
+                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
+            case bscore_1.ContentItemType.Audio:
+                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
+        }
+    }
+    return null;
+}
+exports.dmCreatePlayFileItemFromMediaContentItem = dmCreatePlayFileItemFromMediaContentItem;
+exports.MediaContentItemTypeSet = new Set([
+    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.Text
+]);
+function dmContentItemIsMediaContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem)
+        && contentItem.hasOwnProperty('assetId')
+        && exports.MediaContentItemTypeSet.has(contentItem.type);
+}
+exports.dmContentItemIsMediaContentItem = dmContentItemIsMediaContentItem;
+function dmContentItemIsMediaSequenceContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem)
+        && (contentItem.type === bscore_1.ContentItemType.MediaList || contentItem.type === bscore_1.ContentItemType.PlayFile);
+}
+exports.dmContentItemIsMediaSequenceContentItem = dmContentItemIsMediaSequenceContentItem;
+function dmCreateVideoContentItem(name, assetId, props) {
+    if (props === void 0) { props = {}; }
+    var defaults = bsDmDefaults_1.dmGetDefaultVideoContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.Video,
+        assetId: assetId,
+        volume: (props.volume === undefined ? defaults.volume : props.volume),
+        videoDisplayMode: (props.videoDisplayMode === undefined ? defaults.videoDisplayMode : props.videoDisplayMode),
+        automaticallyLoop: (props.automaticallyLoop === undefined ? defaults.automaticallyLoop : props.automaticallyLoop),
+    };
+}
+exports.dmCreateVideoContentItem = dmCreateVideoContentItem;
+function dmContentItemIsVideoContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Video;
+}
+exports.dmContentItemIsVideoContentItem = dmContentItemIsVideoContentItem;
+function dmCreateAudioContentItem(name, assetId, props) {
+    if (props === void 0) { props = {}; }
+    var defaults = bsDmDefaults_1.dmGetDefaultAudioContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.Audio,
+        assetId: assetId,
+        volume: (props.volume === undefined ? defaults.volume : props.volume),
+    };
+}
+exports.dmCreateAudioContentItem = dmCreateAudioContentItem;
+function dmContentItemIsAudioContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Audio;
+}
+exports.dmContentItemIsAudioContentItem = dmContentItemIsAudioContentItem;
+function dmCreateImageContentItem(name, assetId, props) {
+    if (props === void 0) { props = {}; }
+    var defaults = bsDmDefaults_1.dmGetDefaultImageContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.Image,
+        assetId: assetId,
+        useImageBuffer: (props.useImageBuffer === undefined ? defaults.useImageBuffer : props.useImageBuffer),
+        videoPlayerRequired: (props.videoPlayerRequired === undefined ?
+            defaults.videoPlayerRequired : props.videoPlayerRequired),
+        defaultTransition: (props.defaultTransition === undefined ? defaults.defaultTransition : props.defaultTransition),
+        transitionDuration: (props.transitionDuration === undefined ?
+            defaults.transitionDuration : props.transitionDuration),
+    };
+}
+exports.dmCreateImageContentItem = dmCreateImageContentItem;
+function dmContentItemIsImageContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Image;
+}
+exports.dmContentItemIsImageContentItem = dmContentItemIsImageContentItem;
+function dmCreateHtmlContentItem(name, siteId) {
+    var params = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        params[_i - 2] = arguments[_i];
+    }
+    var props = params.length === 0 || lodash_1.isNil(params[0]) || typeof params[0] === 'boolean' ?
+        {} : params[0];
+    if (params.length > 0 && typeof params[0] === 'boolean') {
+        params.forEach(function (param, index) { return props[bsDmInterfaces_1.DmHtmlContentItemDataNameArray[index]] = param; });
+    }
+    var defaults = bsDmDefaults_1.dmGetDefaultHtmlContentItemData();
+    var contentItemData = {
+        enableBrightSignJavascriptObjects: (lodash_1.isNil(props.enableBrightSignJavascriptObjects) ?
+            defaults.enableBrightSignJavascriptObjects : props.enableBrightSignJavascriptObjects),
+        enableCrossDomainPolicyChecks: (lodash_1.isNil(props.enableCrossDomainPolicyChecks) ?
+            defaults.enableCrossDomainPolicyChecks : props.enableCrossDomainPolicyChecks),
+        ignoreHttpsCertificateErrors: (lodash_1.isNil(props.ignoreHttpsCertificateErrors) ?
+            defaults.ignoreHttpsCertificateErrors : props.ignoreHttpsCertificateErrors),
+        enableCamera: (lodash_1.isNil(props.enableCamera) ? defaults.enableCamera : props.enableCamera),
+        enableMouseEvents: (lodash_1.isNil(props.enableMouseEvents) ? defaults.enableMouseEvents : props.enableMouseEvents),
+        displayCursor: (lodash_1.isNil(props.displayCursor) ? defaults.displayCursor : props.displayCursor),
+        hwzOn: (lodash_1.isNil(props.hwzOn) ? defaults.hwzOn : props.hwzOn),
+        useUserStylesheet: (lodash_1.isNil(props.userStylesheetAssetId) ?
+            defaults.useUserStylesheet : (lodash_1.isNil(props.useUserStylesheet) ? false : props.useUserStylesheet)),
+    };
+    if (contentItemData.useUserStylesheet) {
+        contentItemData.userStylesheetAssetId = !lodash_1.isNil(props.userStylesheetAssetId) ?
+            props.userStylesheetAssetId : bscore_1.BsAssetIdNone;
+    }
+    if (!lodash_1.isNil(props.customFonts)) {
+        contentItemData.customFonts = props.customFonts;
+    }
+    return Object.assign({ name: name, type: bscore_1.ContentItemType.Html, siteId: siteId }, contentItemData);
+}
+exports.dmCreateHtmlContentItem = dmCreateHtmlContentItem;
+function dmContentItemIsHtmlContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Html;
+}
+exports.dmContentItemIsHtmlContentItem = dmContentItemIsHtmlContentItem;
+function dmCreateLiveVideoContentItem(name) {
+    var params = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        params[_i - 1] = arguments[_i];
+    }
+    var props = params.length === 0 || lodash_1.isNil(params[0]) || typeof params[0] === 'number' ?
+        {} : params[0];
+    if (params.length > 0 && typeof params[0] === 'number') {
+        params.forEach(function (param, index) { return props[bsDmInterfaces_1.DmLiveVideoContentItemDataNameArray[index]] = param; });
+    }
+    var defaults = bsDmDefaults_1.dmGetDefaultLiveVideoContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.LiveVideo,
+        volume: (props.volume === undefined ? defaults.volume : props.volume),
+        overscan: (props.overscan === undefined ? defaults.overscan : props.overscan),
+    };
+}
+exports.dmCreateLiveVideoContentItem = dmCreateLiveVideoContentItem;
+function dmContentItemIsLiveVideoContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LiveVideo;
+}
+exports.dmContentItemIsLiveVideoContentItem = dmContentItemIsLiveVideoContentItem;
+function dmCreateDataFeedContentItem(name, dataFeedId) {
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.DataFeed,
+        dataFeedId: dataFeedId,
+    };
+}
+exports.dmCreateDataFeedContentItem = dmCreateDataFeedContentItem;
+function dmContentItemIsTextFeedContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.DataFeed;
+}
+exports.dmContentItemIsTextFeedContentItem = dmContentItemIsTextFeedContentItem;
+function dmCreateMrssDataFeedContentItem(name, dataFeedId, videoPlayerRequired) {
+    var defaults = bsDmDefaults_1.dmGetDefaultMrssDataFeedContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.MrssFeed,
+        dataFeedId: dataFeedId,
+        videoPlayerRequired: (videoPlayerRequired === undefined ? defaults.videoPlayerRequired : videoPlayerRequired),
+    };
+}
+exports.dmCreateMrssDataFeedContentItem = dmCreateMrssDataFeedContentItem;
+function dmContentItemIsMrssDataFeedContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MrssFeed;
+}
+exports.dmContentItemIsMrssDataFeedContentItem = dmContentItemIsMrssDataFeedContentItem;
+function dmContentItemIsAnyDataFeedContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem)
+        && (contentItem.type === bscore_1.ContentItemType.DataFeed
+            || contentItem.type === bscore_1.ContentItemType.MrssFeed
+            || contentItem.type === bscore_1.ContentItemType.LocalPlaylistItem);
+}
+exports.dmContentItemIsAnyDataFeedContentItem = dmContentItemIsAnyDataFeedContentItem;
+function dmCreateTwitterFeedContentItem(name, props) {
+    var defaults = bsDmDefaults_1.dmGetDefaultTwitterFeedContentItemData();
+    return {
+        name: lodash_1.isNil(name) ? '' : name,
+        type: bscore_1.ContentItemType.TwitterFeed,
+        userName: (props.userName === undefined ? defaults.userName : props.userName),
+        updateInterval: (props.updateInterval === undefined ? defaults.updateInterval : props.updateInterval),
+        restrictNumberOfTweets: (props.restrictNumberOfTweets === undefined ? defaults.restrictNumberOfTweets : props.restrictNumberOfTweets),
+        numberOfTweetsToShow: (props.numberOfTweetsToShow === undefined ? defaults.numberOfTweetsToShow : props.numberOfTweetsToShow),
+        numberOfRecentDaysForTweets: (props.numberOfRecentDaysForTweets === undefined ?
+            defaults.numberOfRecentDaysForTweets : props.numberOfRecentDaysForTweets),
+        authToken: props.authToken,
+        encryptedTwitterSecrets: props.encryptedTwitterSecrets,
+    };
+}
+exports.dmCreateTwitterFeedContentItem = dmCreateTwitterFeedContentItem;
+function dmContentItemIsTwitterFeedContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.TwitterFeed;
+}
+exports.dmContentItemIsTwitterFeedContentItem = dmContentItemIsTwitterFeedContentItem;
+function dmCreateUserVariableContentItem(name, userVariableId) {
+    return {
+        name: lodash_1.isNil(name) ? '' : name,
+        type: bscore_1.ContentItemType.UserVariable,
+        userVariableId: userVariableId,
+    };
+}
+exports.dmCreateUserVariableContentItem = dmCreateUserVariableContentItem;
+function dmContentItemIsUserVariableContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.UserVariable;
+}
+exports.dmContentItemIsUserVariableContentItem = dmContentItemIsUserVariableContentItem;
+function dmCreateVideoStreamContentItem(name, url, param) {
+    var defaults = bsDmDefaults_1.dmGetDefaultVideoStreamContentItemData();
+    var volume = lodash_1.isNil(param) ? defaults.volume :
+        (typeof param === 'number' ? param : (lodash_1.isNil(param.volume) ? defaults.volume : param.volume));
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.VideoStream,
+        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
+        volume: volume,
+    };
+}
+exports.dmCreateVideoStreamContentItem = dmCreateVideoStreamContentItem;
+function dmContentItemIsVideoStreamContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.VideoStream;
+}
+exports.dmContentItemIsVideoStreamContentItem = dmContentItemIsVideoStreamContentItem;
+function dmCreateAudioStreamContentItem(name, url, param) {
+    var defaults = bsDmDefaults_1.dmGetDefaultAudioStreamContentItemData();
+    var volume = lodash_1.isNil(param) ? defaults.volume :
+        (typeof param === 'number' ? param : (lodash_1.isNil(param.volume) ? defaults.volume : param.volume));
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.AudioStream,
+        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
+        volume: volume,
+    };
+}
+exports.dmCreateAudioStreamContentItem = dmCreateAudioStreamContentItem;
+function dmContentItemIsAudioStreamContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.AudioStream;
+}
+exports.dmContentItemIsAudioStreamContentItem = dmContentItemIsAudioStreamContentItem;
+function dmCreateMjpegStreamContentItem(name, url, rotation) {
+    var defaults = bsDmDefaults_1.dmGetDefaultMjpegStreamContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.MjpegStream,
+        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
+        rotation: (rotation === undefined ? defaults.rotation : rotation),
+    };
+}
+exports.dmCreateMjpegStreamContentItem = dmCreateMjpegStreamContentItem;
+function dmContentItemIsMjpegStreamContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MjpegStream;
+}
+exports.dmContentItemIsMjpegStreamContentItem = dmContentItemIsMjpegStreamContentItem;
+function dmContentItemIsStreamContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) &&
+        (contentItem.type === bscore_1.ContentItemType.VideoStream
+            || contentItem.type === bscore_1.ContentItemType.AudioStream
+            || contentItem.type === bscore_1.ContentItemType.MjpegStream);
+}
+exports.dmContentItemIsStreamContentItem = dmContentItemIsStreamContentItem;
+function dmCreateMediaListContentItem(name, props) {
+    if (props === void 0) { props = {}; }
+    var defaults = bsDmDefaults_1.dmGetDefaultMediaListContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.MediaList,
+        playbackType: lodash_1.isUndefined(props.playbackType) ? defaults.playbackType : props.playbackType,
+        startIndex: lodash_1.isUndefined(props.startIndex) ? 0 : props.startIndex,
+        shuffle: lodash_1.isUndefined(props.shuffle) ? defaults.shuffle : props.shuffle,
+        support4KImage: lodash_1.isUndefined(props.support4KImage) ? defaults.support4KImage : props.support4KImage,
+        sendMediaZoneMessage: lodash_1.isUndefined(props.sendMediaZoneMessage) ?
+            defaults.sendMediaZoneMessage : props.sendMediaZoneMessage,
+        useDataFeed: lodash_1.isUndefined(props.useDataFeed) ? false : props.useDataFeed,
+        dataFeedId: bsDmInterfaces_1.BsDmIdNone,
+        transition: lodash_1.isUndefined(props.transition) ? defaults.transition : props.transition,
+        transitionDuration: lodash_1.isUndefined(props.transitionDuration) ? defaults.transitionDuration : props.transitionDuration,
+        autoTransitions: lodash_1.isUndefined(props.autoTransitions) ? defaults.autoTransitions : props.autoTransitions,
+        inactivityTimeout: lodash_1.isUndefined(props.inactivityTimeout) ? defaults.inactivityTimeout : props.inactivityTimeout,
+        inactivityTime: lodash_1.isUndefined(props.inactivityTime) ? defaults.inactivityTime : props.inactivityTime,
+    };
+}
+exports.dmCreateMediaListContentItem = dmCreateMediaListContentItem;
+function dmContentItemIsMediaListContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MediaList;
+}
+exports.dmContentItemIsMediaListContentItem = dmContentItemIsMediaListContentItem;
+function dmCreateLocalPlaylistItem(contentItem, contentData) {
+    var serialNumber = lodash_1.isNil(contentData) ? '' : contentData.serialNumber;
+    return {
+        name: contentItem.name + '-' + serialNumber,
+        type: bscore_1.ContentItemType.LocalPlaylistItem,
+        serialNumber: serialNumber,
+        dataFeedId: contentItem.defaultDataFeedId,
+        videoPlayerRequired: true,
+    };
+}
+exports.dmCreateLocalPlaylistItem = dmCreateLocalPlaylistItem;
+function dmCreateLocalPlaylistContentItem(name) {
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.LocalPlaylist,
+        defaultDataFeedId: bsDmInterfaces_1.BsDmIdNone,
+    };
+}
+exports.dmCreateLocalPlaylistContentItem = dmCreateLocalPlaylistContentItem;
+function dmContentItemIsLocalPlaylistContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LocalPlaylist;
+}
+exports.dmContentItemIsLocalPlaylistContentItem = dmContentItemIsLocalPlaylistContentItem;
+function dmContentItemIsLocalPlaylistItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LocalPlaylistItem;
+}
+exports.dmContentItemIsLocalPlaylistItem = dmContentItemIsLocalPlaylistItem;
+function dmCreatePlayFileContentItem(name, props) {
+    if (props === void 0) { props = {}; }
+    var defaults = bsDmDefaults_1.dmGetDefaultPlayFileContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.PlayFile,
+        triggerType: lodash_1.isUndefined(props.triggerType) ? defaults.triggerType : props.triggerType,
+        useDefaultMedia: lodash_1.isUndefined(props.useDefaultMedia) ? defaults.useDefaultMedia : props.useDefaultMedia,
+        defaultMediaId: bscore_1.BsAssetIdNone,
+        userVariableIdOrName: lodash_1.isUndefined(props.userVariableIdOrName) ? '' : props.userVariableIdOrName,
+        useDataFeed: lodash_1.isUndefined(props.useDataFeed) ? false : props.useDataFeed,
+        dataFeedId: bsDmInterfaces_1.BsDmIdNone,
+    };
+}
+exports.dmCreatePlayFileContentItem = dmCreatePlayFileContentItem;
+function dmContentItemIsPlayFileContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.PlayFile;
+}
+exports.dmContentItemIsPlayFileContentItem = dmContentItemIsPlayFileContentItem;
+function dmContentItemIsMediaListOrPlayFileContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem)
+        && (contentItem.type === bscore_1.ContentItemType.MediaList
+            || contentItem.type === bscore_1.ContentItemType.PlayFile);
+}
+exports.dmContentItemIsMediaListOrPlayFileContentItem = dmContentItemIsMediaListOrPlayFileContentItem;
+function dmCreateEventHandlerContentItem(name, stopPlayback) {
+    var defaults = bsDmDefaults_1.dmGetDefaultEventHandlerContentItemData();
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.EventHandler,
+        stopPlayback: stopPlayback === undefined ? defaults.stopPlayback : stopPlayback,
+    };
+}
+exports.dmCreateEventHandlerContentItem = dmCreateEventHandlerContentItem;
+function dmContentItemIsEventHandlerContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.EventHandler;
+}
+exports.dmContentItemIsEventHandlerContentItem = dmContentItemIsEventHandlerContentItem;
+function dmCreateLiveTextContentItem(name, canvasId) {
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.LiveText,
+        canvasId: canvasId,
+    };
+}
+exports.dmCreateLiveTextContentItem = dmCreateLiveTextContentItem;
+function dmContentItemIsLiveTextContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LiveText;
+}
+exports.dmContentItemIsLiveTextContentItem = dmContentItemIsLiveTextContentItem;
+function dmCreateTimeContentItem(name) {
+    return { name: name, type: bscore_1.ContentItemType.Time };
+}
+exports.dmCreateTimeContentItem = dmCreateTimeContentItem;
+function dmContentItemIsTimeContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Time;
+}
+exports.dmContentItemIsTimeContentItem = dmContentItemIsTimeContentItem;
+function dmCreateDateContentItem(name) {
+    return { name: name, type: bscore_1.ContentItemType.Date };
+}
+exports.dmCreateDateContentItem = dmCreateDateContentItem;
+function dmContentItemIsDateContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Date;
+}
+exports.dmContentItemIsDateContentItem = dmContentItemIsDateContentItem;
+function dmCreateSuperStateContentItem(name) {
+    return {
+        name: name,
+        type: bscore_1.ContentItemType.SuperState,
+        initialMediaStateId: bsDmInterfaces_1.BsDmIdNone,
+    };
+}
+exports.dmCreateSuperStateContentItem = dmCreateSuperStateContentItem;
+function dmContentItemIsSuperStateContentItem(contentItem) {
+    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.SuperState;
+}
+exports.dmContentItemIsSuperStateContentItem = dmContentItemIsSuperStateContentItem;
+var VideoOrImagesZoneContentTypeArray = [
+    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio,
+    bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.LiveVideo,
+    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MjpegStream,
+    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
+    bscore_1.ContentItemType.LiveText, bscore_1.ContentItemType.SuperState,
+    bscore_1.ContentItemType.LocalPlaylist, bscore_1.ContentItemType.LocalPlaylistItem,
+];
+var VideoOrImagesZoneContentTypes = new Set(VideoOrImagesZoneContentTypeArray);
+var VideoOnlyZoneContentTypeArray = [
+    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.LiveVideo,
+    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.MjpegStream, bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile,
+    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
+];
+var VideoOnlyZoneContentTypes = new Set(VideoOnlyZoneContentTypeArray);
+var ImagesZoneContentTypeArray = [
+    bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed,
+    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
+    bscore_1.ContentItemType.LiveText, bscore_1.ContentItemType.SuperState,
+    bscore_1.ContentItemType.LocalPlaylist, bscore_1.ContentItemType.LocalPlaylistItem,
+];
+var ImagesZoneContentTypes = new Set(ImagesZoneContentTypeArray);
+var AudioZoneContentTypeArray = [
+    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MrssFeed,
+    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
+    bscore_1.ContentItemType.SuperState,
+];
+var AudioZoneContentTypes = new Set(AudioZoneContentTypeArray);
+var EnhancedAudioZoneContentTypeArray = [
+    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile,
+    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
+];
+var EnhancedAudioZoneContentTypes = new Set(EnhancedAudioZoneContentTypeArray);
+var TickerZoneContentTypeArray = [
+    bscore_1.ContentItemType.Text, bscore_1.ContentItemType.DataFeed, bscore_1.ContentItemType.TwitterFeed, bscore_1.ContentItemType.UserVariable,
+];
+var TickerZoneContentTypes = new Set(TickerZoneContentTypeArray);
+var ClockZoneContentTypeArray = [
+    bscore_1.ContentItemType.Time, bscore_1.ContentItemType.Date,
+];
+var ClockZoneContentTypes = new Set(ClockZoneContentTypeArray);
+var ControlZoneContentTypeArray = [
+    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
+];
+var ControlZoneContentTypes = new Set(ControlZoneContentTypeArray);
+function dmIsValidContentItemForZone(contentItem, zoneType) {
+    return dmIsValidContentItemTypeForZone(contentItem.type, zoneType);
+}
+exports.dmIsValidContentItemForZone = dmIsValidContentItemForZone;
+function dmIsValidContentItemTypeForZone(contentItemType, zoneType) {
+    switch (zoneType) {
+        case bscore_1.ZoneType.VideoOrImages:
+            return VideoOrImagesZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.VideoOnly:
+            return VideoOnlyZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Images:
+            return ImagesZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.AudioOnly:
+            return AudioZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.EnhancedAudio:
+            return EnhancedAudioZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Ticker:
+            return TickerZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Clock:
+            return ClockZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.BackgroundImage:
+            return contentItemType === bscore_1.ContentItemType.Image;
+        case bscore_1.ZoneType.Control:
+            return ControlZoneContentTypes.has(contentItemType);
+    }
+    return false;
+}
+exports.dmIsValidContentItemTypeForZone = dmIsValidContentItemTypeForZone;
+function dmIsValidContentItemTypeForMosaicZone(contentItemType) {
+    return VideoOrImagesZoneContentTypes.has(contentItemType) && contentItemType !== bscore_1.ContentItemType.LiveVideo;
+}
+exports.dmIsValidContentItemTypeForMosaicZone = dmIsValidContentItemTypeForMosaicZone;
+var VideoOrImagesPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio,
+    bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.LiveVideo,
+    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MjpegStream,
+    bscore_1.ContentItemType.LocalPlaylist, bscore_1.ContentItemType.LocalPlaylistItem,
+];
+var VideoOrImagesPlaylistContentTypes = new Set(VideoOrImagesPlaylistContentTypeArray);
+var VideoOnlyPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.LiveVideo,
+    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.MjpegStream,
+];
+var VideoOnlyPlaylistContentTypes = new Set(VideoOnlyPlaylistContentTypeArray);
+var ImagesPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed,
+    bscore_1.ContentItemType.LocalPlaylist, bscore_1.ContentItemType.LocalPlaylistItem,
+];
+var ImagesPlaylistContentTypes = new Set(ImagesPlaylistContentTypeArray);
+var AudioPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MrssFeed,
+];
+var AudioPlaylistContentTypes = new Set(AudioPlaylistContentTypeArray);
+var EnhancedAudioPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.MrssFeed,
+];
+var EnhancedAudioPlaylistContentTypes = new Set(EnhancedAudioPlaylistContentTypeArray);
+var TickerPlaylistContentTypeArray = [
+    bscore_1.ContentItemType.Text, bscore_1.ContentItemType.DataFeed, bscore_1.ContentItemType.TwitterFeed,
+    bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.UserVariable,
+];
+var TickerPlaylistContentTypes = new Set(TickerPlaylistContentTypeArray);
+function dmIsValidContentItemForPlaylist(contentItem, zoneType) {
+    return dmIsValidContentItemTypeForPlaylist(contentItem.type, zoneType);
+}
+exports.dmIsValidContentItemForPlaylist = dmIsValidContentItemForPlaylist;
+function dmIsValidContentItemTypeForPlaylist(contentItemType, zoneType) {
+    switch (zoneType) {
+        case bscore_1.ZoneType.VideoOrImages:
+            return VideoOrImagesPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.VideoOnly:
+            return VideoOnlyPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Images:
+            return ImagesPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.AudioOnly:
+            return AudioPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.EnhancedAudio:
+            return EnhancedAudioPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Ticker:
+            return TickerPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Clock:
+            return ClockZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.BackgroundImage:
+            return contentItemType === bscore_1.ContentItemType.Image;
+        case bscore_1.ZoneType.Control:
+            return false;
+    }
+    return false;
+}
+exports.dmIsValidContentItemTypeForPlaylist = dmIsValidContentItemTypeForPlaylist;
+function dmIsValidContentItemTypeForMediaListOrPlayFile(contentItemType, zoneType) {
+    return false;
+}
+exports.dmIsValidContentItemTypeForMediaListOrPlayFile = dmIsValidContentItemTypeForMediaListOrPlayFile;
+function dmIsValidContentItemTypeForPlaylistChangeZoneType(contentItemType, zoneType, currentZoneType) {
+    var noTickerZoneMrssFeed = true;
+    if (currentZoneType === bscore_1.ZoneType.Ticker && contentItemType === bscore_1.ContentItemType.MrssFeed) {
+        noTickerZoneMrssFeed = false;
+    }
+    switch (zoneType) {
+        case bscore_1.ZoneType.VideoOrImages: {
+            return VideoOrImagesPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
+        }
+        case bscore_1.ZoneType.VideoOnly: {
+            return VideoOnlyPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
+        }
+        case bscore_1.ZoneType.Images: {
+            return ImagesPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
+        }
+        case bscore_1.ZoneType.AudioOnly:
+        case bscore_1.ZoneType.EnhancedAudio:
+            return AudioPlaylistContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.Ticker:
+            return TickerPlaylistContentTypes.has(contentItemType) && contentItemType !== bscore_1.ContentItemType.MrssFeed;
+        case bscore_1.ZoneType.Clock:
+            return ClockZoneContentTypes.has(contentItemType);
+        case bscore_1.ZoneType.BackgroundImage:
+            return contentItemType === bscore_1.ContentItemType.Image;
+        case bscore_1.ZoneType.Control:
+            return ControlZoneContentTypes.has(contentItemType);
+    }
+    return false;
+}
+exports.dmIsValidContentItemTypeForPlaylistChangeZoneType = dmIsValidContentItemTypeForPlaylistChangeZoneType;
+function dmFilterContentItemData(contentItemType, contentItemData) {
+    if (!lodash_1.isNil(contentItemData)) {
+        switch (contentItemType) {
+            case bscore_1.ContentItemType.Video:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmVideoContentItemDataNameArray);
+            case bscore_1.ContentItemType.Image:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmImageContentItemDataNameArray);
+            case bscore_1.ContentItemType.Audio:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmAudioContentItemDataNameArray);
+            case bscore_1.ContentItemType.Html:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmHtmlContentItemDataNameArray);
+            case bscore_1.ContentItemType.LiveVideo:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmLiveVideoContentItemDataNameArray);
+            case bscore_1.ContentItemType.MrssFeed:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMrssDataFeedContentItemDataNameArray);
+            case bscore_1.ContentItemType.TwitterFeed:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmTwitterFeedContentItemDataNameArray);
+            case bscore_1.ContentItemType.VideoStream:
+            case bscore_1.ContentItemType.AudioStream:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmStreamContentItemDataNameArray);
+            case bscore_1.ContentItemType.MjpegStream:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMjpegStreamContentItemDataNameArray);
+            case bscore_1.ContentItemType.MediaList:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMediaListContentItemDataNameArray);
+            case bscore_1.ContentItemType.PlayFile:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmPlayFileContentItemDataNameArray);
+            case bscore_1.ContentItemType.EventHandler:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmEventHandlerContentItemDataNameArray);
+            case bscore_1.ContentItemType.LiveText:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmLiveTextContentItemDataNameArray);
+            case bscore_1.ContentItemType.SuperState:
+                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmSuperStateContentItemDataNameArray);
+        }
+    }
+    return null;
+}
+exports.dmFilterContentItemData = dmFilterContentItemData;
+var VideoPlayFileDataNameArray = bsDmInterfaces_1.DmVideoContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
+var ImagePlayFileDataNameArray = bsDmInterfaces_1.DmImageContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
+var AudioPlayFileDataNameArray = bsDmInterfaces_1.DmAudioContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
+function dmFilterPlayFileItemContentItemData(contentItemType, contentItemData) {
+    if (contentItemData) {
+        switch (contentItemType) {
+            case bscore_1.ContentItemType.Video:
+                return lodash_1.pick(contentItemData, VideoPlayFileDataNameArray);
+            case bscore_1.ContentItemType.Image:
+                return lodash_1.pick(contentItemData, ImagePlayFileDataNameArray);
+            case bscore_1.ContentItemType.Audio:
+                return lodash_1.pick(contentItemData, AudioPlayFileDataNameArray);
+        }
+    }
+    return null;
+}
+exports.dmFilterPlayFileItemContentItemData = dmFilterPlayFileItemContentItemData;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmUpdateDeviceWebPageAssetLocation = exports.dmUpdateAssetLocation = exports.dmUpdateAssetItem = exports.dmRemoveDuplicateAssetItems = exports.dmRemoveAssetItems = exports.dmPutAssetItem = exports.UPDATE_ASSET_ITEM = exports.REMOVE_ASSET_ITEMS = exports.REMOVE_DUPLICATE_ASSET_ITEMS = exports.PUT_ASSET_ITEM = void 0;
 var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmHtmlSite_1 = __webpack_require__(37);
 var bsDmLiveText_1 = __webpack_require__(28);
 var selectors_1 = __webpack_require__(6);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
+var actionAssetHelper_1 = __webpack_require__(13);
 var actionHtmlSite_1 = __webpack_require__(32);
-var actionDeviceWebPage_1 = __webpack_require__(51);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionDeviceWebPage_1 = __webpack_require__(52);
+var actionDataFeed_1 = __webpack_require__(21);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
-var actionNodeApp_1 = __webpack_require__(43);
+var actionMediaState_1 = __webpack_require__(11);
+var actionNodeApp_1 = __webpack_require__(45);
 var actionLiveText_1 = __webpack_require__(29);
-var actionScriptPlugin_1 = __webpack_require__(44);
-var actionParserPlugin_1 = __webpack_require__(53);
-var actionVideoModePlugin_1 = __webpack_require__(55);
-var actionLinkedPresentation_1 = __webpack_require__(52);
-var actionAuxiliaryFile_1 = __webpack_require__(50);
+var actionScriptPlugin_1 = __webpack_require__(46);
+var actionParserPlugin_1 = __webpack_require__(54);
+var actionVideoModePlugin_1 = __webpack_require__(56);
+var actionLinkedPresentation_1 = __webpack_require__(53);
+var actionAuxiliaryFile_1 = __webpack_require__(51);
 var bsDmError_1 = __webpack_require__(4);
 var lodash_1 = __webpack_require__(0);
 exports.PUT_ASSET_ITEM = 'DM_PUT_ASSET_ITEM';
@@ -1370,7 +2105,7 @@ var dmGetAssetIdForAsset = function (dmState, asset) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1386,683 +2121,814 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmFilterPlayFileItemContentItemData = exports.dmFilterContentItemData = exports.dmIsValidContentItemTypeForPlaylistChangeZoneType = exports.dmIsValidContentItemTypeForMediaListOrPlayFile = exports.dmIsValidContentItemTypeForPlaylist = exports.dmIsValidContentItemForPlaylist = exports.dmIsValidContentItemTypeForMosaicZone = exports.dmIsValidContentItemTypeForZone = exports.dmIsValidContentItemForZone = exports.dmContentItemIsSuperStateContentItem = exports.dmCreateSuperStateContentItem = exports.dmContentItemIsDateContentItem = exports.dmCreateDateContentItem = exports.dmContentItemIsTimeContentItem = exports.dmCreateTimeContentItem = exports.dmContentItemIsLiveTextContentItem = exports.dmCreateLiveTextContentItem = exports.dmContentItemIsEventHandlerContentItem = exports.dmCreateEventHandlerContentItem = exports.dmContentItemIsMediaListOrPlayFileContentItem = exports.dmContentItemIsPlayFileContentItem = exports.dmCreatePlayFileContentItem = exports.dmContentItemIsMediaListContentItem = exports.dmCreateMediaListContentItem = exports.dmContentItemIsStreamContentItem = exports.dmContentItemIsMjpegStreamContentItem = exports.dmCreateMjpegStreamContentItem = exports.dmContentItemIsAudioStreamContentItem = exports.dmCreateAudioStreamContentItem = exports.dmContentItemIsVideoStreamContentItem = exports.dmCreateVideoStreamContentItem = exports.dmContentItemIsUserVariableContentItem = exports.dmCreateUserVariableContentItem = exports.dmContentItemIsTwitterFeedContentItem = exports.dmCreateTwitterFeedContentItem = exports.dmContentItemIsAnyDataFeedContentItem = exports.dmContentItemIsMrssDataFeedContentItem = exports.dmCreateMrssDataFeedContentItem = exports.dmContentItemIsTextFeedContentItem = exports.dmCreateDataFeedContentItem = exports.dmContentItemIsLiveVideoContentItem = exports.dmCreateLiveVideoContentItem = exports.dmContentItemIsHtmlContentItem = exports.dmCreateHtmlContentItem = exports.dmContentItemIsImageContentItem = exports.dmCreateImageContentItem = exports.dmContentItemIsAudioContentItem = exports.dmCreateAudioContentItem = exports.dmContentItemIsVideoContentItem = exports.dmCreateVideoContentItem = exports.dmContentItemIsMediaSequenceContentItem = exports.dmContentItemIsMediaContentItem = exports.MediaContentItemTypeSet = exports.dmCreatePlayFileItemFromMediaContentItem = exports.dmCreateMediaContentItem = exports.dmIsContentItem = exports.dmGetWidgetCustomFontAssetId = exports.dmCreateAssetItemFromLocalFile = exports.dmIsMediaStateBasedContainer = exports.dmIsMediaSequenceContainer = exports.dmGetMediaStateContainer = exports.dmGetZoneMediaStateContainer = void 0;
+exports.dmPasteMediaStateCopySet = exports.dmPreparePasteMediaStateAction = exports.dmDeleteMediaState = exports.dmDeleteMediaStateWithParams = exports.dmGetMediaStateDeleteParams = exports.dmUpdateMediaStatesContainers = exports.dmUpdateMediaStateContentItem = exports.doUpdateMediaState = exports.dmUpdateMediaState = exports.dmAddSequencedMediaStates = exports.dmAddLiveTextMediaState = exports.dmAddMediaState = exports.dmAddMediaStateWithContentItem = exports.dmContentIsAssetItem = exports.PASTE_MEDIA_STATES = exports.DELETE_MEDIA_STATE = exports.UPDATE_MEDIA_STATES_CONTAINERS = exports.UPDATE_MEDIA_STATE = exports.ADD_MEDIA_STATE_SEQUENCE = exports.ADD_SEQUENCED_MEDIA_STATE = exports.ADD_MEDIA_STATE = void 0;
+var utils_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(0);
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
-var bsDmDefaults_1 = __webpack_require__(19);
-var lodash_1 = __webpack_require__(0);
-function dmGetZoneMediaStateContainer(zoneId) {
-    return {
-        id: zoneId,
-        type: bsDmInterfaces_1.MediaStateContainerType.Zone,
+var bsDmState_1 = __webpack_require__(5);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmDataFeed_1 = __webpack_require__(15);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var bsDmError_1 = __webpack_require__(4);
+var selectors_1 = __webpack_require__(6);
+var actionBase_1 = __webpack_require__(8);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionEvent_1 = __webpack_require__(20);
+var actionTransition_1 = __webpack_require__(25);
+var actionHtmlSite_1 = __webpack_require__(32);
+var actionDataFeed_1 = __webpack_require__(21);
+var actionLiveText_1 = __webpack_require__(29);
+var actionUserVariable_1 = __webpack_require__(34);
+var actionZone_1 = __webpack_require__(14);
+var bsDmCommands_1 = __webpack_require__(22);
+exports.ADD_MEDIA_STATE = 'DM_ADD_MEDIA_STATE';
+exports.ADD_SEQUENCED_MEDIA_STATE = 'DM_ADD_SEQUENCED_MEDIA_STATE';
+exports.ADD_MEDIA_STATE_SEQUENCE = 'DM_ADD_MEDIA_STATE_SEQUENCE';
+exports.UPDATE_MEDIA_STATE = 'DM_UPDATE_MEDIA_STATE';
+exports.UPDATE_MEDIA_STATES_CONTAINERS = 'DM_UPDATE_MEDIA_STATES_CONTAINERS';
+exports.DELETE_MEDIA_STATE = 'DM_DELETE_MEDIA_STATE';
+exports.PASTE_MEDIA_STATES = 'DM_PASTE_MEDIA_STATES';
+var dmContentIsAssetItem = function (content) {
+    return bscore_1.bscIsAssetItem(content);
+};
+exports.dmContentIsAssetItem = dmContentIsAssetItem;
+function dmAddMediaStateWithContentItem(name, container, contentItem, zoneId, tag, index) {
+    if (tag === void 0) { tag = null; }
+    var isSequenced = !lodash_1.isNil(index);
+    var action = {
+        type: isSequenced ? exports.ADD_SEQUENCED_MEDIA_STATE : exports.ADD_MEDIA_STATE,
+        payload: {
+            id: utils_1.newBsDmId(),
+            name: name ? name : contentItem.name,
+            tag: lodash_1.isNil(tag) ? '' : tag,
+            container: container,
+            contentItem: contentItem,
+            zoneId: zoneId,
+        },
+    };
+    if (isSequenced) {
+        action.payload.index = index;
+    }
+    return action;
+}
+exports.dmAddMediaStateWithContentItem = dmAddMediaStateWithContentItem;
+function dmAddMediaState(name, container, content, contentData, index, contentAdditionalAsset) {
+    if (contentData === void 0) { contentData = null; }
+    if (index === void 0) { index = null; }
+    return function (dispatch, getState) {
+        var isSequenced = !lodash_1.isNil(index) || bsDmContentItems_1.dmIsMediaSequenceContainer(container);
+        if (isSequenced && lodash_1.isNil(index)) {
+            index = -1;
+        }
+        if (lodash_1.isNil(name)) {
+            name = '';
+        }
+        var mainAction = {
+            type: isSequenced ? exports.ADD_SEQUENCED_MEDIA_STATE : exports.ADD_MEDIA_STATE,
+            payload: {
+                id: utils_1.newBsDmId(),
+                name: name,
+                container: container,
+            },
+        };
+        if (isSequenced) {
+            mainAction.payload.index = lodash_1.isNil(index) ? -1 : index;
+        }
+        var batchedActions = [];
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var containingZone = selectors_1.dmGetZoneStateForContainer(dmState, container);
+        if (lodash_1.isNil(containingZone)) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Invalid container', { functionName: 'dmAddMediaState', action: mainAction });
+        }
+        mainAction.payload.zoneId = containingZone.id;
+        var zoneType = containingZone.type;
+        if (container.type === bsDmInterfaces_1.MediaStateContainerType.Zone
+            && !(zoneType === bscore_1.ZoneType.BackgroundImage || zoneType === bscore_1.ZoneType.Clock)
+            && selectors_1.dmGetZoneNonInteractiveById(dmState, { id: container.id })) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'AddMediaState: Use PlaylistAddMediaState to add mediaStates in nonInteractive zones', { functionName: 'dmAddMediaState', action: mainAction });
+        }
+        var tagIndex = selectors_1.dmGetNextMediaStateTagIndexForZone(dmState, { id: containingZone.id });
+        mainAction.payload.tag = tagIndex.toString();
+        var assetItem;
+        var contentItem;
+        if (exports.dmContentIsAssetItem(content)) {
+            if (bscore_1.bscIsAssetItemPlayableContent(content)) {
+                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, content, mainAction);
+                contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
+                var assetAction = actionAssetMap_1.dmPutAssetItem(assetItem);
+                batchedActions.push(assetAction);
+            }
+            else if (content.assetType === bscore_1.AssetType.HtmlSite) {
+                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, content, mainAction);
+                var assetAction = actionAssetMap_1.dmPutAssetItem(assetItem);
+                batchedActions.push(assetAction);
+                var htmlSiteAction = actionHtmlSite_1.dmAddHostedHtmlSiteWithoutAssetProcessing(assetItem.name, assetItem.id);
+                var htmlSiteId = htmlSiteAction.payload.id;
+                batchedActions.push(htmlSiteAction);
+                contentItem = bsDmContentItems_1.dmCreateHtmlContentItem(assetItem.name, htmlSiteId);
+            }
+            else {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Unsupported BsAssetItem assetType', { functionName: 'dmAddMediaState', action: mainAction });
+            }
+        }
+        else if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(content)) {
+            if (zoneType === bscore_1.ZoneType.Ticker) {
+                content.usage = bscore_1.DataFeedUsageType.Text;
+            }
+            var dataFeedName = bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(content) ? content.assetItem.name : name;
+            var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, dataFeedName, content);
+            batchedActions.push.apply(batchedActions, actionListParams.actions);
+            var dataFeedParams = actionListParams.mainAction.payload;
+            var contentName = lodash_1.isNil(dataFeedParams.name) ? '' : dataFeedParams.name;
+            contentItem = content.usage === bscore_1.DataFeedUsageType.Text ?
+                bsDmContentItems_1.dmCreateDataFeedContentItem(contentName, dataFeedParams.id) :
+                bsDmContentItems_1.dmCreateMrssDataFeedContentItem(contentName, dataFeedParams.id);
+        }
+        else if (bsDmContentItems_1.dmIsContentItem(content)) {
+            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(content)) {
+                mainAction.payload.contentItem = content;
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: MediaContentItems must be specified by AssetItem parameters', { functionName: 'dmAddMediaState', action: mainAction });
+            }
+            else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(content)) {
+                var dataFeed = selectors_1.dmGetDataFeedStateById(dmState, { id: content.dataFeedId });
+                if (!lodash_1.isNil(dataFeed) && dataFeed.isSystemFeed) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: System dataFeed cannot be used in a dataFeed contentItem', { functionName: 'dmAddMediaState', action: mainAction });
+                }
+            }
+            contentItem = __assign({}, content);
+            if (!lodash_1.isNil(contentAdditionalAsset)) {
+                if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(contentItem)) {
+                    var dataFeedSpec = contentAdditionalAsset.dataFeedSpec;
+                    if (!lodash_1.isNil(dataFeedSpec)) {
+                        dataFeedSpec.usage = bscore_1.DataFeedUsageType.Mrss;
+                        var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
+                        batchedActions.push.apply(batchedActions, actionListParams.actions);
+                        contentItem.defaultDataFeedId = actionListParams.mainAction.payload.id;
+                    }
+                }
+                else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem)) {
+                    var dataFeedSpec = contentAdditionalAsset.dataFeedSpec;
+                    if (contentItem.useDataFeed && !lodash_1.isNil(dataFeedSpec)) {
+                        dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
+                        var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
+                        batchedActions.push.apply(batchedActions, actionListParams.actions);
+                        contentItem.dataFeedId = actionListParams.mainAction.payload.id;
+                    }
+                    if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)) {
+                        var defaultMedia = contentAdditionalAsset.defaultMedia;
+                        if (contentItem.useDefaultMedia && !lodash_1.isNil(defaultMedia)) {
+                            var defaultMediaAssetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, defaultMedia, mainAction);
+                            batchedActions.push(actionAssetMap_1.dmPutAssetItem(defaultMediaAssetItem));
+                            contentItem.defaultMediaId = defaultMediaAssetItem.id;
+                        }
+                    }
+                }
+            }
+        }
+        var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, contentData);
+        if (!lodash_1.isNil(contentItemData)) {
+            contentItem = __assign(__assign({}, contentItem), contentItemData);
+        }
+        if (!mainAction.payload.name) {
+            mainAction.payload.name = contentItem.name ? contentItem.name : 'State' + tagIndex;
+        }
+        if (!bsDmContentItems_1.dmIsMediaSequenceContainer(container)) {
+            var zoneId = selectors_1.dmGetZoneIdForContainer(dmState, container);
+            if (!lodash_1.isNil(zoneId)) {
+                mainAction.payload.name =
+                    selectors_1.dmGetUniqueMediaStateNameForBaseNameInZone(dmState, { id: zoneId, name: mainAction.payload.name });
+            }
+        }
+        if (zoneType === bscore_1.ZoneType.BackgroundImage) {
+            var backgroundStates = selectors_1.dmGetMediaStateIdsForZone(dmState, { id: container.id });
+            if (backgroundStates.length >= 1) {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'AddMediaState: BackgroundImage can accept only one media state', { functionName: 'dmAddMediaState', action: mainAction });
+            }
+        }
+        if (!bsDmContentItems_1.dmIsValidContentItemForZone(contentItem, zoneType)) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Content item type "' + contentItem.type + '" cannot be added to "' + zoneType + '" zone', { functionName: 'dmAddMediaState', action: mainAction });
+        }
+        mainAction.payload.contentItem = contentItem;
+        batchedActions.push(mainAction);
+        dispatch(actionBase_1.dmBatchActions(batchedActions));
+        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
     };
 }
-exports.dmGetZoneMediaStateContainer = dmGetZoneMediaStateContainer;
-function dmGetMediaStateContainer(id, type) {
-    return { id: id, type: type };
+exports.dmAddMediaState = dmAddMediaState;
+function dmAddLiveTextMediaState(name, container, backgroundImage, backgroundColor, backgroundWidth, backgroundHeight) {
+    if (backgroundWidth === void 0) { backgroundWidth = 0; }
+    if (backgroundHeight === void 0) { backgroundHeight = 0; }
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var containingZone = selectors_1.dmGetZoneStateForContainer(dmState, container);
+        if (lodash_1.isNil(containingZone)) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddLiveTextMediaState: Invalid container', { functionName: 'dmAddLiveTextMediaState' });
+        }
+        var liveTextActionListParams = actionLiveText_1.dmGetAddLiveTextCanvasActionList(dmState, backgroundImage, backgroundColor, backgroundWidth, backgroundHeight);
+        var batchedActions = liveTextActionListParams.actions;
+        var canvasId = liveTextActionListParams.mainAction.payload.id;
+        var tagIndex = selectors_1.dmGetNextMediaStateTagIndexForZone(dmState, { id: containingZone.id });
+        var liveTextCanvasName = lodash_1.isNil(name) ? '' : name;
+        var contentItem = bsDmContentItems_1.dmCreateLiveTextContentItem(liveTextCanvasName, canvasId);
+        var mainAction = {
+            type: exports.ADD_MEDIA_STATE,
+            payload: {
+                id: utils_1.newBsDmId(),
+                name: liveTextCanvasName.length > 0 ? liveTextCanvasName : 'State' + tagIndex,
+                tag: tagIndex.toString(),
+                container: container,
+                contentItem: contentItem,
+                zoneId: containingZone.id,
+            },
+        };
+        batchedActions.push(mainAction);
+        dispatch(actionBase_1.dmBatchActions(batchedActions));
+        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
+    };
 }
-exports.dmGetMediaStateContainer = dmGetMediaStateContainer;
-function dmIsMediaSequenceContainer(container) {
-    return container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList || container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile;
+exports.dmAddLiveTextMediaState = dmAddLiveTextMediaState;
+function dmAddSequencedMediaStates(ids, container) {
+    return {
+        type: exports.ADD_MEDIA_STATE_SEQUENCE,
+        payload: { ids: ids, container: container },
+    };
 }
-exports.dmIsMediaSequenceContainer = dmIsMediaSequenceContainer;
-function dmIsMediaStateBasedContainer(container) {
-    return container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList
-        || container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile
-        || container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState;
+exports.dmAddSequencedMediaStates = dmAddSequencedMediaStates;
+function dmUpdateMediaState(params) {
+    return function (dispatch, getState) {
+        return doUpdateMediaState(params, dispatch, getState);
+    };
 }
-exports.dmIsMediaStateBasedContainer = dmIsMediaStateBasedContainer;
-function dmCreateAssetItemFromLocalFile(fullPath, id, mediaType, assetType) {
-    if (id === void 0) { id = bscore_1.BsAssetIdNone; }
-    if (mediaType === void 0) { mediaType = null; }
-    if (assetType === void 0) { assetType = null; }
-    var name = fullPath.replace(/^.*[\\\/]/, '');
-    var path = fullPath.substr(0, fullPath.length - name.length);
-    var fileTypeInfo;
-    if (mediaType) {
-        fileTypeInfo = { assetType: bscore_1.AssetType.Content, mediaType: mediaType };
+exports.dmUpdateMediaState = dmUpdateMediaState;
+function doUpdateMediaState(params, dispatch, getState) {
+    var mainAction = {
+        type: exports.UPDATE_MEDIA_STATE,
+        payload: lodash_1.pick(params, ['id', 'name']),
+    };
+    var batchedActions = [];
+    var dmState = bsDmState_1.dmFilterDmState(getState());
+    var currentMediaStateState = selectors_1.dmGetMediaStateStateById(dmState, { id: params.id });
+    if (!currentMediaStateState) {
+        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Cannot update mediaState: Invalid mediaState ID');
+    }
+    var existingContentItem = currentMediaStateState.contentItem;
+    var contentItem;
+    if (params.content) {
+        var assetItem = void 0;
+        if (exports.dmContentIsAssetItem(params.content)) {
+            assetItem = params.content;
+            var newContentItemType = bscore_1.bscGetContentItemTypeForMediaType(assetItem.mediaType);
+            var incompatibleEventIds = selectors_1.dmGetIncompatibleMediaStateEventIdsForContentItemType(dmState, { id: params.id, type: newContentItemType });
+            if (incompatibleEventIds.length > 0) {
+                batchedActions.push(actionEvent_1.dmDeleteEventWithParams(actionEvent_1.dmGetEventDeleteParams(dmState, incompatibleEventIds)));
+            }
+            if (bscore_1.bscIsAssetItemPlayableContent(assetItem)) {
+                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, params.content, mainAction);
+                var useExistingProps = false;
+                if (bsDmContentItems_1.dmContentItemIsMediaContentItem(existingContentItem)) {
+                    batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.assetId));
+                    useExistingProps = newContentItemType === existingContentItem.type;
+                }
+                if (useExistingProps) {
+                    contentItem = __assign(__assign({}, existingContentItem), { name: assetItem.name, assetId: assetItem.id });
+                }
+                else {
+                    contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
+                }
+                batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
+            }
+            else {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: only MediaContentItems can be updated using an AssetItem');
+            }
+        }
+        else if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(params.content)) {
+            if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(existingContentItem)) {
+                var currentZoneType = selectors_1.dmGetZoneTypeForMediaStateId(dmState, { id: currentMediaStateState.id });
+                if (currentZoneType === bscore_1.ZoneType.Ticker) {
+                    params.content.usage = bscore_1.DataFeedUsageType.Text;
+                }
+                var dataFeedUpdateParams = {
+                    id: existingContentItem.dataFeedId,
+                    feedSpec: params.content,
+                };
+                if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(params.content)) {
+                    dataFeedUpdateParams.name = params.content.assetItem.name;
+                }
+                var actionListParams = actionDataFeed_1.dmGetUpdateDataFeedActionList(dmState, dataFeedUpdateParams);
+                batchedActions.push.apply(batchedActions, actionListParams.actions);
+                var dataFeedParams = actionListParams.mainAction.payload;
+                var contentName = lodash_1.isNil(dataFeedParams.name) ? '' : dataFeedParams.name;
+                contentItem = params.content.usage === bscore_1.DataFeedUsageType.Text ?
+                    bsDmContentItems_1.dmCreateDataFeedContentItem(contentName, dataFeedParams.id) :
+                    bsDmContentItems_1.dmCreateMrssDataFeedContentItem(contentName, dataFeedParams.id);
+            }
+            else {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: cannot change ContentItem to a DataFeed ContentItem');
+            }
+        }
+        else if (bsDmContentItems_1.dmIsContentItem(params.content)) {
+            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(params.content)) {
+                mainAction.payload.contentItem = params.content;
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: MediaContentItems must be specified by AssetItem parameters', { action: mainAction });
+            }
+            else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(params.content)) {
+                var dataFeed = selectors_1.dmGetDataFeedStateById(dmState, { id: params.content.dataFeedId });
+                if (!lodash_1.isNil(dataFeed) && dataFeed.isSystemFeed) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: system dataFeed cannot be used in a dataFeed contentItem', { action: mainAction });
+                }
+            }
+            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(existingContentItem)) {
+                batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.assetId));
+            }
+            contentItem = __assign({}, params.content);
+        }
+        var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, params.contentData);
+        if (contentItemData) {
+            contentItem = __assign(__assign({}, contentItem), contentItemData);
+        }
+        var zoneId = selectors_1.dmGetZoneIdForMediaStateId(dmState, { id: currentMediaStateState.id });
+        var zoneType = selectors_1.dmGetZoneTypeById(dmState, { id: zoneId });
+        var isNonInteractiveZone = selectors_1.dmGetZoneNonInteractiveById(dmState, { id: zoneId });
+        var contentItemValid = isNonInteractiveZone ?
+            bsDmContentItems_1.dmIsValidContentItemForPlaylist(contentItem, zoneType) : bsDmContentItems_1.dmIsValidContentItemForZone(contentItem, zoneType);
+        if (!contentItemValid) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: Content item type "' + contentItem.type
+                + '" cannot be added to "' + zoneType + '" zone', { action: mainAction });
+        }
+    }
+    else if (params.contentData) {
+        var filteredData = bsDmContentItems_1.dmFilterContentItemData(existingContentItem.type, params.contentData);
+        if (lodash_1.isNil(filteredData) || Object.keys(filteredData).length === 0) {
+            contentItem = null;
+        }
+        else {
+            contentItem = __assign(__assign({}, existingContentItem), filteredData);
+        }
+    }
+    if ((lodash_1.isNil(contentItem) || bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem))
+        && bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(existingContentItem)) {
+        var dataFeedSpec = void 0;
+        if (!lodash_1.isNil(params.contentAdditionalAsset)) {
+            dataFeedSpec = params.contentAdditionalAsset.dataFeedSpec;
+        }
+        if (lodash_1.isNil(contentItem)) {
+            contentItem = __assign({}, existingContentItem);
+        }
+        if (existingContentItem.useDataFeed !== contentItem.useDataFeed) {
+            if (contentItem.useDataFeed) {
+                if (!lodash_1.isNil(dataFeedSpec)) {
+                    dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
+                    var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
+                    batchedActions.push.apply(batchedActions, actionListParams.actions);
+                    contentItem.dataFeedId = actionListParams.mainAction.payload.id;
+                }
+                else {
+                    contentItem.dataFeedId = bsDmInterfaces_1.BsDmIdNone;
+                }
+                var itemSequenceObject = selectors_1.dmGetMediaStateSequenceForContainer(dmState, { id: params.id });
+                if (!lodash_1.isNil(itemSequenceObject)) {
+                    var deleteParams = dmGetMediaStateDeleteParams(dmState, itemSequenceObject.sequence);
+                    batchedActions.push(dmDeleteMediaStateWithParams(deleteParams));
+                }
+            }
+            else {
+                var dataFeedId = existingContentItem.dataFeedId;
+                if (utils_1.isValidBsDmId(dataFeedId)) {
+                    batchedActions.push(actionDataFeed_1.dmDeleteDataFeedWithParams(actionDataFeed_1.dmGetDataFeedDeleteParams(dmState, dataFeedId)));
+                }
+                contentItem.dataFeedId = bsDmInterfaces_1.BsDmIdNone;
+            }
+        }
+        else if (contentItem.useDataFeed) {
+            if (!lodash_1.isNil(dataFeedSpec)) {
+                dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
+                var actionListParams = void 0;
+                if (utils_1.isValidBsDmId(contentItem.dataFeedId)) {
+                    actionListParams = actionDataFeed_1.dmGetUpdateDataFeedActionList(dmState, { id: contentItem.dataFeedId, feedSpec: dataFeedSpec });
+                }
+                else {
+                    actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
+                    contentItem.dataFeedId = actionListParams.mainAction.payload.id;
+                }
+                batchedActions.push.apply(batchedActions, actionListParams.actions);
+            }
+        }
+    }
+    if (params.contentAdditionalAsset !== undefined) {
+        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)
+            || (lodash_1.isNil(contentItem) && bsDmContentItems_1.dmContentItemIsPlayFileContentItem(existingContentItem))) {
+            var defaultMediaAssetItem = params.contentAdditionalAsset.defaultMedia;
+            if (defaultMediaAssetItem !== undefined) {
+                if (lodash_1.isNil(contentItem)) {
+                    contentItem = __assign({}, existingContentItem);
+                }
+                if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(existingContentItem)
+                    && utils_1.isValidBsDmId(existingContentItem.defaultMediaId)) {
+                    batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.defaultMediaId));
+                    contentItem.defaultMediaId = bscore_1.BsAssetIdNone;
+                }
+                if (defaultMediaAssetItem !== null) {
+                    var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, defaultMediaAssetItem, mainAction);
+                    batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
+                    contentItem.defaultMediaId = assetItem.id;
+                }
+            }
+        }
+    }
+    if (lodash_1.isString(params.contentName) && lodash_1.isNil(contentItem)) {
+        contentItem = __assign({}, existingContentItem);
+    }
+    if (!lodash_1.isNil(contentItem)) {
+        if (lodash_1.isString(params.contentName)) {
+            contentItem.name = params.contentName;
+        }
+        mainAction.payload.contentItem = contentItem;
+    }
+    batchedActions.push(mainAction);
+    dispatch(actionBase_1.dmBatchActions(batchedActions));
+    return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
+}
+exports.doUpdateMediaState = doUpdateMediaState;
+function dmUpdateMediaStateContentItem(id, contentItem) {
+    return {
+        type: exports.UPDATE_MEDIA_STATE,
+        payload: { id: id, contentItem: contentItem },
+    };
+}
+exports.dmUpdateMediaStateContentItem = dmUpdateMediaStateContentItem;
+function dmUpdateMediaStatesContainers(ids, container) {
+    return {
+        type: exports.UPDATE_MEDIA_STATES_CONTAINERS,
+        payload: { ids: ids, container: container },
+    };
+}
+exports.dmUpdateMediaStatesContainers = dmUpdateMediaStatesContainers;
+function dmGetMediaStateDeleteParams(state, id, includeIncomingTransitions) {
+    var _a, _b, _c, _d, _e;
+    if (includeIncomingTransitions === void 0) { includeIncomingTransitions = false; }
+    var deleteParams = {
+        mediaStateIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
+        dataFeedIds: [],
+        dataFeedSourceIds: [],
+        assetIds: [],
+        eventIds: [],
+        transitionIds: [],
+        commandIds: [],
+        liveTextCanvasIds: [],
+        liveTextItemIds: [],
+        liveTextGroupIds: [],
+    };
+    var getContainedMediaStateIds = function (containerId) {
+        if (selectors_1.dmIsMediaStateContainer(state, { id: containerId })) {
+            var ids_1 = selectors_1.dmGetContainedMediaStateIdsForMediaState(state, { id: containerId });
+            var outerIds = ids_1.slice();
+            outerIds.forEach(function (outerId) {
+                var innerIds = getContainedMediaStateIds(outerId);
+                if (innerIds) {
+                    ids_1.push.apply(ids_1, innerIds);
+                }
+            });
+            if (ids_1.length) {
+                return ids_1;
+            }
+        }
+        return null;
+    };
+    var originalMediaStateIds = deleteParams.mediaStateIds.slice();
+    var invalidMediaStateIds = [];
+    originalMediaStateIds.forEach(function (mediaStateId) {
+        var _a;
+        var mediaStateState = selectors_1.dmGetMediaStateStateById(state, { id: mediaStateId });
+        if (!lodash_1.isNil(mediaStateState)) {
+            var containedMediaStateIds = getContainedMediaStateIds(mediaStateId);
+            if (containedMediaStateIds) {
+                (_a = deleteParams.mediaStateIds).push.apply(_a, containedMediaStateIds);
+            }
+        }
+        else {
+            invalidMediaStateIds.push(mediaStateId);
+        }
+    });
+    if (invalidMediaStateIds.length) {
+        lodash_1.pullAll(deleteParams.mediaStateIds, invalidMediaStateIds);
+    }
+    deleteParams.mediaStateIds.forEach(function (mediaStateId) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+        var mediaStateEventIds = selectors_1.dmGetAllEventIdsForMediaState(state, { id: mediaStateId });
+        if (mediaStateEventIds.length) {
+            (_a = deleteParams.eventIds).push.apply(_a, mediaStateEventIds);
+        }
+        var entryCommandIds = selectors_1.dmGetEntryCommandIdsForMediaState(state, { id: mediaStateId });
+        var exitCommandIds = selectors_1.dmGetExitCommandIdsForMediaState(state, { id: mediaStateId });
+        if (entryCommandIds.length || exitCommandIds.length) {
+            (_b = deleteParams.commandIds).push.apply(_b, __spreadArrays(entryCommandIds, exitCommandIds));
+        }
+        var dataFeedIds = selectors_1.dmGetDataFeedIdsForMediaState(state, { id: mediaStateId });
+        if (dataFeedIds.length) {
+            (_c = deleteParams.dataFeedIds).push.apply(_c, dataFeedIds);
+        }
+        var mediaStateState = selectors_1.dmGetMediaStateStateById(state, { id: mediaStateId });
+        var contentItem = mediaStateState.contentItem;
+        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(contentItem)) {
+            deleteParams.assetIds.push(contentItem.assetId);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(contentItem)) {
+            var seqNextCommandIds = selectors_1.dmGetSequenceItemNextCommandIdsForMediaState(state, { id: mediaStateId });
+            var seqPrevCommandIds = selectors_1.dmGetSequenceItemPreviousCommandIdsForMediaState(state, { id: mediaStateId });
+            if (seqNextCommandIds.length || seqPrevCommandIds.length) {
+                (_d = deleteParams.commandIds).push.apply(_d, __spreadArrays(seqNextCommandIds, seqPrevCommandIds));
+            }
+        }
+        else if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)) {
+            var defaultMediaId = contentItem.defaultMediaId;
+            if (utils_1.isValidBsDmId(defaultMediaId)) {
+                deleteParams.assetIds.push(defaultMediaId);
+            }
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(contentItem)) {
+            var liveTextDeleteItems = actionLiveText_1.dmGetLiveTextCanvasDeleteParams(state, contentItem.canvasId, false);
+            deleteParams.liveTextCanvasIds.push(contentItem.canvasId);
+            if (liveTextDeleteItems.liveTextItemIds.length) {
+                (_e = deleteParams.liveTextItemIds).push.apply(_e, liveTextDeleteItems.liveTextItemIds);
+            }
+            if (liveTextDeleteItems.liveTextGroupIds.length) {
+                (_f = deleteParams.liveTextGroupIds).push.apply(_f, liveTextDeleteItems.liveTextGroupIds);
+            }
+            if (liveTextDeleteItems.dataFeedIds.length) {
+                (_g = deleteParams.dataFeedIds).push.apply(_g, liveTextDeleteItems.dataFeedIds);
+            }
+            if (liveTextDeleteItems.assetIds.length) {
+                (_h = deleteParams.assetIds).push.apply(_h, liveTextDeleteItems.assetIds);
+            }
+        }
+        if (includeIncomingTransitions) {
+            var transitionIds = selectors_1.dmGetIncomingTransitionIdsForMediaState(state, { id: mediaStateId });
+            if (transitionIds.length) {
+                (_j = deleteParams.transitionIds).push.apply(_j, transitionIds);
+                transitionIds.forEach(function (transitionId) {
+                    var transitionState = selectors_1.dmGetTransitionStateById(state, { id: transitionId });
+                    var event = selectors_1.dmGetEventById(state, { id: transitionState.eventId });
+                    if (!lodash_1.isNil(event) && !lodash_1.isNil(event.defaultTransition)
+                        && event.conditionalTransitions.length === 0
+                        && event.commands.length === 0) {
+                        deleteParams.eventIds.push(event.id);
+                    }
+                });
+            }
+        }
+    });
+    if (includeIncomingTransitions) {
+        deleteParams.eventIds = lodash_1.uniq(deleteParams.eventIds);
+    }
+    var eventDeleteParams = actionEvent_1.dmGetEventDeleteParams(state, deleteParams.eventIds);
+    (_a = deleteParams.transitionIds).push.apply(_a, eventDeleteParams.transitionIds);
+    if (eventDeleteParams.commandIds.length) {
+        (_b = deleteParams.commandIds).push.apply(_b, eventDeleteParams.commandIds);
+    }
+    if (includeIncomingTransitions) {
+        deleteParams.transitionIds = lodash_1.uniq(deleteParams.transitionIds);
+    }
+    var transitionDeleteParams = actionTransition_1.dmGetTransitionDeleteParams(state, deleteParams.transitionIds);
+    if (transitionDeleteParams.commandIds.length) {
+        (_c = deleteParams.commandIds).push.apply(_c, transitionDeleteParams.commandIds);
+    }
+    var dataFeedDeleteParams = actionDataFeed_1.dmGetDataFeedDeleteParams(state, deleteParams.dataFeedIds);
+    deleteParams.dataFeedSourceIds = dataFeedDeleteParams.dataFeedSourceIds;
+    if (dataFeedDeleteParams.commandIds.length) {
+        (_d = deleteParams.commandIds).push.apply(_d, dataFeedDeleteParams.commandIds);
+    }
+    if (dataFeedDeleteParams.assetIds.length) {
+        (_e = deleteParams.assetIds).push.apply(_e, dataFeedDeleteParams.assetIds);
+    }
+    deleteParams.commandIds = lodash_1.uniq(deleteParams.commandIds);
+    return deleteParams;
+}
+exports.dmGetMediaStateDeleteParams = dmGetMediaStateDeleteParams;
+function dmDeleteMediaStateWithParams(params) {
+    return {
+        type: exports.DELETE_MEDIA_STATE,
+        payload: params,
+    };
+}
+exports.dmDeleteMediaStateWithParams = dmDeleteMediaStateWithParams;
+function dmDeleteMediaState(id) {
+    return function (dispatch, getState) {
+        var batchedActions = [];
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var containerDeleteListMap = new Map();
+        var addToContainerMap = function (mediaStateId) {
+            var mediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: mediaStateId });
+            if (!lodash_1.isNil(mediaState)
+                && (mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.Zone
+                    || mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState)) {
+                var mapItem = containerDeleteListMap.get(mediaState.container.id);
+                if (lodash_1.isNil(mapItem)) {
+                    containerDeleteListMap.set(mediaState.container.id, { containerType: mediaState.container.type, idsToDelete: [mediaStateId] });
+                }
+                else {
+                    mapItem.idsToDelete.push(mediaStateId);
+                }
+            }
+        };
+        if (Array.isArray(id)) {
+            id.forEach(addToContainerMap);
+        }
+        else {
+            addToContainerMap(id);
+        }
+        containerDeleteListMap.forEach(function (containerDeleteList, containerId) {
+            if (containerDeleteList.containerType === bsDmInterfaces_1.MediaStateContainerType.Zone) {
+                var currentInitialState = selectors_1.dmGetInitialMediaStateIdForZone(dmState, { id: containerId });
+                if (!lodash_1.isNil(currentInitialState) && containerDeleteList.idsToDelete.indexOf(currentInitialState) >= 0) {
+                    var zoneMediaStateIds = selectors_1.dmGetMediaStateIdsForZone(dmState, { id: containerId });
+                    var remainingMediaStates = lodash_1.without.apply(void 0, __spreadArrays([zoneMediaStateIds], containerDeleteList.idsToDelete));
+                    var newInitialMediaStateId = remainingMediaStates.length > 0 ? remainingMediaStates[0] : bsDmInterfaces_1.BsDmIdNone;
+                    batchedActions.push(actionZone_1.dmUpdateZoneWithoutTest({ id: containerId, initialMediaStateId: newInitialMediaStateId }));
+                }
+            }
+            else {
+                var mediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: containerId });
+                if (!lodash_1.isNil(mediaState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(mediaState.contentItem)) {
+                    var currentInitialState = mediaState.contentItem.initialMediaStateId;
+                    if (!lodash_1.isNil(currentInitialState) && containerDeleteList.idsToDelete.indexOf(currentInitialState) >= 0) {
+                        var superStateMediaStateIds = selectors_1.dmGetContainedMediaStateIdsForMediaState(dmState, { id: containerId });
+                        var remainingMediaStates = lodash_1.without.apply(void 0, __spreadArrays([superStateMediaStateIds], containerDeleteList.idsToDelete));
+                        var initialMediaStateId = remainingMediaStates.length > 0 ? remainingMediaStates[0] : bsDmInterfaces_1.BsDmIdNone;
+                        batchedActions.push(dmUpdateMediaStateContentItem(containerId, __assign(__assign({}, mediaState.contentItem), { initialMediaStateId: initialMediaStateId })));
+                    }
+                }
+            }
+        });
+        var deleteParams = dmGetMediaStateDeleteParams(dmState, id, true);
+        var mainAction = dmDeleteMediaStateWithParams(deleteParams);
+        batchedActions.push(mainAction);
+        dispatch(actionBase_1.dmBatchActions(batchedActions));
+        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
+    };
+}
+exports.dmDeleteMediaState = dmDeleteMediaState;
+function dmPreparePasteMediaStateAction(dmState, copySet, targetZoneId, duplicateMatchedUserVariables) {
+    if (duplicateMatchedUserVariables === void 0) { duplicateMatchedUserVariables = false; }
+    if (!lodash_1.isNil(targetZoneId)) {
+        var mergeParams = {};
+        var pasteToDifferentSign = selectors_1.dmGetSignId(dmState) !== copySet.signId;
+        if (pasteToDifferentSign) {
+            mergeParams.assetItemMergeParams = selectors_1.dmGetMergedAssetItemCopySet(dmState, copySet.assetMap);
+            mergeParams.dataFeedSourceMergeParams = selectors_1.dmGetMergedDataFeedSourceCopySet(dmState, copySet.dataFeeds.sourcesById, copySet.assetMap, copySet.userVariables);
+            mergeParams.updatedCommandCollection = selectors_1.dmGetCommandCollectionForDifferentSign(dmState, copySet.commands, copySet.zoneId, Object.keys(copySet.dataFeeds.sourcesById), Object.keys(copySet.userVariables.variablesById));
+        }
+        var mergingUserVariables = copySet.userVariables.sequence.length > 0;
+        if (mergingUserVariables) {
+            mergeParams.userVariableCopySetMergeParams =
+                selectors_1.dmGetMergedUserVariableCopySet(dmState, copySet.userVariables, duplicateMatchedUserVariables);
+        }
+        var copySetUpdateResult_1 = bsDmCopyPaste_1.dmUpdateMediaStateCopySetWithUniqueIds(copySet, mergeParams);
+        if (mergingUserVariables && copySetUpdateResult_1.userVariableIdMap.size > 0) {
+            selectors_1.dmVisitUserVariableReferences(dmState, copySetUpdateResult_1.copySet, function (uvId) {
+                var newId = copySetUpdateResult_1.userVariableIdMap.get(uvId);
+                return lodash_1.isNil(newId) ? bsDmInterfaces_1.BsDmIdNone : newId;
+            });
+        }
+        if (pasteToDifferentSign) {
+            Object.keys(copySetUpdateResult_1.copySet.commands.commandsById).forEach(function (commandId) {
+                var command = copySetUpdateResult_1.copySet.commands.commandsById[commandId];
+                command.operations.forEach(function (op) {
+                    if (bsDmCommands_1.dmIsZoneCommandData(op.data)) {
+                        op.data.zoneId = targetZoneId;
+                    }
+                    else if (bsDmCommands_1.dmIsDataFeedSourceCommandData(op.data)) {
+                        var newId = copySetUpdateResult_1.dataFeedSourceIdMap.get(op.data.dataFeedSourceId);
+                        op.data.dataFeedSourceId = lodash_1.isNil(newId) ? bsDmInterfaces_1.BsDmIdNone : newId;
+                    }
+                });
+            });
+        }
+        var updatedCopySet = bsDmCopyPaste_1.dmUpdateMediaStateCopySetWithUniqueStateNamesForZone(dmState, copySetUpdateResult_1.copySet, targetZoneId);
+        return {
+            type: exports.PASTE_MEDIA_STATES,
+            payload: {
+                copySet: updatedCopySet,
+                mediaStateIdMap: copySetUpdateResult_1.mediaStateIdMap,
+                eventIdMap: copySetUpdateResult_1.eventIdMap,
+            },
+        };
     }
     else {
-        fileTypeInfo = bscore_1.bscGetBscFileTypeInfo(name);
+        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PreparePasteMediaStateAction - target zone ID is invalid', { functionName: 'dmPreparePasteMediaStateAction' });
     }
-    var assetItem = {
-        id: id,
-        name: name,
-        path: path,
-        networkId: 0,
-        location: bscore_1.AssetLocation.Local,
-        locator: bscore_1.bscGetLocalAssetLocatorKey(fullPath),
-        assetType: assetType ? assetType : fileTypeInfo.assetType,
-        scope: '',
-    };
-    if (assetItem.assetType === bscore_1.AssetType.Content) {
-        assetItem.mediaType = fileTypeInfo.mediaType;
-    }
-    return assetItem;
 }
-exports.dmCreateAssetItemFromLocalFile = dmCreateAssetItemFromLocalFile;
-function dmGetWidgetCustomFontAssetId(widget) {
-    return !lodash_1.isNil(widget) && !lodash_1.isNil(widget.font)
-        && widget.font !== bsDmInterfaces_1.DmDefaultFontName && bscore_1.bscIsValidAssetId(widget.font) ? widget.font : null;
-}
-exports.dmGetWidgetCustomFontAssetId = dmGetWidgetCustomFontAssetId;
-function dmIsContentItem(value) {
-    return typeof value === 'object'
-        && value.hasOwnProperty('name')
-        && value.hasOwnProperty('type');
-}
-exports.dmIsContentItem = dmIsContentItem;
-function dmCreateMediaContentItem(name, assetId, mediaType, props) {
-    switch (mediaType) {
-        case bscore_1.MediaType.Video:
-            return dmCreateVideoContentItem(name, assetId, props);
-        case bscore_1.MediaType.Audio:
-            return dmCreateAudioContentItem(name, assetId, props);
-        case bscore_1.MediaType.Image:
-            return dmCreateImageContentItem(name, assetId, props);
-        case bscore_1.MediaType.Text:
-            return {
-                name: name,
-                type: bscore_1.ContentItemType.Text,
-                assetId: assetId,
-            };
-        default:
+exports.dmPreparePasteMediaStateAction = dmPreparePasteMediaStateAction;
+function dmPasteMediaStateCopySet(copySet, container, options) {
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var targetZoneId = selectors_1.dmGetZoneIdForZoneOrMediaStateId(dmState, { id: container.id });
+        var duplicateMatchedUserVariables = lodash_1.isNil(options) || lodash_1.isNil(options.duplicateMatchedUserVariables) ? false :
+            options.duplicateMatchedUserVariables;
+        var mainAction = dmPreparePasteMediaStateAction(dmState, copySet, targetZoneId, duplicateMatchedUserVariables);
+        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.Playlist) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'PasteMediaStateCopySet: Use PlaylistPasteMediaStateCopySet to paste mediaStates in nonInteractive zones', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
+        }
+        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.Interactive) {
+            var pasteToDifferentSign = selectors_1.dmGetSignId(dmState) !== copySet.signId;
+            if (pasteToDifferentSign || copySet.zoneId !== targetZoneId) {
+                var result = selectors_1.dmIsMediaStateCopySetCompatibleWithZone(dmState, { zoneId: targetZoneId, copySet: copySet });
+                if (!result.ok) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PasteMediaStateCopySet - the copied mediaStates are not compatible with the target zone', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
+                }
+            }
+            if (container.type !== bsDmInterfaces_1.MediaStateContainerType.Zone) {
+                var targetMediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: container.id });
+                if (lodash_1.isNil(targetMediaState) || !bsDmContentItems_1.dmContentItemIsSuperStateContentItem(targetMediaState.contentItem)) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PasteMediaStateCopySet - interactive mediaStates can only be pasted to a Zone or a SuperState', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
+                }
+            }
+        }
+        var batchedActions = [mainAction];
+        var updatedCopySet = mainAction.payload.copySet;
+        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.MediaItemList) {
+            var mediaSequenceContainer = selectors_1.dmGetMediaStateStateById(dmState, { id: copySet.containerId });
+            if (!lodash_1.isNil(mediaSequenceContainer)
+                && bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaSequenceContainer.contentItem)) {
+                var mediaStateSequence = selectors_1.dmGetMediaStateSequenceForContainer(dmState, { id: copySet.containerId });
+                var idsToInsert = Object.keys(updatedCopySet.mediaStates.mediaStatesById);
+                var newSequence = void 0;
+                if (lodash_1.isNil(mediaStateSequence)) {
+                    newSequence = idsToInsert;
+                }
+                else {
+                    if (mediaStateSequence.parentType !== container.type) {
+                        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, "PasteMediaStateCopySet - " + container.type + " content items can only be pasted into " + container.type + " " +
+                            'mediaStates', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
+                    }
+                    var index = !lodash_1.isNil(options)
+                        && !lodash_1.isNil(options.targetSequenceIndex)
+                        && options.targetSequenceIndex >= 0
+                        && options.targetSequenceIndex <= mediaStateSequence.sequence.length ?
+                        options.targetSequenceIndex : mediaStateSequence.sequence.length;
+                    if (index < 0 || index >= mediaStateSequence.sequence.length) {
+                        newSequence = mediaStateSequence.sequence.concat(idsToInsert);
+                    }
+                    else {
+                        newSequence = __spreadArrays(mediaStateSequence.sequence.slice(0, index), idsToInsert, mediaStateSequence.sequence.slice(index));
+                    }
+                }
+                mainAction.payload.copySet.mediaStates.sequencesByParentId[container.id] = {
+                    id: container.id, parentType: container.type, sequence: newSequence,
+                };
+            }
+            else {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'PasteMediaStateCopySet - invalid MediaList or PlayFile ID', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
+            }
+        }
+        else {
+            if (updatedCopySet.userVariables.sequence.length) {
+                batchedActions.push(actionUserVariable_1.dmGetMergeUserVariableAction(updatedCopySet.userVariables));
+            }
+        }
+        if (copySet.containerId !== container.id) {
+            bsDmCopyPaste_1.dmUpdateMediaStateCopySetForPasteTargetContainer(updatedCopySet, container);
+        }
+        var getNewInitialMediaStateId = function (currentInitialMediaStateId) {
+            if (!utils_1.isValidBsDmId(currentInitialMediaStateId)) {
+                return utils_1.isValidBsDmId(updatedCopySet.csInitialMediaStateId) ? updatedCopySet.csInitialMediaStateId :
+                    Object.keys(updatedCopySet.mediaStates.mediaStatesById)[0];
+            }
             return null;
-    }
-}
-exports.dmCreateMediaContentItem = dmCreateMediaContentItem;
-function dmCreatePlayFileItemFromMediaContentItem(mediaContentItem, key, exportKey, name) {
-    if (key === void 0) { key = null; }
-    if (exportKey === void 0) { exportKey = true; }
-    if (!lodash_1.isNil(mediaContentItem)) {
-        if (lodash_1.isNil(key)) {
-            key = bscore_1.bscStripFileExtension(mediaContentItem.name);
+        };
+        if (container.type === bsDmInterfaces_1.MediaStateContainerType.Zone) {
+            var newInitialMediaStateId = getNewInitialMediaStateId(selectors_1.dmGetInitialMediaStateIdForZone(dmState, { id: container.id }));
+            if (!lodash_1.isNil(newInitialMediaStateId)) {
+                batchedActions.push(actionZone_1.dmUpdateZoneWithoutTest({ id: container.id, initialMediaStateId: newInitialMediaStateId }));
+            }
         }
-        var label = lodash_1.isNil(name) ? mediaContentItem.name : name;
-        switch (mediaContentItem.type) {
-            case bscore_1.ContentItemType.Video:
-                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
-            case bscore_1.ContentItemType.Image:
-                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
-            case bscore_1.ContentItemType.Audio:
-                return __assign(__assign({}, mediaContentItem), { key: key, exportKey: exportKey, name: label });
+        else if (container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState) {
+            var superState = selectors_1.dmGetMediaStateStateById(dmState, { id: container.id });
+            if (!lodash_1.isNil(superState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(superState.contentItem)) {
+                var newInitialMediaStateId = getNewInitialMediaStateId(superState.contentItem.initialMediaStateId);
+                if (!lodash_1.isNil(newInitialMediaStateId)) {
+                    batchedActions.push(dmUpdateMediaStateContentItem(container.id, __assign(__assign({}, superState.contentItem), { initialMediaStateId: newInitialMediaStateId })));
+                }
+            }
         }
-    }
-    return null;
-}
-exports.dmCreatePlayFileItemFromMediaContentItem = dmCreatePlayFileItemFromMediaContentItem;
-exports.MediaContentItemTypeSet = new Set([
-    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.Text
-]);
-function dmContentItemIsMediaContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem)
-        && contentItem.hasOwnProperty('assetId')
-        && exports.MediaContentItemTypeSet.has(contentItem.type);
-}
-exports.dmContentItemIsMediaContentItem = dmContentItemIsMediaContentItem;
-function dmContentItemIsMediaSequenceContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem)
-        && (contentItem.type === bscore_1.ContentItemType.MediaList || contentItem.type === bscore_1.ContentItemType.PlayFile);
-}
-exports.dmContentItemIsMediaSequenceContentItem = dmContentItemIsMediaSequenceContentItem;
-function dmCreateVideoContentItem(name, assetId, props) {
-    if (props === void 0) { props = {}; }
-    var defaults = bsDmDefaults_1.dmGetDefaultVideoContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.Video,
-        assetId: assetId,
-        volume: (props.volume === undefined ? defaults.volume : props.volume),
-        videoDisplayMode: (props.videoDisplayMode === undefined ? defaults.videoDisplayMode : props.videoDisplayMode),
-        automaticallyLoop: (props.automaticallyLoop === undefined ? defaults.automaticallyLoop : props.automaticallyLoop),
+        dispatch(actionBase_1.dmBatchActions(batchedActions));
+        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
     };
 }
-exports.dmCreateVideoContentItem = dmCreateVideoContentItem;
-function dmContentItemIsVideoContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Video;
-}
-exports.dmContentItemIsVideoContentItem = dmContentItemIsVideoContentItem;
-function dmCreateAudioContentItem(name, assetId, props) {
-    if (props === void 0) { props = {}; }
-    var defaults = bsDmDefaults_1.dmGetDefaultAudioContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.Audio,
-        assetId: assetId,
-        volume: (props.volume === undefined ? defaults.volume : props.volume),
-    };
-}
-exports.dmCreateAudioContentItem = dmCreateAudioContentItem;
-function dmContentItemIsAudioContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Audio;
-}
-exports.dmContentItemIsAudioContentItem = dmContentItemIsAudioContentItem;
-function dmCreateImageContentItem(name, assetId, props) {
-    if (props === void 0) { props = {}; }
-    var defaults = bsDmDefaults_1.dmGetDefaultImageContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.Image,
-        assetId: assetId,
-        useImageBuffer: (props.useImageBuffer === undefined ? defaults.useImageBuffer : props.useImageBuffer),
-        videoPlayerRequired: (props.videoPlayerRequired === undefined ?
-            defaults.videoPlayerRequired : props.videoPlayerRequired),
-        defaultTransition: (props.defaultTransition === undefined ? defaults.defaultTransition : props.defaultTransition),
-        transitionDuration: (props.transitionDuration === undefined ?
-            defaults.transitionDuration : props.transitionDuration),
-    };
-}
-exports.dmCreateImageContentItem = dmCreateImageContentItem;
-function dmContentItemIsImageContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Image;
-}
-exports.dmContentItemIsImageContentItem = dmContentItemIsImageContentItem;
-function dmCreateHtmlContentItem(name, siteId) {
-    var params = [];
-    for (var _i = 2; _i < arguments.length; _i++) {
-        params[_i - 2] = arguments[_i];
-    }
-    var props = params.length === 0 || lodash_1.isNil(params[0]) || typeof params[0] === 'boolean' ?
-        {} : params[0];
-    if (params.length > 0 && typeof params[0] === 'boolean') {
-        params.forEach(function (param, index) { return props[bsDmInterfaces_1.DmHtmlContentItemDataNameArray[index]] = param; });
-    }
-    var defaults = bsDmDefaults_1.dmGetDefaultHtmlContentItemData();
-    var contentItemData = {
-        enableBrightSignJavascriptObjects: (lodash_1.isNil(props.enableBrightSignJavascriptObjects) ?
-            defaults.enableBrightSignJavascriptObjects : props.enableBrightSignJavascriptObjects),
-        enableCrossDomainPolicyChecks: (lodash_1.isNil(props.enableCrossDomainPolicyChecks) ?
-            defaults.enableCrossDomainPolicyChecks : props.enableCrossDomainPolicyChecks),
-        ignoreHttpsCertificateErrors: (lodash_1.isNil(props.ignoreHttpsCertificateErrors) ?
-            defaults.ignoreHttpsCertificateErrors : props.ignoreHttpsCertificateErrors),
-        enableCamera: (lodash_1.isNil(props.enableCamera) ? defaults.enableCamera : props.enableCamera),
-        enableMouseEvents: (lodash_1.isNil(props.enableMouseEvents) ? defaults.enableMouseEvents : props.enableMouseEvents),
-        displayCursor: (lodash_1.isNil(props.displayCursor) ? defaults.displayCursor : props.displayCursor),
-        hwzOn: (lodash_1.isNil(props.hwzOn) ? defaults.hwzOn : props.hwzOn),
-        useUserStylesheet: (lodash_1.isNil(props.userStylesheetAssetId) ?
-            defaults.useUserStylesheet : (lodash_1.isNil(props.useUserStylesheet) ? false : props.useUserStylesheet)),
-    };
-    if (contentItemData.useUserStylesheet) {
-        contentItemData.userStylesheetAssetId = !lodash_1.isNil(props.userStylesheetAssetId) ?
-            props.userStylesheetAssetId : bscore_1.BsAssetIdNone;
-    }
-    if (!lodash_1.isNil(props.customFonts)) {
-        contentItemData.customFonts = props.customFonts;
-    }
-    return Object.assign({ name: name, type: bscore_1.ContentItemType.Html, siteId: siteId }, contentItemData);
-}
-exports.dmCreateHtmlContentItem = dmCreateHtmlContentItem;
-function dmContentItemIsHtmlContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Html;
-}
-exports.dmContentItemIsHtmlContentItem = dmContentItemIsHtmlContentItem;
-function dmCreateLiveVideoContentItem(name) {
-    var params = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        params[_i - 1] = arguments[_i];
-    }
-    var props = params.length === 0 || lodash_1.isNil(params[0]) || typeof params[0] === 'number' ?
-        {} : params[0];
-    if (params.length > 0 && typeof params[0] === 'number') {
-        params.forEach(function (param, index) { return props[bsDmInterfaces_1.DmLiveVideoContentItemDataNameArray[index]] = param; });
-    }
-    var defaults = bsDmDefaults_1.dmGetDefaultLiveVideoContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.LiveVideo,
-        volume: (props.volume === undefined ? defaults.volume : props.volume),
-        overscan: (props.overscan === undefined ? defaults.overscan : props.overscan),
-    };
-}
-exports.dmCreateLiveVideoContentItem = dmCreateLiveVideoContentItem;
-function dmContentItemIsLiveVideoContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LiveVideo;
-}
-exports.dmContentItemIsLiveVideoContentItem = dmContentItemIsLiveVideoContentItem;
-function dmCreateDataFeedContentItem(name, dataFeedId) {
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.DataFeed,
-        dataFeedId: dataFeedId,
-    };
-}
-exports.dmCreateDataFeedContentItem = dmCreateDataFeedContentItem;
-function dmContentItemIsTextFeedContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.DataFeed;
-}
-exports.dmContentItemIsTextFeedContentItem = dmContentItemIsTextFeedContentItem;
-function dmCreateMrssDataFeedContentItem(name, dataFeedId, videoPlayerRequired) {
-    var defaults = bsDmDefaults_1.dmGetDefaultMrssDataFeedContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.MrssFeed,
-        dataFeedId: dataFeedId,
-        videoPlayerRequired: (videoPlayerRequired === undefined ? defaults.videoPlayerRequired : videoPlayerRequired),
-    };
-}
-exports.dmCreateMrssDataFeedContentItem = dmCreateMrssDataFeedContentItem;
-function dmContentItemIsMrssDataFeedContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MrssFeed;
-}
-exports.dmContentItemIsMrssDataFeedContentItem = dmContentItemIsMrssDataFeedContentItem;
-function dmContentItemIsAnyDataFeedContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem)
-        && (contentItem.type === bscore_1.ContentItemType.DataFeed || contentItem.type === bscore_1.ContentItemType.MrssFeed);
-}
-exports.dmContentItemIsAnyDataFeedContentItem = dmContentItemIsAnyDataFeedContentItem;
-function dmCreateTwitterFeedContentItem(name, props) {
-    var defaults = bsDmDefaults_1.dmGetDefaultTwitterFeedContentItemData();
-    return {
-        name: lodash_1.isNil(name) ? '' : name,
-        type: bscore_1.ContentItemType.TwitterFeed,
-        userName: (props.userName === undefined ? defaults.userName : props.userName),
-        updateInterval: (props.updateInterval === undefined ? defaults.updateInterval : props.updateInterval),
-        restrictNumberOfTweets: (props.restrictNumberOfTweets === undefined ? defaults.restrictNumberOfTweets : props.restrictNumberOfTweets),
-        numberOfTweetsToShow: (props.numberOfTweetsToShow === undefined ? defaults.numberOfTweetsToShow : props.numberOfTweetsToShow),
-        numberOfRecentDaysForTweets: (props.numberOfRecentDaysForTweets === undefined ?
-            defaults.numberOfRecentDaysForTweets : props.numberOfRecentDaysForTweets),
-        authToken: props.authToken,
-        encryptedTwitterSecrets: props.encryptedTwitterSecrets,
-    };
-}
-exports.dmCreateTwitterFeedContentItem = dmCreateTwitterFeedContentItem;
-function dmContentItemIsTwitterFeedContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.TwitterFeed;
-}
-exports.dmContentItemIsTwitterFeedContentItem = dmContentItemIsTwitterFeedContentItem;
-function dmCreateUserVariableContentItem(name, userVariableId) {
-    return {
-        name: lodash_1.isNil(name) ? '' : name,
-        type: bscore_1.ContentItemType.UserVariable,
-        userVariableId: userVariableId,
-    };
-}
-exports.dmCreateUserVariableContentItem = dmCreateUserVariableContentItem;
-function dmContentItemIsUserVariableContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.UserVariable;
-}
-exports.dmContentItemIsUserVariableContentItem = dmContentItemIsUserVariableContentItem;
-function dmCreateVideoStreamContentItem(name, url, param) {
-    var defaults = bsDmDefaults_1.dmGetDefaultVideoStreamContentItemData();
-    var volume = lodash_1.isNil(param) ? defaults.volume :
-        (typeof param === 'number' ? param : (lodash_1.isNil(param.volume) ? defaults.volume : param.volume));
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.VideoStream,
-        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
-        volume: volume,
-    };
-}
-exports.dmCreateVideoStreamContentItem = dmCreateVideoStreamContentItem;
-function dmContentItemIsVideoStreamContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.VideoStream;
-}
-exports.dmContentItemIsVideoStreamContentItem = dmContentItemIsVideoStreamContentItem;
-function dmCreateAudioStreamContentItem(name, url, param) {
-    var defaults = bsDmDefaults_1.dmGetDefaultAudioStreamContentItemData();
-    var volume = lodash_1.isNil(param) ? defaults.volume :
-        (typeof param === 'number' ? param : (lodash_1.isNil(param.volume) ? defaults.volume : param.volume));
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.AudioStream,
-        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
-        volume: volume,
-    };
-}
-exports.dmCreateAudioStreamContentItem = dmCreateAudioStreamContentItem;
-function dmContentItemIsAudioStreamContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.AudioStream;
-}
-exports.dmContentItemIsAudioStreamContentItem = dmContentItemIsAudioStreamContentItem;
-function dmCreateMjpegStreamContentItem(name, url, rotation) {
-    var defaults = bsDmDefaults_1.dmGetDefaultMjpegStreamContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.MjpegStream,
-        url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(url),
-        rotation: (rotation === undefined ? defaults.rotation : rotation),
-    };
-}
-exports.dmCreateMjpegStreamContentItem = dmCreateMjpegStreamContentItem;
-function dmContentItemIsMjpegStreamContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MjpegStream;
-}
-exports.dmContentItemIsMjpegStreamContentItem = dmContentItemIsMjpegStreamContentItem;
-function dmContentItemIsStreamContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) &&
-        (contentItem.type === bscore_1.ContentItemType.VideoStream
-            || contentItem.type === bscore_1.ContentItemType.AudioStream
-            || contentItem.type === bscore_1.ContentItemType.MjpegStream);
-}
-exports.dmContentItemIsStreamContentItem = dmContentItemIsStreamContentItem;
-function dmCreateMediaListContentItem(name, props) {
-    if (props === void 0) { props = {}; }
-    var defaults = bsDmDefaults_1.dmGetDefaultMediaListContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.MediaList,
-        playbackType: lodash_1.isUndefined(props.playbackType) ? defaults.playbackType : props.playbackType,
-        startIndex: lodash_1.isUndefined(props.startIndex) ? 0 : props.startIndex,
-        shuffle: lodash_1.isUndefined(props.shuffle) ? defaults.shuffle : props.shuffle,
-        support4KImage: lodash_1.isUndefined(props.support4KImage) ? defaults.support4KImage : props.support4KImage,
-        sendMediaZoneMessage: lodash_1.isUndefined(props.sendMediaZoneMessage) ?
-            defaults.sendMediaZoneMessage : props.sendMediaZoneMessage,
-        useDataFeed: lodash_1.isUndefined(props.useDataFeed) ? false : props.useDataFeed,
-        dataFeedId: bsDmInterfaces_1.BsDmIdNone,
-        transition: lodash_1.isUndefined(props.transition) ? defaults.transition : props.transition,
-        transitionDuration: lodash_1.isUndefined(props.transitionDuration) ? defaults.transitionDuration : props.transitionDuration,
-        autoTransitions: lodash_1.isUndefined(props.autoTransitions) ? defaults.autoTransitions : props.autoTransitions,
-        inactivityTimeout: lodash_1.isUndefined(props.inactivityTimeout) ? defaults.inactivityTimeout : props.inactivityTimeout,
-        inactivityTime: lodash_1.isUndefined(props.inactivityTime) ? defaults.inactivityTime : props.inactivityTime,
-    };
-}
-exports.dmCreateMediaListContentItem = dmCreateMediaListContentItem;
-function dmContentItemIsMediaListContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.MediaList;
-}
-exports.dmContentItemIsMediaListContentItem = dmContentItemIsMediaListContentItem;
-function dmCreatePlayFileContentItem(name, props) {
-    if (props === void 0) { props = {}; }
-    var defaults = bsDmDefaults_1.dmGetDefaultPlayFileContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.PlayFile,
-        triggerType: lodash_1.isUndefined(props.triggerType) ? defaults.triggerType : props.triggerType,
-        useDefaultMedia: lodash_1.isUndefined(props.useDefaultMedia) ? defaults.useDefaultMedia : props.useDefaultMedia,
-        defaultMediaId: bscore_1.BsAssetIdNone,
-        userVariableIdOrName: lodash_1.isUndefined(props.userVariableIdOrName) ? '' : props.userVariableIdOrName,
-        useDataFeed: lodash_1.isUndefined(props.useDataFeed) ? false : props.useDataFeed,
-        dataFeedId: bsDmInterfaces_1.BsDmIdNone,
-    };
-}
-exports.dmCreatePlayFileContentItem = dmCreatePlayFileContentItem;
-function dmContentItemIsPlayFileContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.PlayFile;
-}
-exports.dmContentItemIsPlayFileContentItem = dmContentItemIsPlayFileContentItem;
-function dmContentItemIsMediaListOrPlayFileContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem)
-        && (contentItem.type === bscore_1.ContentItemType.MediaList || contentItem.type === bscore_1.ContentItemType.PlayFile);
-}
-exports.dmContentItemIsMediaListOrPlayFileContentItem = dmContentItemIsMediaListOrPlayFileContentItem;
-function dmCreateEventHandlerContentItem(name, stopPlayback) {
-    var defaults = bsDmDefaults_1.dmGetDefaultEventHandlerContentItemData();
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.EventHandler,
-        stopPlayback: stopPlayback === undefined ? defaults.stopPlayback : stopPlayback,
-    };
-}
-exports.dmCreateEventHandlerContentItem = dmCreateEventHandlerContentItem;
-function dmContentItemIsEventHandlerContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.EventHandler;
-}
-exports.dmContentItemIsEventHandlerContentItem = dmContentItemIsEventHandlerContentItem;
-function dmCreateLiveTextContentItem(name, canvasId) {
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.LiveText,
-        canvasId: canvasId,
-    };
-}
-exports.dmCreateLiveTextContentItem = dmCreateLiveTextContentItem;
-function dmContentItemIsLiveTextContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.LiveText;
-}
-exports.dmContentItemIsLiveTextContentItem = dmContentItemIsLiveTextContentItem;
-function dmCreateTimeContentItem(name) {
-    return { name: name, type: bscore_1.ContentItemType.Time };
-}
-exports.dmCreateTimeContentItem = dmCreateTimeContentItem;
-function dmContentItemIsTimeContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Time;
-}
-exports.dmContentItemIsTimeContentItem = dmContentItemIsTimeContentItem;
-function dmCreateDateContentItem(name) {
-    return { name: name, type: bscore_1.ContentItemType.Date };
-}
-exports.dmCreateDateContentItem = dmCreateDateContentItem;
-function dmContentItemIsDateContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.Date;
-}
-exports.dmContentItemIsDateContentItem = dmContentItemIsDateContentItem;
-function dmCreateSuperStateContentItem(name) {
-    return {
-        name: name,
-        type: bscore_1.ContentItemType.SuperState,
-        initialMediaStateId: bsDmInterfaces_1.BsDmIdNone,
-    };
-}
-exports.dmCreateSuperStateContentItem = dmCreateSuperStateContentItem;
-function dmContentItemIsSuperStateContentItem(contentItem) {
-    return !lodash_1.isNil(contentItem) && contentItem.type === bscore_1.ContentItemType.SuperState;
-}
-exports.dmContentItemIsSuperStateContentItem = dmContentItemIsSuperStateContentItem;
-var VideoOrImagesZoneContentTypeArray = [
-    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio,
-    bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.LiveVideo,
-    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MjpegStream,
-    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
-    bscore_1.ContentItemType.LiveText, bscore_1.ContentItemType.SuperState,
-];
-var VideoOrImagesZoneContentTypes = new Set(VideoOrImagesZoneContentTypeArray);
-var VideoOnlyZoneContentTypeArray = [
-    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.LiveVideo,
-    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.MjpegStream, bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile,
-    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
-];
-var VideoOnlyZoneContentTypes = new Set(VideoOnlyZoneContentTypeArray);
-var ImagesZoneContentTypeArray = [
-    bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed,
-    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
-    bscore_1.ContentItemType.LiveText, bscore_1.ContentItemType.SuperState,
-];
-var ImagesZoneContentTypes = new Set(ImagesZoneContentTypeArray);
-var AudioZoneContentTypeArray = [
-    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MrssFeed,
-    bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.EventHandler,
-    bscore_1.ContentItemType.SuperState,
-];
-var AudioZoneContentTypes = new Set(AudioZoneContentTypeArray);
-var EnhancedAudioZoneContentTypeArray = [
-    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile,
-    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
-];
-var EnhancedAudioZoneContentTypes = new Set(EnhancedAudioZoneContentTypeArray);
-var TickerZoneContentTypeArray = [
-    bscore_1.ContentItemType.Text, bscore_1.ContentItemType.DataFeed, bscore_1.ContentItemType.TwitterFeed, bscore_1.ContentItemType.UserVariable,
-];
-var TickerZoneContentTypes = new Set(TickerZoneContentTypeArray);
-var ClockZoneContentTypeArray = [
-    bscore_1.ContentItemType.Time, bscore_1.ContentItemType.Date,
-];
-var ClockZoneContentTypes = new Set(ClockZoneContentTypeArray);
-var ControlZoneContentTypeArray = [
-    bscore_1.ContentItemType.EventHandler, bscore_1.ContentItemType.SuperState,
-];
-var ControlZoneContentTypes = new Set(ControlZoneContentTypeArray);
-function dmIsValidContentItemForZone(contentItem, zoneType) {
-    return dmIsValidContentItemTypeForZone(contentItem.type, zoneType);
-}
-exports.dmIsValidContentItemForZone = dmIsValidContentItemForZone;
-function dmIsValidContentItemTypeForZone(contentItemType, zoneType) {
-    switch (zoneType) {
-        case bscore_1.ZoneType.VideoOrImages:
-            return VideoOrImagesZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.VideoOnly:
-            return VideoOnlyZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Images:
-            return ImagesZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.AudioOnly:
-            return AudioZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.EnhancedAudio:
-            return EnhancedAudioZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Ticker:
-            return TickerZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Clock:
-            return ClockZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.BackgroundImage:
-            return contentItemType === bscore_1.ContentItemType.Image;
-        case bscore_1.ZoneType.Control:
-            return ControlZoneContentTypes.has(contentItemType);
-    }
-    return false;
-}
-exports.dmIsValidContentItemTypeForZone = dmIsValidContentItemTypeForZone;
-function dmIsValidContentItemTypeForMosaicZone(contentItemType) {
-    return VideoOrImagesZoneContentTypes.has(contentItemType) && contentItemType !== bscore_1.ContentItemType.LiveVideo;
-}
-exports.dmIsValidContentItemTypeForMosaicZone = dmIsValidContentItemTypeForMosaicZone;
-var VideoOrImagesPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Audio,
-    bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.LiveVideo,
-    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MjpegStream,
-];
-var VideoOrImagesPlaylistContentTypes = new Set(VideoOrImagesPlaylistContentTypeArray);
-var VideoOnlyPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Video, bscore_1.ContentItemType.LiveVideo,
-    bscore_1.ContentItemType.VideoStream, bscore_1.ContentItemType.MjpegStream,
-];
-var VideoOnlyPlaylistContentTypes = new Set(VideoOnlyPlaylistContentTypeArray);
-var ImagesPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Image, bscore_1.ContentItemType.Html, bscore_1.ContentItemType.MrssFeed,
-];
-var ImagesPlaylistContentTypes = new Set(ImagesPlaylistContentTypeArray);
-var AudioPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.AudioStream, bscore_1.ContentItemType.MrssFeed,
-];
-var AudioPlaylistContentTypes = new Set(AudioPlaylistContentTypeArray);
-var EnhancedAudioPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Audio, bscore_1.ContentItemType.MrssFeed,
-];
-var EnhancedAudioPlaylistContentTypes = new Set(EnhancedAudioPlaylistContentTypeArray);
-var TickerPlaylistContentTypeArray = [
-    bscore_1.ContentItemType.Text, bscore_1.ContentItemType.DataFeed, bscore_1.ContentItemType.TwitterFeed,
-    bscore_1.ContentItemType.MrssFeed, bscore_1.ContentItemType.UserVariable,
-];
-var TickerPlaylistContentTypes = new Set(TickerPlaylistContentTypeArray);
-function dmIsValidContentItemForPlaylist(contentItem, zoneType) {
-    return dmIsValidContentItemTypeForPlaylist(contentItem.type, zoneType);
-}
-exports.dmIsValidContentItemForPlaylist = dmIsValidContentItemForPlaylist;
-function dmIsValidContentItemTypeForPlaylist(contentItemType, zoneType) {
-    switch (zoneType) {
-        case bscore_1.ZoneType.VideoOrImages:
-            return VideoOrImagesPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.VideoOnly:
-            return VideoOnlyPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Images:
-            return ImagesPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.AudioOnly:
-            return AudioPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.EnhancedAudio:
-            return EnhancedAudioPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Ticker:
-            return TickerPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Clock:
-            return ClockZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.BackgroundImage:
-            return contentItemType === bscore_1.ContentItemType.Image;
-        case bscore_1.ZoneType.Control:
-            return false;
-    }
-    return false;
-}
-exports.dmIsValidContentItemTypeForPlaylist = dmIsValidContentItemTypeForPlaylist;
-function dmIsValidContentItemTypeForMediaListOrPlayFile(contentItemType, zoneType) {
-    return false;
-}
-exports.dmIsValidContentItemTypeForMediaListOrPlayFile = dmIsValidContentItemTypeForMediaListOrPlayFile;
-function dmIsValidContentItemTypeForPlaylistChangeZoneType(contentItemType, zoneType, currentZoneType) {
-    var noTickerZoneMrssFeed = true;
-    if (currentZoneType === bscore_1.ZoneType.Ticker && contentItemType === bscore_1.ContentItemType.MrssFeed) {
-        noTickerZoneMrssFeed = false;
-    }
-    switch (zoneType) {
-        case bscore_1.ZoneType.VideoOrImages: {
-            return VideoOrImagesPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
-        }
-        case bscore_1.ZoneType.VideoOnly: {
-            return VideoOnlyPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
-        }
-        case bscore_1.ZoneType.Images: {
-            return ImagesPlaylistContentTypes.has(contentItemType) && noTickerZoneMrssFeed;
-        }
-        case bscore_1.ZoneType.AudioOnly:
-        case bscore_1.ZoneType.EnhancedAudio:
-            return AudioPlaylistContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.Ticker:
-            return TickerPlaylistContentTypes.has(contentItemType) && contentItemType !== bscore_1.ContentItemType.MrssFeed;
-        case bscore_1.ZoneType.Clock:
-            return ClockZoneContentTypes.has(contentItemType);
-        case bscore_1.ZoneType.BackgroundImage:
-            return contentItemType === bscore_1.ContentItemType.Image;
-        case bscore_1.ZoneType.Control:
-            return ControlZoneContentTypes.has(contentItemType);
-    }
-    return false;
-}
-exports.dmIsValidContentItemTypeForPlaylistChangeZoneType = dmIsValidContentItemTypeForPlaylistChangeZoneType;
-function dmFilterContentItemData(contentItemType, contentItemData) {
-    if (!lodash_1.isNil(contentItemData)) {
-        switch (contentItemType) {
-            case bscore_1.ContentItemType.Video:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmVideoContentItemDataNameArray);
-            case bscore_1.ContentItemType.Image:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmImageContentItemDataNameArray);
-            case bscore_1.ContentItemType.Audio:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmAudioContentItemDataNameArray);
-            case bscore_1.ContentItemType.Html:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmHtmlContentItemDataNameArray);
-            case bscore_1.ContentItemType.LiveVideo:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmLiveVideoContentItemDataNameArray);
-            case bscore_1.ContentItemType.MrssFeed:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMrssDataFeedContentItemDataNameArray);
-            case bscore_1.ContentItemType.TwitterFeed:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmTwitterFeedContentItemDataNameArray);
-            case bscore_1.ContentItemType.VideoStream:
-            case bscore_1.ContentItemType.AudioStream:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmStreamContentItemDataNameArray);
-            case bscore_1.ContentItemType.MjpegStream:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMjpegStreamContentItemDataNameArray);
-            case bscore_1.ContentItemType.MediaList:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmMediaListContentItemDataNameArray);
-            case bscore_1.ContentItemType.PlayFile:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmPlayFileContentItemDataNameArray);
-            case bscore_1.ContentItemType.EventHandler:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmEventHandlerContentItemDataNameArray);
-            case bscore_1.ContentItemType.LiveText:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmLiveTextContentItemDataNameArray);
-            case bscore_1.ContentItemType.SuperState:
-                return lodash_1.pick(contentItemData, bsDmInterfaces_1.DmSuperStateContentItemDataNameArray);
-        }
-    }
-    return null;
-}
-exports.dmFilterContentItemData = dmFilterContentItemData;
-var VideoPlayFileDataNameArray = bsDmInterfaces_1.DmVideoContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
-var ImagePlayFileDataNameArray = bsDmInterfaces_1.DmImageContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
-var AudioPlayFileDataNameArray = bsDmInterfaces_1.DmAudioContentItemDataNameArray.concat(bsDmInterfaces_1.DmPlayFileItemDataNameArray);
-function dmFilterPlayFileItemContentItemData(contentItemType, contentItemData) {
-    if (contentItemData) {
-        switch (contentItemType) {
-            case bscore_1.ContentItemType.Video:
-                return lodash_1.pick(contentItemData, VideoPlayFileDataNameArray);
-            case bscore_1.ContentItemType.Image:
-                return lodash_1.pick(contentItemData, ImagePlayFileDataNameArray);
-            case bscore_1.ContentItemType.Audio:
-                return lodash_1.pick(contentItemData, AudioPlayFileDataNameArray);
-        }
-    }
-    return null;
-}
-exports.dmFilterPlayFileItemContentItemData = dmFilterPlayFileItemContentItemData;
+exports.dmPasteMediaStateCopySet = dmPasteMediaStateCopySet;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2071,7 +2937,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2099,12 +2965,12 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DmcVideoModeBrightScriptPlugin = exports.DmcParserBrightScriptPlugin = exports.DmcBrightScriptPlugin = exports.DmcUserVariable = exports.DmcDataFeed = exports.DmcPresentationWebPage = exports.DmcDeviceWebPage = exports.DmcNodeApp = exports.DmcHtmlSite = exports.DmcSignMetadata = exports.DmcZone = exports.dmIsDmcVideoZoneLayer = exports.DmcVideoZoneLayer = exports.dmIsDmcZoneLayer = exports.DmcZoneLayer = exports.DmcCondition = exports.DmcCommand = exports.DmcTransition = exports.DmcEvent = exports.dmIsDmcLiveTextMediaState = exports.DmcLiveTextMediaState = exports.DmcPlayFileItem = exports.dmIsDmcPlayFileMediaState = exports.DmcPlayFileMediaState = exports.DmcMediaListItem = exports.dmIsDmcMediaListMediaState = exports.DmcMediaListMediaState = exports.DmcMediaState = exports.DmcMediaStateContainer = void 0;
+exports.DmcVideoModeBrightScriptPlugin = exports.DmcParserBrightScriptPlugin = exports.DmcBrightScriptPlugin = exports.DmcUserVariable = exports.DmcDataFeed = exports.DmcPresentationWebPage = exports.DmcDeviceWebPage = exports.DmcNodeApp = exports.DmcHtmlSite = exports.DmcSignMetadata = exports.DmcZone = exports.dmIsDmcVideoZoneLayer = exports.DmcVideoZoneLayer = exports.dmIsDmcZoneLayer = exports.DmcZoneLayer = exports.DmcCondition = exports.DmcCommand = exports.DmcTransition = exports.DmcEvent = exports.dmIsDmcLiveTextMediaState = exports.DmcLiveTextMediaState = exports.DmcLocalPlaylistItem = exports.dmIsDmcLocalPlaylistMediaState = exports.DmcLocalPlaylistMediaState = exports.DmcPlayFileItem = exports.dmIsDmcPlayFileMediaState = exports.DmcPlayFileMediaState = exports.DmcMediaListItem = exports.dmIsDmcMediaListMediaState = exports.DmcMediaListMediaState = exports.DmcMediaState = exports.DmcMediaStateContainer = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmCommands_1 = __webpack_require__(21);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmCommands_1 = __webpack_require__(22);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmHtmlSite_1 = __webpack_require__(37);
 var bsDmZone_1 = __webpack_require__(31);
 var lodash_1 = __webpack_require__(0);
@@ -2144,6 +3010,7 @@ var DmcMediaState = (function () {
                 case bscore_1.ContentItemType.MediaList: return { id: this.id, type: bsDmInterfaces_1.MediaStateContainerType.MediaList };
                 case bscore_1.ContentItemType.PlayFile: return { id: this.id, type: bsDmInterfaces_1.MediaStateContainerType.PlayFile };
                 case bscore_1.ContentItemType.SuperState: return { id: this.id, type: bsDmInterfaces_1.MediaStateContainerType.SuperState };
+                case bscore_1.ContentItemType.LocalPlaylist: return { id: this.id, type: bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist };
             }
             return null;
         },
@@ -2312,6 +3179,31 @@ var DmcPlayFileItem = (function (_super) {
     return DmcPlayFileItem;
 }(DmcMediaState));
 exports.DmcPlayFileItem = DmcPlayFileItem;
+var DmcLocalPlaylistMediaState = (function (_super) {
+    __extends(DmcLocalPlaylistMediaState, _super);
+    function DmcLocalPlaylistMediaState(mediaStateState, components, localPlaylistComponents) {
+        var _this = _super.call(this, mediaStateState, components) || this;
+        _this.defaultDynamicPlaylistDataFeed = null;
+        if (!lodash_1.isNil(localPlaylistComponents.defaultDynamicPlaylistDataFeed)) {
+            _this.defaultDynamicPlaylistDataFeed = new DmcDataFeed(localPlaylistComponents.defaultDynamicPlaylistDataFeed);
+        }
+        return _this;
+    }
+    return DmcLocalPlaylistMediaState;
+}(DmcMediaState));
+exports.DmcLocalPlaylistMediaState = DmcLocalPlaylistMediaState;
+function dmIsDmcLocalPlaylistMediaState(object) {
+    return !lodash_1.isNil(object) && typeof (object) === 'object' && object instanceof DmcLocalPlaylistMediaState;
+}
+exports.dmIsDmcLocalPlaylistMediaState = dmIsDmcLocalPlaylistMediaState;
+var DmcLocalPlaylistItem = (function (_super) {
+    __extends(DmcLocalPlaylistItem, _super);
+    function DmcLocalPlaylistItem(mediaStateState, components) {
+        return _super.call(this, mediaStateState, components) || this;
+    }
+    return DmcLocalPlaylistItem;
+}(DmcMediaState));
+exports.DmcLocalPlaylistItem = DmcLocalPlaylistItem;
 var DmcLiveTextMediaState = (function (_super) {
     __extends(DmcLiveTextMediaState, _super);
     function DmcLiveTextMediaState(mediaStateState, components, canvas) {
@@ -2817,7 +3709,7 @@ exports.DmcVideoModeBrightScriptPlugin = DmcVideoModeBrightScriptPlugin;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2878,803 +3770,6 @@ exports.dmSetAssetId = dmSetAssetId;
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmPasteMediaStateCopySet = exports.dmPreparePasteMediaStateAction = exports.dmDeleteMediaState = exports.dmDeleteMediaStateWithParams = exports.dmGetMediaStateDeleteParams = exports.dmUpdateMediaStateContentItem = exports.doUpdateMediaState = exports.dmUpdateMediaState = exports.dmAddLiveTextMediaState = exports.dmAddMediaState = exports.dmAddMediaStateWithContentItem = exports.dmContentIsAssetItem = exports.PASTE_MEDIA_STATES = exports.DELETE_MEDIA_STATE = exports.UPDATE_MEDIA_STATE = exports.ADD_SEQUENCED_MEDIA_STATE = exports.ADD_MEDIA_STATE = void 0;
-var utils_1 = __webpack_require__(3);
-var lodash_1 = __webpack_require__(0);
-var bscore_1 = __webpack_require__(1);
-var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmDataFeed_1 = __webpack_require__(18);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var bsDmError_1 = __webpack_require__(4);
-var selectors_1 = __webpack_require__(6);
-var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionEvent_1 = __webpack_require__(20);
-var actionTransition_1 = __webpack_require__(25);
-var actionHtmlSite_1 = __webpack_require__(32);
-var actionDataFeed_1 = __webpack_require__(24);
-var actionLiveText_1 = __webpack_require__(29);
-var actionUserVariable_1 = __webpack_require__(34);
-var actionZone_1 = __webpack_require__(14);
-var bsDmCommands_1 = __webpack_require__(21);
-exports.ADD_MEDIA_STATE = 'DM_ADD_MEDIA_STATE';
-exports.ADD_SEQUENCED_MEDIA_STATE = 'DM_ADD_SEQUENCED_MEDIA_STATE';
-exports.UPDATE_MEDIA_STATE = 'DM_UPDATE_MEDIA_STATE';
-exports.DELETE_MEDIA_STATE = 'DM_DELETE_MEDIA_STATE';
-exports.PASTE_MEDIA_STATES = 'DM_PASTE_MEDIA_STATES';
-exports.dmContentIsAssetItem = function (content) {
-    return bscore_1.bscIsAssetItem(content);
-};
-function dmAddMediaStateWithContentItem(name, container, contentItem, zoneId, tag, index) {
-    if (tag === void 0) { tag = null; }
-    var isSequenced = !lodash_1.isNil(index);
-    var action = {
-        type: isSequenced ? exports.ADD_SEQUENCED_MEDIA_STATE : exports.ADD_MEDIA_STATE,
-        payload: {
-            id: utils_1.newBsDmId(),
-            name: name ? name : contentItem.name,
-            tag: lodash_1.isNil(tag) ? '' : tag,
-            container: container,
-            contentItem: contentItem,
-            zoneId: zoneId,
-        },
-    };
-    if (isSequenced) {
-        action.payload.index = index;
-    }
-    return action;
-}
-exports.dmAddMediaStateWithContentItem = dmAddMediaStateWithContentItem;
-function dmAddMediaState(name, container, content, contentData, index, contentAdditionalAsset) {
-    if (contentData === void 0) { contentData = null; }
-    if (index === void 0) { index = null; }
-    return function (dispatch, getState) {
-        var isSequenced = !lodash_1.isNil(index) || bsDmContentItems_1.dmIsMediaSequenceContainer(container);
-        if (isSequenced && lodash_1.isNil(index)) {
-            index = -1;
-        }
-        if (lodash_1.isNil(name)) {
-            name = '';
-        }
-        var mainAction = {
-            type: isSequenced ? exports.ADD_SEQUENCED_MEDIA_STATE : exports.ADD_MEDIA_STATE,
-            payload: {
-                id: utils_1.newBsDmId(),
-                name: name,
-                container: container,
-            },
-        };
-        if (isSequenced) {
-            mainAction.payload.index = lodash_1.isNil(index) ? -1 : index;
-        }
-        var batchedActions = [];
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var containingZone = selectors_1.dmGetZoneStateForContainer(dmState, container);
-        if (lodash_1.isNil(containingZone)) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Invalid container', { functionName: 'dmAddMediaState', action: mainAction });
-        }
-        mainAction.payload.zoneId = containingZone.id;
-        var zoneType = containingZone.type;
-        if (container.type === bsDmInterfaces_1.MediaStateContainerType.Zone
-            && !(zoneType === bscore_1.ZoneType.BackgroundImage || zoneType === bscore_1.ZoneType.Clock)
-            && selectors_1.dmGetZoneNonInteractiveById(dmState, { id: container.id })) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'AddMediaState: Use PlaylistAddMediaState to add mediaStates in nonInteractive zones', { functionName: 'dmAddMediaState', action: mainAction });
-        }
-        var tagIndex = selectors_1.dmGetNextMediaStateTagIndexForZone(dmState, { id: containingZone.id });
-        mainAction.payload.tag = tagIndex.toString();
-        var assetItem;
-        var contentItem;
-        if (exports.dmContentIsAssetItem(content)) {
-            if (bscore_1.bscIsAssetItemPlayableContent(content)) {
-                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, content, mainAction);
-                contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
-                var assetAction = actionAssetMap_1.dmPutAssetItem(assetItem);
-                batchedActions.push(assetAction);
-            }
-            else if (content.assetType === bscore_1.AssetType.HtmlSite) {
-                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, content, mainAction);
-                var assetAction = actionAssetMap_1.dmPutAssetItem(assetItem);
-                batchedActions.push(assetAction);
-                var htmlSiteAction = actionHtmlSite_1.dmAddHostedHtmlSiteWithoutAssetProcessing(assetItem.name, assetItem.id);
-                var htmlSiteId = htmlSiteAction.payload.id;
-                batchedActions.push(htmlSiteAction);
-                contentItem = bsDmContentItems_1.dmCreateHtmlContentItem(assetItem.name, htmlSiteId);
-            }
-            else {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Unsupported BsAssetItem assetType', { functionName: 'dmAddMediaState', action: mainAction });
-            }
-        }
-        else if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(content)) {
-            if (zoneType === bscore_1.ZoneType.Ticker) {
-                content.usage = bscore_1.DataFeedUsageType.Text;
-            }
-            var dataFeedName = bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(content) ? content.assetItem.name : name;
-            var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, dataFeedName, content);
-            batchedActions.push.apply(batchedActions, actionListParams.actions);
-            var dataFeedParams = actionListParams.mainAction.payload;
-            var contentName = lodash_1.isNil(dataFeedParams.name) ? '' : dataFeedParams.name;
-            contentItem = content.usage === bscore_1.DataFeedUsageType.Text ?
-                bsDmContentItems_1.dmCreateDataFeedContentItem(contentName, dataFeedParams.id) :
-                bsDmContentItems_1.dmCreateMrssDataFeedContentItem(contentName, dataFeedParams.id);
-        }
-        else if (bsDmContentItems_1.dmIsContentItem(content)) {
-            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(content)) {
-                mainAction.payload.contentItem = content;
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: MediaContentItems must be specified by AssetItem parameters', { functionName: 'dmAddMediaState', action: mainAction });
-            }
-            else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(content)) {
-                var dataFeed = selectors_1.dmGetDataFeedStateById(dmState, { id: content.dataFeedId });
-                if (!lodash_1.isNil(dataFeed) && dataFeed.isSystemFeed) {
-                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: System dataFeed cannot be used in a dataFeed contentItem', { functionName: 'dmAddMediaState', action: mainAction });
-                }
-            }
-            contentItem = __assign({}, content);
-            if (!lodash_1.isNil(contentAdditionalAsset)) {
-                if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem)) {
-                    var dataFeedSpec = contentAdditionalAsset.dataFeedSpec;
-                    if (contentItem.useDataFeed && !lodash_1.isNil(dataFeedSpec)) {
-                        dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
-                        var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
-                        batchedActions.push.apply(batchedActions, actionListParams.actions);
-                        contentItem.dataFeedId = actionListParams.mainAction.payload.id;
-                    }
-                    if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)) {
-                        var defaultMedia = contentAdditionalAsset.defaultMedia;
-                        if (contentItem.useDefaultMedia && !lodash_1.isNil(defaultMedia)) {
-                            var defaultMediaAssetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, defaultMedia, mainAction);
-                            batchedActions.push(actionAssetMap_1.dmPutAssetItem(defaultMediaAssetItem));
-                            contentItem.defaultMediaId = defaultMediaAssetItem.id;
-                        }
-                    }
-                }
-            }
-        }
-        var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, contentData);
-        if (!lodash_1.isNil(contentItemData)) {
-            contentItem = __assign(__assign({}, contentItem), contentItemData);
-        }
-        if (!mainAction.payload.name) {
-            mainAction.payload.name = contentItem.name ? contentItem.name : 'State' + tagIndex;
-        }
-        if (!bsDmContentItems_1.dmIsMediaSequenceContainer(container)) {
-            var zoneId = selectors_1.dmGetZoneIdForContainer(dmState, container);
-            if (!lodash_1.isNil(zoneId)) {
-                mainAction.payload.name =
-                    selectors_1.dmGetUniqueMediaStateNameForBaseNameInZone(dmState, { id: zoneId, name: mainAction.payload.name });
-            }
-        }
-        if (zoneType === bscore_1.ZoneType.BackgroundImage) {
-            var backgroundStates = selectors_1.dmGetMediaStateIdsForZone(dmState, { id: container.id });
-            if (backgroundStates.length >= 1) {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'AddMediaState: BackgroundImage can accept only one media state', { functionName: 'dmAddMediaState', action: mainAction });
-            }
-        }
-        if (!bsDmContentItems_1.dmIsValidContentItemForZone(contentItem, zoneType)) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddMediaState: Content item type "' + contentItem.type + '" cannot be added to "' + zoneType + '" zone', { functionName: 'dmAddMediaState', action: mainAction });
-        }
-        mainAction.payload.contentItem = contentItem;
-        batchedActions.push(mainAction);
-        dispatch(actionBase_1.dmBatchActions(batchedActions));
-        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
-    };
-}
-exports.dmAddMediaState = dmAddMediaState;
-function dmAddLiveTextMediaState(name, container, backgroundImage, backgroundColor, backgroundWidth, backgroundHeight) {
-    if (backgroundWidth === void 0) { backgroundWidth = 0; }
-    if (backgroundHeight === void 0) { backgroundHeight = 0; }
-    return function (dispatch, getState) {
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var containingZone = selectors_1.dmGetZoneStateForContainer(dmState, container);
-        if (lodash_1.isNil(containingZone)) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddLiveTextMediaState: Invalid container', { functionName: 'dmAddLiveTextMediaState' });
-        }
-        var liveTextActionListParams = actionLiveText_1.dmGetAddLiveTextCanvasActionList(dmState, backgroundImage, backgroundColor, backgroundWidth, backgroundHeight);
-        var batchedActions = liveTextActionListParams.actions;
-        var canvasId = liveTextActionListParams.mainAction.payload.id;
-        var tagIndex = selectors_1.dmGetNextMediaStateTagIndexForZone(dmState, { id: containingZone.id });
-        var liveTextCanvasName = lodash_1.isNil(name) ? '' : name;
-        var contentItem = bsDmContentItems_1.dmCreateLiveTextContentItem(liveTextCanvasName, canvasId);
-        var mainAction = {
-            type: exports.ADD_MEDIA_STATE,
-            payload: {
-                id: utils_1.newBsDmId(),
-                name: liveTextCanvasName.length > 0 ? liveTextCanvasName : 'State' + tagIndex,
-                tag: tagIndex.toString(),
-                container: container,
-                contentItem: contentItem,
-                zoneId: containingZone.id,
-            },
-        };
-        batchedActions.push(mainAction);
-        dispatch(actionBase_1.dmBatchActions(batchedActions));
-        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
-    };
-}
-exports.dmAddLiveTextMediaState = dmAddLiveTextMediaState;
-function dmUpdateMediaState(params) {
-    return function (dispatch, getState) {
-        return doUpdateMediaState(params, dispatch, getState);
-    };
-}
-exports.dmUpdateMediaState = dmUpdateMediaState;
-function doUpdateMediaState(params, dispatch, getState) {
-    var mainAction = {
-        type: exports.UPDATE_MEDIA_STATE,
-        payload: lodash_1.pick(params, ['id', 'name']),
-    };
-    var batchedActions = [];
-    var dmState = bsDmState_1.dmFilterDmState(getState());
-    var currentMediaStateState = selectors_1.dmGetMediaStateStateById(dmState, { id: params.id });
-    if (!currentMediaStateState) {
-        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Cannot update mediaState: Invalid mediaState ID');
-    }
-    var existingContentItem = currentMediaStateState.contentItem;
-    var contentItem;
-    if (params.content) {
-        var assetItem = void 0;
-        if (exports.dmContentIsAssetItem(params.content)) {
-            assetItem = params.content;
-            var newContentItemType = bscore_1.bscGetContentItemTypeForMediaType(assetItem.mediaType);
-            var incompatibleEventIds = selectors_1.dmGetIncompatibleMediaStateEventIdsForContentItemType(dmState, { id: params.id, type: newContentItemType });
-            if (incompatibleEventIds.length > 0) {
-                batchedActions.push(actionEvent_1.dmDeleteEventWithParams(actionEvent_1.dmGetEventDeleteParams(dmState, incompatibleEventIds)));
-            }
-            if (bscore_1.bscIsAssetItemPlayableContent(assetItem)) {
-                assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, params.content, mainAction);
-                var useExistingProps = false;
-                if (bsDmContentItems_1.dmContentItemIsMediaContentItem(existingContentItem)) {
-                    batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.assetId));
-                    useExistingProps = newContentItemType === existingContentItem.type;
-                }
-                if (useExistingProps) {
-                    contentItem = __assign(__assign({}, existingContentItem), { name: assetItem.name, assetId: assetItem.id });
-                }
-                else {
-                    contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
-                }
-                batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
-            }
-            else {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: only MediaContentItems can be updated using an AssetItem');
-            }
-        }
-        else if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(params.content)) {
-            if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(existingContentItem)) {
-                var currentZoneType = selectors_1.dmGetZoneTypeForMediaStateId(dmState, { id: currentMediaStateState.id });
-                if (currentZoneType === bscore_1.ZoneType.Ticker) {
-                    params.content.usage = bscore_1.DataFeedUsageType.Text;
-                }
-                var dataFeedUpdateParams = {
-                    id: existingContentItem.dataFeedId,
-                    feedSpec: params.content,
-                };
-                if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(params.content)) {
-                    dataFeedUpdateParams.name = params.content.assetItem.name;
-                }
-                var actionListParams = actionDataFeed_1.dmGetUpdateDataFeedActionList(dmState, dataFeedUpdateParams);
-                batchedActions.push.apply(batchedActions, actionListParams.actions);
-                var dataFeedParams = actionListParams.mainAction.payload;
-                var contentName = lodash_1.isNil(dataFeedParams.name) ? '' : dataFeedParams.name;
-                contentItem = params.content.usage === bscore_1.DataFeedUsageType.Text ?
-                    bsDmContentItems_1.dmCreateDataFeedContentItem(contentName, dataFeedParams.id) :
-                    bsDmContentItems_1.dmCreateMrssDataFeedContentItem(contentName, dataFeedParams.id);
-            }
-            else {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: cannot change ContentItem to a DataFeed ContentItem');
-            }
-        }
-        else if (bsDmContentItems_1.dmIsContentItem(params.content)) {
-            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(params.content)) {
-                mainAction.payload.contentItem = params.content;
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: MediaContentItems must be specified by AssetItem parameters', { action: mainAction });
-            }
-            else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(params.content)) {
-                var dataFeed = selectors_1.dmGetDataFeedStateById(dmState, { id: params.content.dataFeedId });
-                if (!lodash_1.isNil(dataFeed) && dataFeed.isSystemFeed) {
-                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: system dataFeed cannot be used in a dataFeed contentItem', { action: mainAction });
-                }
-            }
-            if (bsDmContentItems_1.dmContentItemIsMediaContentItem(existingContentItem)) {
-                batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.assetId));
-            }
-            contentItem = __assign({}, params.content);
-        }
-        var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, params.contentData);
-        if (contentItemData) {
-            contentItem = __assign(__assign({}, contentItem), contentItemData);
-        }
-        var zoneId = selectors_1.dmGetZoneIdForMediaStateId(dmState, { id: currentMediaStateState.id });
-        var zoneType = selectors_1.dmGetZoneTypeById(dmState, { id: zoneId });
-        var isNonInteractiveZone = selectors_1.dmGetZoneNonInteractiveById(dmState, { id: zoneId });
-        var contentItemValid = isNonInteractiveZone ?
-            bsDmContentItems_1.dmIsValidContentItemForPlaylist(contentItem, zoneType) : bsDmContentItems_1.dmIsValidContentItemForZone(contentItem, zoneType);
-        if (!contentItemValid) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateMediaState: Content item type "' + contentItem.type
-                + '" cannot be added to "' + zoneType + '" zone', { action: mainAction });
-        }
-    }
-    else if (params.contentData) {
-        var filteredData = bsDmContentItems_1.dmFilterContentItemData(existingContentItem.type, params.contentData);
-        if (lodash_1.isNil(filteredData) || Object.keys(filteredData).length === 0) {
-            contentItem = null;
-        }
-        else {
-            contentItem = __assign(__assign({}, existingContentItem), filteredData);
-        }
-    }
-    if ((lodash_1.isNil(contentItem) || bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem))
-        && bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(existingContentItem)) {
-        var dataFeedSpec = void 0;
-        if (!lodash_1.isNil(params.contentAdditionalAsset)) {
-            dataFeedSpec = params.contentAdditionalAsset.dataFeedSpec;
-        }
-        if (lodash_1.isNil(contentItem)) {
-            contentItem = __assign({}, existingContentItem);
-        }
-        if (existingContentItem.useDataFeed !== contentItem.useDataFeed) {
-            if (contentItem.useDataFeed) {
-                if (!lodash_1.isNil(dataFeedSpec)) {
-                    dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
-                    var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
-                    batchedActions.push.apply(batchedActions, actionListParams.actions);
-                    contentItem.dataFeedId = actionListParams.mainAction.payload.id;
-                }
-                else {
-                    contentItem.dataFeedId = bsDmInterfaces_1.BsDmIdNone;
-                }
-                var itemSequenceObject = selectors_1.dmGetMediaStateSequenceForContainer(dmState, { id: params.id });
-                if (!lodash_1.isNil(itemSequenceObject)) {
-                    var deleteParams = dmGetMediaStateDeleteParams(dmState, itemSequenceObject.sequence);
-                    batchedActions.push(dmDeleteMediaStateWithParams(deleteParams));
-                }
-            }
-            else {
-                var dataFeedId = existingContentItem.dataFeedId;
-                if (utils_1.isValidBsDmId(dataFeedId)) {
-                    batchedActions.push(actionDataFeed_1.dmDeleteDataFeedWithParams(actionDataFeed_1.dmGetDataFeedDeleteParams(dmState, dataFeedId)));
-                }
-                contentItem.dataFeedId = bsDmInterfaces_1.BsDmIdNone;
-            }
-        }
-        else if (contentItem.useDataFeed) {
-            if (!lodash_1.isNil(dataFeedSpec)) {
-                dataFeedSpec.usage = bscore_1.DataFeedUsageType.Content;
-                var actionListParams = void 0;
-                if (utils_1.isValidBsDmId(contentItem.dataFeedId)) {
-                    actionListParams = actionDataFeed_1.dmGetUpdateDataFeedActionList(dmState, { id: contentItem.dataFeedId, feedSpec: dataFeedSpec });
-                }
-                else {
-                    actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, dataFeedSpec);
-                    contentItem.dataFeedId = actionListParams.mainAction.payload.id;
-                }
-                batchedActions.push.apply(batchedActions, actionListParams.actions);
-            }
-        }
-    }
-    if (params.contentAdditionalAsset !== undefined) {
-        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)
-            || (lodash_1.isNil(contentItem) && bsDmContentItems_1.dmContentItemIsPlayFileContentItem(existingContentItem))) {
-            var defaultMediaAssetItem = params.contentAdditionalAsset.defaultMedia;
-            if (defaultMediaAssetItem !== undefined) {
-                if (lodash_1.isNil(contentItem)) {
-                    contentItem = __assign({}, existingContentItem);
-                }
-                if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(existingContentItem)
-                    && utils_1.isValidBsDmId(existingContentItem.defaultMediaId)) {
-                    batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.defaultMediaId));
-                    contentItem.defaultMediaId = bscore_1.BsAssetIdNone;
-                }
-                if (defaultMediaAssetItem !== null) {
-                    var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, defaultMediaAssetItem, mainAction);
-                    batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
-                    contentItem.defaultMediaId = assetItem.id;
-                }
-            }
-        }
-    }
-    if (lodash_1.isString(params.contentName) && lodash_1.isNil(contentItem)) {
-        contentItem = __assign({}, existingContentItem);
-    }
-    if (!lodash_1.isNil(contentItem)) {
-        if (lodash_1.isString(params.contentName)) {
-            contentItem.name = params.contentName;
-        }
-        mainAction.payload.contentItem = contentItem;
-    }
-    batchedActions.push(mainAction);
-    dispatch(actionBase_1.dmBatchActions(batchedActions));
-    return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
-}
-exports.doUpdateMediaState = doUpdateMediaState;
-function dmUpdateMediaStateContentItem(id, contentItem) {
-    return {
-        type: exports.UPDATE_MEDIA_STATE,
-        payload: { id: id, contentItem: contentItem },
-    };
-}
-exports.dmUpdateMediaStateContentItem = dmUpdateMediaStateContentItem;
-function dmGetMediaStateDeleteParams(state, id, includeIncomingTransitions) {
-    var _a, _b, _c, _d, _e;
-    if (includeIncomingTransitions === void 0) { includeIncomingTransitions = false; }
-    var deleteParams = {
-        mediaStateIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
-        dataFeedIds: [],
-        dataFeedSourceIds: [],
-        assetIds: [],
-        eventIds: [],
-        transitionIds: [],
-        commandIds: [],
-        liveTextCanvasIds: [],
-        liveTextItemIds: [],
-        liveTextGroupIds: [],
-    };
-    var getContainedMediaStateIds = function (containerId) {
-        if (selectors_1.dmIsMediaStateContainer(state, { id: containerId })) {
-            var ids_1 = selectors_1.dmGetContainedMediaStateIdsForMediaState(state, { id: containerId });
-            var outerIds = ids_1.slice();
-            outerIds.forEach(function (outerId) {
-                var innerIds = getContainedMediaStateIds(outerId);
-                if (innerIds) {
-                    ids_1.push.apply(ids_1, innerIds);
-                }
-            });
-            if (ids_1.length) {
-                return ids_1;
-            }
-        }
-        return null;
-    };
-    var originalMediaStateIds = deleteParams.mediaStateIds.slice();
-    var invalidMediaStateIds = [];
-    originalMediaStateIds.forEach(function (mediaStateId) {
-        var _a;
-        var mediaStateState = selectors_1.dmGetMediaStateStateById(state, { id: mediaStateId });
-        if (!lodash_1.isNil(mediaStateState)) {
-            var containedMediaStateIds = getContainedMediaStateIds(mediaStateId);
-            if (containedMediaStateIds) {
-                (_a = deleteParams.mediaStateIds).push.apply(_a, containedMediaStateIds);
-            }
-        }
-        else {
-            invalidMediaStateIds.push(mediaStateId);
-        }
-    });
-    if (invalidMediaStateIds.length) {
-        lodash_1.pullAll(deleteParams.mediaStateIds, invalidMediaStateIds);
-    }
-    deleteParams.mediaStateIds.forEach(function (mediaStateId) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-        var mediaStateEventIds = selectors_1.dmGetAllEventIdsForMediaState(state, { id: mediaStateId });
-        if (mediaStateEventIds.length) {
-            (_a = deleteParams.eventIds).push.apply(_a, mediaStateEventIds);
-        }
-        var entryCommandIds = selectors_1.dmGetEntryCommandIdsForMediaState(state, { id: mediaStateId });
-        var exitCommandIds = selectors_1.dmGetExitCommandIdsForMediaState(state, { id: mediaStateId });
-        if (entryCommandIds.length || exitCommandIds.length) {
-            (_b = deleteParams.commandIds).push.apply(_b, __spreadArrays(entryCommandIds, exitCommandIds));
-        }
-        var dataFeedIds = selectors_1.dmGetDataFeedIdsForMediaState(state, { id: mediaStateId });
-        if (dataFeedIds.length) {
-            (_c = deleteParams.dataFeedIds).push.apply(_c, dataFeedIds);
-        }
-        var mediaStateState = selectors_1.dmGetMediaStateStateById(state, { id: mediaStateId });
-        var contentItem = mediaStateState.contentItem;
-        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(contentItem)) {
-            deleteParams.assetIds.push(contentItem.assetId);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(contentItem)) {
-            var seqNextCommandIds = selectors_1.dmGetSequenceItemNextCommandIdsForMediaState(state, { id: mediaStateId });
-            var seqPrevCommandIds = selectors_1.dmGetSequenceItemPreviousCommandIdsForMediaState(state, { id: mediaStateId });
-            if (seqNextCommandIds.length || seqPrevCommandIds.length) {
-                (_d = deleteParams.commandIds).push.apply(_d, __spreadArrays(seqNextCommandIds, seqPrevCommandIds));
-            }
-        }
-        else if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem)) {
-            var defaultMediaId = contentItem.defaultMediaId;
-            if (utils_1.isValidBsDmId(defaultMediaId)) {
-                deleteParams.assetIds.push(defaultMediaId);
-            }
-        }
-        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(contentItem)) {
-            var liveTextDeleteItems = actionLiveText_1.dmGetLiveTextCanvasDeleteParams(state, contentItem.canvasId, false);
-            deleteParams.liveTextCanvasIds.push(contentItem.canvasId);
-            if (liveTextDeleteItems.liveTextItemIds.length) {
-                (_e = deleteParams.liveTextItemIds).push.apply(_e, liveTextDeleteItems.liveTextItemIds);
-            }
-            if (liveTextDeleteItems.liveTextGroupIds.length) {
-                (_f = deleteParams.liveTextGroupIds).push.apply(_f, liveTextDeleteItems.liveTextGroupIds);
-            }
-            if (liveTextDeleteItems.dataFeedIds.length) {
-                (_g = deleteParams.dataFeedIds).push.apply(_g, liveTextDeleteItems.dataFeedIds);
-            }
-            if (liveTextDeleteItems.assetIds.length) {
-                (_h = deleteParams.assetIds).push.apply(_h, liveTextDeleteItems.assetIds);
-            }
-        }
-        if (includeIncomingTransitions) {
-            var transitionIds = selectors_1.dmGetIncomingTransitionIdsForMediaState(state, { id: mediaStateId });
-            if (transitionIds.length) {
-                (_j = deleteParams.transitionIds).push.apply(_j, transitionIds);
-                transitionIds.forEach(function (transitionId) {
-                    var transitionState = selectors_1.dmGetTransitionStateById(state, { id: transitionId });
-                    var event = selectors_1.dmGetEventById(state, { id: transitionState.eventId });
-                    if (!lodash_1.isNil(event) && !lodash_1.isNil(event.defaultTransition)
-                        && event.conditionalTransitions.length === 0
-                        && event.commands.length === 0) {
-                        deleteParams.eventIds.push(event.id);
-                    }
-                });
-            }
-        }
-    });
-    if (includeIncomingTransitions) {
-        deleteParams.eventIds = lodash_1.uniq(deleteParams.eventIds);
-    }
-    var eventDeleteParams = actionEvent_1.dmGetEventDeleteParams(state, deleteParams.eventIds);
-    (_a = deleteParams.transitionIds).push.apply(_a, eventDeleteParams.transitionIds);
-    if (eventDeleteParams.commandIds.length) {
-        (_b = deleteParams.commandIds).push.apply(_b, eventDeleteParams.commandIds);
-    }
-    if (includeIncomingTransitions) {
-        deleteParams.transitionIds = lodash_1.uniq(deleteParams.transitionIds);
-    }
-    var transitionDeleteParams = actionTransition_1.dmGetTransitionDeleteParams(state, deleteParams.transitionIds);
-    if (transitionDeleteParams.commandIds.length) {
-        (_c = deleteParams.commandIds).push.apply(_c, transitionDeleteParams.commandIds);
-    }
-    var dataFeedDeleteParams = actionDataFeed_1.dmGetDataFeedDeleteParams(state, deleteParams.dataFeedIds);
-    deleteParams.dataFeedSourceIds = dataFeedDeleteParams.dataFeedSourceIds;
-    if (dataFeedDeleteParams.commandIds.length) {
-        (_d = deleteParams.commandIds).push.apply(_d, dataFeedDeleteParams.commandIds);
-    }
-    if (dataFeedDeleteParams.assetIds.length) {
-        (_e = deleteParams.assetIds).push.apply(_e, dataFeedDeleteParams.assetIds);
-    }
-    deleteParams.commandIds = lodash_1.uniq(deleteParams.commandIds);
-    return deleteParams;
-}
-exports.dmGetMediaStateDeleteParams = dmGetMediaStateDeleteParams;
-function dmDeleteMediaStateWithParams(params) {
-    return {
-        type: exports.DELETE_MEDIA_STATE,
-        payload: params,
-    };
-}
-exports.dmDeleteMediaStateWithParams = dmDeleteMediaStateWithParams;
-function dmDeleteMediaState(id) {
-    return function (dispatch, getState) {
-        var batchedActions = [];
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var containerDeleteListMap = new Map();
-        var addToContainerMap = function (mediaStateId) {
-            var mediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: mediaStateId });
-            if (!lodash_1.isNil(mediaState)
-                && (mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.Zone
-                    || mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState)) {
-                var mapItem = containerDeleteListMap.get(mediaState.container.id);
-                if (lodash_1.isNil(mapItem)) {
-                    containerDeleteListMap.set(mediaState.container.id, { containerType: mediaState.container.type, idsToDelete: [mediaStateId] });
-                }
-                else {
-                    mapItem.idsToDelete.push(mediaStateId);
-                }
-            }
-        };
-        if (Array.isArray(id)) {
-            id.forEach(addToContainerMap);
-        }
-        else {
-            addToContainerMap(id);
-        }
-        containerDeleteListMap.forEach(function (containerDeleteList, containerId) {
-            if (containerDeleteList.containerType === bsDmInterfaces_1.MediaStateContainerType.Zone) {
-                var currentInitialState = selectors_1.dmGetInitialMediaStateIdForZone(dmState, { id: containerId });
-                if (!lodash_1.isNil(currentInitialState) && containerDeleteList.idsToDelete.indexOf(currentInitialState) >= 0) {
-                    var zoneMediaStateIds = selectors_1.dmGetMediaStateIdsForZone(dmState, { id: containerId });
-                    var remainingMediaStates = lodash_1.without.apply(void 0, __spreadArrays([zoneMediaStateIds], containerDeleteList.idsToDelete));
-                    var newInitialMediaStateId = remainingMediaStates.length > 0 ? remainingMediaStates[0] : bsDmInterfaces_1.BsDmIdNone;
-                    batchedActions.push(actionZone_1.dmUpdateZoneWithoutTest({ id: containerId, initialMediaStateId: newInitialMediaStateId }));
-                }
-            }
-            else {
-                var mediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: containerId });
-                if (!lodash_1.isNil(mediaState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(mediaState.contentItem)) {
-                    var currentInitialState = mediaState.contentItem.initialMediaStateId;
-                    if (!lodash_1.isNil(currentInitialState) && containerDeleteList.idsToDelete.indexOf(currentInitialState) >= 0) {
-                        var superStateMediaStateIds = selectors_1.dmGetContainedMediaStateIdsForMediaState(dmState, { id: containerId });
-                        var remainingMediaStates = lodash_1.without.apply(void 0, __spreadArrays([superStateMediaStateIds], containerDeleteList.idsToDelete));
-                        var initialMediaStateId = remainingMediaStates.length > 0 ? remainingMediaStates[0] : bsDmInterfaces_1.BsDmIdNone;
-                        batchedActions.push(dmUpdateMediaStateContentItem(containerId, __assign(__assign({}, mediaState.contentItem), { initialMediaStateId: initialMediaStateId })));
-                    }
-                }
-            }
-        });
-        var deleteParams = dmGetMediaStateDeleteParams(dmState, id, true);
-        var mainAction = dmDeleteMediaStateWithParams(deleteParams);
-        batchedActions.push(mainAction);
-        dispatch(actionBase_1.dmBatchActions(batchedActions));
-        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
-    };
-}
-exports.dmDeleteMediaState = dmDeleteMediaState;
-function dmPreparePasteMediaStateAction(dmState, copySet, targetZoneId, duplicateMatchedUserVariables) {
-    if (duplicateMatchedUserVariables === void 0) { duplicateMatchedUserVariables = false; }
-    if (!lodash_1.isNil(targetZoneId)) {
-        var mergeParams = {};
-        var pasteToDifferentSign = selectors_1.dmGetSignId(dmState) !== copySet.signId;
-        if (pasteToDifferentSign) {
-            mergeParams.assetItemMergeParams = selectors_1.dmGetMergedAssetItemCopySet(dmState, copySet.assetMap);
-            mergeParams.dataFeedSourceMergeParams = selectors_1.dmGetMergedDataFeedSourceCopySet(dmState, copySet.dataFeeds.sourcesById, copySet.assetMap, copySet.userVariables);
-            mergeParams.updatedCommandCollection = selectors_1.dmGetCommandCollectionForDifferentSign(dmState, copySet.commands, copySet.zoneId, Object.keys(copySet.dataFeeds.sourcesById), Object.keys(copySet.userVariables.variablesById));
-        }
-        var mergingUserVariables = copySet.userVariables.sequence.length > 0;
-        if (mergingUserVariables) {
-            mergeParams.userVariableCopySetMergeParams =
-                selectors_1.dmGetMergedUserVariableCopySet(dmState, copySet.userVariables, duplicateMatchedUserVariables);
-        }
-        var copySetUpdateResult_1 = bsDmCopyPaste_1.dmUpdateMediaStateCopySetWithUniqueIds(copySet, mergeParams);
-        if (mergingUserVariables && copySetUpdateResult_1.userVariableIdMap.size > 0) {
-            selectors_1.dmVisitUserVariableReferences(dmState, copySetUpdateResult_1.copySet, function (uvId) {
-                var newId = copySetUpdateResult_1.userVariableIdMap.get(uvId);
-                return lodash_1.isNil(newId) ? bsDmInterfaces_1.BsDmIdNone : newId;
-            });
-        }
-        if (pasteToDifferentSign) {
-            Object.keys(copySetUpdateResult_1.copySet.commands.commandsById).forEach(function (commandId) {
-                var command = copySetUpdateResult_1.copySet.commands.commandsById[commandId];
-                command.operations.forEach(function (op) {
-                    if (bsDmCommands_1.dmIsZoneCommandData(op.data)) {
-                        op.data.zoneId = targetZoneId;
-                    }
-                    else if (bsDmCommands_1.dmIsDataFeedSourceCommandData(op.data)) {
-                        var newId = copySetUpdateResult_1.dataFeedSourceIdMap.get(op.data.dataFeedSourceId);
-                        op.data.dataFeedSourceId = lodash_1.isNil(newId) ? bsDmInterfaces_1.BsDmIdNone : newId;
-                    }
-                });
-            });
-        }
-        var updatedCopySet = bsDmCopyPaste_1.dmUpdateMediaStateCopySetWithUniqueStateNamesForZone(dmState, copySetUpdateResult_1.copySet, targetZoneId);
-        return {
-            type: exports.PASTE_MEDIA_STATES,
-            payload: {
-                copySet: updatedCopySet,
-                mediaStateIdMap: copySetUpdateResult_1.mediaStateIdMap,
-                eventIdMap: copySetUpdateResult_1.eventIdMap,
-            },
-        };
-    }
-    else {
-        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PreparePasteMediaStateAction - target zone ID is invalid', { functionName: 'dmPreparePasteMediaStateAction' });
-    }
-}
-exports.dmPreparePasteMediaStateAction = dmPreparePasteMediaStateAction;
-function dmPasteMediaStateCopySet(copySet, container, options) {
-    return function (dispatch, getState) {
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var targetZoneId = selectors_1.dmGetZoneIdForZoneOrMediaStateId(dmState, { id: container.id });
-        var duplicateMatchedUserVariables = lodash_1.isNil(options) || lodash_1.isNil(options.duplicateMatchedUserVariables) ? false :
-            options.duplicateMatchedUserVariables;
-        var mainAction = dmPreparePasteMediaStateAction(dmState, copySet, targetZoneId, duplicateMatchedUserVariables);
-        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.Playlist) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, 'PasteMediaStateCopySet: Use PlaylistPasteMediaStateCopySet to paste mediaStates in nonInteractive zones', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
-        }
-        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.Interactive) {
-            var pasteToDifferentSign = selectors_1.dmGetSignId(dmState) !== copySet.signId;
-            if (pasteToDifferentSign || copySet.zoneId !== targetZoneId) {
-                var result = selectors_1.dmIsMediaStateCopySetCompatibleWithZone(dmState, { zoneId: targetZoneId, copySet: copySet });
-                if (!result.ok) {
-                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PasteMediaStateCopySet - the copied mediaStates are not compatible with the target zone', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
-                }
-            }
-            if (container.type !== bsDmInterfaces_1.MediaStateContainerType.Zone) {
-                var targetMediaState = selectors_1.dmGetMediaStateStateById(dmState, { id: container.id });
-                if (lodash_1.isNil(targetMediaState) || !bsDmContentItems_1.dmContentItemIsSuperStateContentItem(targetMediaState.contentItem)) {
-                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, 'PasteMediaStateCopySet - interactive mediaStates can only be pasted to a Zone or a SuperState', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
-                }
-            }
-        }
-        var batchedActions = [mainAction];
-        var updatedCopySet = mainAction.payload.copySet;
-        if (copySet.contentType === bsDmInterfaces_1.DmCopySetContentType.MediaItemList) {
-            var mediaSequenceContainer = selectors_1.dmGetMediaStateStateById(dmState, { id: copySet.containerId });
-            if (!lodash_1.isNil(mediaSequenceContainer)
-                && bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaSequenceContainer.contentItem)) {
-                var mediaStateSequence = selectors_1.dmGetMediaStateSequenceForContainer(dmState, { id: copySet.containerId });
-                var idsToInsert = Object.keys(updatedCopySet.mediaStates.mediaStatesById);
-                var newSequence = void 0;
-                if (lodash_1.isNil(mediaStateSequence)) {
-                    newSequence = idsToInsert;
-                }
-                else {
-                    if (mediaStateSequence.parentType !== container.type) {
-                        throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidContainerForPaste, "PasteMediaStateCopySet - " + container.type + " content items can only be pasted into " + container.type + " " +
-                            'mediaStates', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
-                    }
-                    var index = !lodash_1.isNil(options)
-                        && !lodash_1.isNil(options.targetSequenceIndex)
-                        && options.targetSequenceIndex >= 0
-                        && options.targetSequenceIndex <= mediaStateSequence.sequence.length ?
-                        options.targetSequenceIndex : mediaStateSequence.sequence.length;
-                    if (index < 0 || index >= mediaStateSequence.sequence.length) {
-                        newSequence = mediaStateSequence.sequence.concat(idsToInsert);
-                    }
-                    else {
-                        newSequence = __spreadArrays(mediaStateSequence.sequence.slice(0, index), idsToInsert, mediaStateSequence.sequence.slice(index));
-                    }
-                }
-                mainAction.payload.copySet.mediaStates.sequencesByParentId[container.id] = {
-                    id: container.id, parentType: container.type, sequence: newSequence
-                };
-            }
-            else {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'PasteMediaStateCopySet - invalid MediaList or PlayFile ID', { functionName: 'dmPasteMediaStateCopySet', action: mainAction });
-            }
-        }
-        else {
-            if (updatedCopySet.userVariables.sequence.length) {
-                batchedActions.push(actionUserVariable_1.dmGetMergeUserVariableAction(updatedCopySet.userVariables));
-            }
-        }
-        if (copySet.containerId !== container.id) {
-            bsDmCopyPaste_1.dmUpdateMediaStateCopySetForPasteTargetContainer(updatedCopySet, container);
-        }
-        var getNewInitialMediaStateId = function (currentInitialMediaStateId) {
-            if (!utils_1.isValidBsDmId(currentInitialMediaStateId)) {
-                return utils_1.isValidBsDmId(updatedCopySet.csInitialMediaStateId) ? updatedCopySet.csInitialMediaStateId :
-                    Object.keys(updatedCopySet.mediaStates.mediaStatesById)[0];
-            }
-            return null;
-        };
-        if (container.type === bsDmInterfaces_1.MediaStateContainerType.Zone) {
-            var newInitialMediaStateId = getNewInitialMediaStateId(selectors_1.dmGetInitialMediaStateIdForZone(dmState, { id: container.id }));
-            if (!lodash_1.isNil(newInitialMediaStateId)) {
-                batchedActions.push(actionZone_1.dmUpdateZoneWithoutTest({ id: container.id, initialMediaStateId: newInitialMediaStateId }));
-            }
-        }
-        else if (container.type === bsDmInterfaces_1.MediaStateContainerType.SuperState) {
-            var superState = selectors_1.dmGetMediaStateStateById(dmState, { id: container.id });
-            if (!lodash_1.isNil(superState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(superState.contentItem)) {
-                var newInitialMediaStateId = getNewInitialMediaStateId(superState.contentItem.initialMediaStateId);
-                if (!lodash_1.isNil(newInitialMediaStateId)) {
-                    batchedActions.push(dmUpdateMediaStateContentItem(container.id, __assign(__assign({}, superState.contentItem), { initialMediaStateId: newInitialMediaStateId })));
-                }
-            }
-        }
-        dispatch(actionBase_1.dmBatchActions(batchedActions));
-        return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
-    };
-}
-exports.dmPasteMediaStateCopySet = dmPasteMediaStateCopySet;
-
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3699,21 +3794,21 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetDefaultLayerIdParams = exports.dmGetUpdatedZoneLayersForChangedZoneType = exports.dmGetUpdatedZoneLayersForAddedZone = exports.dmMoveMosaicZonesAtIndices = exports.dmMoveZoneLayersAtIndices = exports.dmClearZone = exports.dmDeleteZone = exports.dmDeleteZoneWithParams = exports.dmUpdateZoneAudioOutputAssignments = exports.dmUpdateClockOrTickerZoneWidget = exports.dmUpdateZoneProperties = exports.dmUpdateZone = exports.dmUpdateZoneWithoutTest = exports.dmAddDefaultZone = exports.dmGetAddZoneAction = exports.dmAddZone = exports.getDisabledAudioOutputAssignmentMap = exports.createDefaultZoneProperties = exports.createDefaultZoneState = exports.MOVE_MOSAIC_ZONES = exports.MOVE_ZONE_LAYERS = exports.DELETE_ZONE = exports.UPDATE_ZONE_PROPS = exports.UPDATE_ZONE = exports.ADD_ZONE = void 0;
+exports.dmGetZoneUpdateVideoModeAction = exports.dmGetDeleteZoneLayerAction = exports.dmGetAddZoneLayerAction = exports.dmGetDefaultLayerIdParams = exports.dmGetUpdatedZoneLayersForChangedZoneType = exports.dmGetUpdatedZoneLayersForAddedZone = exports.dmMoveMosaicZonesAtIndices = exports.dmMoveZoneLayersAtIndices = exports.dmClearZone = exports.dmDeleteZone = exports.dmDeleteZoneWithParams = exports.dmUpdateZoneAudioOutputAssignments = exports.dmUpdateClockOrTickerZoneWidget = exports.dmUpdateZoneProperties = exports.dmUpdateZone = exports.dmUpdateZoneWithoutTest = exports.dmAddDefaultZone = exports.dmGetAddZoneAction = exports.dmAddZone = exports.getDisabledAudioOutputAssignmentMap = exports.createDefaultZoneProperties = exports.createDefaultZoneState = exports.ADD_ZONE_LAYER = exports.DELETE_ZONE_LAYER = exports.MOVE_MOSAIC_ZONES = exports.MOVE_ZONE_LAYERS = exports.DELETE_ZONE = exports.UPDATE_ZONE_PROPS = exports.UPDATE_ZONE = exports.ADD_ZONE = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmAssetItems_1 = __webpack_require__(41);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmAssetItems_1 = __webpack_require__(43);
 var bsDmDefaults_1 = __webpack_require__(19);
 var bsDmZone_1 = __webpack_require__(31);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var selectors_1 = __webpack_require__(6);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionMediaState_1 = __webpack_require__(13);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionMediaState_1 = __webpack_require__(11);
 var lodash_1 = __webpack_require__(0);
 exports.ADD_ZONE = 'DM_ADD_ZONE';
 exports.UPDATE_ZONE = 'DM_UPDATE_ZONE';
@@ -3721,7 +3816,9 @@ exports.UPDATE_ZONE_PROPS = 'DM_UPDATE_ZONE_PROPS';
 exports.DELETE_ZONE = 'DM_DELETE_ZONE';
 exports.MOVE_ZONE_LAYERS = 'DM_MOVE_ZONE_LAYERS';
 exports.MOVE_MOSAIC_ZONES = 'DM_MOVE_MOSAIC_ZONES';
-exports.createDefaultZoneState = function (id, name, type, tag, nonInteractive, position, disableAudio) { return ({
+exports.DELETE_ZONE_LAYER = 'DM_DELETE_ZONE_LAYER';
+exports.ADD_ZONE_LAYER = 'DM_ADD_ZONE_LAYER';
+var createDefaultZoneState = function (id, name, type, tag, nonInteractive, position, disableAudio) { return ({
     id: id,
     name: name,
     type: type,
@@ -3731,7 +3828,8 @@ exports.createDefaultZoneState = function (id, name, type, tag, nonInteractive, 
     position: lodash_1.isNil(position) ? __assign({}, bscore_1.BsRectFull) : position,
     properties: exports.createDefaultZoneProperties(type, disableAudio),
 }); };
-exports.createDefaultZoneProperties = function (type, disableAudio) {
+exports.createDefaultZoneState = createDefaultZoneState;
+var createDefaultZoneProperties = function (type, disableAudio) {
     switch (type) {
         case bscore_1.ZoneType.VideoOrImages:
             var viZoneProps = Object.assign(bsDmDefaults_1.dmGetDefaultVideoZoneProperties(), bsDmDefaults_1.dmGetDefaultAudioZoneProperties(), bsDmDefaults_1.dmGetDefaultImageZoneProperties());
@@ -3758,12 +3856,14 @@ exports.createDefaultZoneProperties = function (type, disableAudio) {
     }
     return {};
 };
-exports.getDisabledAudioOutputAssignmentMap = function () {
+exports.createDefaultZoneProperties = createDefaultZoneProperties;
+var getDisabledAudioOutputAssignmentMap = function () {
     return bscore_1.AudioOutputNameArray.reduce(function (acc, audioOutputName) {
         acc[audioOutputName] = bscore_1.AudioOutputType.None;
         return acc;
     }, {});
 };
+exports.getDisabledAudioOutputAssignmentMap = getDisabledAudioOutputAssignmentMap;
 function dmAddZone(name, type, tag, params) {
     if (params === void 0) { params = {}; }
     return function (dispatch, getState) {
@@ -3873,13 +3973,14 @@ function dmAddDefaultZone(name, tag, params) {
     };
 }
 exports.dmAddDefaultZone = dmAddDefaultZone;
-exports.dmUpdateZoneWithoutTest = function (zoneParams) { return ({
+var dmUpdateZoneWithoutTest = function (zoneParams) { return ({
     type: exports.UPDATE_ZONE,
     payload: {
         zoneParams: zoneParams,
         zoneLayerMap: null,
     },
 }); };
+exports.dmUpdateZoneWithoutTest = dmUpdateZoneWithoutTest;
 function dmUpdateZone(zoneParams, layerParams) {
     if (layerParams === void 0) { layerParams = {}; }
     return function (dispatch, getState) {
@@ -4208,10 +4309,127 @@ function dmValidZoneLayerIdParams(type, zoneLayerIdParams) {
     }
     return false;
 }
+function dmGetAddZoneLayerAction(zoneLayer) {
+    var _a;
+    return {
+        type: exports.ADD_ZONE_LAYER,
+        payload: {
+            zoneLayerId: zoneLayer.id,
+            zoneLayerMap: (_a = {}, _a[zoneLayer.id] = zoneLayer, _a),
+        },
+    };
+}
+exports.dmGetAddZoneLayerAction = dmGetAddZoneLayerAction;
+function dmGetDeleteZoneLayerAction(zoneLayerId) {
+    return {
+        type: exports.DELETE_ZONE_LAYER,
+        payload: {
+            zoneLayerId: zoneLayerId,
+        },
+    };
+}
+exports.dmGetDeleteZoneLayerAction = dmGetDeleteZoneLayerAction;
+function dmGetZoneUpdateVideoModeAction(targetVideoMode, dmState) {
+    var isTargetVideoModeHDOrSmaller = bscore_1.bscIsHDVideoResolutionOrSmaller(targetVideoMode);
+    var currentVideoMode = selectors_1.dmGetSignVideoMode(dmState);
+    var isCurrentVideModeHDOrSmaller = bscore_1.bscIsHDVideoResolutionOrSmaller(currentVideoMode);
+    var playerModel = selectors_1.dmGetSignPlayerModel(dmState);
+    var playerCapabilities = bscore_1.bscGetPlayerCapabilities(playerModel);
+    var action = null;
+    if (playerCapabilities.videoDecoder4kCount === 1
+        && playerCapabilities.videoPlaneCount > 1) {
+        if (isCurrentVideModeHDOrSmaller && !isTargetVideoModeHDOrSmaller) {
+            var unusedVideoLayer = selectors_1.dmGetUnusedVideoLayer(dmState);
+            if (!lodash_1.isNil(unusedVideoLayer)) {
+                action = dmGetDeleteZoneLayerAction(unusedVideoLayer.id);
+            }
+        }
+        else if (!isCurrentVideModeHDOrSmaller && isTargetVideoModeHDOrSmaller) {
+            var videoDecoders = bsDmZone_1.dmGetVideoDecodersByModel(playerModel);
+            var videoLayer = bsDmZone_1.dmCreateDefaultVideoZoneLayer(videoDecoders[0], 1, targetVideoMode);
+            action = dmGetAddZoneLayerAction(videoLayer);
+        }
+    }
+    return action;
+}
+exports.dmGetZoneUpdateVideoModeAction = dmGetZoneUpdateVideoModeAction;
 
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmIsDataFeedSourceBsnDataFeed = exports.dmIsDataFeedSourceRemoteDataFeed = exports.dmIsDataFeedSourceSpecification = exports.dmIsRemoteDataFeedSourceSpecification = exports.dmIsBsnDataFeedSourceSpecification = exports.dmCreateBsnDataFeedSpecification = exports.dmCreateRemoteDataFeedSpecification = void 0;
+var bscore_1 = __webpack_require__(1);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
+var lodash_1 = __webpack_require__(0);
+function dmCreateRemoteDataFeedSpecification(url, usage, updateInterval, useHeadRequest) {
+    var spec = {
+        type: 'URLDataFeed',
+        usage: usage,
+        url: url,
+    };
+    if (!lodash_1.isNil(updateInterval)) {
+        spec.updateInterval = updateInterval;
+    }
+    if (!lodash_1.isNil(useHeadRequest)) {
+        spec.useHeadRequest = useHeadRequest;
+    }
+    return spec;
+}
+exports.dmCreateRemoteDataFeedSpecification = dmCreateRemoteDataFeedSpecification;
+function dmCreateBsnDataFeedSpecification(assetItem, usage, updateInterval, useHeadRequest) {
+    var spec = {
+        type: assetItem.assetType,
+        usage: usage,
+        assetItem: assetItem,
+    };
+    if (!lodash_1.isNil(updateInterval)) {
+        spec.updateInterval = updateInterval;
+    }
+    if (!lodash_1.isNil(useHeadRequest)) {
+        spec.useHeadRequest = useHeadRequest;
+    }
+    return spec;
+}
+exports.dmCreateBsnDataFeedSpecification = dmCreateBsnDataFeedSpecification;
+function dmIsBsnDataFeedSourceSpecification(feedSpec) {
+    return feedSpec.type !== bscore_1.DataFeedType.URLDataFeed
+        && bscore_1.bscIsAssetItem(feedSpec.assetItem)
+        && bscore_1.bscAssetItemIsBsnDataFeed(feedSpec.assetItem);
+}
+exports.dmIsBsnDataFeedSourceSpecification = dmIsBsnDataFeedSourceSpecification;
+function dmIsRemoteDataFeedSourceSpecification(feedSpec) {
+    return feedSpec.type === bscore_1.DataFeedType.URLDataFeed
+        && (lodash_1.isString(feedSpec.url)
+            || bsDmParameterizedStrings_1.dmIsValidParameterizedString(feedSpec.url));
+}
+exports.dmIsRemoteDataFeedSourceSpecification = dmIsRemoteDataFeedSourceSpecification;
+function dmIsDataFeedSourceSpecification(feedSpec) {
+    return !lodash_1.isNil(feedSpec)
+        && typeof feedSpec === 'object'
+        && feedSpec.hasOwnProperty('type')
+        && ((feedSpec.type === bscore_1.DataFeedType.URLDataFeed && feedSpec.hasOwnProperty('url')
+            || feedSpec.hasOwnProperty('assetItem') && bscore_1.bscIsAssetItem(feedSpec.assetItem)));
+}
+exports.dmIsDataFeedSourceSpecification = dmIsDataFeedSourceSpecification;
+function dmIsDataFeedSourceRemoteDataFeed(feedSource) {
+    return feedSource.type === bscore_1.DataFeedType.URLDataFeed && feedSource.hasOwnProperty('url');
+}
+exports.dmIsDataFeedSourceRemoteDataFeed = dmIsDataFeedSourceRemoteDataFeed;
+function dmIsDataFeedSourceBsnDataFeed(feedSource) {
+    return !lodash_1.isNil(feedSource)
+        && feedSource.type !== bscore_1.DataFeedType.URLDataFeed
+        && feedSource.hasOwnProperty('dataFeedAssetId');
+}
+exports.dmIsDataFeedSourceBsnDataFeed = dmIsDataFeedSourceBsnDataFeed;
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4382,7 +4600,7 @@ exports.dmGetParameterizedStringTextParams = dmGetParameterizedStringTextParams;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4399,27 +4617,28 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmValidateIrRemoteEventData = exports.dmValidateCustomPresentationWebPage = exports.dmValidateDmWidget = exports.dmValidateDataFeedSourceId = exports.dmValidateLinkedPresentationId = exports.dmValidateAssetId = exports.dmValidateScriptPluginId = exports.dmValidateUserVariableInputFromEventData = exports.dmValidateUserVariableName = exports.dmValidateUserVariableId = exports.dmValidateEntityHtmlSite = exports.dmValidateEntityDataFeed = exports.dmValidateEntityParameterizedNumber = exports.dmValidateEntityParameterizedHexString = exports.dmValidateEntityParameterizedHttpUrlString = exports.dmValidateEntityParameterizedString = exports.dmGetEntityError = void 0;
+exports.dmValidateIrRemoteEventData = exports.dmValidateCustomPresentationWebPage = exports.dmValidateDmWidget = exports.dmValidateDataFeedSourceId = exports.dmValidateLinkedPresentationId = exports.dmValidateAssetId = exports.dmValidateScriptPluginId = exports.dmValidateUserVariableInputFromEventData = exports.dmValidateUserVariableName = exports.dmValidateUserVariableId = exports.dmValidateEntityHtmlSite = exports.dmValidateEntityDataFeed = exports.dmValidateEntityParameterizedVolume = exports.dmValidateEntityParameterizedNumber = exports.dmValidateEntityParameterizedHexString = exports.dmValidateEntityParameterizedHttpUrlString = exports.dmValidateEntityParameterizedString = exports.dmGetEntityError = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var bsDmParameterizedNumbers_1 = __webpack_require__(38);
 var selectorAssetMap_1 = __webpack_require__(39);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmHtmlSite_1 = __webpack_require__(37);
 var selectorDataFeed_1 = __webpack_require__(35);
-var selectorHtmlSite_1 = __webpack_require__(58);
+var selectorHtmlSite_1 = __webpack_require__(59);
 var selectorUserVariable_1 = __webpack_require__(36);
-var selectorScriptPlugin_1 = __webpack_require__(46);
-var selectorDeviceWebPage_1 = __webpack_require__(67);
-var selectorLinkedPresentation_1 = __webpack_require__(59);
+var selectorScriptPlugin_1 = __webpack_require__(48);
+var selectorDeviceWebPage_1 = __webpack_require__(68);
+var selectorLinkedPresentation_1 = __webpack_require__(60);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
-exports.dmGetEntityError = function (type, errorDetails) {
+var dmGetEntityError = function (type, errorDetails) {
     return new bsDmError_1.BsDmError(type, null, errorDetails);
 };
-exports.dmValidateEntityParameterizedString = function (state, paramString, errorDetails, cannotBeEmpty) {
+exports.dmGetEntityError = dmGetEntityError;
+var dmValidateEntityParameterizedString = function (state, paramString, errorDetails, cannotBeEmpty) {
     if (cannotBeEmpty === void 0) { cannotBeEmpty = false; }
     if (bsDmParameterizedStrings_1.dmIsValidParameterizedString(paramString)) {
         if (!selectorUserVariable_1.dmAreParameterizedStringUserVariablesValid(state, { paramString: paramString })) {
@@ -4434,7 +4653,8 @@ exports.dmValidateEntityParameterizedString = function (state, paramString, erro
     }
     return null;
 };
-exports.dmValidateEntityParameterizedHttpUrlString = function (state, paramString, errorDetails) {
+exports.dmValidateEntityParameterizedString = dmValidateEntityParameterizedString;
+var dmValidateEntityParameterizedHttpUrlString = function (state, paramString, errorDetails) {
     var error = exports.dmValidateEntityParameterizedString(state, paramString, errorDetails, true);
     if (lodash_1.isNil(error)
         && !lodash_1.isNil(paramString)
@@ -4448,7 +4668,8 @@ exports.dmValidateEntityParameterizedHttpUrlString = function (state, paramStrin
     }
     return error;
 };
-exports.dmValidateEntityParameterizedHexString = function (state, paramString, errorDetails, cannotBeEmpty) {
+exports.dmValidateEntityParameterizedHttpUrlString = dmValidateEntityParameterizedHttpUrlString;
+var dmValidateEntityParameterizedHexString = function (state, paramString, errorDetails, cannotBeEmpty) {
     if (cannotBeEmpty === void 0) { cannotBeEmpty = false; }
     if (bsDmParameterizedStrings_1.dmIsValidParameterizedString(paramString)) {
         if (!selectorUserVariable_1.dmAreParameterizedStringUserVariablesValid(state, { paramString: paramString })) {
@@ -4472,7 +4693,8 @@ exports.dmValidateEntityParameterizedHexString = function (state, paramString, e
     }
     return exports.dmGetEntityError(bsDmError_1.DmErrorType.invalidParameters, errorDetails);
 };
-exports.dmValidateEntityParameterizedNumber = function (state, paramNumber, errorDetails) {
+exports.dmValidateEntityParameterizedHexString = dmValidateEntityParameterizedHexString;
+var dmValidateEntityParameterizedNumber = function (state, paramNumber, errorDetails) {
     if (bsDmParameterizedNumbers_1.dmIsValidParameterizedNumber(paramNumber)) {
         if (!selectorUserVariable_1.dmIsParameterizedNumberUserVariableValid(state, { paramNumber: paramNumber })) {
             return exports.dmGetEntityError(bsDmError_1.DmErrorType.userVariableNameNotDefined, errorDetails);
@@ -4483,7 +4705,17 @@ exports.dmValidateEntityParameterizedNumber = function (state, paramNumber, erro
     }
     return null;
 };
-exports.dmValidateEntityDataFeed = function (state, dataFeedId, errorDetails) {
+exports.dmValidateEntityParameterizedNumber = dmValidateEntityParameterizedNumber;
+var dmValidateEntityParameterizedVolume = function (paramNumber, errorDetails) {
+    if (bsDmParameterizedNumbers_1.dmIsValidParameterizedNumber(paramNumber)
+        && paramNumber.type === bscore_1.NumberParameterType.Number
+        && (paramNumber.value < 0 || paramNumber.value > 100)) {
+        return exports.dmGetEntityError(bsDmError_1.DmErrorType.invalidVolume, errorDetails);
+    }
+    return null;
+};
+exports.dmValidateEntityParameterizedVolume = dmValidateEntityParameterizedVolume;
+var dmValidateEntityDataFeed = function (state, dataFeedId, errorDetails) {
     if (!lodash_1.isNil(dataFeedId)) {
         var feedSource = selectorDataFeed_1.dmGetDataFeedSourceForFeedId(state, { id: dataFeedId });
         if (!lodash_1.isNil(feedSource) && bsDmDataFeed_1.dmIsDataFeedSourceRemoteDataFeed(feedSource)) {
@@ -4500,7 +4732,8 @@ exports.dmValidateEntityDataFeed = function (state, dataFeedId, errorDetails) {
     }
     return null;
 };
-exports.dmValidateEntityHtmlSite = function (state, htmlSiteId, errorDetails) {
+exports.dmValidateEntityDataFeed = dmValidateEntityDataFeed;
+var dmValidateEntityHtmlSite = function (state, htmlSiteId, errorDetails) {
     var errorList = [];
     if (!lodash_1.isNil(htmlSiteId)) {
         var htmlSite = selectorHtmlSite_1.dmGetHtmlSiteStateById(state, { id: htmlSiteId });
@@ -4533,19 +4766,22 @@ exports.dmValidateEntityHtmlSite = function (state, htmlSiteId, errorDetails) {
     }
     return errorList.length ? errorList : null;
 };
-exports.dmValidateUserVariableId = function (state, userVariableId, errorDetails) {
+exports.dmValidateEntityHtmlSite = dmValidateEntityHtmlSite;
+var dmValidateUserVariableId = function (state, userVariableId, errorDetails) {
     if (!(utils_1.isValidBsDmId(userVariableId) && !lodash_1.isNil(selectorUserVariable_1.dmGetUserVariableStateById(state, { id: userVariableId })))) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.userVariableIdInvalid, errorDetails);
     }
     return null;
 };
-exports.dmValidateUserVariableName = function (state, userVariableName, errorDetails) {
+exports.dmValidateUserVariableId = dmValidateUserVariableId;
+var dmValidateUserVariableName = function (state, userVariableName, errorDetails) {
     if (!lodash_1.isString(userVariableName) || lodash_1.isNil(selectorUserVariable_1.dmGetUserVariableIdForName(state, { name: userVariableName }))) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.userVariableNameNotDefined, errorDetails);
     }
     return null;
 };
-exports.dmValidateUserVariableInputFromEventData = function (state, eventInputData, errorDetails) {
+exports.dmValidateUserVariableName = dmValidateUserVariableName;
+var dmValidateUserVariableInputFromEventData = function (state, eventInputData, errorDetails) {
     var formatError = exports.dmGetEntityError(bsDmError_1.DmErrorType.userVariableInputStringFormatIsIncorrect, errorDetails);
     if (lodash_1.isString(eventInputData)) {
         var result_1 = null;
@@ -4565,13 +4801,15 @@ exports.dmValidateUserVariableInputFromEventData = function (state, eventInputDa
     }
     return formatError;
 };
-exports.dmValidateScriptPluginId = function (state, pluginId, errorDetails) {
+exports.dmValidateUserVariableInputFromEventData = dmValidateUserVariableInputFromEventData;
+var dmValidateScriptPluginId = function (state, pluginId, errorDetails) {
     if (!(utils_1.isValidBsDmId(pluginId) && !lodash_1.isNil(selectorScriptPlugin_1.dmGetScriptPluginStateById(state, { id: pluginId })))) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.invalidPlugin, errorDetails);
     }
     return null;
 };
-exports.dmValidateAssetId = function (state, assetId, errorDetails) {
+exports.dmValidateScriptPluginId = dmValidateScriptPluginId;
+var dmValidateAssetId = function (state, assetId, errorDetails) {
     var assetIdOk = bscore_1.bscIsValidAssetId(assetId);
     if (assetIdOk) {
         var assetItem = selectorAssetMap_1.dmGetAssetItemById(state, { id: assetId });
@@ -4579,19 +4817,22 @@ exports.dmValidateAssetId = function (state, assetId, errorDetails) {
     }
     return assetIdOk ? null : exports.dmGetEntityError(bsDmError_1.DmErrorType.assetNotFound, errorDetails);
 };
-exports.dmValidateLinkedPresentationId = function (state, presentationId, errorDetails) {
+exports.dmValidateAssetId = dmValidateAssetId;
+var dmValidateLinkedPresentationId = function (state, presentationId, errorDetails) {
     if (!(utils_1.isValidBsDmId(presentationId) && !lodash_1.isNil(selectorLinkedPresentation_1.dmGetLinkedPresentationStateById(state, { id: presentationId })))) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.linkedPresentationIdInvalid, errorDetails);
     }
     return null;
 };
-exports.dmValidateDataFeedSourceId = function (state, dataFeedSourceId, errorDetails) {
+exports.dmValidateLinkedPresentationId = dmValidateLinkedPresentationId;
+var dmValidateDataFeedSourceId = function (state, dataFeedSourceId, errorDetails) {
     if (!(utils_1.isValidBsDmId(dataFeedSourceId) && !lodash_1.isNil(selectorDataFeed_1.dmGetDataFeedSourceForFeedSourceId(state, { id: dataFeedSourceId })))) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.invalidDataFeedSource, errorDetails);
     }
     return null;
 };
-exports.dmValidateDmWidget = function (state, widget, errorDetails) {
+exports.dmValidateDataFeedSourceId = dmValidateDataFeedSourceId;
+var dmValidateDmWidget = function (state, widget, errorDetails) {
     if (widget.font !== bsDmInterfaces_1.DmDefaultFontName) {
         var error = exports.dmValidateAssetId(state, widget.font, errorDetails);
         if (!lodash_1.isNil(error)) {
@@ -4600,7 +4841,8 @@ exports.dmValidateDmWidget = function (state, widget, errorDetails) {
     }
     return null;
 };
-exports.dmValidateCustomPresentationWebPage = function (state, errorDetails) {
+exports.dmValidateDmWidget = dmValidateDmWidget;
+var dmValidateCustomPresentationWebPage = function (state, errorDetails) {
     var errorList = [];
     var presentationWebPage = selectorDeviceWebPage_1.dmGetPresentationWebPage(state);
     if (presentationWebPage.mode === bscore_1.DeviceWebPageDisplay.Custom) {
@@ -4621,6 +4863,7 @@ exports.dmValidateCustomPresentationWebPage = function (state, errorDetails) {
     }
     return errorList;
 };
+exports.dmValidateCustomPresentationWebPage = dmValidateCustomPresentationWebPage;
 function dmValidateIrRemoteEventData(state, data, errorDetails) {
     if (!lodash_1.isString(data) || data.length === 0) {
         return exports.dmGetEntityError(bsDmError_1.DmErrorType.eventDataMissing, errorDetails);
@@ -4642,83 +4885,10 @@ exports.dmValidateIrRemoteEventData = dmValidateIrRemoteEventData;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("re-reselect");
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmIsDataFeedSourceBsnDataFeed = exports.dmIsDataFeedSourceRemoteDataFeed = exports.dmIsDataFeedSourceSpecification = exports.dmIsRemoteDataFeedSourceSpecification = exports.dmIsBsnDataFeedSourceSpecification = exports.dmCreateBsnDataFeedSpecification = exports.dmCreateRemoteDataFeedSpecification = void 0;
-var bscore_1 = __webpack_require__(1);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
-var lodash_1 = __webpack_require__(0);
-function dmCreateRemoteDataFeedSpecification(url, usage, updateInterval, useHeadRequest) {
-    var spec = {
-        type: 'URLDataFeed',
-        usage: usage,
-        url: url,
-    };
-    if (!lodash_1.isNil(updateInterval)) {
-        spec.updateInterval = updateInterval;
-    }
-    if (!lodash_1.isNil(useHeadRequest)) {
-        spec.useHeadRequest = useHeadRequest;
-    }
-    return spec;
-}
-exports.dmCreateRemoteDataFeedSpecification = dmCreateRemoteDataFeedSpecification;
-function dmCreateBsnDataFeedSpecification(assetItem, usage, updateInterval, useHeadRequest) {
-    var spec = {
-        type: assetItem.assetType,
-        usage: usage,
-        assetItem: assetItem,
-    };
-    if (!lodash_1.isNil(updateInterval)) {
-        spec.updateInterval = updateInterval;
-    }
-    if (!lodash_1.isNil(useHeadRequest)) {
-        spec.useHeadRequest = useHeadRequest;
-    }
-    return spec;
-}
-exports.dmCreateBsnDataFeedSpecification = dmCreateBsnDataFeedSpecification;
-function dmIsBsnDataFeedSourceSpecification(feedSpec) {
-    return feedSpec.type !== bscore_1.DataFeedType.URLDataFeed
-        && bscore_1.bscIsAssetItem(feedSpec.assetItem)
-        && bscore_1.bscAssetItemIsBsnDataFeed(feedSpec.assetItem);
-}
-exports.dmIsBsnDataFeedSourceSpecification = dmIsBsnDataFeedSourceSpecification;
-function dmIsRemoteDataFeedSourceSpecification(feedSpec) {
-    return feedSpec.type === bscore_1.DataFeedType.URLDataFeed
-        && (lodash_1.isString(feedSpec.url)
-            || bsDmParameterizedStrings_1.dmIsValidParameterizedString(feedSpec.url));
-}
-exports.dmIsRemoteDataFeedSourceSpecification = dmIsRemoteDataFeedSourceSpecification;
-function dmIsDataFeedSourceSpecification(feedSpec) {
-    return !lodash_1.isNil(feedSpec)
-        && typeof feedSpec === 'object'
-        && feedSpec.hasOwnProperty('type')
-        && ((feedSpec.type === bscore_1.DataFeedType.URLDataFeed && feedSpec.hasOwnProperty('url')
-            || feedSpec.hasOwnProperty('assetItem') && bscore_1.bscIsAssetItem(feedSpec.assetItem)));
-}
-exports.dmIsDataFeedSourceSpecification = dmIsDataFeedSourceSpecification;
-function dmIsDataFeedSourceRemoteDataFeed(feedSource) {
-    return feedSource.type === bscore_1.DataFeedType.URLDataFeed && feedSource.hasOwnProperty('url');
-}
-exports.dmIsDataFeedSourceRemoteDataFeed = dmIsDataFeedSourceRemoteDataFeed;
-function dmIsDataFeedSourceBsnDataFeed(feedSource) {
-    return !lodash_1.isNil(feedSource)
-        && feedSource.type !== bscore_1.DataFeedType.URLDataFeed
-        && feedSource.hasOwnProperty('dataFeedAssetId');
-}
-exports.dmIsDataFeedSourceBsnDataFeed = dmIsDataFeedSourceBsnDataFeed;
-
 
 /***/ }),
 /* 19 */
@@ -4738,7 +4908,8 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DmInternal = exports.dmGetDefaultTimerEventData = exports.initialTimerEventDefaults = exports.dmGetDefaultEventHandlerContentItemData = exports.initialEventHandlerContentItemDefaults = exports.dmGetDefaultPlayFileContentItemData = exports.initialPlayFileContentItemDefaults = exports.dmGetDefaultMediaListContentItemData = exports.initialMediaListContentItemDefaults = exports.dmGetDefaultMjpegStreamContentItemData = exports.initialMjpegStreamContentItemDefaults = exports.dmGetDefaultAudioStreamContentItemData = exports.dmGetDefaultVideoStreamContentItemData = exports.initialStreamContentItemDefaults = exports.dmGetDefaultLiveVideoContentItemData = exports.initialLiveVideoContentItemDefaults = exports.dmGetDefaultTwitterFeedContentItemData = exports.initialTwitterContentItemDefaults = exports.dmGetDefaultMrssDataFeedContentItemData = exports.initialMrssContentItemDefaults = exports.dmGetDefaultHtmlContentItemData = exports.initialHtmlContentItemDefaults = exports.dmGetDefaultImageContentItemData = exports.initialImageContentItemDefaults = exports.dmGetDefaultAudioContentItemData = exports.initialAudioContentItemDefaults = exports.dmGetDefaultVideoContentItemData = exports.initialVideoContentItemDefaults = exports.dmGetDefaultDataFeedSourceProperties = exports.initialDataFeedSourcePropertyDefaults = exports.dmGetDefaultLiveTextItemTextProperties = exports.initialLiveTextItemTextPropertyDefaults = exports.dmGetDefaultClockZoneProperties = exports.initialClockZonePropertyDefaults = exports.dmGetDefaultTickerZoneProperties = exports.initialTickerZonePropertyDefaults = exports.dmGetDefaultVideoZoneProperties = exports.initialVideoZonePropertyDefaults = exports.dmGetDefaultImageZoneProperties = exports.initialImageZonePropertyDefaults = exports.dmGetDefaultEnhancedAudioZoneProperties = exports.initialEnhancedAudioZonePropertyDefaults = exports.dmGetDefaultAudioZoneProperties = exports.initialAudioZonePropertyDefaults = exports.initialDefaultAudioOutputAssignmentMap = exports.dmGetDefaultAudioSignPropertyMap = exports.initialAudioSignPropertyDefaults = exports.dmGetDefaultButtonPanelMap = exports.initialButtonPanelConfigurationDefaults = exports.dmGetDefaultIrRemote = exports.initialIrRemoteDefault = exports.dmGetDefaultGpioList = exports.initialGpioListDefaults = exports.dmGetDefaultSerialPortList = exports.initialSerialPortDefaults = exports.dmGetDefaultSignPropertyData = exports.initialSignPropertyDefaults = exports.dmGetDefaultPropertyValues = exports.dmResetDefaultPropertyValues = exports.dmSetDefaultPropertyValues = void 0;
+exports.initialMjpegStreamContentItemDefaults = exports.dmGetDefaultAudioStreamContentItemData = exports.dmGetDefaultVideoStreamContentItemData = exports.initialStreamContentItemDefaults = exports.dmGetDefaultLiveVideoContentItemData = exports.initialLiveVideoContentItemDefaults = exports.dmGetDefaultTwitterFeedContentItemData = exports.initialTwitterContentItemDefaults = exports.dmGetDefaultMrssDataFeedContentItemData = exports.initialMrssContentItemDefaults = exports.dmGetDefaultHtmlContentItemData = exports.initialHtmlContentItemDefaults = exports.dmGetDefaultImageContentItemData = exports.initialImageContentItemDefaults = exports.dmGetDefaultAudioContentItemData = exports.initialAudioContentItemDefaults = exports.dmGetDefaultVideoContentItemData = exports.initialVideoContentItemDefaults = exports.dmGetDefaultDataFeedSourceProperties = exports.initialDataFeedSourcePropertyDefaults = exports.dmGetDefaultLiveTextItemTextProperties = exports.initialLiveTextItemTextPropertyDefaults = exports.dmGetDefaultClockZoneProperties = exports.initialClockZonePropertyDefaults = exports.dmGetDefaultTickerZoneProperties = exports.initialTickerZonePropertyDefaults = exports.dmGetDefaultVideoZoneProperties = exports.initialVideoZonePropertyDefaults = exports.dmGetDefaultImageZoneProperties = exports.initialImageZonePropertyDefaults = exports.dmGetDefaultEnhancedAudioZoneProperties = exports.initialEnhancedAudioZonePropertyDefaults = exports.dmGetDefaultAudioZoneProperties = exports.initialAudioZonePropertyDefaults = exports.initialDefaultAudioOutputAssignmentMap = exports.dmGetDefaultAudioSignPropertyMap = exports.initialAudioSignPropertyDefaults = exports.dmGetDefaultButtonPanelMap = exports.initialButtonPanelConfigurationDefaults = exports.dmGetDefaultIrRemote = exports.initialIrRemoteDefault = exports.dmGetDefaultGpioList = exports.initialGpioListDefaults = exports.dmGetDefaultSerialPortList = exports.initialSerialPortDefaults = exports.dmGetDefaultSignPropertyData = exports.initialSignPropertyDefaults = exports.dmGetDefaultPropertyValues = exports.dmResetDefaultPropertyValues = exports.dmSetDefaultPropertyValues = void 0;
+exports.DmInternal = exports.dmGetDefaultTimerEventData = exports.initialTimerEventDefaults = exports.dmGetDefaultEventHandlerContentItemData = exports.initialEventHandlerContentItemDefaults = exports.dmGetDefaultPlayFileContentItemData = exports.initialPlayFileContentItemDefaults = exports.dmGetDefaultMediaListContentItemData = exports.initialMediaListContentItemDefaults = exports.dmGetDefaultMjpegStreamContentItemData = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var lodash_1 = __webpack_require__(0);
@@ -4796,12 +4967,12 @@ exports.initialSerialPortDefaults = {
     baudRate: 115200,
     dataBits: 8,
     stopBits: 1,
-    parity: 'N',
-    protocol: 'ASCII',
-    sendEol: 'CR',
-    receiveEol: 'CR',
+    parity: bsDmInterfaces_1.SerialParity.None,
+    protocol: bsDmInterfaces_1.SerialProtocol.Ascii,
+    sendEol: bsDmInterfaces_1.SerialEol.CR,
+    receiveEol: bsDmInterfaces_1.SerialEol.CR,
     invertSignals: false,
-    connectedDevice: 'None',
+    connectedDevice: bsDmInterfaces_1.SerialConnectedDeviceType.None,
 };
 Object.freeze(exports.initialSerialPortDefaults);
 var createDefaultSerialPortList = function () {
@@ -5486,7 +5657,7 @@ exports.dmDeleteEvent = exports.dmDeleteEventWithParams = exports.dmGetEventDele
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmValidate_1 = __webpack_require__(49);
+var bsDmValidate_1 = __webpack_require__(50);
 var bsDmError_1 = __webpack_require__(4);
 var selectors_1 = __webpack_require__(6);
 var actionTransition_1 = __webpack_require__(25);
@@ -5638,12 +5809,355 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmGetPasteDataFeedAction = exports.dmDeleteDataFeed = exports.dmDeleteDataFeedWithParams = exports.dmGetDataFeedDeleteParams = exports.dmUpdateDataFeedSourceProperties = exports.dmGetUpdateDataFeedActionList = exports.dmUpdateDataFeed = exports.dmPutDataFeed = exports.dmGetDataFeedSourceRemoveParams = exports.dmRemoveDataFeedSourceWithParams = exports.dmUpdateDataFeedSource = exports.dmPutDataFeedSource = exports.dmGetAddDataFeedActionList = exports.dmAddDataFeed = exports.PASTE_DATA_FEEDS = exports.REMOVE_DATA_FEED_SOURCE = exports.UPDATE_DATA_FEED_SOURCE = exports.PUT_DATA_FEED_SOURCE = exports.DELETE_DATA_FEED = exports.UPDATE_DATA_FEED = exports.ADD_DATA_FEED = void 0;
+var utils_1 = __webpack_require__(3);
+var bscore_1 = __webpack_require__(1);
+var bsDmInterfaces_1 = __webpack_require__(2);
+var bsDmState_1 = __webpack_require__(5);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
+var bsDmDefaults_1 = __webpack_require__(19);
+var bsDmDataFeed_1 = __webpack_require__(15);
+var actionBase_1 = __webpack_require__(8);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
+var selectors_1 = __webpack_require__(6);
+var bsDmError_1 = __webpack_require__(4);
+var lodash_1 = __webpack_require__(0);
+exports.ADD_DATA_FEED = 'DM_ADD_DATA_FEED';
+exports.UPDATE_DATA_FEED = 'DM_UPDATE_DATA_FEED';
+exports.DELETE_DATA_FEED = 'DM_DELETE_DATA_FEED';
+exports.PUT_DATA_FEED_SOURCE = 'DM_PUT_DATA_FEED_SOURCE';
+exports.UPDATE_DATA_FEED_SOURCE = 'DM_UPDATE_DATA_FEED_SOURCE';
+exports.REMOVE_DATA_FEED_SOURCE = 'DM_REMOVE_DATA_FEED_SOURCE';
+exports.PASTE_DATA_FEEDS = 'DM_PASTE_DATA_FEEDS';
+var defaultDataFeedProperties = {
+    parserPlugin: bsDmInterfaces_1.BsDmIdNone,
+    autoGenerateUserVariables: false,
+    userVariableAccess: bscore_1.AccessType.Private,
+};
+var defaultBsnDataFeedProperties = __assign(__assign({}, defaultDataFeedProperties), { supportsAudio: false, playerTagMatching: bscore_1.PlayerTagMatchingType.DoNotMatchTags });
+function initDataFeedSourceFromSpec(source, callerName) {
+    var defaultProps = __assign({}, bsDmDefaults_1.dmGetDefaultDataFeedSourceProperties());
+    if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(source)) {
+        return {
+            id: utils_1.newBsDmId(),
+            type: source.assetItem.assetType,
+            dataFeedAssetId: source.assetItem.id,
+            updateInterval: lodash_1.isNil(source.updateInterval) ? defaultProps.updateInterval : source.updateInterval,
+            useHeadRequest: lodash_1.isNil(source.useHeadRequest) ? defaultProps.useHeadRequest : source.useHeadRequest,
+        };
+    }
+    else if (bsDmDataFeed_1.dmIsRemoteDataFeedSourceSpecification(source)) {
+        return {
+            id: utils_1.newBsDmId(),
+            type: bscore_1.DataFeedType.URLDataFeed,
+            url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(source.url),
+            updateInterval: lodash_1.isNil(source.updateInterval) ? defaultProps.updateInterval : source.updateInterval,
+            useHeadRequest: lodash_1.isNil(source.useHeadRequest) ? defaultProps.useHeadRequest : source.useHeadRequest,
+        };
+    }
+    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, callerName + ': invalid data feed source specification');
+}
+function dmAddDataFeed(name, feedSpec, properties) {
+    return function (dispatch, getState) {
+        var actionListParams = dmGetAddDataFeedActionList(bsDmState_1.dmFilterDmState(getState()), name, feedSpec, properties);
+        if (lodash_1.isNil(actionListParams)) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.unknownError, 'AddDataFeed - error in configuring data feed source');
+        }
+        dispatch(actionBase_1.dmBatchActions(actionListParams.actions));
+        return __assign(__assign({}, actionListParams.mainAction), { meta: { dispatchList: actionListParams.actions } });
+    };
+}
+exports.dmAddDataFeed = dmAddDataFeed;
+function dmGetAddDataFeedActionList(dmState, name, feedSpec, properties) {
+    if (!lodash_1.isNil(properties)) {
+        if (utils_1.isValidBsDmId(properties.parserPlugin)) {
+            var plugin = selectors_1.dmGetParserPluginStateById(dmState, { id: properties.parserPlugin });
+            if (lodash_1.isNil(plugin)) {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddDataFeed - invalid parser plugin ID');
+            }
+        }
+        else if (lodash_1.isNull(properties.parserPlugin)) {
+            properties.parserPlugin = bsDmInterfaces_1.BsDmIdNone;
+        }
+    }
+    var actions = [];
+    var feedSourceId = selectors_1.dmGetDataFeedSourceIdForFeedSpec(dmState, feedSpec);
+    var feedSource = lodash_1.isNil(feedSourceId) ? null :
+        selectors_1.dmGetDataFeedSourceForFeedSourceId(dmState, { id: feedSourceId });
+    if (lodash_1.isNil(feedSource)) {
+        feedSource = initDataFeedSourceFromSpec(feedSpec, 'dmAddDataFeed');
+        if (bsDmDataFeed_1.dmIsDataFeedSourceRemoteDataFeed(feedSource)) {
+            feedSource.url = selectors_1.dmResolveParameterizedStringUserVariables(dmState, { paramString: feedSource.url });
+        }
+    }
+    if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(feedSpec)) {
+        var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, feedSpec.assetItem);
+        actions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
+        feedSource.dataFeedAssetId = assetItem.id;
+        if (!name) {
+            name = assetItem.name;
+        }
+    }
+    actions.push(dmPutDataFeedSource(feedSource));
+    var defaultProperties = feedSpec.type !== bscore_1.DataFeedType.URLDataFeed ? defaultBsnDataFeedProperties : defaultDataFeedProperties;
+    var mergedProperties = __assign(__assign({}, defaultProperties), properties);
+    var mainAction = dmPutDataFeed(lodash_1.isNil(name) ? '' : name, feedSource, feedSpec.usage, mergedProperties);
+    actions.push(mainAction);
+    return { actions: actions, mainAction: mainAction };
+}
+exports.dmGetAddDataFeedActionList = dmGetAddDataFeedActionList;
+function dmPutDataFeedSource(source) {
+    return {
+        type: exports.PUT_DATA_FEED_SOURCE,
+        payload: source,
+    };
+}
+exports.dmPutDataFeedSource = dmPutDataFeedSource;
+function dmUpdateDataFeedSource(source) {
+    return {
+        type: exports.UPDATE_DATA_FEED_SOURCE,
+        payload: source,
+    };
+}
+exports.dmUpdateDataFeedSource = dmUpdateDataFeedSource;
+function dmRemoveDataFeedSourceWithParams(deleteParams) {
+    return {
+        type: exports.REMOVE_DATA_FEED_SOURCE,
+        payload: deleteParams,
+    };
+}
+exports.dmRemoveDataFeedSourceWithParams = dmRemoveDataFeedSourceWithParams;
+function dmGetDataFeedSourceRemoveParams(state, id) {
+    var deleteParams = {
+        dataFeedSourceIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
+        commandIds: [],
+        assetIds: [],
+    };
+    deleteParams.dataFeedSourceIds.forEach(function (feedSourceId) {
+        var feedSource = state.dataFeeds.sourcesById[feedSourceId];
+        if (!lodash_1.isNil(feedSource) && bsDmDataFeed_1.dmIsDataFeedSourceBsnDataFeed(feedSource)) {
+            deleteParams.assetIds.push(feedSource.dataFeedAssetId);
+        }
+    });
+    deleteParams.commandIds = dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, deleteParams.dataFeedSourceIds);
+    return deleteParams;
+}
+exports.dmGetDataFeedSourceRemoveParams = dmGetDataFeedSourceRemoveParams;
+function dmPutDataFeed(name, source, usage, properties) {
+    return {
+        type: exports.ADD_DATA_FEED,
+        payload: {
+            id: utils_1.newBsDmId(),
+            name: name,
+            feedSourceId: source.id,
+            usage: usage,
+            properties: properties,
+        },
+    };
+}
+exports.dmPutDataFeed = dmPutDataFeed;
+function dmUpdateDataFeed(params) {
+    return function (dispatch, getState) {
+        var actionListParams = dmGetUpdateDataFeedActionList(bsDmState_1.dmFilterDmState(getState()), params);
+        dispatch(actionBase_1.dmBatchActions(actionListParams.actions));
+        return __assign(__assign({}, actionListParams.mainAction), { meta: { dispatchList: actionListParams.actions } });
+    };
+}
+exports.dmUpdateDataFeed = dmUpdateDataFeed;
+function dmGetUpdateDataFeedActionList(dmState, params) {
+    if (!lodash_1.isNil(params.properties)) {
+        if (utils_1.isValidBsDmId(params.properties.parserPlugin)) {
+            var plugin = selectors_1.dmGetParserPluginStateById(dmState, { id: params.properties.parserPlugin });
+            if (lodash_1.isNil(plugin)) {
+                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateDataFeed - invalid parser plugin ID');
+            }
+        }
+        else if (lodash_1.isNull(params.properties.parserPlugin)) {
+            params.properties.parserPlugin = bsDmInterfaces_1.BsDmIdNone;
+        }
+        lodash_1.omit(params.properties, 'isSystemFeed');
+    }
+    var actions = [];
+    var feedSource;
+    var usage;
+    if (!lodash_1.isNil(params.feedSpec)) {
+        var newFeedSourceId = selectors_1.dmGetDataFeedSourceIdForFeedSpec(dmState, params.feedSpec);
+        var existingFeedSource = selectors_1.dmGetDataFeedSourceForFeedId(dmState, { id: params.id });
+        var updateToSameFeedSource = !lodash_1.isNil(existingFeedSource) && !lodash_1.isNil(newFeedSourceId) && newFeedSourceId === existingFeedSource.id;
+        var feedSourceProps = lodash_1.pick(params.feedSpec, ['updateInterval', 'useHeadRequest']);
+        if (!updateToSameFeedSource) {
+            if (!lodash_1.isNil(existingFeedSource)) {
+                actions.push(dmRemoveDataFeedSourceWithParams(dmGetDataFeedSourceRemoveParams(dmState, existingFeedSource.id)));
+            }
+            var currentFeedSource = lodash_1.isNil(newFeedSourceId) ? null :
+                selectors_1.dmGetDataFeedSourceForFeedSourceId(dmState, { id: newFeedSourceId });
+            if (lodash_1.isNil(currentFeedSource)) {
+                feedSource = initDataFeedSourceFromSpec(params.feedSpec, 'dmUpdateDataFeed');
+                if (bsDmDataFeed_1.dmIsDataFeedSourceRemoteDataFeed(feedSource)) {
+                    feedSource.url = selectors_1.dmResolveParameterizedStringUserVariables(dmState, { paramString: feedSource.url });
+                }
+                if (!lodash_1.isNil(existingFeedSource)) {
+                    if (lodash_1.isNil(params.feedSpec.updateInterval)) {
+                        feedSource.updateInterval = existingFeedSource.updateInterval;
+                    }
+                    if (lodash_1.isNil(params.feedSpec.useHeadRequest)) {
+                        feedSource.useHeadRequest = existingFeedSource.useHeadRequest;
+                    }
+                }
+            }
+            else {
+                feedSource = __assign(__assign({}, currentFeedSource), feedSourceProps);
+            }
+            if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(params.feedSpec)) {
+                var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, params.feedSpec.assetItem);
+                actions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
+                feedSource.dataFeedAssetId = assetItem.id;
+                if (!params.name) {
+                    params.name = assetItem.name;
+                }
+            }
+            else if (lodash_1.isNil(params.name)) {
+                params.name = '';
+            }
+            actions.push(dmPutDataFeedSource(feedSource));
+        }
+        else {
+            if (Object.keys(feedSourceProps).length) {
+                actions.push(dmUpdateDataFeedSource(__assign({ id: existingFeedSource.id }, feedSourceProps)));
+            }
+        }
+        usage = params.feedSpec.usage;
+    }
+    var actionParams = lodash_1.pick(params, 'id', 'name', 'properties');
+    if (!lodash_1.isNil(feedSource)) {
+        actionParams.feedSourceId = feedSource.id;
+    }
+    if (!lodash_1.isNil(usage)) {
+        actionParams.usage = usage;
+    }
+    var mainAction = {
+        type: exports.UPDATE_DATA_FEED,
+        payload: actionParams,
+    };
+    if (Object.keys(actionParams).length > 1 || actions.length > 0) {
+        actions.push(mainAction);
+    }
+    return { actions: actions, mainAction: mainAction };
+}
+exports.dmGetUpdateDataFeedActionList = dmGetUpdateDataFeedActionList;
+function dmUpdateDataFeedSourceProperties(params) {
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var dataFeedState = selectors_1.dmGetDataFeedStateById(dmState, { id: params.id });
+        if (!lodash_1.isNil(dataFeedState)) {
+            var props = lodash_1.pick(params, ['updateInterval', 'useHeadRequest']);
+            return dispatch(dmUpdateDataFeedSource(__assign({ id: dataFeedState.feedSourceId }, props)));
+        }
+        else {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateDataFeedSourceProperties: invalid dataFeed ID');
+        }
+    };
+}
+exports.dmUpdateDataFeedSourceProperties = dmUpdateDataFeedSourceProperties;
+function dmGetDataFeedDeleteParams(state, id) {
+    var deleteParams = {
+        dataFeedIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
+        dataFeedSourceIds: [],
+        commandIds: [],
+        assetIds: [],
+    };
+    deleteParams.dataFeedIds.forEach(function (dataFeedId) {
+        var dataFeed = state.dataFeeds.feedsById[dataFeedId];
+        if (!lodash_1.isNil(dataFeed)) {
+            deleteParams.dataFeedSourceIds.push(dataFeed.feedSourceId);
+            var feedSource = selectors_1.dmGetDataFeedSourceForFeedSourceId(state, { id: dataFeed.feedSourceId });
+            if (bsDmDataFeed_1.dmIsDataFeedSourceBsnDataFeed(feedSource)) {
+                deleteParams.assetIds.push(feedSource.dataFeedAssetId);
+            }
+        }
+    });
+    deleteParams.commandIds = dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, deleteParams.dataFeedSourceIds);
+    return deleteParams;
+}
+exports.dmGetDataFeedDeleteParams = dmGetDataFeedDeleteParams;
+function dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, dataFeedSourceIds) {
+    var commandIds = [];
+    var updateDataFeedCommandIds = selectors_1.dmGetDataFeedSourceCommandIdsForDataFeedSources(state, { ids: dataFeedSourceIds });
+    if (updateDataFeedCommandIds.length > 0) {
+        var getUpdateDataFeedCommandIdsForSource_1 = function (feedSourceId) {
+            return updateDataFeedCommandIds.filter(function (commandId) {
+                var command = selectors_1.dmGetCommandStateById(state, { id: commandId });
+                return command.operations[0].data.dataFeedSourceId === feedSourceId;
+            });
+        };
+        var feedSourceDeleteCounts_1 = dataFeedSourceIds.reduce(function (countMap, feedSrcId) {
+            countMap[feedSrcId] = (countMap[feedSrcId] || 0) + 1;
+            return countMap;
+        }, {});
+        Object.keys(feedSourceDeleteCounts_1).forEach(function (feedSourceId) {
+            var feedSource = selectors_1.dmGetDataFeedSourceForFeedSourceId(state, { id: feedSourceId });
+            var feedSourceRefCount = lodash_1.isNil(feedSource.refCount) ? 0 : feedSource.refCount;
+            if (feedSourceRefCount <= feedSourceDeleteCounts_1[feedSourceId]) {
+                var updateCommandIdsForSource = getUpdateDataFeedCommandIdsForSource_1(feedSourceId);
+                if (updateCommandIdsForSource.length > 0) {
+                    commandIds.push.apply(commandIds, updateCommandIdsForSource);
+                }
+            }
+        });
+    }
+    return commandIds;
+}
+function dmDeleteDataFeedWithParams(params) {
+    return {
+        type: exports.DELETE_DATA_FEED,
+        payload: params,
+    };
+}
+exports.dmDeleteDataFeedWithParams = dmDeleteDataFeedWithParams;
+function dmDeleteDataFeed(id) {
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var deleteParams = dmGetDataFeedDeleteParams(dmState, id);
+        var mainAction = dmDeleteDataFeedWithParams(deleteParams);
+        dispatch(mainAction);
+        return mainAction;
+    };
+}
+exports.dmDeleteDataFeed = dmDeleteDataFeed;
+function dmGetPasteDataFeedAction(copySet) {
+    return {
+        type: exports.PASTE_DATA_FEEDS,
+        payload: { copySet: copySet },
+    };
+}
+exports.dmGetPasteDataFeedAction = dmGetPasteDataFeedAction;
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmIsValidByteSequenceString = exports.dmIsCommandCompatibleWithPlayerModel = exports.dmIsPresentationCommandData = exports.dmIsUserVariableCommandData = exports.dmIsPluginCommandData = exports.dmIsDataFeedSourceCommandData = exports.dmIsZoneCommandData = exports.dmIsTimedCommand = exports.dmCreateTimedCommand = exports.dmCreateCommand = exports.dmCreateCommandData = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmDefaults_1 = __webpack_require__(19);
 var bsDmParameterizedNumbers_1 = __webpack_require__(38);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var bsDmZone_1 = __webpack_require__(31);
 var bsDmError_1 = __webpack_require__(4);
 var lodash_1 = __webpack_require__(0);
@@ -5860,7 +6374,7 @@ function dmCreateCommandData(type, params) {
             var defaultZoneProperties = bsDmDefaults_1.dmGetDefaultAudioZoneProperties();
             return {
                 zoneId: !lodash_1.isNil(params.zoneId) ? params.zoneId : bsDmInterfaces_1.BsDmIdNone,
-                mode: !lodash_1.isNil(params.audioMode) ? params.audioMode : defaultZoneProperties.audioMode,
+                mode: !lodash_1.isNil(params.audioMode) ? params.audioMode : defaultZoneProperties.audioMixMode,
             };
         }
         case bscore_1.CommandType.UpdateDataFeed: {
@@ -5993,7 +6507,7 @@ exports.dmIsValidByteSequenceString = dmIsValidByteSequenceString;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6013,13 +6527,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fnAddCopySetDataFeed = exports.fnAddCopySetAssetItem = exports.dmUpdateUserVariableCopySetWithUniqueIds = exports.dmUpdateCommandCopySetWithUniqueIds = exports.dmUpdateMediaStateCopySetForPasteTargetContainer = exports.dmUpdateMediaStateCopySetWithUniqueStateNamesForZone = exports.dmUpdateLiveTextCopySetWithUniqueIds = exports.dmUpdateMediaStateCopySetWithUniqueIds = exports.dmIsUserVariableCopySet = exports.dmCreateNewUserVariableCopySet = exports.dmIsCommandCopySet = exports.dmCreateNewCommandCopySet = exports.dmIsLiveTextCopySet = exports.dmCreateNewLiveTextCopySet = exports.dmIsPlaylistMediaStateCopySet = exports.dmIsMediaStateCopySet = exports.dmCreateNewMediaStateCopySet = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmContentItems_1 = __webpack_require__(10);
+var bsDmContentItems_1 = __webpack_require__(9);
 var bsDmHtmlSite_1 = __webpack_require__(37);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmLiveText_1 = __webpack_require__(28);
 var selectors_1 = __webpack_require__(6);
 var utils_1 = __webpack_require__(3);
-var bsDmVersion_1 = __webpack_require__(57);
+var bsDmVersion_1 = __webpack_require__(58);
 var lodash_1 = __webpack_require__(0);
 function dmCreateNewMediaStateCopySet(contentType, containerId, zoneId, signId) {
     return {
@@ -6080,7 +6594,7 @@ function dmIsPlaylistMediaStateCopySet(copySet) {
 exports.dmIsPlaylistMediaStateCopySet = dmIsPlaylistMediaStateCopySet;
 function dmCreateNewLiveTextCopySet(canvasId) {
     return {
-        contentType: 'LiveText',
+        contentType: bsDmInterfaces_1.DmCopySetContentType.LiveText,
         'version': bsDmVersion_1.version,
         containerId: canvasId,
         liveText: {
@@ -6105,7 +6619,7 @@ exports.dmIsLiveTextCopySet = dmIsLiveTextCopySet;
 function dmCreateNewCommandCopySet(parentId) {
     if (parentId === void 0) { parentId = bsDmInterfaces_1.BsDmIdNone; }
     return {
-        contentType: 'Command',
+        contentType: bsDmInterfaces_1.DmCopySetContentType.Command,
         'version': bsDmVersion_1.version,
         containerId: parentId,
         commands: {
@@ -6124,7 +6638,7 @@ function dmIsCommandCopySet(copySet) {
 exports.dmIsCommandCopySet = dmIsCommandCopySet;
 function dmCreateNewUserVariableCopySet(signId) {
     return {
-        contentType: 'UserVariable',
+        contentType: bsDmInterfaces_1.DmCopySetContentType.UserVariable,
         'version': bsDmVersion_1.version,
         containerId: signId,
         userVariables: {
@@ -6271,6 +6785,10 @@ function dmUpdateMediaStateCopySetWithUniqueIds(copySet, mergeParams) {
                 substituteAssetIdIfNecessary(contentItem, 'defaultMediaId');
             }
         }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(contentItem)) {
+            contentItem.defaultDataFeedId =
+                subMap.dataFeedIds.get(contentItem.defaultDataFeedId);
+        }
         else if (bsDmContentItems_1.dmContentItemIsSuperStateContentItem(contentItem)) {
             contentItem.initialMediaStateId = subMap.mediaStateIds.get(contentItem.initialMediaStateId);
         }
@@ -6399,7 +6917,7 @@ function dmUpdateMediaStateCopySetWithUniqueIds(copySet, mergeParams) {
         mediaStateIdMap: subMap.mediaStateIds,
         eventIdMap: subMap.eventIds,
         userVariableIdMap: subMap.userVariableIds,
-        dataFeedSourceIdMap: subMap.dataFeedSourceIds
+        dataFeedSourceIdMap: subMap.dataFeedSourceIds,
     };
 }
 exports.dmUpdateMediaStateCopySetWithUniqueIds = dmUpdateMediaStateCopySetWithUniqueIds;
@@ -6651,7 +7169,7 @@ exports.fnAddCopySetDataFeed = fnAddCopySetDataFeed;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7004,6 +7522,11 @@ function dmIsEventCompatibleWithTargetContentItem(event, contentItemType) {
                     || contentItemType === bscore_1.ContentItemType.PlayFile;
                 error = new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.synchronizeEventNotCompatibleWithContentType);
                 break;
+            case bscore_1.EventType.AudioTimeCode:
+            case bscore_1.EventType.VideoTimeCode:
+                result.ok = false;
+                error = new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.eventNotAllowedWithTarget);
+                break;
         }
     }
     if (!result.ok && !lodash_1.isNil(error)) {
@@ -7139,349 +7662,6 @@ exports.dmIsValidKeyboardEventData = dmIsValidKeyboardEventData;
 
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetPasteDataFeedAction = exports.dmDeleteDataFeed = exports.dmDeleteDataFeedWithParams = exports.dmGetDataFeedDeleteParams = exports.dmUpdateDataFeedSourceProperties = exports.dmGetUpdateDataFeedActionList = exports.dmUpdateDataFeed = exports.dmPutDataFeed = exports.dmGetDataFeedSourceRemoveParams = exports.dmRemoveDataFeedSourceWithParams = exports.dmUpdateDataFeedSource = exports.dmPutDataFeedSource = exports.dmGetAddDataFeedActionList = exports.dmAddDataFeed = exports.PASTE_DATA_FEEDS = exports.REMOVE_DATA_FEED_SOURCE = exports.UPDATE_DATA_FEED_SOURCE = exports.PUT_DATA_FEED_SOURCE = exports.DELETE_DATA_FEED = exports.UPDATE_DATA_FEED = exports.ADD_DATA_FEED = void 0;
-var utils_1 = __webpack_require__(3);
-var bscore_1 = __webpack_require__(1);
-var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmState_1 = __webpack_require__(5);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
-var bsDmDefaults_1 = __webpack_require__(19);
-var bsDmDataFeed_1 = __webpack_require__(18);
-var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
-var selectors_1 = __webpack_require__(6);
-var bsDmError_1 = __webpack_require__(4);
-var lodash_1 = __webpack_require__(0);
-exports.ADD_DATA_FEED = 'DM_ADD_DATA_FEED';
-exports.UPDATE_DATA_FEED = 'DM_UPDATE_DATA_FEED';
-exports.DELETE_DATA_FEED = 'DM_DELETE_DATA_FEED';
-exports.PUT_DATA_FEED_SOURCE = 'DM_PUT_DATA_FEED_SOURCE';
-exports.UPDATE_DATA_FEED_SOURCE = 'DM_UPDATE_DATA_FEED_SOURCE';
-exports.REMOVE_DATA_FEED_SOURCE = 'DM_REMOVE_DATA_FEED_SOURCE';
-exports.PASTE_DATA_FEEDS = 'DM_PASTE_DATA_FEEDS';
-var defaultDataFeedProperties = {
-    parserPlugin: bsDmInterfaces_1.BsDmIdNone,
-    autoGenerateUserVariables: false,
-    userVariableAccess: bscore_1.AccessType.Private,
-};
-var defaultBsnDataFeedProperties = __assign(__assign({}, defaultDataFeedProperties), { supportsAudio: false, playerTagMatching: bscore_1.PlayerTagMatchingType.DoNotMatchTags });
-function initDataFeedSourceFromSpec(source, callerName) {
-    var defaultProps = __assign({}, bsDmDefaults_1.dmGetDefaultDataFeedSourceProperties());
-    if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(source)) {
-        return {
-            id: utils_1.newBsDmId(),
-            type: source.assetItem.assetType,
-            dataFeedAssetId: source.assetItem.id,
-            updateInterval: lodash_1.isNil(source.updateInterval) ? defaultProps.updateInterval : source.updateInterval,
-            useHeadRequest: lodash_1.isNil(source.useHeadRequest) ? defaultProps.useHeadRequest : source.useHeadRequest,
-        };
-    }
-    else if (bsDmDataFeed_1.dmIsRemoteDataFeedSourceSpecification(source)) {
-        return {
-            id: utils_1.newBsDmId(),
-            type: 'URLDataFeed',
-            url: bsDmParameterizedStrings_1.dmResolveDmParameterizedString(source.url),
-            updateInterval: lodash_1.isNil(source.updateInterval) ? defaultProps.updateInterval : source.updateInterval,
-            useHeadRequest: lodash_1.isNil(source.useHeadRequest) ? defaultProps.useHeadRequest : source.useHeadRequest,
-        };
-    }
-    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, callerName + ': invalid data feed source specification');
-}
-function dmAddDataFeed(name, feedSpec, properties) {
-    return function (dispatch, getState) {
-        var actionListParams = dmGetAddDataFeedActionList(bsDmState_1.dmFilterDmState(getState()), name, feedSpec, properties);
-        if (lodash_1.isNil(actionListParams)) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.unknownError, 'AddDataFeed - error in configuring data feed source');
-        }
-        dispatch(actionBase_1.dmBatchActions(actionListParams.actions));
-        return __assign(__assign({}, actionListParams.mainAction), { meta: { dispatchList: actionListParams.actions } });
-    };
-}
-exports.dmAddDataFeed = dmAddDataFeed;
-function dmGetAddDataFeedActionList(dmState, name, feedSpec, properties) {
-    if (!lodash_1.isNil(properties)) {
-        if (utils_1.isValidBsDmId(properties.parserPlugin)) {
-            var plugin = selectors_1.dmGetParserPluginStateById(dmState, { id: properties.parserPlugin });
-            if (lodash_1.isNil(plugin)) {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'AddDataFeed - invalid parser plugin ID');
-            }
-        }
-        else if (lodash_1.isNull(properties.parserPlugin)) {
-            properties.parserPlugin = bsDmInterfaces_1.BsDmIdNone;
-        }
-    }
-    var actions = [];
-    var feedSourceId = selectors_1.dmGetDataFeedSourceIdForFeedSpec(dmState, feedSpec);
-    var feedSource = lodash_1.isNil(feedSourceId) ? null :
-        selectors_1.dmGetDataFeedSourceForFeedSourceId(dmState, { id: feedSourceId });
-    if (lodash_1.isNil(feedSource)) {
-        feedSource = initDataFeedSourceFromSpec(feedSpec, 'dmAddDataFeed');
-        if (bsDmDataFeed_1.dmIsDataFeedSourceRemoteDataFeed(feedSource)) {
-            feedSource.url = selectors_1.dmResolveParameterizedStringUserVariables(dmState, { paramString: feedSource.url });
-        }
-    }
-    if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(feedSpec)) {
-        var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, feedSpec.assetItem);
-        actions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
-        feedSource.dataFeedAssetId = assetItem.id;
-        if (!name) {
-            name = assetItem.name;
-        }
-    }
-    actions.push(dmPutDataFeedSource(feedSource));
-    var defaultProperties = feedSpec.type !== bscore_1.DataFeedType.URLDataFeed ? defaultBsnDataFeedProperties : defaultDataFeedProperties;
-    var mergedProperties = __assign(__assign({}, defaultProperties), properties);
-    var mainAction = dmPutDataFeed(lodash_1.isNil(name) ? '' : name, feedSource, feedSpec.usage, mergedProperties);
-    actions.push(mainAction);
-    return { actions: actions, mainAction: mainAction };
-}
-exports.dmGetAddDataFeedActionList = dmGetAddDataFeedActionList;
-function dmPutDataFeedSource(source) {
-    return {
-        type: exports.PUT_DATA_FEED_SOURCE,
-        payload: source,
-    };
-}
-exports.dmPutDataFeedSource = dmPutDataFeedSource;
-function dmUpdateDataFeedSource(source) {
-    return {
-        type: exports.UPDATE_DATA_FEED_SOURCE,
-        payload: source,
-    };
-}
-exports.dmUpdateDataFeedSource = dmUpdateDataFeedSource;
-function dmRemoveDataFeedSourceWithParams(deleteParams) {
-    return {
-        type: exports.REMOVE_DATA_FEED_SOURCE,
-        payload: deleteParams,
-    };
-}
-exports.dmRemoveDataFeedSourceWithParams = dmRemoveDataFeedSourceWithParams;
-function dmGetDataFeedSourceRemoveParams(state, id) {
-    var deleteParams = {
-        dataFeedSourceIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
-        commandIds: [],
-        assetIds: [],
-    };
-    deleteParams.dataFeedSourceIds.forEach(function (feedSourceId) {
-        var feedSource = state.dataFeeds.sourcesById[feedSourceId];
-        if (!lodash_1.isNil(feedSource) && bsDmDataFeed_1.dmIsDataFeedSourceBsnDataFeed(feedSource)) {
-            deleteParams.assetIds.push(feedSource.dataFeedAssetId);
-        }
-    });
-    deleteParams.commandIds = dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, deleteParams.dataFeedSourceIds);
-    return deleteParams;
-}
-exports.dmGetDataFeedSourceRemoveParams = dmGetDataFeedSourceRemoveParams;
-function dmPutDataFeed(name, source, usage, properties) {
-    return {
-        type: exports.ADD_DATA_FEED,
-        payload: {
-            id: utils_1.newBsDmId(),
-            name: name,
-            feedSourceId: source.id,
-            usage: usage,
-            properties: properties,
-        },
-    };
-}
-exports.dmPutDataFeed = dmPutDataFeed;
-function dmUpdateDataFeed(params) {
-    return function (dispatch, getState) {
-        var actionListParams = dmGetUpdateDataFeedActionList(bsDmState_1.dmFilterDmState(getState()), params);
-        dispatch(actionBase_1.dmBatchActions(actionListParams.actions));
-        return __assign(__assign({}, actionListParams.mainAction), { meta: { dispatchList: actionListParams.actions } });
-    };
-}
-exports.dmUpdateDataFeed = dmUpdateDataFeed;
-function dmGetUpdateDataFeedActionList(dmState, params) {
-    if (!lodash_1.isNil(params.properties)) {
-        if (utils_1.isValidBsDmId(params.properties.parserPlugin)) {
-            var plugin = selectors_1.dmGetParserPluginStateById(dmState, { id: params.properties.parserPlugin });
-            if (lodash_1.isNil(plugin)) {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateDataFeed - invalid parser plugin ID');
-            }
-        }
-        else if (lodash_1.isNull(params.properties.parserPlugin)) {
-            params.properties.parserPlugin = bsDmInterfaces_1.BsDmIdNone;
-        }
-        lodash_1.omit(params.properties, 'isSystemFeed');
-    }
-    var actions = [];
-    var feedSource;
-    var usage;
-    if (!lodash_1.isNil(params.feedSpec)) {
-        var newFeedSourceId = selectors_1.dmGetDataFeedSourceIdForFeedSpec(dmState, params.feedSpec);
-        var existingFeedSource = selectors_1.dmGetDataFeedSourceForFeedId(dmState, { id: params.id });
-        var updateToSameFeedSource = !lodash_1.isNil(existingFeedSource) && !lodash_1.isNil(newFeedSourceId) && newFeedSourceId === existingFeedSource.id;
-        var feedSourceProps = lodash_1.pick(params.feedSpec, ['updateInterval', 'useHeadRequest']);
-        if (!updateToSameFeedSource) {
-            if (!lodash_1.isNil(existingFeedSource)) {
-                actions.push(dmRemoveDataFeedSourceWithParams(dmGetDataFeedSourceRemoveParams(dmState, existingFeedSource.id)));
-            }
-            var currentFeedSource = lodash_1.isNil(newFeedSourceId) ? null :
-                selectors_1.dmGetDataFeedSourceForFeedSourceId(dmState, { id: newFeedSourceId });
-            if (lodash_1.isNil(currentFeedSource)) {
-                feedSource = initDataFeedSourceFromSpec(params.feedSpec, 'dmUpdateDataFeed');
-                if (bsDmDataFeed_1.dmIsDataFeedSourceRemoteDataFeed(feedSource)) {
-                    feedSource.url = selectors_1.dmResolveParameterizedStringUserVariables(dmState, { paramString: feedSource.url });
-                }
-                if (!lodash_1.isNil(existingFeedSource)) {
-                    if (lodash_1.isNil(params.feedSpec.updateInterval)) {
-                        feedSource.updateInterval = existingFeedSource.updateInterval;
-                    }
-                    if (lodash_1.isNil(params.feedSpec.useHeadRequest)) {
-                        feedSource.useHeadRequest = existingFeedSource.useHeadRequest;
-                    }
-                }
-            }
-            else {
-                feedSource = __assign(__assign({}, currentFeedSource), feedSourceProps);
-            }
-            if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(params.feedSpec)) {
-                var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, params.feedSpec.assetItem);
-                actions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
-                feedSource.dataFeedAssetId = assetItem.id;
-                if (!params.name) {
-                    params.name = assetItem.name;
-                }
-            }
-            else if (lodash_1.isNil(params.name)) {
-                params.name = '';
-            }
-            actions.push(dmPutDataFeedSource(feedSource));
-        }
-        else {
-            if (Object.keys(feedSourceProps).length) {
-                actions.push(dmUpdateDataFeedSource(__assign({ id: existingFeedSource.id }, feedSourceProps)));
-            }
-        }
-        usage = params.feedSpec.usage;
-    }
-    var actionParams = lodash_1.pick(params, 'id', 'name', 'properties');
-    if (!lodash_1.isNil(feedSource)) {
-        actionParams.feedSourceId = feedSource.id;
-    }
-    if (!lodash_1.isNil(usage)) {
-        actionParams.usage = usage;
-    }
-    var mainAction = {
-        type: exports.UPDATE_DATA_FEED,
-        payload: actionParams,
-    };
-    if (Object.keys(actionParams).length > 1 || actions.length > 0) {
-        actions.push(mainAction);
-    }
-    return { actions: actions, mainAction: mainAction };
-}
-exports.dmGetUpdateDataFeedActionList = dmGetUpdateDataFeedActionList;
-function dmUpdateDataFeedSourceProperties(params) {
-    return function (dispatch, getState) {
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var dataFeedState = selectors_1.dmGetDataFeedStateById(dmState, { id: params.id });
-        if (!lodash_1.isNil(dataFeedState)) {
-            var props = lodash_1.pick(params, ['updateInterval', 'useHeadRequest']);
-            return dispatch(dmUpdateDataFeedSource(__assign({ id: dataFeedState.feedSourceId }, props)));
-        }
-        else {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'UpdateDataFeedSourceProperties: invalid dataFeed ID');
-        }
-    };
-}
-exports.dmUpdateDataFeedSourceProperties = dmUpdateDataFeedSourceProperties;
-function dmGetDataFeedDeleteParams(state, id) {
-    var deleteParams = {
-        dataFeedIds: (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId),
-        dataFeedSourceIds: [],
-        commandIds: [],
-        assetIds: [],
-    };
-    deleteParams.dataFeedIds.forEach(function (dataFeedId) {
-        var dataFeed = state.dataFeeds.feedsById[dataFeedId];
-        if (!lodash_1.isNil(dataFeed)) {
-            deleteParams.dataFeedSourceIds.push(dataFeed.feedSourceId);
-            var feedSource = selectors_1.dmGetDataFeedSourceForFeedSourceId(state, { id: dataFeed.feedSourceId });
-            if (bsDmDataFeed_1.dmIsDataFeedSourceBsnDataFeed(feedSource)) {
-                deleteParams.assetIds.push(feedSource.dataFeedAssetId);
-            }
-        }
-    });
-    deleteParams.commandIds = dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, deleteParams.dataFeedSourceIds);
-    return deleteParams;
-}
-exports.dmGetDataFeedDeleteParams = dmGetDataFeedDeleteParams;
-function dmGetUpdateDataFeedCommandIdsForDataFeedSourceIds(state, dataFeedSourceIds) {
-    var commandIds = [];
-    var updateDataFeedCommandIds = selectors_1.dmGetDataFeedSourceCommandIdsForDataFeedSources(state, { ids: dataFeedSourceIds });
-    if (updateDataFeedCommandIds.length > 0) {
-        var getUpdateDataFeedCommandIdsForSource_1 = function (feedSourceId) {
-            return updateDataFeedCommandIds.filter(function (commandId) {
-                var command = selectors_1.dmGetCommandStateById(state, { id: commandId });
-                return command.operations[0].data.dataFeedSourceId === feedSourceId;
-            });
-        };
-        var feedSourceDeleteCounts_1 = dataFeedSourceIds.reduce(function (countMap, feedSrcId) {
-            countMap[feedSrcId] = (countMap[feedSrcId] || 0) + 1;
-            return countMap;
-        }, {});
-        Object.keys(feedSourceDeleteCounts_1).forEach(function (feedSourceId) {
-            var feedSource = selectors_1.dmGetDataFeedSourceForFeedSourceId(state, { id: feedSourceId });
-            var feedSourceRefCount = lodash_1.isNil(feedSource.refCount) ? 0 : feedSource.refCount;
-            if (feedSourceRefCount <= feedSourceDeleteCounts_1[feedSourceId]) {
-                var updateCommandIdsForSource = getUpdateDataFeedCommandIdsForSource_1(feedSourceId);
-                if (updateCommandIdsForSource.length > 0) {
-                    commandIds.push.apply(commandIds, updateCommandIdsForSource);
-                }
-            }
-        });
-    }
-    return commandIds;
-}
-function dmDeleteDataFeedWithParams(params) {
-    return {
-        type: exports.DELETE_DATA_FEED,
-        payload: params,
-    };
-}
-exports.dmDeleteDataFeedWithParams = dmDeleteDataFeedWithParams;
-function dmDeleteDataFeed(id) {
-    return function (dispatch, getState) {
-        var dmState = bsDmState_1.dmFilterDmState(getState());
-        var deleteParams = dmGetDataFeedDeleteParams(dmState, id);
-        var mainAction = dmDeleteDataFeedWithParams(deleteParams);
-        dispatch(mainAction);
-        return mainAction;
-    };
-}
-exports.dmDeleteDataFeed = dmDeleteDataFeed;
-function dmGetPasteDataFeedAction(copySet) {
-    return {
-        type: exports.PASTE_DATA_FEEDS,
-        payload: { copySet: copySet },
-    };
-}
-exports.dmGetPasteDataFeedAction = dmGetPasteDataFeedAction;
-
-
-/***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7504,7 +7684,7 @@ var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmEvents_1 = __webpack_require__(23);
+var bsDmEvents_1 = __webpack_require__(24);
 var bsDmError_1 = __webpack_require__(4);
 var selectors_1 = __webpack_require__(6);
 var actionBase_1 = __webpack_require__(8);
@@ -7749,15 +7929,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetCommandCollectionForDifferentSign = exports.dmGetCommandCopySet = exports.dmGetCommandSequenceCopySet = exports.dmGetCommandIdsForSign = exports.dmGetCommandStatesForParentAndType = exports.fnGetCommandStatesForParentAndType = exports.fnGetCommandStatesForMediaState = exports.dmValidateCommand = exports.dmCommandIdsForTransition = exports.dmGetCommandIdsForCommandOperationTypes = exports.dmCommandIdsForEvent = exports.dmGetCommandSequenceIdsForParentId = exports.dmGetSequenceItemPreviousCommandIdsForMediaState = exports.dmGetSequenceItemNextCommandIdsForMediaState = exports.dmGetExitCommandIdsForMediaState = exports.dmGetEntryCommandIdsForMediaState = exports.dmGetCommandSequenceStateForParentAndType = exports.dmGetCommandSequenceStateById = exports.dmGetCommandSequenceIdForParentAndType = exports.dmGetCommandStateById = exports.dmGetCommandById = exports.clearCommandSelectorCaches = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
-var bsDmCommands_1 = __webpack_require__(21);
-var selectorValidation_1 = __webpack_require__(16);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
+var bsDmCommands_1 = __webpack_require__(22);
+var selectorValidation_1 = __webpack_require__(17);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetCommandById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.commands.commandsById; }, function (cmdId, commands) {
     var commandState = commands[cmdId];
     return lodash_1.isNil(commandState) ? null : new bsDmClasses_1.DmcCommand(commandState);
@@ -7858,6 +8038,12 @@ function dmValidateCommand(state, props) {
     };
     var validateParameterizedNumber = function (paramNumber, entityProperty) {
         var error = selectorValidation_1.dmValidateEntityParameterizedNumber(state, paramNumber, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validateParameterizedVolume = function (paramNumber, entityProperty) {
+        var error = selectorValidation_1.dmValidateEntityParameterizedVolume(paramNumber, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
@@ -7973,6 +8159,7 @@ function dmValidateCommand(state, props) {
                 case bscore_1.CommandType.DecrementZoneChannelVolume:
                 case bscore_1.CommandType.CecPhilipsSetVolume: {
                     validateParameterizedNumber(op.data.volume, op.type + '.volume');
+                    validateParameterizedVolume(op.data.volume, op.type + '.volume');
                     break;
                 }
                 case bscore_1.CommandType.CecSendString: {
@@ -8161,7 +8348,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -8186,8 +8373,8 @@ exports.dmIsDmcLiveTextItemMediaRssMediaItem = exports.DmcMediaRssMediaItem = ex
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmParameterizedNumbers_1 = __webpack_require__(38);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
-var bsDmClasses_1 = __webpack_require__(11);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
+var bsDmClasses_1 = __webpack_require__(12);
 var lodash_1 = __webpack_require__(0);
 exports.DefaultLiveTextPosition = bscore_1.bscCreatePercentageRect(0, 0, 50, 10);
 Object.freeze(exports.DefaultLiveTextPosition);
@@ -8197,17 +8384,17 @@ function dmCreateLiveTextItemData(type, params) {
         default:
         case bsDmInterfaces_1.LiveTextItemType.StaticText:
             return {
-                type: 'StaticText',
+                type: bsDmInterfaces_1.LiveTextItemType.StaticText,
                 text: lodash_1.isNil(params.text) ? '' : params.text,
             };
         case bsDmInterfaces_1.LiveTextItemType.SystemVariable:
             return {
-                type: 'SystemVariable',
+                type: bsDmInterfaces_1.LiveTextItemType.SystemVariable,
                 variable: lodash_1.isNil(params.systemVariable) ? bscore_1.SystemVariableType.SerialNumber : params.systemVariable,
             };
         case bsDmInterfaces_1.LiveTextItemType.MediaCounter:
             return {
-                type: 'MediaCounter',
+                type: bsDmInterfaces_1.LiveTextItemType.MediaCounter,
                 assetId: lodash_1.isNil(params.assetId) ? bscore_1.BsAssetIdNone : params.assetId,
             };
         case bsDmInterfaces_1.LiveTextItemType.UserVariable: {
@@ -8215,13 +8402,13 @@ function dmCreateLiveTextItemData(type, params) {
                 (lodash_1.isNil(params.userVariableName) ? bsDmInterfaces_1.BsDmIdNone : params.userVariableName) :
                 params.userVariableId;
             return {
-                type: 'UserVariable',
+                type: bsDmInterfaces_1.LiveTextItemType.UserVariable,
                 userVariableIdOrName: userVariableIdOrName,
             };
         }
         case bsDmInterfaces_1.LiveTextItemType.SimpleRss:
             return {
-                type: 'SimpleRss',
+                type: bsDmInterfaces_1.LiveTextItemType.SimpleRss,
                 element: lodash_1.isNil(params.element) ? bsDmInterfaces_1.RssTextElementName.Title : params.element,
                 groupId: lodash_1.isNil(params.groupId) ? bsDmInterfaces_1.BsDmIdNone : params.groupId,
                 enabled: true,
@@ -8229,7 +8416,7 @@ function dmCreateLiveTextItemData(type, params) {
         case bsDmInterfaces_1.LiveTextItemType.MediaRssText:
         case bsDmInterfaces_1.LiveTextEntityType.MediaRss:
             var mediaRssData = {
-                type: 'MediaRssText',
+                type: bsDmInterfaces_1.LiveTextItemType.MediaRssText,
                 element: lodash_1.isNil(params.element) ? bsDmInterfaces_1.RssTextElementName.Title : params.element,
                 groupId: lodash_1.isNil(params.groupId) ? bsDmInterfaces_1.BsDmIdNone : params.groupId,
                 enabled: true,
@@ -8240,18 +8427,18 @@ function dmCreateLiveTextItemData(type, params) {
             return mediaRssData;
         case bsDmInterfaces_1.LiveTextItemType.MediaRssMedia:
             return {
-                type: 'MediaRssMedia',
+                type: bsDmInterfaces_1.LiveTextItemType.MediaRssMedia,
                 groupId: lodash_1.isNil(params.groupId) ? bsDmInterfaces_1.BsDmIdNone : params.groupId,
                 enabled: true,
             };
         case bsDmInterfaces_1.LiveTextItemType.Image:
             return {
-                type: 'Image',
+                type: bsDmInterfaces_1.LiveTextItemType.Image,
                 assetId: bscore_1.BsAssetIdNone,
             };
         case bsDmInterfaces_1.LiveTextItemType.IndexedDataFeed:
             return {
-                type: 'IndexedDataFeed',
+                type: bsDmInterfaces_1.LiveTextItemType.IndexedDataFeed,
                 dataFeedId: bsDmInterfaces_1.BsDmIdNone,
                 index: lodash_1.isNil(params.index) ?
                     bsDmParameterizedNumbers_1.dmGetParameterizedNumberFromNumber(0) : bsDmParameterizedNumbers_1.dmResolveDmParameterizedNumber(params.index),
@@ -8259,7 +8446,7 @@ function dmCreateLiveTextItemData(type, params) {
         case bsDmInterfaces_1.LiveTextItemType.TitledDataFeed:
         case bsDmInterfaces_1.LiveTextEntityType.DataFeed:
             return {
-                type: 'TitledDataFeed',
+                type: bsDmInterfaces_1.LiveTextItemType.TitledDataFeed,
                 dataFeedId: bsDmInterfaces_1.BsDmIdNone,
                 title: lodash_1.isNil(params.title) ?
                     bsDmParameterizedStrings_1.dmGetEmptyParameterizedString() : bsDmParameterizedStrings_1.dmResolveDmParameterizedString(params.title),
@@ -8656,16 +8843,16 @@ var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
 var bsDmLiveText_1 = __webpack_require__(28);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmAssetItems_1 = __webpack_require__(41);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmAssetItems_1 = __webpack_require__(43);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmDefaults_1 = __webpack_require__(19);
-var bsDmCopyPaste_1 = __webpack_require__(22);
+var bsDmCopyPaste_1 = __webpack_require__(23);
 var bsDmError_1 = __webpack_require__(4);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionDataFeed_1 = __webpack_require__(21);
 var selectors_1 = __webpack_require__(6);
 exports.ADD_LIVE_TEXT_CANVAS = 'DM_ADD_LIVE_TEXT_CANVAS';
 exports.UPDATE_LIVE_TEXT_CANVAS = 'DM_UPDATE_LIVE_TEXT_CANVAS';
@@ -9600,7 +9787,7 @@ exports.dmCreateDefaultVideoZoneLayerProperties = dmCreateDefaultVideoZoneLayerP
 function dmCreateDefaultVideoZoneLayer(decoder, index, videoMode, id) {
     return {
         id: utils_1.isValidBsDmId(id) ? id : utils_1.newBsDmId(),
-        type: 'Video',
+        type: bscore_1.ZoneLayerType.Video,
         zoneSequence: [],
         zoneLayerSpecificProperties: dmCreateDefaultVideoZoneLayerProperties(decoder, index, videoMode),
     };
@@ -9614,7 +9801,7 @@ function dmCreateDefaultNonVideoZoneLayer(type, id) {
     };
 }
 exports.dmCreateDefaultNonVideoZoneLayer = dmCreateDefaultNonVideoZoneLayer;
-exports.dmCreateDefaultSignZoneLayerMap = function (model, videoMode) {
+var dmCreateDefaultSignZoneLayerMap = function (model, videoMode) {
     var _a;
     if (lodash_1.isNil(model)) {
         model = bsDmDefaults_1.dmGetDefaultSignPropertyData().model;
@@ -9643,7 +9830,8 @@ exports.dmCreateDefaultSignZoneLayerMap = function (model, videoMode) {
     }
     return zoneLayerMap;
 };
-exports.dmCreateDefaultSignZoneLayerSequence = function (zoneLayerMap) {
+exports.dmCreateDefaultSignZoneLayerMap = dmCreateDefaultSignZoneLayerMap;
+var dmCreateDefaultSignZoneLayerSequence = function (zoneLayerMap) {
     var zoneLayerSequence = [];
     var graphicsLayerId;
     var videoLayer1Id;
@@ -9675,6 +9863,7 @@ exports.dmCreateDefaultSignZoneLayerSequence = function (zoneLayerMap) {
     }
     return zoneLayerSequence;
 };
+exports.dmCreateDefaultSignZoneLayerSequence = dmCreateDefaultSignZoneLayerSequence;
 function dmGetZoneLayerIdsByType(zoneLayersById) {
     var zoneLayerIdsInSign = {
         videoLayer1Id: bsDmInterfaces_1.BsDmIdNone,
@@ -9734,11 +9923,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmDeleteHtmlSite = exports.dmUpdateHtmlSiteWithoutAssetProcessing = exports.dmUpdateHtmlSite = exports.dmAddRemoteHtmlSite = exports.dmAddHostedHtmlSiteWithoutAssetProcessing = exports.dmAddHostedHtmlSite = exports.DELETE_HTML_SITE = exports.UPDATE_HTML_SITE = exports.ADD_HTML_SITE = void 0;
 var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var lodash_1 = __webpack_require__(0);
 exports.ADD_HTML_SITE = 'DM_ADD_HTML_SITE';
 exports.UPDATE_HTML_SITE = 'DM_UPDATE_HTML_SITE';
@@ -9920,9 +10109,9 @@ var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmCommands_1 = __webpack_require__(21);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var bsDmEvents_1 = __webpack_require__(23);
+var bsDmCommands_1 = __webpack_require__(22);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var bsDmEvents_1 = __webpack_require__(24);
 var bsDmError_1 = __webpack_require__(4);
 var lodash_1 = __webpack_require__(0);
 var selectors_1 = __webpack_require__(6);
@@ -10097,30 +10286,31 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetMergeUserVariableAction = exports.dmMergeUserVariableCopySet = exports.dmGetResolveUserVariablePlaceholderNameActionList = exports.dmResolveUserVariablePlaceholderNames = exports.dmDeleteUserVariable = exports.dmDeleteUserVariablesWithParams = exports.dmGetUserVariableDeleteParams = exports.dmMoveUserVariablesAtIndices = exports.dmUpdateUserVariable = exports.dmGetUserVariableAddAction = exports.dmAddUserVariable = exports.RESOLVE_USER_VARIABLE_PLACEHOLDER_NAMES = exports.DELETE_USER_VARIABLE = exports.MERGE_USER_VARIABLES = exports.MOVE_USER_VARIABLES = exports.UPDATE_USER_VARIABLE = exports.ADD_USER_VARIABLE = void 0;
+exports.dmGetMergeUserVariableAction = exports.dmMergeUserVariableCopySet = exports.dmGetResolveUserVariablePlaceholderNameActionList = exports.dmResolveUserVariablePlaceholderNames = exports.dmDeleteUserVariable = exports.dmDeleteUserVariablesWithParams = exports.dmGetUserVariableDeleteParams = exports.dmReSequenceUserVariables = exports.dmMoveUserVariablesAtIndices = exports.dmUpdateUserVariable = exports.dmGetUserVariableAddAction = exports.dmAddUserVariable = exports.RESOLVE_USER_VARIABLE_PLACEHOLDER_NAMES = exports.DELETE_USER_VARIABLE = exports.MERGE_USER_VARIABLES = exports.RESEQUENCE_USER_VARIABLES = exports.MOVE_USER_VARIABLES = exports.UPDATE_USER_VARIABLE = exports.ADD_USER_VARIABLE = void 0;
 var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var bsDmParameterizedNumbers_1 = __webpack_require__(38);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmLiveText_1 = __webpack_require__(28);
 var bsDmError_1 = __webpack_require__(4);
 var selectors_1 = __webpack_require__(6);
 var actionBase_1 = __webpack_require__(8);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionTransition_1 = __webpack_require__(25);
 var actionCommand_1 = __webpack_require__(33);
 var actionLiveText_1 = __webpack_require__(29);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionDataFeed_1 = __webpack_require__(21);
 var actionHtmlSite_1 = __webpack_require__(32);
 var lodash_1 = __webpack_require__(0);
 exports.ADD_USER_VARIABLE = 'DM_ADD_USER_VARIABLE';
 exports.UPDATE_USER_VARIABLE = 'DM_UPDATE_USER_VARIABLE';
 exports.MOVE_USER_VARIABLES = 'DM_MOVE_USER_VARIABLES';
+exports.RESEQUENCE_USER_VARIABLES = 'DM_RESEQUENCE_USER_VARIABLES';
 exports.MERGE_USER_VARIABLES = 'DM_MERGE_USER_VARIABLES';
 exports.DELETE_USER_VARIABLE = 'DM_DELETE_USER_VARIABLE';
 exports.RESOLVE_USER_VARIABLE_PLACEHOLDER_NAMES = 'DM_RESOLVE_USER_VARIABLE_PLACEHOLDER_NAMES';
@@ -10235,6 +10425,21 @@ function dmMoveUserVariablesAtIndices(indices, targetIndex) {
     };
 }
 exports.dmMoveUserVariablesAtIndices = dmMoveUserVariablesAtIndices;
+function dmReSequenceUserVariables(indices) {
+    return function (dispatch, getState) {
+        var uvSequence = selectors_1.dmGetUserVariableIdsForSign(bsDmState_1.dmFilterDmState(getState()));
+        indices = lodash_1.uniq(indices)
+            .filter(function (index) { return index >= 0 && index < uvSequence.length; });
+        if (indices.length !== uvSequence.length) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'ReSequenceUserVariables - invalid index array');
+        }
+        return dispatch({
+            type: exports.RESEQUENCE_USER_VARIABLES,
+            payload: { indices: indices },
+        });
+    };
+}
+exports.dmReSequenceUserVariables = dmReSequenceUserVariables;
 function dmGetUserVariableDeleteParams(state, id) {
     var userVariableIds = (Array.isArray(id) ? id : [id]).filter(utils_1.isValidBsDmId);
     var deleteParams = {
@@ -10515,18 +10720,18 @@ exports.dmGetMergedDataFeedSourceCopySet = exports.dmGetDataFeedSourceCommandIds
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmDataFeed_1 = __webpack_require__(18);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmCommands_1 = __webpack_require__(21);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmDataFeed_1 = __webpack_require__(15);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmCommands_1 = __webpack_require__(22);
 var selectorAssetMap_1 = __webpack_require__(39);
 var selectorUserVariable_1 = __webpack_require__(36);
 var selectorCommand_1 = __webpack_require__(26);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 function dmCreateDmcDataFeed(dataFeedState, assetMap, dataFeedId) {
     var dataFeedObjects = fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, dataFeedId);
     return lodash_1.isNil(dataFeedObjects) ? null : new bsDmClasses_1.DmcDataFeed(dataFeedObjects);
@@ -10598,6 +10803,11 @@ function dmGetDataFeedIdsForMediaState(state, props) {
         else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaState.contentItem)) {
             if (utils_1.isValidBsDmId(mediaState.contentItem.dataFeedId)) {
                 dataFeedIds.push(mediaState.contentItem.dataFeedId);
+            }
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(mediaState.contentItem)) {
+            if (utils_1.isValidBsDmId(mediaState.contentItem.defaultDataFeedId)) {
+                dataFeedIds.push(mediaState.contentItem.defaultDataFeedId);
             }
         }
     }
@@ -10725,24 +10935,24 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetMergedUserVariableCopySet = exports.dmGetUserVariableNameMap = exports.dmGetAllUserVariableCopySet = exports.dmGetUserVariableCopySet = exports.dmCheckUserVariableValidity = exports.dmIsParameterizedNumberUserVariableValid = exports.dmResolveParameterizedNumberUserVariables = exports.dmAreParameterizedStringUserVariablesValid = exports.dmResolveParameterizedStringUserVariables = exports.dmVisitUserVariableReferences = exports.dmGetActiveUserVariablesIdsForMediaStateCopySet = exports.dmGetActiveUserVariableIds = exports.dmGetParameterizedNumberFromDisplayString = exports.dmGetDisplayStringFromParameterizedNumber = exports.dmGetParameterizedStringFromDisplayString = exports.dmConstructParameterizedStringWithDefaultUserVariables = exports.dmGetParameterizedStringWithDefaultUserVariables = exports.dmConstructParameterizedDisplayString = exports.dmGetDisplayStringFromParameterizedString = exports.dmGetUserVariableByName = exports.dmGetUserVariableIdForName = exports.dmGetUserVariableIdsForSign = exports.dmGetUserVariableStateById = exports.dmGetUserVariableById = exports.clearUserVariableSelectorCaches = void 0;
+exports.dmGetMergedUserVariableCopySet = exports.dmGetUserVariableNameMap = exports.dmGetAllUserVariableCopySet = exports.dmGetUserVariableCopySet = exports.dmCheckUserVariableValidity = exports.dmIsParameterizedNumberUserVariableValid = exports.dmResolveParameterizedNumberUserVariables = exports.dmAreParameterizedStringUserVariablesValid = exports.dmResolveParameterizedStringUserVariables = exports.dmVisitUserVariableReferences = exports.dmGetActiveUserVariablesIdsForMediaStateCopySet = exports.dmGetActiveUserVariableIds = exports.dmGetParameterizedNumberFromDisplayString = exports.dmGetDisplayStringFromParameterizedNumber = exports.dmGetParameterizedStringFromDisplayString = exports.dmConstructParameterizedStringWithDefaultUserVariables = exports.dmGetParameterizedStringWithDefaultUserVariables = exports.dmConstructParameterizedNumberWithDefaultUserVariables = exports.dmGetParameterizedNumberWithDefaultUserVariables = exports.dmConstructParameterizedDisplayString = exports.dmGetDisplayStringFromParameterizedString = exports.dmGetUserVariableByName = exports.dmGetUserVariableIdForName = exports.dmGetUserVariableIdsForSign = exports.dmGetUserVariableStateById = exports.dmGetUserVariableById = exports.clearUserVariableSelectorCaches = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var bsDmError_1 = __webpack_require__(4);
 var bsDmParameterizedNumbers_1 = __webpack_require__(38);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var bsDmDataFeed_1 = __webpack_require__(18);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var bsDmDataFeed_1 = __webpack_require__(15);
 var bsDmLiveText_1 = __webpack_require__(28);
-var selectorSign_1 = __webpack_require__(47);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorSign_1 = __webpack_require__(49);
+var selectorValidation_1 = __webpack_require__(17);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetUserVariableById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.userVariables.variablesById; }, function (uvId, userVariableMap) {
     var userVariableState = userVariableMap[uvId];
     return lodash_1.isNil(userVariableState) ? null : new bsDmClasses_1.DmcUserVariable(userVariableState);
@@ -10803,6 +11013,26 @@ function dmConstructParameterizedDisplayString(paramString, userVariableMap) {
     return returnString;
 }
 exports.dmConstructParameterizedDisplayString = dmConstructParameterizedDisplayString;
+function dmGetParameterizedNumberWithDefaultUserVariables(state, props) {
+    return dmConstructParameterizedNumberWithDefaultUserVariables(props, state.userVariables.variablesById);
+}
+exports.dmGetParameterizedNumberWithDefaultUserVariables = dmGetParameterizedNumberWithDefaultUserVariables;
+function dmConstructParameterizedNumberWithDefaultUserVariables(param, userVariableMap) {
+    if (param.type === bscore_1.NumberParameterType.UserVariable) {
+        var userVar = userVariableMap[param.value];
+        if (!lodash_1.isNil(userVar)) {
+            var dValue = Number(dmConstructParameterizedStringWithDefaultUserVariables(userVar.defaultValue, userVariableMap));
+            if (!isNaN(dValue)) {
+                return dValue;
+            }
+        }
+    }
+    else if (param.type === bscore_1.NumberParameterType.Number) {
+        return param.value;
+    }
+    return -1;
+}
+exports.dmConstructParameterizedNumberWithDefaultUserVariables = dmConstructParameterizedNumberWithDefaultUserVariables;
 function dmGetParameterizedStringWithDefaultUserVariables(state, props) {
     return dmConstructParameterizedStringWithDefaultUserVariables(props.paramString, state.userVariables.variablesById);
 }
@@ -10857,12 +11087,12 @@ function dmGetDisplayStringFromParameterizedNumber(state, props) {
     var pn = props.paramNumber;
     var returnString = '';
     if (typeof pn === 'object' && pn.hasOwnProperty('value') && pn.hasOwnProperty('type')) {
-        if (pn.type === bscore_1.StringParameterType.UserVariable) {
+        if (pn.type === bscore_1.NumberParameterType.UserVariable) {
             var userVar = userVariables[pn.value];
             var userVarName = userVar ? userVar.name : '<undefined>';
             returnString = bsDmParameterizedStrings_1.dmGetPsUvStartDelimiter() + userVarName + bsDmParameterizedStrings_1.dmGetPsUvEndDelimiter();
         }
-        else if (pn.type === bscore_1.StringParameterType.UserVariableName) {
+        else if (pn.type === bscore_1.NumberParameterType.UserVariableName) {
             returnString = bsDmParameterizedStrings_1.dmGetPsUvStartDelimiter() + pn.value + bsDmParameterizedStrings_1.dmGetPsUvEndDelimiter();
         }
         else {
@@ -11381,8 +11611,8 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetMergedAssetItemCopySet = exports.dmGetBsnPresentationAssetItemSpecification = exports.dmGetBlobAssetItemList = exports.dmGetLocalAssetLocatorList = exports.dmGetBsnAssetLocatorList = exports.dmGetAssetItemListForFileName = exports.dmGetMediaContentAssetItemList = exports.dmHasLocalAssetItems = exports.dmGetAssetItemIdsForSign = exports.dmGetAssetItemByLocator = exports.dmGetAssetIdByLocator = exports.dmGetAssetItemById = void 0;
 var bscore_1 = __webpack_require__(1);
-var selectorDeviceWebPage_1 = __webpack_require__(67);
-var selectorZone_1 = __webpack_require__(40);
+var selectorDeviceWebPage_1 = __webpack_require__(68);
+var selectorZone_1 = __webpack_require__(42);
 var lodash_1 = __webpack_require__(0);
 var utils_1 = __webpack_require__(3);
 function dmGetAssetItemById(state, props) {
@@ -11560,26 +11790,422 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmAreAudioDecodersAvailableForZone = exports.dmGetZoneLayerIdsForZone = exports.dmGetZoneLayerMap = exports.dmGetDefaultVideoLayer = exports.dmGetAvailableVideoLayer = exports.dmGetUnusedVideoLayer = exports.dmCanAddBackgroundImageZoneToLayer = exports.dmCanAddBackgroundImageZone = exports.dmGetInvisibleZoneLayerIdInSign = exports.dmGetAudioZoneLayerIdInSign = exports.dmGetGraphicsZoneLayerIdInSign = exports.dmGetVideoZoneLayerIdsInSign = exports.dmGetZoneLayerIdsInSign = exports.dmGetZonePropertyAssetItemIds = exports.dmGetCanChangeZoneType = exports.dmCanChangeZoneType = exports.dmGetCanAddZone = exports.dmCanAddZone = exports.dmGetZoneLayerByTypeAndIndex = exports.dmGetZoneLayerIdByTypeAndIndex = exports.dmGetZoneLayerSequence = exports.dmGetZonesForLayer = exports.dmGetZoneLayersForZoneId = exports.dmGetZoneLayerIdsForZoneId = exports.dmGetZoneLayerById = exports.dmGetZoneLayerStateById = exports.dmGetNextMediaStateTagIndexForZone = exports.dmGetNonContainedZoneCommandIdsForZone = exports.dmGetZoneCommandIdsForZone = exports.dmGetZoneTagMap = exports.dmGetZoneIdsForZoneType = exports.dmGetZoneCount = exports.dmGetZonesForSign = exports.dmValidateZone = exports.dmIsValidContentItemTypeForContainer = exports.dmIsValidAssetTypeForContainer = exports.dmGetZoneAudioOutputSpecificationById = exports.dmGetZonePropertiesByTag = exports.dmGetZonePropertiesByName = exports.dmGetZonePropertiesById = exports.dmIsZoneNonInteractiveCompatible = exports.dmIsZoneInteractiveCompatible = exports.dmIsZoneContentNonInteractive = exports.dmGetZoneNonInteractiveById = exports.dmGetZoneTypeById = exports.dmGetZoneIdForCommandId = exports.dmGetZoneIdForTransitionId = exports.dmGetZoneIdForEventId = exports.dmGetZoneTypeForMediaStateId = exports.dmGetZoneForMediaStateId = exports.dmGetZoneStateForContainer = exports.dmGetZoneIdForContainer = exports.dmGetZoneIdForZoneOrMediaStateId = exports.dmGetZoneIdForMediaStateId = exports.dmGetEventIdsForZone = exports.dmGetAllTargetableMediaStateIdsForContainer = exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = exports.dmGetMediaStateIdsForZone = exports.dmGetZoneByTag = exports.dmIsAudioEnabledInZone = exports.dmCanSetAudioOutputForZone = exports.dmGetAvailableAudioDecoderCount = exports.dmGetAudioDecoderCountForSign = exports.dmGetAudioDecoderCountForZone = exports.dmGetVideoZoneCount = exports.dmGetZoneCountByZoneType = exports.dmGetZoneByName = exports.dmGetZoneStateById = exports.dmGetZoneById = exports.clearZoneSelectorCaches = void 0;
+exports.dmGetEventIdsForSign = exports.dmValidateEvent = exports.dmIsEventCompatibleWithContentItemType = exports.dmGetAllEventStatesForEventType = exports.dmGetAllEventIdsForEventType = exports.dmGetEventTypeById = exports.dmGetEventById = exports.dmGetEventStateById = exports.clearEventSelectorCaches = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmZone_1 = __webpack_require__(31);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmAssetItems_1 = __webpack_require__(41);
-var bsDmCommands_1 = __webpack_require__(21);
-var bsDmError_1 = __webpack_require__(4);
-var selectorSign_1 = __webpack_require__(47);
-var selectorPlaylist_1 = __webpack_require__(69);
-var selectorMediaState_1 = __webpack_require__(61);
-var selectorEvent_1 = __webpack_require__(45);
-var selectorTransition_1 = __webpack_require__(48);
+var bsDmClasses_1 = __webpack_require__(12);
+var selectorTransition_1 = __webpack_require__(41);
 var selectorCommand_1 = __webpack_require__(26);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmError_1 = __webpack_require__(4);
+var utils_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(0);
+var re_reselect_1 = __webpack_require__(18);
+var selGetEventById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (evId, events, transitions, commands) {
+    var eventState = events[evId];
+    if (eventState) {
+        var transitionStates = selectorTransition_1.fnGetSortedTransitionStatesForEventId(transitions, evId);
+        var evCommands = selectorCommand_1.fnGetCommandStatesForParentAndType(commands, evId, bscore_1.CommandSequenceType.Event);
+        return new bsDmClasses_1.DmcEvent(eventState, transitionStates, evCommands);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 500 }),
+});
+function clearEventSelectorCaches() {
+    selGetEventById.clearCache();
+}
+exports.clearEventSelectorCaches = clearEventSelectorCaches;
+function dmGetEventStateById(state, props) {
+    var eventState = state.events[props.id];
+    return lodash_1.isNil(eventState) ? null : eventState;
+}
+exports.dmGetEventStateById = dmGetEventStateById;
+function dmGetEventById(state, props) {
+    return selGetEventById(state, props);
+}
+exports.dmGetEventById = dmGetEventById;
+function dmGetEventTypeById(state, props) {
+    var eventState = state.events[props.id];
+    return lodash_1.isNil(eventState) ? null : eventState.type;
+}
+exports.dmGetEventTypeById = dmGetEventTypeById;
+function dmGetAllEventIdsForEventType(state, props) {
+    return Object.keys(state.events).filter(function (id) { return state.events[id].type === props.type; });
+}
+exports.dmGetAllEventIdsForEventType = dmGetAllEventIdsForEventType;
+function dmGetAllEventStatesForEventType(state, props) {
+    return Object.keys(state.events).reduce(function (list, id) {
+        if (state.events[id].type === props.type) {
+            list.push(state.events[id]);
+        }
+        return list;
+    }, []);
+}
+exports.dmGetAllEventStatesForEventType = dmGetAllEventStatesForEventType;
+function dmIsEventCompatibleWithContentItemType(state, props) {
+    var eventState = state.events[props.id];
+    return lodash_1.isNil(eventState) ? false : bsDmEvents_1.dmIsEventCompatibleWithContentItem(eventState, props.type).ok;
+}
+exports.dmIsEventCompatibleWithContentItemType = dmIsEventCompatibleWithContentItemType;
+function dmValidateEvent(state, props) {
+    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.Event, entityId: props.id };
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Event, props.id);
+    var validateStringData = function (data, entityProperty) {
+        if (!lodash_1.isString(data) || data.length === 0) {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.eventDataMissing, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
+        }
+    };
+    var validateHexStringData = function (data, entityProperty) {
+        if (!utils_1.isValidHexString(data)) {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.invalidHexString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
+        }
+    };
+    var validateKeyboardStringData = function (data, entityProperty) {
+        var kbdResult = bsDmEvents_1.dmIsValidKeyboardEventData(data);
+        if (!kbdResult.ok) {
+            kbdResult.error.details = __assign(__assign({}, entityDetails), { entityProperty: entityProperty });
+            result.errorList.push(kbdResult.error);
+        }
+    };
+    var validateIrRemoteStringData = function (data, entityProperty) {
+        var error = selectorValidation_1.dmValidateIrRemoteEventData(state, data, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validateUserVariableId = function (userVariableId, entityProperty) {
+        var error = selectorValidation_1.dmValidateUserVariableId(state, userVariableId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validatePluginId = function (pluginId, entityProperty) {
+        var error = selectorValidation_1.dmValidateScriptPluginId(state, pluginId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validateUserVariableInputFromEventData = function (dataString, entityProperty) {
+        var error = selectorValidation_1.dmValidateUserVariableInputFromEventData(state, dataString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var event = dmGetEventStateById(state, props);
+    if (!lodash_1.isNil(event)) {
+        switch (event.type) {
+            case bscore_1.EventType.Serial:
+                validateStringData(event.data.port, event.type + '.port');
+            case bscore_1.EventType.Usb:
+            case bscore_1.EventType.Synchronize:
+            case bscore_1.EventType.ZoneMessage:
+            case bscore_1.EventType.InternalSynchronize:
+                validateStringData(event.data.data, event.type + '.data');
+                break;
+            case bscore_1.EventType.Keyboard:
+                validateKeyboardStringData(event.data.data, event.type + '.data');
+                break;
+            case bscore_1.EventType.Remote:
+                validateIrRemoteStringData(event.data.data, event.type + '.data');
+                break;
+            case bscore_1.EventType.Udp:
+                validateStringData(event.data.data, event.type + '.data');
+                validateStringData(event.data.label, event.type + '.label');
+                break;
+            case bscore_1.EventType.PluginMessage:
+                validatePluginId(event.data.pluginId, event.type + '.pluginId');
+                validateStringData(event.data.message, event.type + '.message');
+                break;
+            case bscore_1.EventType.WssEvent:
+                var wssEventData = event.data;
+                if (!lodash_1.isNil(wssEventData.wssEventParameter)) {
+                    validateStringData(wssEventData.wssEventParameter.parameterValue, event.type + '.wssEventParameter.parameterValue');
+                }
+                break;
+            case bscore_1.EventType.Bmap:
+                validateStringData(event.data.port, event.type + '.port');
+                validateStringData(event.data.data, event.type + '.data');
+                break;
+            case bscore_1.EventType.BmapHex:
+                validateStringData(event.data.port, event.type + '.port');
+                validateHexStringData(event.data.data, event.type + '.data');
+        }
+        if (event.type === bscore_1.EventType.Serial || event.type === bscore_1.EventType.Udp ||
+            event.type === bscore_1.EventType.PluginMessage || event.type === bscore_1.EventType.WssEvent) {
+            var uvAssign = event.data;
+            if (uvAssign.assignInputToUserVariable) {
+                var entityProperty = event.type + '.userVariableToAssignInput';
+                if (utils_1.isValidBsDmId(uvAssign.userVariableToAssignInput)) {
+                    validateUserVariableId(uvAssign.userVariableToAssignInput, entityProperty);
+                }
+                else {
+                    var dataString = void 0;
+                    if (event.type === bscore_1.EventType.PluginMessage) {
+                        dataString = uvAssign.message;
+                    }
+                    else if (event.type === bscore_1.EventType.WssEvent) {
+                        var wssEventParameter = uvAssign.wssEventParameter;
+                        if (!lodash_1.isNil(wssEventParameter)) {
+                            dataString = wssEventParameter.parameterValue;
+                        }
+                    }
+                    else {
+                        dataString = uvAssign.data;
+                    }
+                    validateUserVariableInputFromEventData(dataString, entityProperty);
+                }
+            }
+            if (uvAssign.assignWildcardToUserVariable) {
+                validateUserVariableId(uvAssign.userVariableToAssignWildcard, event.type + '.userVariableToAssignWildcard');
+            }
+        }
+        var transitionIds = selectorTransition_1.dmGetTransitionIdsForEvent(state, props);
+        var componentErrors = transitionIds.reduce(function (acc, transitionId) {
+            var cmdResult = selectorTransition_1.dmValidateTransition(state, { id: transitionId });
+            if (!cmdResult.ok) {
+                acc.push(cmdResult);
+            }
+            return acc;
+        }, []);
+        var commandIds = selectorCommand_1.dmCommandIdsForEvent(state, props);
+        componentErrors = commandIds.reduce(function (acc, commandId) {
+            var cmdResult = selectorCommand_1.dmValidateCommand(state, { id: commandId });
+            if (!cmdResult.ok) {
+                acc.push(cmdResult);
+            }
+            return acc;
+        }, componentErrors);
+        if (componentErrors.length) {
+            result.componentErrors = componentErrors;
+            result.ok = false;
+        }
+    }
+    result.ok = result.ok && result.errorList.length === 0;
+    return result;
+}
+exports.dmValidateEvent = dmValidateEvent;
+function dmGetEventIdsForSign(state) {
+    return Object.keys(state.events);
+}
+exports.dmGetEventIdsForSign = dmGetEventIdsForSign;
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmGetTransitionIdsForSign = exports.fnGetSortedTransitionStatesForEventId = exports.dmGetConditionalTransitionIdsForEventFromTransitionState = exports.dmGetNonConditionalTransitionsForEventId = exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState = exports.dmValidateTransition = exports.dmGetConditionalTransitionCountForEvent = exports.dmGetConditionalTransitionIdsForEvent = exports.dmGetConditionalTransitionSequenceForEvent = exports.dmGetIncomingTransitionIdsForMediaState = exports.dmGetTransitionIdsForEvent = exports.dmGetTransitionById = exports.dmGetTransitionStateById = exports.clearTransitionSelectorCaches = void 0;
+var bscore_1 = __webpack_require__(1);
+var bsDmInterfaces_1 = __webpack_require__(2);
+var bsDmClasses_1 = __webpack_require__(12);
+var selectorCommand_1 = __webpack_require__(26);
+var selectorValidation_1 = __webpack_require__(17);
+var bsDmError_1 = __webpack_require__(4);
+var utils_1 = __webpack_require__(3);
+var lodash_1 = __webpack_require__(0);
+var re_reselect_1 = __webpack_require__(18);
+var selGetTransitionById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.transitions.transitionsById; }, function (dmState) { return dmState.commands; }, function (trnId, transitions, commandState) {
+    var transitionState = transitions[trnId];
+    if (!lodash_1.isNil(transitionState)) {
+        var commands = selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, trnId, bscore_1.CommandSequenceType.Transition);
+        return new bsDmClasses_1.DmcTransition(transitionState, commands);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 500 }),
+});
+function clearTransitionSelectorCaches() {
+    selGetTransitionById.clearCache();
+}
+exports.clearTransitionSelectorCaches = clearTransitionSelectorCaches;
+function dmGetTransitionStateById(state, props) {
+    var transitionState = state.transitions.transitionsById[props.id];
+    return transitionState ? transitionState : null;
+}
+exports.dmGetTransitionStateById = dmGetTransitionStateById;
+function dmGetTransitionById(state, props) {
+    return selGetTransitionById(state, props);
+}
+exports.dmGetTransitionById = dmGetTransitionById;
+function dmGetTransitionIdsForEvent(state, props) {
+    var transitions = state.transitions.transitionsById;
+    return Object.keys(transitions).filter(function (id) { return transitions[id].eventId === props.id; });
+}
+exports.dmGetTransitionIdsForEvent = dmGetTransitionIdsForEvent;
+function dmGetIncomingTransitionIdsForMediaState(state, props) {
+    var transitions = state.transitions.transitionsById;
+    return Object.keys(transitions).filter(function (id) { return transitions[id].targetMediaStateId === props.id; });
+}
+exports.dmGetIncomingTransitionIdsForMediaState = dmGetIncomingTransitionIdsForMediaState;
+function dmGetConditionalTransitionSequenceForEvent(state, props) {
+    var sequence = state.transitions.sequencesByEventId[props.id];
+    return lodash_1.isNil(sequence) ? null : sequence;
+}
+exports.dmGetConditionalTransitionSequenceForEvent = dmGetConditionalTransitionSequenceForEvent;
+function dmGetConditionalTransitionIdsForEvent(state, props) {
+    return exports.dmGetConditionalTransitionIdsForEventFromTransitionState(state.transitions, props.id);
+}
+exports.dmGetConditionalTransitionIdsForEvent = dmGetConditionalTransitionIdsForEvent;
+function dmGetConditionalTransitionCountForEvent(state, props) {
+    var ids = dmGetConditionalTransitionIdsForEvent(state, props);
+    return ids.length;
+}
+exports.dmGetConditionalTransitionCountForEvent = dmGetConditionalTransitionCountForEvent;
+function dmValidateTransition(state, props) {
+    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.Transition, entityId: props.id };
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Transition, props.id);
+    var validateParameterizedString = function (paramString, entityProperty) {
+        var error = selectorValidation_1.dmValidateEntityParameterizedString(state, paramString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validateUserVariableId = function (userVariableId, entityProperty) {
+        var error = selectorValidation_1.dmValidateUserVariableId(state, userVariableId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var validateUserVariableName = function (userVariableName, entityProperty) {
+        var error = selectorValidation_1.dmValidateUserVariableName(state, userVariableName, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(error)) {
+            result.errorList.push(error);
+        }
+    };
+    var transition = dmGetTransitionStateById(state, props);
+    if (!lodash_1.isNil(transition) && !lodash_1.isNil(transition.condition)) {
+        if (utils_1.isValidBsDmId(transition.condition.userVariableId)) {
+            validateUserVariableId(transition.condition.userVariableId, 'condition.userVariableId');
+        }
+        else if (transition.condition.userVariableName) {
+            validateUserVariableName(transition.condition.userVariableName, 'condition.userVariableName');
+        }
+        else {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.userVariableNotSpecified, __assign(__assign({}, entityDetails), { entityProperty: 'condition.userVariable' })));
+        }
+        validateParameterizedString(transition.condition.compareValue1, 'condition.compareValue1');
+        if (transition.condition.compareOperator === bscore_1.CompareOperator.BTW) {
+            validateParameterizedString(transition.condition.compareValue2, 'condition.compareValue2');
+        }
+        var commandIds = selectorCommand_1.dmCommandIdsForTransition(state, props);
+        var commandErrors = commandIds.reduce(function (acc, commandId) {
+            var cmdResult = selectorCommand_1.dmValidateCommand(state, { id: commandId });
+            if (!cmdResult.ok) {
+                acc.push(cmdResult);
+            }
+            return acc;
+        }, []);
+        if (commandErrors.length) {
+            result.componentErrors = commandErrors;
+            result.ok = false;
+        }
+    }
+    result.ok = result.ok && result.errorList.length === 0;
+    return result;
+}
+exports.dmValidateTransition = dmValidateTransition;
+var dmGetNonConditionalTransitionsForEventIdFromTransitionState = function (transitionState, eventId) {
+    var transitionsById = transitionState.transitionsById;
+    return Object.keys(transitionsById).filter(function (id) {
+        var transition = transitionsById[id];
+        return transition.eventId === eventId && lodash_1.isNil(transition.condition);
+    });
+};
+exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState = dmGetNonConditionalTransitionsForEventIdFromTransitionState;
+var dmGetNonConditionalTransitionsForEventId = function (state, props) {
+    return exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState(state.transitions, props.id);
+};
+exports.dmGetNonConditionalTransitionsForEventId = dmGetNonConditionalTransitionsForEventId;
+var dmGetConditionalTransitionIdsForEventFromTransitionState = function (transitionState, eventId) {
+    var sequence = transitionState.sequencesByEventId[eventId];
+    if (sequence) {
+        var transitions_1 = transitionState.transitionsById;
+        var transitionSequence = sequence.sequence;
+        return transitionSequence.filter(function (id) { return !lodash_1.isNil(transitions_1[id].condition); });
+    }
+    return [];
+};
+exports.dmGetConditionalTransitionIdsForEventFromTransitionState = dmGetConditionalTransitionIdsForEventFromTransitionState;
+var fnGetSortedTransitionStatesForEventId = function (transitionState, eventId) {
+    var defaultTransitionId = exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState(transitionState, eventId)
+        .slice(0, 1);
+    var transitionIds = __spreadArrays(exports.dmGetConditionalTransitionIdsForEventFromTransitionState(transitionState, eventId), defaultTransitionId);
+    if (transitionIds.length > 0) {
+        return transitionIds.map(function (id) { return transitionState.transitionsById[id]; });
+    }
+    return null;
+};
+exports.fnGetSortedTransitionStatesForEventId = fnGetSortedTransitionStatesForEventId;
+function dmGetTransitionIdsForSign(state) {
+    return Object.keys(state.transitions.transitionsById);
+}
+exports.dmGetTransitionIdsForSign = dmGetTransitionIdsForSign;
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmGetZoneLayerSequence = exports.dmGetZonesForLayer = exports.dmGetZoneLayersForZoneId = exports.dmGetZoneLayerIdsForZoneId = exports.dmGetZoneLayerById = exports.dmGetZoneLayerStateById = exports.dmGetNextMediaStateTagIndexForZone = exports.dmGetNonContainedZoneCommandIdsForZone = exports.dmGetZoneCommandIdsForZone = exports.dmGetZoneTagMap = exports.dmGetZoneIdsForZoneType = exports.dmGetZoneCount = exports.dmGetZonesForSign = exports.dmValidateZone = exports.dmIsValidContentItemTypeForContainer = exports.dmIsValidAssetTypeForContainer = exports.dmGetZoneAudioOutputSpecificationById = exports.dmGetZonePropertiesByTag = exports.dmGetZonePropertiesByName = exports.dmGetZonePropertiesById = exports.dmIsZoneNonInteractiveCompatible = exports.dmIsZoneInteractiveCompatible = exports.dmIsZoneContentNonInteractive = exports.dmGetZoneNonInteractiveById = exports.dmGetZoneTypeById = exports.dmGetZoneIdForCommandId = exports.dmGetZoneIdForTransitionId = exports.dmGetZoneIdForEventId = exports.dmGetZoneTypeForMediaStateId = exports.dmGetZoneForMediaStateId = exports.dmGetZoneStateForContainer = exports.dmGetZoneIdForContainer = exports.dmGetZoneIdForZoneOrMediaStateId = exports.dmGetZoneIdForMediaStateId = exports.dmGetEventIdsForZone = exports.dmGetAllTargetableMediaStateIdsForContainer = exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = exports.dmGetMediaStateIdsForZone = exports.dmGetZoneByTag = exports.dmIsAudioEnabledInZone = exports.dmCanSetAudioOutputForZone = exports.dmGetAvailableAudioDecoderCount = exports.dmGetAudioDecoderCountForSign = exports.dmGetAudioDecoderCountForZone = exports.dmGetVideoZoneCount = exports.dmGetZoneCountByZoneType = exports.dmGetZoneByName = exports.dmGetZoneStateById = exports.dmGetZoneById = exports.clearZoneSelectorCaches = void 0;
+exports.dmAreAudioDecodersAvailableForZone = exports.dmGetZoneLayerIdsForZone = exports.dmGetZoneLayerMap = exports.dmGetDefaultVideoLayer = exports.dmGetAvailableVideoLayer = exports.dmGetUnusedVideoLayer = exports.dmCanAddBackgroundImageZoneToLayer = exports.dmCanAddBackgroundImageZone = exports.dmGetInvisibleZoneLayerIdInSign = exports.dmGetAudioZoneLayerIdInSign = exports.dmGetGraphicsZoneLayerIdInSign = exports.dmGetVideoZoneLayerIdsInSign = exports.dmGetZoneLayerIdsInSign = exports.dmGetZonePropertyAssetItemIds = exports.dmGetCanChangeZoneType = exports.dmCanChangeZoneType = exports.dmGetCanAddZone = exports.dmCanAddZone = exports.dmGetZoneLayerByTypeAndIndex = exports.dmGetZoneLayerIdByTypeAndIndex = void 0;
+var bscore_1 = __webpack_require__(1);
+var bsDmInterfaces_1 = __webpack_require__(2);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmZone_1 = __webpack_require__(31);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmAssetItems_1 = __webpack_require__(43);
+var bsDmCommands_1 = __webpack_require__(22);
+var bsDmError_1 = __webpack_require__(4);
+var selectorSign_1 = __webpack_require__(49);
+var selectorPlaylist_1 = __webpack_require__(69);
+var selectorMediaState_1 = __webpack_require__(47);
+var selectorEvent_1 = __webpack_require__(40);
+var selectorTransition_1 = __webpack_require__(41);
+var selectorCommand_1 = __webpack_require__(26);
+var selectorValidation_1 = __webpack_require__(17);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 function fnGetZoneLayerById(layerId, zoneLayerMap) {
     var zoneLayer = zoneLayerMap[layerId];
     return lodash_1.isNil(zoneLayer) ? null :
@@ -11712,7 +12338,7 @@ function dmGetMediaStateIdsForZone(state, props) {
     });
 }
 exports.dmGetMediaStateIdsForZone = dmGetMediaStateIdsForZone;
-exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = function (containerId, mediaStateMap) {
+var fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = function (containerId, mediaStateMap) {
     var getContainedMediaStateIds = function (ctrId) {
         return Object.keys(mediaStateMap).filter(function (id) { return mediaStateMap[id].container.id === ctrId; });
     };
@@ -11729,6 +12355,7 @@ exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = function (c
     }
     return targetableMediaStateIds;
 };
+exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap = fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap;
 var selGetTargetableMediaStateIdsForContainer = reselect_1.createSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, exports.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap);
 function dmGetAllTargetableMediaStateIdsForContainer(state, props) {
     return selGetTargetableMediaStateIdsForContainer(state, props);
@@ -12168,7 +12795,7 @@ function dmIsAudioSpecifiedBySetZoneParams(params) {
 }
 function dmGetCanChangeZoneTypeToBackgroundImage(state, zoneId) {
     var result = { canSetZone: false };
-    if (!selectorSign_1.dmIsDolbyVisionEnabled(state)) {
+    if (!selectorSign_1.dmIsDolbyVisionEnabled(state) && dmGetMediaStateIdsForZone(state, { id: zoneId }).length <= 1) {
         var currentZoneType = dmGetZoneTypeById(state, { id: zoneId });
         if (!lodash_1.isNil(currentZoneType)) {
             if (bsDmZone_1.dmIsVideoZoneType(currentZoneType)) {
@@ -12448,7 +13075,7 @@ exports.dmAreAudioDecodersAvailableForZone = dmAreAudioDecodersAvailableForZone;
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12651,7 +13278,7 @@ exports.dmIsValidAssetItemForZone = dmIsValidAssetItemForZone;
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12763,7 +13390,6 @@ function checkBasicScriptPluginData(dmState, plugin, errorDetails) {
     if (plugin.name.indexOf(' ') >= 0) {
         return new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.valueNotSpecifiedOrInvalid, 'The plugin name cannot contain a space', errorDetails);
     }
-    errorDetails.entityProperty = errorDetails.entityProperty + ': ' + plugin.name;
     if (!utils_1.isValidBsDmId(plugin.assetId)) {
         return new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidPlugin, 'The plugin asset ID is invalid', errorDetails);
     }
@@ -12866,7 +13492,7 @@ exports.dmCheckNewVideoModePluginFunctionValidity = dmCheckNewVideoModePluginFun
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12888,8 +13514,8 @@ var utils_1 = __webpack_require__(3);
 var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var lodash_1 = __webpack_require__(0);
 var bsDmError_1 = __webpack_require__(4);
 exports.ADD_NODE_APP = 'DM_ADD_NODE_APP';
@@ -13003,7 +13629,7 @@ exports.dmDeleteNodeApp = dmDeleteNodeApp;
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13024,11 +13650,11 @@ exports.dmRemoveBrightScriptPlugin = exports.dmUpdateBrightScriptPluginAssetId =
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmPlugins_1 = __webpack_require__(42);
+var bsDmPlugins_1 = __webpack_require__(44);
 var bsDmError_1 = __webpack_require__(4);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var actionCommand_1 = __webpack_require__(33);
 var actionEvent_1 = __webpack_require__(20);
 var selectors_1 = __webpack_require__(6);
@@ -13165,7 +13791,7 @@ exports.dmRemoveBrightScriptPlugin = dmRemoveBrightScriptPlugin;
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13182,88 +13808,516 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetEventIdsForSign = exports.dmValidateEvent = exports.dmIsEventCompatibleWithContentItemType = exports.dmGetAllEventStatesForEventType = exports.dmGetAllEventIdsForEventType = exports.dmGetEventTypeById = exports.dmGetEventById = exports.dmGetEventStateById = exports.clearEventSelectorCaches = void 0;
+exports.dmIsMediaStateCopySetCompatibleWithZone = exports.dmGetMediaStateCopySet = exports.dmDoValidatePlayFileItem = exports.dmDoValidateMediaStateEvents = exports.dmDoValidateMediaState = exports.dmValidateMediaStateEvents = exports.dmValidateMediaState = exports.dmGetIncompatibleMediaStateEventIdsForContentItemType = exports.dmGpioEventAvailabilityForMediaStateEvents = exports.dmIrRemoteEventAvailabilityForMediaStateEvents = exports.dmBpEventAvailabilityForMediaStateEvents = exports.dmGetPlayFileItemByIndex = exports.dmGetLocalPlaylistItemById = exports.dmGetPlayFileItemById = exports.dmIsMediaListGlobalIntrinsicEvent = exports.dmGetMediaListGlobalEventIds = exports.dmGetMediaListItemByIndex = exports.dmGetMediaListItemById = exports.dmGetMediaSequenceByMediaStateId = exports.dmGetMediaStateSequenceForContainer = exports.dmGetInitialMediaStateIdForSuperState = exports.dmGetInitialMediaStateForZone = exports.dmGetInitialMediaStateIdForZone = exports.dmGetMediaAssetItemForMediaStateId = exports.dmGetAllEventIdsForMediaState = exports.dmGetEventIdsForMediaState = exports.dmGetEventStatesForMediaStateId = exports.dmGetContentItemTypeForMediaStateId = exports.dmIsMediaStateContainer = exports.dmGetContainedMediaStateIdsForMediaState = exports.dmGetMediaStateIdsForSign = exports.dmGetMediaStateContainerById = exports.dmGetUniqueMediaStateNameForBaseNameInSign = exports.dmGetUniqueMediaStateNameForBaseNameInZone = exports.dmGetMediaStateNameMapForSign = exports.dmGetMediaStateNameMapForZone = exports.dmGetMediaStateByName = exports.dmGetMediaStateIdsForProps = exports.dmGetMediaStateStateByName = exports.dmGetMediaStateStateById = exports.dmGetMediaStateById = exports.clearMediaStateSelectorCaches = exports.fnGetMediaStateComponents = exports.fnGetDeNormalizedEventsForMediaState = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var selectorTransition_1 = __webpack_require__(48);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmHtmlSite_1 = __webpack_require__(37);
+var bsDmLiveText_1 = __webpack_require__(28);
+var bsDmCopyPaste_1 = __webpack_require__(23);
+var selectorSign_1 = __webpack_require__(49);
+var selectorZone_1 = __webpack_require__(42);
+var selectorEvent_1 = __webpack_require__(40);
+var selectorTransition_1 = __webpack_require__(41);
 var selectorCommand_1 = __webpack_require__(26);
-var selectorValidation_1 = __webpack_require__(16);
-var bsDmEvents_1 = __webpack_require__(23);
+var selectorMediaSequence_1 = __webpack_require__(74);
+var selectorHtmlSite_1 = __webpack_require__(59);
+var selectorDataFeed_1 = __webpack_require__(35);
+var selectorLiveText_1 = __webpack_require__(61);
+var selectorUserVariable_1 = __webpack_require__(36);
+var selectorValidation_1 = __webpack_require__(17);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
-var selGetEventById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (evId, events, transitions, commands) {
-    var eventState = events[evId];
-    if (eventState) {
-        var transitionStates = selectorTransition_1.fnGetSortedTransitionStatesForEventId(transitions, evId);
-        var evCommands = selectorCommand_1.fnGetCommandStatesForParentAndType(commands, evId, bscore_1.CommandSequenceType.Event);
-        return new bsDmClasses_1.DmcEvent(eventState, transitionStates, evCommands);
+var reselect_1 = __webpack_require__(27);
+var re_reselect_1 = __webpack_require__(18);
+function fnGetEventIdsForMediaState(mediaStateMap, eventMap, msId) {
+    return Object.keys(eventMap)
+        .filter(function (id) { return eventMap[id].mediaStateId === msId
+        && !lodash_1.isNil(mediaStateMap[msId])
+        && !(mediaStateMap[msId].contentItem.type === bscore_1.ContentItemType.MediaList
+            && bsDmEvents_1.dmIsMediaListIntrinsicEvent(eventMap[id])); });
+}
+function fnGetEventStatesForMediaStateId(mediaStateMap, eventMap, msId) {
+    return fnGetEventIdsForMediaState(mediaStateMap, eventMap, msId).map(function (id) { return eventMap[id]; });
+}
+function fnGetDeNormalizedEventsForMediaState(mediaStateMap, eventMap, transitionState, msId) {
+    var events = fnGetEventStatesForMediaStateId(mediaStateMap, eventMap, msId);
+    return events.map(function (eventState) {
+        var deNormEvent = { eventState: eventState };
+        var transitionStates = selectorTransition_1.fnGetSortedTransitionStatesForEventId(transitionState, eventState.id);
+        if (!lodash_1.isNil(transitionStates)) {
+            deNormEvent.transitionStates = transitionStates;
+        }
+        return deNormEvent;
+    });
+}
+exports.fnGetDeNormalizedEventsForMediaState = fnGetDeNormalizedEventsForMediaState;
+function fnGetMediaAssetItemForMediaStateId(mediaStateMap, assetMap, msId) {
+    var mediaState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaState) && bsDmContentItems_1.dmContentItemIsMediaContentItem(mediaState.contentItem)) {
+        return assetMap[mediaState.contentItem.assetId];
+    }
+    return null;
+}
+function fnGetMediaStateComponents(mediaStateMap, eventMap, transitionState, commandMap, assetMap, msId) {
+    return {
+        deNormEvents: fnGetDeNormalizedEventsForMediaState(mediaStateMap, eventMap, transitionState, msId),
+        commands: selectorCommand_1.fnGetCommandStatesForMediaState(commandMap, msId),
+        mediaAssetItem: fnGetMediaAssetItemForMediaStateId(mediaStateMap, assetMap, msId),
+    };
+}
+exports.fnGetMediaStateComponents = fnGetMediaStateComponents;
+function fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, action, msId) {
+    var mediaStateState = mediaStateMap[msId];
+    if (mediaStateState.contentItem.type === bscore_1.ContentItemType.MediaList) {
+        return Object.keys(eventMap)
+            .filter(function (id) { return eventMap[id].mediaStateId === msId && eventMap[id].action === action; })
+            .map(function (id) { return eventMap[id]; });
+    }
+    return [];
+}
+function fnGetMediaListComponents(mediaStateMap, eventMap, commandState, dataFeedState, assetMap, msId) {
+    var sourceDataFeed = selectorMediaSequence_1.fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedState.feedsById, msId);
+    return {
+        forwardEvents: fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, bscore_1.EventIntrinsicAction.SequenceForward, msId),
+        backwardEvents: fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, bscore_1.EventIntrinsicAction.SequenceBackward, msId),
+        playNextCommands: selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, msId, bscore_1.CommandSequenceType.SequenceItemNext),
+        playPreviousCommands: selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, msId, bscore_1.CommandSequenceType.SequenceItemPrevious),
+        sourceDataFeed: lodash_1.isNil(sourceDataFeed) ? null :
+            selectorDataFeed_1.fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, sourceDataFeed.id),
+    };
+}
+function fnGetPlayFileComponents(mediaStateMap, dataFeedState, assetMap, msId) {
+    var sourceDataFeed = selectorMediaSequence_1.fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedState.feedsById, msId);
+    return {
+        defaultMediaAssetItem: selectorMediaSequence_1.fnGetPlayFileDefaultMediaAssetItem(mediaStateMap, assetMap, msId),
+        sourceDataFeed: lodash_1.isNil(sourceDataFeed) ? null :
+            selectorDataFeed_1.fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, sourceDataFeed.id),
+    };
+}
+function fnGetLocalPlaylistComponents(mediaStateMap, dataFeedState, assetMap, msId) {
+    var defaultDynamicPlaylistDataFeed = selectorMediaSequence_1.fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedState.feedsById, msId);
+    return {
+        defaultDynamicPlaylistDataFeed: lodash_1.isNil(defaultDynamicPlaylistDataFeed) ? null :
+            selectorDataFeed_1.fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, defaultDynamicPlaylistDataFeed.id),
+    };
+}
+var selGetMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        return new bsDmClasses_1.DmcMediaState(mediaStateState, components);
     }
     return null;
 })({
     keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 500 }),
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 200 }),
 });
-function clearEventSelectorCaches() {
-    selGetEventById.clearCache();
+var selGetMediaListMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.dataFeeds; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, dataFeeds, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        var mediaListComponents = fnGetMediaListComponents(mediaStateMap, eventMap, commands, dataFeeds, assetMap, msId);
+        return new bsDmClasses_1.DmcMediaListMediaState(mediaStateState, components, mediaListComponents);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 50 }),
+});
+var selGetMediaItemById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState) && mediaStateState.container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        return new bsDmClasses_1.DmcMediaListItem(mediaStateState, components);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 100 }),
+});
+var selGetPlayFileMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.dataFeeds; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, dataFeeds, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        var playFileComponents = fnGetPlayFileComponents(mediaStateMap, dataFeeds, assetMap, msId);
+        return new bsDmClasses_1.DmcPlayFileMediaState(mediaStateState, components, playFileComponents);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 50 }),
+});
+var selGetPlayFileItemById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState) && mediaStateState.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        return new bsDmClasses_1.DmcPlayFileItem(mediaStateState, components);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 100 }),
+});
+var selGetLocalPlaylistMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.dataFeeds; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, dataFeeds, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        var localPlaylistComponents = fnGetLocalPlaylistComponents(mediaStateMap, dataFeeds, assetMap, msId);
+        return new bsDmClasses_1.DmcLocalPlaylistMediaState(mediaStateState, components, localPlaylistComponents);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 50 }),
+});
+var selGetLocalPlaylistItemById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState) && mediaStateState.container.type === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        return new bsDmClasses_1.DmcLocalPlaylistItem(mediaStateState, components);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 100 }),
+});
+var selGetLiveTextMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (_, props) { return props.canvas; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap, liveTextCanvas) {
+    var mediaStateState = mediaStateMap[msId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
+        return new bsDmClasses_1.DmcLiveTextMediaState(mediaStateState, components, liveTextCanvas);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 40 }),
+});
+var selGetNameMapForZone = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (zoneId, mediaStateMap) {
+    var mediaStateIds = selectorZone_1.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap(zoneId, mediaStateMap);
+    var mediaStateMapForZone = mediaStateIds.reduce(function (acc, id) {
+        acc[id] = mediaStateMap[id];
+        return acc;
+    }, {});
+    return fnGetNameMapForMediaStates(mediaStateMapForZone);
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 20 }),
+});
+function clearMediaStateSelectorCaches() {
+    selGetMediaStateById.clearCache();
+    selGetMediaListMediaStateById.clearCache();
+    selGetMediaItemById.clearCache();
+    selGetPlayFileMediaStateById.clearCache();
+    selGetPlayFileItemById.clearCache();
+    selGetLocalPlaylistMediaStateById.clearCache();
+    selGetLocalPlaylistItemById.clearCache();
+    selGetLiveTextMediaStateById.clearCache();
+    selGetNameMapForZone.clearCache();
 }
-exports.clearEventSelectorCaches = clearEventSelectorCaches;
-function dmGetEventStateById(state, props) {
-    var eventState = state.events[props.id];
-    return lodash_1.isNil(eventState) ? null : eventState;
+exports.clearMediaStateSelectorCaches = clearMediaStateSelectorCaches;
+function dmGetMediaStateById(state, props) {
+    var mediaState = null;
+    var mediaStateState = state.mediaStates.mediaStatesById[props.id];
+    if (!lodash_1.isNil(mediaStateState)) {
+        if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(mediaStateState.contentItem)) {
+            mediaState = selGetMediaListMediaStateById(state, props);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(mediaStateState.contentItem)) {
+            mediaState = selGetPlayFileMediaStateById(state, props);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(mediaStateState.contentItem)) {
+            mediaState = selGetLocalPlaylistMediaStateById(state, props);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(mediaStateState.contentItem)) {
+            var canvas = selectorLiveText_1.dmGetLiveTextCanvasById(state, { id: mediaStateState.contentItem.canvasId });
+            mediaState = selGetLiveTextMediaStateById(state, { id: props.id, canvas: canvas });
+        }
+        else {
+            mediaState = selGetMediaStateById(state, props);
+        }
+    }
+    return mediaState;
 }
-exports.dmGetEventStateById = dmGetEventStateById;
-function dmGetEventById(state, props) {
-    return selGetEventById(state, props);
+exports.dmGetMediaStateById = dmGetMediaStateById;
+function dmGetMediaStateStateById(state, props) {
+    var mediaState = state.mediaStates.mediaStatesById[props.id];
+    return mediaState ? mediaState : null;
 }
-exports.dmGetEventById = dmGetEventById;
-function dmGetEventTypeById(state, props) {
-    var eventState = state.events[props.id];
-    return lodash_1.isNil(eventState) ? null : eventState.type;
+exports.dmGetMediaStateStateById = dmGetMediaStateStateById;
+function dmGetMediaStateStateByName(state, props) {
+    var mediaStates = state.mediaStates.mediaStatesById;
+    var mediaStateId = lodash_1.find(Object.keys(mediaStates), function (id) { return mediaStates[id].name === props.name; });
+    return mediaStateId ? mediaStates[mediaStateId] : null;
 }
-exports.dmGetEventTypeById = dmGetEventTypeById;
-function dmGetAllEventIdsForEventType(state, props) {
-    return Object.keys(state.events).filter(function (id) { return state.events[id].type === props.type; });
+exports.dmGetMediaStateStateByName = dmGetMediaStateStateByName;
+function dmGetMediaStateIdsForProps(state, props) {
+    var ignoreName = lodash_1.isNil(props.name);
+    var ignoreContainerType = lodash_1.isNil(props.containerType);
+    var ignoreContentItemType = lodash_1.isNil(props.contentItemType);
+    var contentTypeSet = Array.isArray(props.contentItemType) ?
+        new Set(props.contentItemType) : new Set([props.contentItemType]);
+    var doSearch = function (containerIds) {
+        var ignoreContainerIds = containerIds.length === 0;
+        var containerIdSet = new Set(containerIds);
+        return Object.keys(state.mediaStates.mediaStatesById).filter(function (id) {
+            var mediaState = state.mediaStates.mediaStatesById[id];
+            return (ignoreName || props.name === mediaState.name)
+                && (ignoreContainerIds || containerIdSet.has(mediaState.container.id))
+                && (ignoreContainerType || props.containerType === mediaState.container.type)
+                && (ignoreContentItemType || contentTypeSet.has(mediaState.contentItem.type));
+        });
+    };
+    var getContainedSuperStateIds = function (containerIds) {
+        var containerIdSet = new Set(containerIds);
+        var containedSuperStateIds = Object.keys(state.mediaStates.mediaStatesById)
+            .filter(function (id) {
+            var mediaState = state.mediaStates.mediaStatesById[id];
+            return containerIdSet.has(mediaState.container.id)
+                && mediaState.contentItem.type === bscore_1.ContentItemType.SuperState;
+        });
+        if (containedSuperStateIds.length > 0) {
+            return containedSuperStateIds.concat(getContainedSuperStateIds(containedSuperStateIds));
+        }
+        return [];
+    };
+    if (!lodash_1.isNil(props.searchContainedSuperStates)
+        && props.searchContainedSuperStates
+        && !lodash_1.isNil(props.containerId)) {
+        var searchContainerIds = getContainedSuperStateIds([props.containerId]);
+        searchContainerIds.unshift(props.containerId);
+        return doSearch(searchContainerIds);
+    }
+    return doSearch(lodash_1.isNil(props.containerId) ? [] : [props.containerId]);
 }
-exports.dmGetAllEventIdsForEventType = dmGetAllEventIdsForEventType;
-function dmGetAllEventStatesForEventType(state, props) {
-    return Object.keys(state.events).reduce(function (list, id) {
-        if (state.events[id].type === props.type) {
-            list.push(state.events[id]);
+exports.dmGetMediaStateIdsForProps = dmGetMediaStateIdsForProps;
+function dmGetMediaStateByName(state, props) {
+    var mediaStates = state.mediaStates.mediaStatesById;
+    var mediaStateId = lodash_1.find(Object.keys(mediaStates), function (id) { return mediaStates[id].name === props.name; });
+    return lodash_1.isNil(mediaStateId) ? null : dmGetMediaStateById(state, { id: mediaStateId });
+}
+exports.dmGetMediaStateByName = dmGetMediaStateByName;
+var fnGetNameMapForMediaStates = function (mediaStateMap, containerIds) {
+    var containerIdSet = lodash_1.isNil(containerIds) ? null : new Set(containerIds);
+    return Object.keys(mediaStateMap).reduce(function (acc, id) {
+        var mediaState = mediaStateMap[id];
+        if (!lodash_1.isNil(mediaState) && (lodash_1.isNil(containerIdSet) || containerIdSet.has(mediaState.container.id))) {
+            if (lodash_1.isNil(acc[mediaState.name])) {
+                acc[mediaState.name] = [id];
+            }
+            else {
+                acc[mediaState.name].push(id);
+            }
+        }
+        return acc;
+    }, {});
+};
+function dmGetMediaStateNameMapForZone(state, props) {
+    return selGetNameMapForZone(state, props);
+}
+exports.dmGetMediaStateNameMapForZone = dmGetMediaStateNameMapForZone;
+var selGetNameMapForSign = reselect_1.createSelector(function (dmState) { return dmState.mediaStates.mediaStatesById; }, fnGetNameMapForMediaStates);
+function dmGetMediaStateNameMapForSign(state) {
+    return selGetNameMapForSign(state);
+}
+exports.dmGetMediaStateNameMapForSign = dmGetMediaStateNameMapForSign;
+function dmGetUniqueMediaStateNameForBaseNameInZone(state, props) {
+    var proposedName = lodash_1.isString(props.name) && props.name.length ? props.name : 'State';
+    return utils_1.getUniqueNameForNameMap(proposedName, dmGetMediaStateNameMapForZone(state, props));
+}
+exports.dmGetUniqueMediaStateNameForBaseNameInZone = dmGetUniqueMediaStateNameForBaseNameInZone;
+function dmGetUniqueMediaStateNameForBaseNameInSign(state, props) {
+    var proposedName = lodash_1.isString(props.name) && props.name.length ? props.name : 'State';
+    return utils_1.getUniqueNameForNameMap(proposedName, dmGetMediaStateNameMapForSign(state));
+}
+exports.dmGetUniqueMediaStateNameForBaseNameInSign = dmGetUniqueMediaStateNameForBaseNameInSign;
+function dmGetMediaStateContainerById(state, props) {
+    var mediaState = state.mediaStates.mediaStatesById[props.id];
+    return lodash_1.isNil(mediaState) ? null : new bsDmClasses_1.DmcMediaStateContainer(mediaState.container.id, mediaState.container.type);
+}
+exports.dmGetMediaStateContainerById = dmGetMediaStateContainerById;
+function dmGetMediaStateIdsForSign(state) {
+    return Object.keys(state.mediaStates.mediaStatesById);
+}
+exports.dmGetMediaStateIdsForSign = dmGetMediaStateIdsForSign;
+function dmGetContainedMediaStateIdsForMediaState(state, props) {
+    var mediaStates = state.mediaStates.mediaStatesById;
+    return Object.keys(mediaStates).filter(function (id) {
+        var mediaState = mediaStates[id];
+        return mediaState.container.type !== bsDmInterfaces_1.MediaStateContainerType.Zone && mediaState.container.id === props.id;
+    });
+}
+exports.dmGetContainedMediaStateIdsForMediaState = dmGetContainedMediaStateIdsForMediaState;
+var containerContentItemTypes = [bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.LocalPlaylist, bscore_1.ContentItemType.SuperState];
+function dmIsMediaStateContainer(state, props) {
+    var mediaState = state.mediaStates.mediaStatesById[props.id];
+    return mediaState ? containerContentItemTypes.indexOf(mediaState.contentItem.type) >= 0 : false;
+}
+exports.dmIsMediaStateContainer = dmIsMediaStateContainer;
+function dmGetContentItemTypeForMediaStateId(state, props) {
+    var mediaStateState = state.mediaStates.mediaStatesById[props.id];
+    return lodash_1.isNil(mediaStateState) ? null : mediaStateState.contentItem.type;
+}
+exports.dmGetContentItemTypeForMediaStateId = dmGetContentItemTypeForMediaStateId;
+function dmGetEventStatesForMediaStateId(state, props) {
+    return fnGetEventStatesForMediaStateId(state.mediaStates.mediaStatesById, state.events, props.id);
+}
+exports.dmGetEventStatesForMediaStateId = dmGetEventStatesForMediaStateId;
+function dmGetEventIdsForMediaState(state, props) {
+    return fnGetEventIdsForMediaState(state.mediaStates.mediaStatesById, state.events, props.id);
+}
+exports.dmGetEventIdsForMediaState = dmGetEventIdsForMediaState;
+function dmGetAllEventIdsForMediaState(state, props) {
+    var events = state.events;
+    return Object.keys(events).filter(function (id) { return events[id].mediaStateId === props.id; });
+}
+exports.dmGetAllEventIdsForMediaState = dmGetAllEventIdsForMediaState;
+function dmGetMediaAssetItemForMediaStateId(state, props) {
+    return fnGetMediaAssetItemForMediaStateId(state.mediaStates.mediaStatesById, state.assetMap, props.id);
+}
+exports.dmGetMediaAssetItemForMediaStateId = dmGetMediaAssetItemForMediaStateId;
+function dmGetInitialMediaStateIdForZone(state, props) {
+    var zone = state.zones.zonesById[props.id];
+    return zone ? zone.initialMediaStateId : null;
+}
+exports.dmGetInitialMediaStateIdForZone = dmGetInitialMediaStateIdForZone;
+function dmGetInitialMediaStateForZone(state, props) {
+    var zone = state.zones.zonesById[props.id];
+    return zone ? dmGetMediaStateById(state, { id: zone.initialMediaStateId }) : null;
+}
+exports.dmGetInitialMediaStateForZone = dmGetInitialMediaStateForZone;
+function dmGetInitialMediaStateIdForSuperState(state, props) {
+    var superState = dmGetMediaStateStateById(state, { id: props.id });
+    if (!lodash_1.isNil(superState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(superState.contentItem)) {
+        return superState.contentItem.initialMediaStateId;
+    }
+    return null;
+}
+exports.dmGetInitialMediaStateIdForSuperState = dmGetInitialMediaStateIdForSuperState;
+function dmGetMediaStateSequenceForContainer(state, props) {
+    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
+    return lodash_1.isNil(mediaStateSequence) ? null : mediaStateSequence;
+}
+exports.dmGetMediaStateSequenceForContainer = dmGetMediaStateSequenceForContainer;
+exports.dmGetMediaSequenceByMediaStateId = dmGetMediaStateSequenceForContainer;
+function dmGetMediaListItemById(state, props) {
+    return selGetMediaItemById(state, props);
+}
+exports.dmGetMediaListItemById = dmGetMediaListItemById;
+function dmGetMediaListItemByIndex(state, props) {
+    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
+    if (mediaStateSequence && mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.MediaList) {
+        var index = props.index;
+        if (index >= 0 && index < mediaStateSequence.sequence.length) {
+            var mediaStateState = state.mediaStates.mediaStatesById[mediaStateSequence.sequence[index]];
+            if (!lodash_1.isNil(mediaStateState)) {
+                return selGetMediaItemById(state, { id: mediaStateState.id });
+            }
+        }
+    }
+    return null;
+}
+exports.dmGetMediaListItemByIndex = dmGetMediaListItemByIndex;
+function dmGetMediaListGlobalEventIds(state, props) {
+    var events = state.events;
+    if (dmGetContentItemTypeForMediaStateId(state, props) === bscore_1.ContentItemType.MediaList) {
+        return Object.keys(events)
+            .filter(function (id) {
+            return events[id].mediaStateId === props.id
+                && dmIsMediaListGlobalIntrinsicEvent(state, props.id, events[id]);
+        });
+    }
+    return [];
+}
+exports.dmGetMediaListGlobalEventIds = dmGetMediaListGlobalEventIds;
+function dmIsMediaListGlobalIntrinsicEvent(state, mediaStateId, eventSpec) {
+    var contentItemType = dmGetContentItemTypeForMediaStateId(state, { id: mediaStateId });
+    return contentItemType === bscore_1.ContentItemType.MediaList && bsDmEvents_1.dmIsMediaListIntrinsicEvent(eventSpec);
+}
+exports.dmIsMediaListGlobalIntrinsicEvent = dmIsMediaListGlobalIntrinsicEvent;
+function dmGetPlayFileItemById(state, props) {
+    return selGetPlayFileItemById(state, props);
+}
+exports.dmGetPlayFileItemById = dmGetPlayFileItemById;
+function dmGetLocalPlaylistItemById(state, props) {
+    return selGetLocalPlaylistItemById(state, props);
+}
+exports.dmGetLocalPlaylistItemById = dmGetLocalPlaylistItemById;
+function dmGetPlayFileItemByIndex(state, props) {
+    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
+    if (mediaStateSequence && mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
+        var index = props.index;
+        if (index >= 0 && index < mediaStateSequence.sequence.length) {
+            var mediaStateState = state.mediaStates.mediaStatesById[mediaStateSequence.sequence[index]];
+            if (!lodash_1.isNil(mediaStateState)) {
+                return selGetPlayFileItemById(state, { id: mediaStateState.id });
+            }
+        }
+    }
+    return null;
+}
+exports.dmGetPlayFileItemByIndex = dmGetPlayFileItemByIndex;
+function dmBpEventAvailabilityForMediaStateEvents(state, props) {
+    var events = state.events;
+    var eventList = Object.keys(events).reduce(function (list, eventId) {
+        var event = events[eventId];
+        if (event.mediaStateId === props.id) {
+            list.push(event);
         }
         return list;
     }, []);
+    return bsDmEvents_1.dmGetBpAvailabilityForEventList(eventList);
 }
-exports.dmGetAllEventStatesForEventType = dmGetAllEventStatesForEventType;
-function dmIsEventCompatibleWithContentItemType(state, props) {
-    var eventState = state.events[props.id];
-    return lodash_1.isNil(eventState) ? false : bsDmEvents_1.dmIsEventCompatibleWithContentItem(eventState, props.type).ok;
+exports.dmBpEventAvailabilityForMediaStateEvents = dmBpEventAvailabilityForMediaStateEvents;
+function dmIrRemoteEventAvailabilityForMediaStateEvents(state, props) {
+    var events = state.events;
+    var eventList = dmGetAllEventIdsForMediaState(state, props).map(function (id) { return events[id]; });
+    return bsDmEvents_1.dmGetIrRemoteAvailabilityForEventList(eventList, selectorSign_1.dmGetSignIrRemoteButtonDescriptions(state));
 }
-exports.dmIsEventCompatibleWithContentItemType = dmIsEventCompatibleWithContentItemType;
-function dmValidateEvent(state, props) {
-    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.Event, entityId: props.id };
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Event, props.id);
-    var validateStringData = function (data, entityProperty) {
-        if (!lodash_1.isString(data) || data.length === 0) {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.eventDataMissing, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
+exports.dmIrRemoteEventAvailabilityForMediaStateEvents = dmIrRemoteEventAvailabilityForMediaStateEvents;
+function dmGpioEventAvailabilityForMediaStateEvents(state, props) {
+    var events = state.events;
+    var eventList = Object.keys(events).reduce(function (list, eventId) {
+        var event = events[eventId];
+        if (event.mediaStateId === props.id) {
+            list.push(event);
         }
-    };
-    var validateHexStringData = function (data, entityProperty) {
-        if (!utils_1.isValidHexString(data)) {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.invalidHexString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
-        }
-    };
-    var validateKeyboardStringData = function (data, entityProperty) {
-        var kbdResult = bsDmEvents_1.dmIsValidKeyboardEventData(data);
-        if (!kbdResult.ok) {
-            kbdResult.error.details = __assign(__assign({}, entityDetails), { entityProperty: entityProperty });
-            result.errorList.push(kbdResult.error);
-        }
-    };
-    var validateIrRemoteStringData = function (data, entityProperty) {
-        var error = selectorValidation_1.dmValidateIrRemoteEventData(state, data, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        return list;
+    }, []);
+    return bsDmEvents_1.dmGetGpioAvailabilityForEventList(eventList, selectorSign_1.dmGetSignGpioList(state));
+}
+exports.dmGpioEventAvailabilityForMediaStateEvents = dmGpioEventAvailabilityForMediaStateEvents;
+function dmGetIncompatibleMediaStateEventIdsForContentItemType(state, props) {
+    var eventIds = dmGetEventIdsForMediaState(state, props);
+    return eventIds.filter(function (id) { return !selectorEvent_1.dmIsEventCompatibleWithContentItemType(state, { id: id, type: props.type }); });
+}
+exports.dmGetIncompatibleMediaStateEventIdsForContentItemType = dmGetIncompatibleMediaStateEventIdsForContentItemType;
+function dmValidateMediaState(state, props) {
+    var mediaState = dmGetMediaStateStateById(state, props);
+    if (!lodash_1.isNil(mediaState) && mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
+        return dmDoValidatePlayFileItem(state, props);
+    }
+    return dmDoValidateMediaState(state, props, false);
+}
+exports.dmValidateMediaState = dmValidateMediaState;
+function dmValidateMediaStateEvents(state, props) {
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
+    var eventComponentErrors = dmDoValidateMediaStateEvents(state, props);
+    if (eventComponentErrors.length) {
+        result.componentErrors = eventComponentErrors;
+        result.ok = false;
+    }
+    return result;
+}
+exports.dmValidateMediaStateEvents = dmValidateMediaStateEvents;
+function dmDoValidateMediaState(state, props, includeEvents) {
+    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState, entityId: props.id };
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
+    var validateParameterizedString = function (paramString, entityProperty, cannotBeEmpty) {
+        var error = selectorValidation_1.dmValidateEntityParameterizedString(state, paramString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }), cannotBeEmpty);
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
@@ -13274,119 +14328,444 @@ function dmValidateEvent(state, props) {
             result.errorList.push(error);
         }
     };
-    var validatePluginId = function (pluginId, entityProperty) {
-        var error = selectorValidation_1.dmValidateScriptPluginId(state, pluginId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+    var validateDataFeed = function (dataFeedId, entityProperty) {
+        var error = selectorValidation_1.dmValidateEntityDataFeed(state, dataFeedId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
     };
-    var validateUserVariableInputFromEventData = function (dataString, entityProperty) {
-        var error = selectorValidation_1.dmValidateUserVariableInputFromEventData(state, dataString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+    var validateHtmlSite = function (htmlSiteId, entityProperty) {
+        var _a;
+        var errorList = selectorValidation_1.dmValidateEntityHtmlSite(state, htmlSiteId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
+        if (!lodash_1.isNil(errorList)) {
+            (_a = result.errorList).push.apply(_a, errorList);
+        }
+    };
+    var validateAssetItem = function (assetId, entityProperty) {
+        var error = selectorValidation_1.dmValidateAssetId(state, assetId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
     };
-    var event = dmGetEventStateById(state, props);
-    if (!lodash_1.isNil(event)) {
-        switch (event.type) {
-            case bscore_1.EventType.Serial:
-                validateStringData(event.data.port, event.type + '.port');
-            case bscore_1.EventType.Usb:
-            case bscore_1.EventType.Synchronize:
-            case bscore_1.EventType.ZoneMessage:
-            case bscore_1.EventType.InternalSynchronize:
-                validateStringData(event.data.data, event.type + '.data');
-                break;
-            case bscore_1.EventType.Keyboard:
-                validateKeyboardStringData(event.data.data, event.type + '.data');
-                break;
-            case bscore_1.EventType.Remote:
-                validateIrRemoteStringData(event.data.data, event.type + '.data');
-                break;
-            case bscore_1.EventType.Udp:
-                validateStringData(event.data.data, event.type + '.data');
-                validateStringData(event.data.label, event.type + '.label');
-                break;
-            case bscore_1.EventType.PluginMessage:
-                validatePluginId(event.data.pluginId, event.type + '.pluginId');
-                validateStringData(event.data.message, event.type + '.message');
-                break;
-            case bscore_1.EventType.WssEvent:
-                var wssEventData = event.data;
-                if (!lodash_1.isNil(wssEventData.wssEventParameter)) {
-                    validateStringData(wssEventData.wssEventParameter.parameterValue, event.type + '.wssEventParameter.parameterValue');
-                }
-                break;
-            case bscore_1.EventType.Bmap:
-                validateStringData(event.data.port, event.type + '.port');
-                validateStringData(event.data.data, event.type + '.data');
-                break;
-            case bscore_1.EventType.BmapHex:
-                validateStringData(event.data.port, event.type + '.port');
-                validateHexStringData(event.data.data, event.type + '.data');
+    var mediaState = dmGetMediaStateStateById(state, props);
+    if (!lodash_1.isNil(mediaState)) {
+        if (!lodash_1.isString(mediaState.name) || mediaState.name.length === 0) {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.nameNotSpecified, __assign(__assign({}, entityDetails), { entityProperty: 'name' })));
         }
-        if (event.type === bscore_1.EventType.Serial || event.type === bscore_1.EventType.Udp ||
-            event.type === bscore_1.EventType.PluginMessage || event.type === bscore_1.EventType.WssEvent) {
-            var uvAssign = event.data;
-            if (uvAssign.assignInputToUserVariable) {
-                var entityProperty = event.type + '.userVariableToAssignInput';
-                if (utils_1.isValidBsDmId(uvAssign.userVariableToAssignInput)) {
-                    validateUserVariableId(uvAssign.userVariableToAssignInput, entityProperty);
-                }
-                else {
-                    var dataString = void 0;
-                    if (event.type === bscore_1.EventType.PluginMessage) {
-                        dataString = uvAssign.message;
-                    }
-                    else if (event.type === bscore_1.EventType.WssEvent) {
-                        var wssEventParameter = uvAssign.wssEventParameter;
-                        if (!lodash_1.isNil(wssEventParameter)) {
-                            dataString = wssEventParameter.parameterValue;
-                        }
-                    }
-                    else {
-                        dataString = uvAssign.data;
-                    }
-                    validateUserVariableInputFromEventData(dataString, entityProperty);
-                }
-            }
-            if (uvAssign.assignWildcardToUserVariable) {
-                validateUserVariableId(uvAssign.userVariableToAssignWildcard, event.type + '.userVariableToAssignWildcard');
+        else if (!bsDmContentItems_1.dmIsMediaSequenceContainer(mediaState.container)) {
+            var zoneId = selectorZone_1.dmGetZoneIdForMediaStateId(state, props);
+            var zoneNameMap = dmGetMediaStateNameMapForZone(state, { id: zoneId });
+            if (zoneNameMap[mediaState.name].length > 1) {
+                result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.duplicateNameNotAllowed, __assign(__assign({}, entityDetails), { entityProperty: 'name' })));
             }
         }
-        var transitionIds = selectorTransition_1.dmGetTransitionIdsForEvent(state, props);
-        var componentErrors = transitionIds.reduce(function (acc, transitionId) {
-            var cmdResult = selectorTransition_1.dmValidateTransition(state, { id: transitionId });
-            if (!cmdResult.ok) {
-                acc.push(cmdResult);
+        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(mediaState.contentItem)) {
+            validateAssetItem(mediaState.contentItem.assetId, 'contentItem.assetId');
+        }
+        else if (bsDmContentItems_1.dmContentItemIsStreamContentItem(mediaState.contentItem)) {
+            validateParameterizedString(mediaState.contentItem.url, 'contentItem.url', true);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsHtmlContentItem(mediaState.contentItem)) {
+            validateHtmlSite(mediaState.contentItem.siteId, 'contentItem.htmlSite');
+        }
+        else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(mediaState.contentItem)) {
+            validateDataFeed(mediaState.contentItem.dataFeedId, 'contentItem.dataFeed');
+        }
+        else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaState.contentItem)) {
+            if (mediaState.contentItem.useDataFeed) {
+                validateDataFeed(mediaState.contentItem.dataFeedId, 'contentItem.dataFeed');
             }
-            return acc;
-        }, []);
-        var commandIds = selectorCommand_1.dmCommandIdsForEvent(state, props);
-        componentErrors = commandIds.reduce(function (acc, commandId) {
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(mediaState.contentItem)) {
+            validateDataFeed(mediaState.contentItem.defaultDataFeedId, 'contentItem.defaultDataFeedId');
+        }
+        else if (bsDmContentItems_1.dmContentItemIsUserVariableContentItem(mediaState.contentItem)) {
+            validateUserVariableId(mediaState.contentItem.userVariableId, 'contentItem.userVariableId');
+        }
+        var componentErrors_1 = [];
+        if (includeEvents) {
+            componentErrors_1 = dmDoValidateMediaStateEvents(state, props);
+        }
+        var commandIds = selectorCommand_1.dmGetEntryCommandIdsForMediaState(state, props).slice();
+        commandIds.push.apply(commandIds, selectorCommand_1.dmGetExitCommandIdsForMediaState(state, props));
+        if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(mediaState.contentItem)) {
+            commandIds.push.apply(commandIds, selectorCommand_1.dmGetSequenceItemNextCommandIdsForMediaState(state, props));
+            commandIds.push.apply(commandIds, selectorCommand_1.dmGetSequenceItemPreviousCommandIdsForMediaState(state, props));
+        }
+        componentErrors_1 = commandIds.reduce(function (acc, commandId) {
             var cmdResult = selectorCommand_1.dmValidateCommand(state, { id: commandId });
             if (!cmdResult.ok) {
                 acc.push(cmdResult);
             }
             return acc;
-        }, componentErrors);
-        if (componentErrors.length) {
-            result.componentErrors = componentErrors;
+        }, componentErrors_1);
+        if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(mediaState.contentItem)) {
+            var liveTextErrors = selectorLiveText_1.dmValidateLiveTextCanvas(state, { id: mediaState.contentItem.canvasId });
+            if (!liveTextErrors.ok) {
+                componentErrors_1.push(liveTextErrors);
+            }
+        }
+        if (bsDmContentItems_1.dmContentItemIsSuperStateContentItem(mediaState.contentItem)) {
+            var containedMediaStateIds = dmGetContainedMediaStateIdsForMediaState(state, props);
+            if (containedMediaStateIds.length > 0) {
+                var initialStateErrorType = null;
+                if (utils_1.isValidBsDmId(mediaState.contentItem.initialMediaStateId)) {
+                    var initialMediaState = dmGetMediaStateStateById(state, { id: mediaState.contentItem.initialMediaStateId });
+                    if (!lodash_1.isNil(initialMediaState)) {
+                        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(initialMediaState.contentItem)) {
+                            initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateCannotBeOnDemand;
+                        }
+                    }
+                    else {
+                        initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateInvalid;
+                    }
+                }
+                else {
+                    initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateInvalid;
+                }
+                if (!lodash_1.isNil(initialStateErrorType)) {
+                    result.errorList.push(selectorValidation_1.dmGetEntityError(initialStateErrorType, __assign(__assign({}, entityDetails), { entityProperty: 'superState.initialMediaState' })));
+                }
+                containedMediaStateIds.forEach(function (containedStateId) {
+                    var containedStateErrors = dmDoValidateMediaState(state, { id: containedStateId }, true);
+                    if (!containedStateErrors.ok) {
+                        componentErrors_1.push(containedStateErrors);
+                    }
+                });
+            }
+        }
+        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(mediaState.contentItem)
+            && !mediaState.contentItem.useDataFeed) {
+            var playFileItems = dmGetContainedMediaStateIdsForMediaState(state, props);
+            playFileItems.forEach(function (itemId) {
+                var containedItemErrors = dmDoValidatePlayFileItem(state, { id: itemId });
+                if (!containedItemErrors.ok) {
+                    componentErrors_1.push(containedItemErrors);
+                }
+            });
+        }
+        if (componentErrors_1.length) {
+            result.componentErrors = componentErrors_1;
             result.ok = false;
         }
     }
     result.ok = result.ok && result.errorList.length === 0;
     return result;
 }
-exports.dmValidateEvent = dmValidateEvent;
-function dmGetEventIdsForSign(state) {
-    return Object.keys(state.events);
+exports.dmDoValidateMediaState = dmDoValidateMediaState;
+function dmDoValidateMediaStateEvents(state, props) {
+    var componentErrors = [];
+    var getEventListComponentErrors = function (eventList) {
+        return eventList.reduce(function (acc, event, index) {
+            var cmdResult = selectorEvent_1.dmValidateEvent(state, { id: event.id });
+            for (var i = 0; i < eventList.length; i++) {
+                if (i !== index) {
+                    var dupCheckResult = bsDmEvents_1.dmIsDuplicateEventData(event, eventList[i]);
+                    if (!dupCheckResult.ok) {
+                        dupCheckResult.error.details = {
+                            entityType: bsDmInterfaces_1.DmEntityType.Event, entityId: event.id, entityProperty: event.type + '.data',
+                        };
+                        cmdResult.errorList.push(dupCheckResult.error);
+                    }
+                }
+            }
+            if (cmdResult.errorList.length > 0) {
+                cmdResult.ok = false;
+            }
+            if (!cmdResult.ok) {
+                acc.push(cmdResult);
+            }
+            return acc;
+        }, componentErrors);
+    };
+    var eventIds = dmGetAllEventIdsForMediaState(state, props);
+    componentErrors = getEventListComponentErrors(eventIds.map(function (id) { return selectorEvent_1.dmGetEventStateById(state, { id: id }); }));
+    return componentErrors;
 }
-exports.dmGetEventIdsForSign = dmGetEventIdsForSign;
+exports.dmDoValidateMediaStateEvents = dmDoValidateMediaStateEvents;
+function dmDoValidatePlayFileItem(state, props) {
+    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState, entityId: props.id };
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
+    var validateNonEmptyString = function (value, errorType, entityProperty) {
+        if (!lodash_1.isString(value) || value.length === 0) {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(errorType, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
+        }
+    };
+    var playFileItem = dmGetMediaStateStateById(state, props);
+    if (!lodash_1.isNil(playFileItem) && playFileItem.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
+        var contentItem_1 = playFileItem.contentItem;
+        validateNonEmptyString(contentItem_1.name, bsDmError_1.DmErrorType.valueNotSpecifiedOrInvalid, 'label');
+        validateNonEmptyString(contentItem_1.key, bsDmError_1.DmErrorType.valueNotSpecifiedOrInvalid, 'key');
+        var itemStateIds = dmGetContainedMediaStateIdsForMediaState(state, { id: playFileItem.container.id });
+        var hasDuplicateKey = itemStateIds.some(function (id) {
+            if (id !== props.id) {
+                var itemStateToCheck = dmGetMediaStateStateById(state, { id: id });
+                return contentItem_1.key.toUpperCase() ===
+                    itemStateToCheck.contentItem.key.toUpperCase();
+            }
+            return false;
+        });
+        if (hasDuplicateKey) {
+            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.duplicateNameNotAllowed, __assign(__assign({}, entityDetails), { entityProperty: 'key' })));
+        }
+    }
+    result.ok = result.ok && result.errorList.length === 0;
+    return result;
+}
+exports.dmDoValidatePlayFileItem = dmDoValidatePlayFileItem;
+function dmGetMediaStateCopySet(state, props) {
+    var mediaStateIdsToCopy = lodash_1.uniq(props.ids);
+    var contentType = bsDmInterfaces_1.DmCopySetContentType.Interactive;
+    var containerId = bsDmInterfaces_1.BsDmIdNone;
+    var containerType = bsDmInterfaces_1.MediaStateContainerType.Zone;
+    var zoneId = containerId;
+    var initialState = null;
+    if (mediaStateIdsToCopy.length > 0) {
+        initialState = dmGetMediaStateStateById(state, { id: mediaStateIdsToCopy[0] });
+        if (!lodash_1.isNil(initialState)) {
+            containerId = initialState.container.id;
+            containerType = initialState.container.type;
+            zoneId = selectorZone_1.dmGetZoneIdForMediaStateId(state, { id: initialState.id });
+            if (bsDmContentItems_1.dmIsMediaSequenceContainer(initialState.container)) {
+                contentType = bsDmInterfaces_1.DmCopySetContentType.MediaItemList;
+            }
+            else if (selectorZone_1.dmGetZoneNonInteractiveById(state, { id: initialState.container.id })) {
+                contentType = bsDmInterfaces_1.DmCopySetContentType.Playlist;
+            }
+        }
+    }
+    var copySet = bsDmCopyPaste_1.dmCreateNewMediaStateCopySet(contentType, containerId, zoneId, selectorSign_1.dmGetSignId(state));
+    if (mediaStateIdsToCopy.length === 0) {
+        return copySet;
+    }
+    if (bsDmCopyPaste_1.dmIsPlaylistMediaStateCopySet(copySet)) {
+        copySet.plStartingMediaStateId = mediaStateIdsToCopy[0];
+    }
+    var addHtmlSite = function (htmlSiteId) {
+        var htmlSite = selectorHtmlSite_1.dmGetHtmlSiteStateById(state, { id: htmlSiteId });
+        if (!lodash_1.isNil(htmlSite)) {
+            copySet.htmlSites[htmlSiteId] = lodash_1.cloneDeep(htmlSite);
+            if (bsDmHtmlSite_1.dmHtmlSiteIsHostedHtmlSite(htmlSite)) {
+                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, htmlSite.indexAssetId);
+            }
+        }
+    };
+    var addLiveTextCanvas = function (canvasId) {
+        var canvas = selectorLiveText_1.dmGetLiveTextCanvasStateById(state, { id: canvasId });
+        if (!lodash_1.isNil(canvas)) {
+            copySet.liveText.canvasesById[canvasId] = lodash_1.cloneDeep(canvas);
+            var itemIdSequence = selectorLiveText_1.dmGetLiveTextLayerSequenceForCanvas(state, { id: canvasId });
+            if (!lodash_1.isNil(itemIdSequence)) {
+                copySet.liveText.layersByCanvasId[canvasId] = lodash_1.cloneDeep(itemIdSequence);
+                itemIdSequence.forEach(function (itemId) {
+                    var liveTextItem = selectorLiveText_1.dmGetLiveTextItemStateById(state, { id: itemId });
+                    copySet.liveText.itemsById[itemId] = lodash_1.cloneDeep(liveTextItem);
+                    if (bsDmLiveText_1.dmIsLiveTextDataFromDataFeed(liveTextItem)) {
+                        bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, liveTextItem.dataFeedId);
+                    }
+                    else if (bsDmLiveText_1.dmIsLiveTextDataImageContent(liveTextItem) || bsDmLiveText_1.dmIsLiveTextDataMediaCounter(liveTextItem)) {
+                        bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, liveTextItem.assetId);
+                    }
+                });
+            }
+            var groupIds = selectorLiveText_1.dmGetAllLiveTextGroupIdsForCanvas(state, { id: canvasId });
+            groupIds.forEach(function (groupId) {
+                var dataFeedSequence = selectorLiveText_1.dmGetLiveTextDataFeedGroupByGroupId(state, { id: groupId });
+                copySet.liveText.dataFeedsByGroupId[groupId] = lodash_1.cloneDeep(dataFeedSequence);
+                dataFeedSequence.dataFeedIds.forEach(function (dataFeedId) { return bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, dataFeedId); });
+            });
+            if (utils_1.isValidBsDmId(canvas.backgroundImageId)) {
+                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, canvas.backgroundImageId);
+            }
+        }
+    };
+    var addCommandSequences = function (parentId) {
+        var commandSequenceIds = selectorCommand_1.dmGetCommandSequenceIdsForParentId(state, { id: parentId });
+        commandSequenceIds.forEach(function (cmdSeqId) {
+            var commandSequence = selectorCommand_1.dmGetCommandSequenceStateById(state, { id: cmdSeqId });
+            if (!lodash_1.isNil(commandSequence)) {
+                copySet.commands.sequencesById[cmdSeqId] = lodash_1.cloneDeep(commandSequence);
+                commandSequence.sequence.forEach(function (cmdId) {
+                    copySet.commands.commandsById[cmdId] = lodash_1.cloneDeep(selectorCommand_1.dmGetCommandStateById(state, { id: cmdId }));
+                });
+            }
+        });
+    };
+    var addMediaState = function (mediaState) {
+        copySet.mediaStates.mediaStatesById[mediaState.id] = lodash_1.cloneDeep(mediaState);
+        addCommandSequences(mediaState.id);
+        var deNormEvents = fnGetDeNormalizedEventsForMediaState(state.mediaStates.mediaStatesById, state.events, state.transitions, mediaState.id);
+        deNormEvents.forEach(function (deNormEvent) {
+            copySet.events[deNormEvent.eventState.id] = lodash_1.cloneDeep(deNormEvent.eventState);
+            addCommandSequences(deNormEvent.eventState.id);
+            var conditionalSequence = selectorTransition_1.dmGetConditionalTransitionSequenceForEvent(state, { id: deNormEvent.eventState.id });
+            if (!lodash_1.isNil(conditionalSequence)) {
+                copySet.transitions.sequencesByEventId[deNormEvent.eventState.id] = lodash_1.cloneDeep(conditionalSequence);
+            }
+            if (!lodash_1.isNil(deNormEvent.transitionStates)) {
+                deNormEvent.transitionStates.forEach(function (transitionState) {
+                    copySet.transitions.transitionsById[transitionState.id] = lodash_1.cloneDeep(transitionState);
+                    addCommandSequences(transitionState.id);
+                });
+            }
+        });
+        var contentItem = mediaState.contentItem;
+        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(contentItem)) {
+            bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, contentItem.assetId);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsHtmlContentItem(contentItem)) {
+            addHtmlSite(contentItem.siteId);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(contentItem)) {
+            bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, contentItem.dataFeedId);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(contentItem)) {
+            addLiveTextCanvas(contentItem.canvasId);
+        }
+        else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem)) {
+            if (contentItem.useDataFeed) {
+                bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, contentItem.dataFeedId);
+            }
+            else {
+                var listItemSequence = dmGetMediaStateSequenceForContainer(state, { id: mediaState.id });
+                if (!lodash_1.isNil(listItemSequence)) {
+                    copySet.mediaStates.sequencesByParentId[mediaState.id] = listItemSequence;
+                    listItemSequence.sequence.forEach(function (itemId) {
+                        addMediaState(dmGetMediaStateStateById(state, { id: itemId }));
+                    });
+                }
+            }
+            if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem) && !lodash_1.isNil(contentItem.defaultMediaId)) {
+                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, contentItem.defaultMediaId);
+            }
+            var mediaListGlobalEventIds = dmGetMediaListGlobalEventIds(state, { id: mediaState.id });
+            mediaListGlobalEventIds.forEach(function (eventId) {
+                copySet.events[eventId] = lodash_1.cloneDeep(selectorEvent_1.dmGetEventStateById(state, { id: eventId }));
+            });
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(contentItem)) {
+            if (utils_1.isValidBsDmId(contentItem.defaultDataFeedId)) {
+                bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, contentItem.defaultDataFeedId);
+            }
+            var localPlaylistItemSequence = dmGetMediaStateSequenceForContainer(state, { id: mediaState.id });
+            if (!lodash_1.isNil(localPlaylistItemSequence)) {
+                copySet.mediaStates.sequencesByParentId[mediaState.id] = localPlaylistItemSequence;
+                localPlaylistItemSequence.sequence.forEach(function (localPlaylistItemId) {
+                    var localPlaylistItem = dmGetMediaStateStateById(state, { id: localPlaylistItemId });
+                    if (!lodash_1.isNil(localPlaylistItem)) {
+                        addMediaState(dmGetMediaStateStateById(state, { id: localPlaylistItemId }));
+                    }
+                });
+            }
+        }
+        else if (bsDmContentItems_1.dmContentItemIsSuperStateContentItem(contentItem)) {
+            var containedMediaStateIds = dmGetContainedMediaStateIdsForMediaState(state, { id: mediaState.id });
+            containedMediaStateIds.forEach(function (mediaStateId) {
+                addMediaState(dmGetMediaStateStateById(state, { id: mediaStateId }));
+            });
+        }
+    };
+    var checkContainer = function (mediaState) {
+        if (copySet.containerId === bsDmInterfaces_1.BsDmIdNone) {
+            copySet.containerId = mediaState.container.id;
+            return true;
+        }
+        return copySet.containerId === mediaState.container.id;
+    };
+    mediaStateIdsToCopy.forEach(function (id, index) {
+        var mediaState = dmGetMediaStateStateById(state, { id: id });
+        if (!lodash_1.isNil(mediaState) && checkContainer(mediaState)) {
+            addMediaState(mediaState);
+            if (bsDmCopyPaste_1.dmIsPlaylistMediaStateCopySet(copySet)) {
+                var targetMediaStateId = index < mediaStateIdsToCopy.length - 1 ? mediaStateIdsToCopy[index + 1] : bsDmInterfaces_1.BsDmIdNone;
+                var eventId_1 = lodash_1.find(Object.keys(copySet.events), function (evId) { return copySet.events[evId].mediaStateId === id; });
+                if (!lodash_1.isNil(eventId_1)) {
+                    var transitionId = lodash_1.find(Object.keys(copySet.transitions.transitionsById), function (trId) { return copySet.transitions.transitionsById[trId].eventId === eventId_1; });
+                    if (!lodash_1.isNil(transitionId)) {
+                        copySet.transitions.transitionsById[transitionId].targetMediaStateId = targetMediaStateId;
+                        if (targetMediaStateId === bsDmInterfaces_1.BsDmIdNone) {
+                            copySet.plLastTransitionId = transitionId;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    if (contentType === bsDmInterfaces_1.DmCopySetContentType.Interactive) {
+        var mediaStateIdSet_1 = new Set(Object.keys(copySet.mediaStates.mediaStatesById));
+        copySet.transitions.transitionsById = lodash_1.pickBy(copySet.transitions.transitionsById, function (transition) {
+            return !utils_1.isValidBsDmId(transition.targetMediaStateId) || mediaStateIdSet_1.has(transition.targetMediaStateId);
+        });
+        var remainingTransitionIds_1 = Object.keys(copySet.transitions.transitionsById);
+        Object.keys(copySet.transitions.sequencesByEventId).forEach(function (eventId) {
+            var transitionSequence = copySet.transitions.sequencesByEventId[eventId];
+            transitionSequence.sequence = lodash_1.intersection(transitionSequence.sequence, remainingTransitionIds_1);
+        });
+        copySet.transitions.sequencesByEventId = lodash_1.pickBy(copySet.transitions.sequencesByEventId, function (transitionSequence) { return transitionSequence.sequence.length > 0; });
+        var transitionIdSet_1 = new Set(remainingTransitionIds_1);
+        var sequenceIdsToRemove = Object.keys(copySet.commands.sequencesById).filter(function (sequenceId) {
+            var commandSequence = copySet.commands.sequencesById[sequenceId];
+            return commandSequence.type === bscore_1.CommandSequenceType.Transition && !transitionIdSet_1.has(commandSequence.parentId);
+        });
+        var sequenceIdToRemoveSet_1 = new Set(sequenceIdsToRemove);
+        copySet.commands.commandsById = lodash_1.pickBy(copySet.commands.commandsById, function (command) { return !sequenceIdToRemoveSet_1.has(command.sequenceId); });
+        copySet.commands.sequencesById = lodash_1.pickBy(copySet.commands.sequencesById, function (commandSequence) { return !sequenceIdToRemoveSet_1.has(commandSequence.id); });
+    }
+    var referencedUserVarIds = selectorUserVariable_1.dmGetActiveUserVariablesIdsForMediaStateCopySet(state, copySet);
+    if (referencedUserVarIds.length > 0) {
+        var signUserVars = selectorUserVariable_1.dmGetUserVariableIdsForSign(state);
+        var uvIdSet_1 = new Set(referencedUserVarIds);
+        copySet.userVariables = signUserVars.reduce(function (uvState, uvId) {
+            if (uvIdSet_1.has(uvId)) {
+                var userVariable = lodash_1.cloneDeep(selectorUserVariable_1.dmGetUserVariableStateById(state, { id: uvId }));
+                uvState.variablesById[uvId] = userVariable;
+                uvState.sequence.push(uvId);
+                if (userVariable.isNetworked && utils_1.isValidBsDmId(userVariable.dataFeedId)) {
+                    bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, userVariable.dataFeedId);
+                }
+            }
+            return uvState;
+        }, copySet.userVariables);
+    }
+    var initialMediaStateId = null;
+    if (containerType === bsDmInterfaces_1.MediaStateContainerType.Zone) {
+        initialMediaStateId = dmGetInitialMediaStateIdForZone(state, { id: containerId });
+    }
+    else if (containerType === bsDmInterfaces_1.MediaStateContainerType.SuperState) {
+        initialMediaStateId = dmGetInitialMediaStateIdForSuperState(state, { id: containerId });
+    }
+    if (utils_1.isValidBsDmId(initialMediaStateId) && mediaStateIdsToCopy.indexOf(initialMediaStateId) >= 0) {
+        copySet.csInitialMediaStateId = initialMediaStateId;
+    }
+    return copySet;
+}
+exports.dmGetMediaStateCopySet = dmGetMediaStateCopySet;
+function dmIsMediaStateCopySetCompatibleWithZone(state, props) {
+    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState };
+    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Zone, props.zoneId);
+    var zoneType = selectorZone_1.dmGetZoneTypeById(state, { id: props.zoneId });
+    if (!lodash_1.isNil(zoneType)) {
+        var isContentItemValid_1 = selectorZone_1.dmGetZoneNonInteractiveById(state, { id: props.zoneId }) ?
+            bsDmContentItems_1.dmIsValidContentItemForPlaylist : bsDmContentItems_1.dmIsValidContentItemForZone;
+        var mediaStateIds = Object.keys(props.copySet.mediaStates.mediaStatesById);
+        mediaStateIds.forEach(function (id) {
+            var mediaStateState = props.copySet.mediaStates.mediaStatesById[id];
+            if (!isContentItemValid_1(mediaStateState.contentItem, zoneType)) {
+                result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.contentTypeNotCompatibleWithZone, __assign(__assign({}, entityDetails), { entityId: id, entityProperty: 'contentItem' })));
+            }
+        });
+    }
+    else {
+        result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.invalidParameters, { entityType: bsDmInterfaces_1.DmEntityType.Zone, entityId: props.zoneId, entityProperty: 'id' }));
+    }
+    result.ok = result.errorList.length === 0;
+    return result;
+}
+exports.dmIsMediaStateCopySetCompatibleWithZone = dmIsMediaStateCopySetCompatibleWithZone;
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13394,13 +14773,13 @@ exports.dmGetEventIdsForSign = dmGetEventIdsForSign;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetPluginEventIdsForPlugin = exports.dmGetPluginEventIdsForPluginId = exports.dmGetPluginCommandIdsForPlugin = exports.dmGetScriptPluginNameMap = exports.dmGetScriptPluginAssetIds = exports.dmGetScriptPluginIds = exports.dmGetScriptPluginByName = exports.dmGetScriptPluginStateByName = exports.dmGetScriptPluginIdForName = exports.dmGetScriptPluginById = exports.dmGetScriptPluginStateById = exports.clearScriptPluginSelectorCaches = void 0;
 var bscore_1 = __webpack_require__(1);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmCommands_1 = __webpack_require__(21);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmCommands_1 = __webpack_require__(22);
 var selectorCommand_1 = __webpack_require__(26);
-var selectorEvent_1 = __webpack_require__(45);
+var selectorEvent_1 = __webpack_require__(40);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetScriptPluginById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.scriptPlugins; }, function (dmState) { return dmState.assetMap; }, function (pluginId, scriptPlugins, assetMap) {
     var pluginState = scriptPlugins[pluginId];
     if (!lodash_1.isNil(pluginState)) {
@@ -13489,7 +14868,7 @@ exports.dmGetPluginEventIdsForPlugin = dmGetPluginEventIdsForPlugin;
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13506,23 +14885,23 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmValidateSign = exports.dmGetSignLastModifiedTime = exports.dmGetSignWssDeviceSpec = exports.dmGetSignAudioPropertyMap = exports.dmGetSignIrRemoteButtonDescriptions = exports.dmGetSignIrRemoteControl = exports.dmGetSignIrOutConfiguration = exports.dmGetSignIrInConfiguration = exports.dmGetSignIrRemote = exports.dmGetSignButtonPanelMap = exports.dmGetSignGpioList = exports.dmGetSignSerialPortConfigurations = exports.dmGetEnhancedSynchronization = exports.dmIsDolbyVisionEnabled = exports.dmGetSignMonitorOrientation = exports.dmGetSignPlayerModel = exports.dmGetSignVideoMode = exports.dmGetSignName = exports.dmGetSignId = exports.dmGetSignMetaData = exports.dmGetSignState = void 0;
+exports.dmCanChangeVideoMode = exports.dmValidateSign = exports.dmGetSignLastModifiedTime = exports.dmGetSignWssDeviceSpec = exports.dmGetSignAudioPropertyMap = exports.dmGetSignIrRemoteButtonDescriptions = exports.dmGetSignIrRemoteControl = exports.dmGetSignIrOutConfiguration = exports.dmGetSignIrInConfiguration = exports.dmGetSignIrRemote = exports.dmGetSignButtonPanelMap = exports.dmGetSignGpioList = exports.dmGetSignSerialPortConfigurations = exports.dmGetEnhancedSynchronization = exports.dmIsDolbyVisionEnabled = exports.dmIsFullResGraphicsEnabled = exports.dmGetSignMonitorOrientation = exports.dmGetSignPlayerModel = exports.dmGetSignVideoMode = exports.dmGetSignName = exports.dmGetSignId = exports.dmGetSignMetaData = exports.dmGetSignState = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmPlugins_1 = __webpack_require__(42);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmPlugins_1 = __webpack_require__(44);
 var bsDmNodeApp_1 = __webpack_require__(71);
 var bsDmError_1 = __webpack_require__(4);
-var selectorZone_1 = __webpack_require__(40);
+var selectorZone_1 = __webpack_require__(42);
 var selectorDataFeed_1 = __webpack_require__(35);
-var selectorScriptPlugin_1 = __webpack_require__(46);
-var selectorParserPlugin_1 = __webpack_require__(62);
+var selectorScriptPlugin_1 = __webpack_require__(48);
+var selectorParserPlugin_1 = __webpack_require__(63);
 var selectorVideoModePlugin_1 = __webpack_require__(70);
-var selectorNodeApp_1 = __webpack_require__(68);
-var selectorLinkedPresentation_1 = __webpack_require__(59);
-var selectorAuxiliaryFile_1 = __webpack_require__(66);
+var selectorNodeApp_1 = __webpack_require__(62);
+var selectorLinkedPresentation_1 = __webpack_require__(60);
+var selectorAuxiliaryFile_1 = __webpack_require__(67);
 var selectorUserVariable_1 = __webpack_require__(36);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
 function dmGetSignState(state) {
@@ -13554,6 +14933,10 @@ function dmGetSignMonitorOrientation(state) {
     return state.sign.properties.monitorOrientation;
 }
 exports.dmGetSignMonitorOrientation = dmGetSignMonitorOrientation;
+function dmIsFullResGraphicsEnabled(state) {
+    return state.sign.properties.fullResGraphicsEnabled;
+}
+exports.dmIsFullResGraphicsEnabled = dmIsFullResGraphicsEnabled;
 function dmIsDolbyVisionEnabled(state) {
     return state.sign.properties.dolbyVisionEnabled
         && bscore_1.bscPlayerModelHasFeature(state.sign.properties.model, bscore_1.ModelFeature.DolbyVision);
@@ -13663,7 +15046,7 @@ function dmValidateSign(state) {
     var linkedPresentations = selectorLinkedPresentation_1.dmGetLinkedPresentationIds(state);
     linkedPresentations.forEach(function (id) {
         var lp = selectorLinkedPresentation_1.dmGetLinkedPresentationStateById(state, { id: id });
-        var error = selectorValidation_1.dmValidateAssetId(state, lp.assetId, __assign(__assign({}, entityDetails), { entityProperty: "linkedPresentation " + lp.name }));
+        var error = selectorValidation_1.dmValidateAssetId(state, lp.assetId, __assign(__assign({}, entityDetails), { entityProperty: 'linkedPresentation' }));
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
@@ -13671,7 +15054,7 @@ function dmValidateSign(state) {
     var auxiliaryFiles = selectorAuxiliaryFile_1.dmGetAuxiliaryFileIds(state);
     auxiliaryFiles.forEach(function (id) {
         var af = selectorAuxiliaryFile_1.dmGetAuxiliaryFileStateById(state, { id: id });
-        var error = selectorValidation_1.dmValidateAssetId(state, af.assetId, __assign(__assign({}, entityDetails), { entityProperty: "auxiliaryFile " + af.name }));
+        var error = selectorValidation_1.dmValidateAssetId(state, af.assetId, __assign(__assign({}, entityDetails), { entityProperty: 'auxiliaryFile' }));
         if (!lodash_1.isNil(error)) {
             result.errorList.push(error);
         }
@@ -13693,180 +15076,24 @@ function dmValidateSign(state) {
     return result;
 }
 exports.dmValidateSign = dmValidateSign;
+function dmCanChangeVideoMode(state, props) {
+    var isTargetVideoModeHDOrSmaller = bscore_1.bscIsHDVideoResolutionOrSmaller(props.videoMode);
+    var currentVideMode = dmGetSignVideoMode(state);
+    var isCurrentVideModeHDOrSmaller = bscore_1.bscIsHDVideoResolutionOrSmaller(currentVideMode);
+    var model = dmGetSignPlayerModel(state);
+    var playerCapabilities = bscore_1.bscGetPlayerCapabilities(model);
+    var canChange = true;
+    if ((playerCapabilities.videoDecoder4kCount === 1 && playerCapabilities.videoPlaneCount > 1)
+        && (isCurrentVideModeHDOrSmaller && !isTargetVideoModeHDOrSmaller && lodash_1.isNil(selectorZone_1.dmGetAvailableVideoLayer(state)))) {
+        canChange = false;
+    }
+    return canChange;
+}
+exports.dmCanChangeVideoMode = dmCanChangeVideoMode;
 
 
 /***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetTransitionIdsForSign = exports.fnGetSortedTransitionStatesForEventId = exports.dmGetConditionalTransitionIdsForEventFromTransitionState = exports.dmGetNonConditionalTransitionsForEventId = exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState = exports.dmValidateTransition = exports.dmGetConditionalTransitionCountForEvent = exports.dmGetConditionalTransitionIdsForEvent = exports.dmGetConditionalTransitionSequenceForEvent = exports.dmGetIncomingTransitionIdsForMediaState = exports.dmGetTransitionIdsForEvent = exports.dmGetTransitionById = exports.dmGetTransitionStateById = exports.clearTransitionSelectorCaches = void 0;
-var bscore_1 = __webpack_require__(1);
-var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var selectorCommand_1 = __webpack_require__(26);
-var selectorValidation_1 = __webpack_require__(16);
-var bsDmError_1 = __webpack_require__(4);
-var utils_1 = __webpack_require__(3);
-var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
-var selGetTransitionById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.transitions.transitionsById; }, function (dmState) { return dmState.commands; }, function (trnId, transitions, commandState) {
-    var transitionState = transitions[trnId];
-    if (!lodash_1.isNil(transitionState)) {
-        var commands = selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, trnId, bscore_1.CommandSequenceType.Transition);
-        return new bsDmClasses_1.DmcTransition(transitionState, commands);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 500 }),
-});
-function clearTransitionSelectorCaches() {
-    selGetTransitionById.clearCache();
-}
-exports.clearTransitionSelectorCaches = clearTransitionSelectorCaches;
-function dmGetTransitionStateById(state, props) {
-    var transitionState = state.transitions.transitionsById[props.id];
-    return transitionState ? transitionState : null;
-}
-exports.dmGetTransitionStateById = dmGetTransitionStateById;
-function dmGetTransitionById(state, props) {
-    return selGetTransitionById(state, props);
-}
-exports.dmGetTransitionById = dmGetTransitionById;
-function dmGetTransitionIdsForEvent(state, props) {
-    var transitions = state.transitions.transitionsById;
-    return Object.keys(transitions).filter(function (id) { return transitions[id].eventId === props.id; });
-}
-exports.dmGetTransitionIdsForEvent = dmGetTransitionIdsForEvent;
-function dmGetIncomingTransitionIdsForMediaState(state, props) {
-    var transitions = state.transitions.transitionsById;
-    return Object.keys(transitions).filter(function (id) { return transitions[id].targetMediaStateId === props.id; });
-}
-exports.dmGetIncomingTransitionIdsForMediaState = dmGetIncomingTransitionIdsForMediaState;
-function dmGetConditionalTransitionSequenceForEvent(state, props) {
-    var sequence = state.transitions.sequencesByEventId[props.id];
-    return lodash_1.isNil(sequence) ? null : sequence;
-}
-exports.dmGetConditionalTransitionSequenceForEvent = dmGetConditionalTransitionSequenceForEvent;
-function dmGetConditionalTransitionIdsForEvent(state, props) {
-    return exports.dmGetConditionalTransitionIdsForEventFromTransitionState(state.transitions, props.id);
-}
-exports.dmGetConditionalTransitionIdsForEvent = dmGetConditionalTransitionIdsForEvent;
-function dmGetConditionalTransitionCountForEvent(state, props) {
-    var ids = dmGetConditionalTransitionIdsForEvent(state, props);
-    return ids.length;
-}
-exports.dmGetConditionalTransitionCountForEvent = dmGetConditionalTransitionCountForEvent;
-function dmValidateTransition(state, props) {
-    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.Transition, entityId: props.id };
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Transition, props.id);
-    var validateParameterizedString = function (paramString, entityProperty) {
-        var error = selectorValidation_1.dmValidateEntityParameterizedString(state, paramString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var validateUserVariableId = function (userVariableId, entityProperty) {
-        var error = selectorValidation_1.dmValidateUserVariableId(state, userVariableId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var validateUserVariableName = function (userVariableName, entityProperty) {
-        var error = selectorValidation_1.dmValidateUserVariableName(state, userVariableName, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var transition = dmGetTransitionStateById(state, props);
-    if (!lodash_1.isNil(transition) && !lodash_1.isNil(transition.condition)) {
-        if (utils_1.isValidBsDmId(transition.condition.userVariableId)) {
-            validateUserVariableId(transition.condition.userVariableId, 'condition.userVariableId');
-        }
-        else if (transition.condition.userVariableName) {
-            validateUserVariableName(transition.condition.userVariableName, 'condition.userVariableName');
-        }
-        else {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.userVariableNotSpecified, __assign(__assign({}, entityDetails), { entityProperty: 'condition.userVariable' })));
-        }
-        validateParameterizedString(transition.condition.compareValue1, 'condition.compareValue1');
-        if (transition.condition.compareOperator === bscore_1.CompareOperator.BTW) {
-            validateParameterizedString(transition.condition.compareValue2, 'condition.compareValue2');
-        }
-        var commandIds = selectorCommand_1.dmCommandIdsForTransition(state, props);
-        var commandErrors = commandIds.reduce(function (acc, commandId) {
-            var cmdResult = selectorCommand_1.dmValidateCommand(state, { id: commandId });
-            if (!cmdResult.ok) {
-                acc.push(cmdResult);
-            }
-            return acc;
-        }, []);
-        if (commandErrors.length) {
-            result.componentErrors = commandErrors;
-            result.ok = false;
-        }
-    }
-    result.ok = result.ok && result.errorList.length === 0;
-    return result;
-}
-exports.dmValidateTransition = dmValidateTransition;
-exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState = function (transitionState, eventId) {
-    var transitionsById = transitionState.transitionsById;
-    return Object.keys(transitionsById).filter(function (id) {
-        var transition = transitionsById[id];
-        return transition.eventId === eventId && lodash_1.isNil(transition.condition);
-    });
-};
-exports.dmGetNonConditionalTransitionsForEventId = function (state, props) {
-    return exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState(state.transitions, props.id);
-};
-exports.dmGetConditionalTransitionIdsForEventFromTransitionState = function (transitionState, eventId) {
-    var sequence = transitionState.sequencesByEventId[eventId];
-    if (sequence) {
-        var transitions_1 = transitionState.transitionsById;
-        var transitionSequence = sequence.sequence;
-        return transitionSequence.filter(function (id) { return !lodash_1.isNil(transitions_1[id].condition); });
-    }
-    return [];
-};
-exports.fnGetSortedTransitionStatesForEventId = function (transitionState, eventId) {
-    var defaultTransitionId = exports.dmGetNonConditionalTransitionsForEventIdFromTransitionState(transitionState, eventId)
-        .slice(0, 1);
-    var transitionIds = __spreadArrays(exports.dmGetConditionalTransitionIdsForEventFromTransitionState(transitionState, eventId), defaultTransitionId);
-    if (transitionIds.length > 0) {
-        return transitionIds.map(function (id) { return transitionState.transitionsById[id]; });
-    }
-    return null;
-};
-function dmGetTransitionIdsForSign(state) {
-    return Object.keys(state.transitions.transitionsById);
-}
-exports.dmGetTransitionIdsForSign = dmGetTransitionIdsForSign;
-
-
-/***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13886,9 +15113,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetIrRemoteOutConfigurationIncompatibleCommands = exports.dmIsIrRemoteOutConfigurationCompatibleWithCommands = exports.dmGetIrRemoteInConfigurationIncompatibleEvents = exports.dmIsIrRemoteInConfigurationCompatibleWithEvents = exports.dmGetIrRemoteIncompatibleEvents = exports.dmIsIrRemoteControlCompatibleWithEvents = exports.dmGetGpioListIncompatibleEventsAndCommands = exports.dmIsGpioListCompatibleWithEventsAndCommands = exports.dmCanAddOrUpdateCommand = exports.dmIsCommandCompatibleWithSignState = exports.dmCanUpdateGlobalEventToMediaList = exports.dmCanAddGlobalEventToMediaList = exports.dmCanUpdateEventToMediaState = exports.dmCanAddEventToMediaState = exports.dmIsEventCompatibleWithSignState = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmCommands_1 = __webpack_require__(21);
+var bsDmClasses_1 = __webpack_require__(12);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmCommands_1 = __webpack_require__(22);
 var selectors_1 = __webpack_require__(6);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
@@ -14263,7 +15490,7 @@ exports.dmGetIrRemoteOutConfigurationIncompatibleCommands = dmGetIrRemoteOutConf
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14284,8 +15511,8 @@ exports.dmRemoveAuxiliaryFiles = exports.dmUpdateAuxiliaryFileAssetId = exports.
 var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(3);
 var bsDmError_1 = __webpack_require__(4);
@@ -14391,7 +15618,7 @@ exports.dmRemoveAuxiliaryFiles = dmRemoveAuxiliaryFiles;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14414,8 +15641,8 @@ var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var actionSign_1 = __webpack_require__(7);
 var selectors_1 = __webpack_require__(6);
 var bsDmError_1 = __webpack_require__(4);
@@ -14576,7 +15803,7 @@ exports.dmGetDeleteDeviceWebPageActions = dmGetDeleteDeviceWebPageActions;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14597,8 +15824,8 @@ exports.dmRemoveLinkedPresentation = exports.dmUpdateLinkedPresentationAssetId =
 var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var utils_1 = __webpack_require__(3);
 var bsDmError_1 = __webpack_require__(4);
@@ -14726,7 +15953,7 @@ exports.dmRemoveLinkedPresentation = dmRemoveLinkedPresentation;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14747,11 +15974,11 @@ exports.dmRemoveParserBrightScriptPlugin = exports.dmUpdateParserBrightScriptPlu
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmPlugins_1 = __webpack_require__(42);
+var bsDmPlugins_1 = __webpack_require__(44);
 var bsDmError_1 = __webpack_require__(4);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var selectors_1 = __webpack_require__(6);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
@@ -14908,7 +16135,7 @@ exports.dmRemoveParserBrightScriptPlugin = dmRemoveParserBrightScriptPlugin;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14916,7 +16143,7 @@ exports.dmRemoveParserBrightScriptPlugin = dmRemoveParserBrightScriptPlugin;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmDeleteThumbnail = exports.dmSetThumbnail = exports.SET_THUMBNAIL = void 0;
 var bsDmError_1 = __webpack_require__(4);
-var base64 = __webpack_require__(74);
+var base64 = __webpack_require__(75);
 var lodash_1 = __webpack_require__(0);
 exports.SET_THUMBNAIL = 'DM_SET_THUMBNAIL';
 function dmSetThumbnail(assetThumbnail) {
@@ -14947,7 +16174,7 @@ exports.dmDeleteThumbnail = dmDeleteThumbnail;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14957,11 +16184,11 @@ exports.dmRemoveVideoModeBrightScriptPlugin = exports.dmUpdateVideoModeBrightScr
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmPlugins_1 = __webpack_require__(42);
+var bsDmPlugins_1 = __webpack_require__(44);
 var bsDmError_1 = __webpack_require__(4);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var selectors_1 = __webpack_require__(6);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
@@ -15104,7 +16331,7 @@ exports.dmRemoveVideoModeBrightScriptPlugin = dmRemoveVideoModeBrightScriptPlugi
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15114,8 +16341,8 @@ exports.dmCreateSignTreeNode = exports.createIrRemoteControl = exports.createDef
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmDefaults_1 = __webpack_require__(19);
-var bsDmVersion_1 = __webpack_require__(57);
-exports.createDefaultSignState = function (id, name, videoMode, model) {
+var bsDmVersion_1 = __webpack_require__(58);
+var createDefaultSignState = function (id, name, videoMode, model) {
     return ({
         properties: exports.createDefaultSignProperties(id, name, videoMode, model),
         serialPortConfigurations: bsDmDefaults_1.dmGetDefaultSerialPortList(),
@@ -15127,14 +16354,16 @@ exports.createDefaultSignState = function (id, name, videoMode, model) {
         lastModifiedTime: (new Date()).toISOString(),
     });
 };
-exports.createDefaultSignProperties = function (id, name, videoMode, model) {
+exports.createDefaultSignState = createDefaultSignState;
+var createDefaultSignProperties = function (id, name, videoMode, model) {
     var optionals = videoMode !== undefined ? { videoMode: videoMode } : {};
     if (model !== undefined) {
         Object.assign(optionals, { model: model });
     }
     return Object.assign({ id: id, version: bsDmVersion_1.version, name: name }, bsDmDefaults_1.dmGetDefaultSignPropertyData(), optionals);
 };
-exports.createDefaultIrRemote = function (model) {
+exports.createDefaultSignProperties = createDefaultSignProperties;
+var createDefaultIrRemote = function (model) {
     var irInConfiguration = { source: bscore_1.IrReceiverSource.IrIn };
     var irOutConfiguration = { destination: bscore_1.IrTransmitterDestination.Iguana };
     if (model !== undefined) {
@@ -15155,12 +16384,14 @@ exports.createDefaultIrRemote = function (model) {
         irRemoteControl: irRemoteControl,
     };
 };
-exports.createIrRemoteControl = function (id, encoding, manufacturerCode, buttons) { return ({
+exports.createDefaultIrRemote = createDefaultIrRemote;
+var createIrRemoteControl = function (id, encoding, manufacturerCode, buttons) { return ({
     id: id,
     encoding: encoding,
     manufacturerCode: manufacturerCode,
     buttons: buttons,
 }); };
+exports.createIrRemoteControl = createIrRemoteControl;
 function dmCreateSignTreeNode(id, type, parentId) {
     if (parentId === void 0) { parentId = bsDmInterfaces_1.BsDmIdNone; }
     return { id: id, type: type, parentId: parentId, children: [] };
@@ -15169,18 +16400,18 @@ exports.dmCreateSignTreeNode = dmCreateSignTreeNode;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.version = void 0;
-exports.version = '1.1.5';
+exports.version = '1.2.1';
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15199,9 +16430,9 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmHtmlSiteHasDuplicateName = exports.dmGetHtmlSiteIdByAssetId = exports.dmGetHtmlSiteByName = exports.dmGetHtmlSiteIdByName = exports.dmGetHtmlSiteIdsForSign = exports.dmGetHtmlSiteStateById = exports.dmGetHtmlSiteById = exports.clearHtmlSiteSelectorCaches = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
+var bsDmClasses_1 = __webpack_require__(12);
 var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetHtmlSiteById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.htmlSites; }, function (dmState) { return dmState.assetMap; }, function (siteId, htmlSites, assetMap) {
     var htmlSiteState = htmlSites[siteId];
     if (!lodash_1.isNil(htmlSiteState)) {
@@ -15263,7 +16494,7 @@ exports.dmHtmlSiteHasDuplicateName = dmHtmlSiteHasDuplicateName;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15283,12 +16514,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmValidateLinkedPresentations = exports.dmGetLinkedPresentationCommandIdsForLinkedPresentation = exports.dmGetLinkedPresentationStateByName = exports.dmGetLinkedPresentationCount = exports.dmGetLinkedPresentationForAssetLocator = exports.dmGetBsnLinkedPresentationAssetLocatorList = exports.dmGetLinkedPresentationAssetLocatorList = exports.dmGetLinkedPresentationAssetIds = exports.dmGetLinkedPresentationAssetIdList = exports.dmGetLinkedPresentationIds = exports.dmGetLinkedPresentationNameForId = exports.dmGetLinkedPresentationStateById = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmCommands_1 = __webpack_require__(21);
+var bsDmCommands_1 = __webpack_require__(22);
 var selectorAssetMap_1 = __webpack_require__(39);
 var selectorCommand_1 = __webpack_require__(26);
 var lodash_1 = __webpack_require__(0);
 var bsDmError_1 = __webpack_require__(4);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 function dmGetLinkedPresentationStateById(state, props) {
     var file = state.linkedPresentations[props.id];
     return file ? file : null;
@@ -15377,7 +16608,7 @@ exports.dmValidateLinkedPresentations = dmValidateLinkedPresentations;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15397,14 +16628,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetLiveTextCopySet = exports.dmValidateLiveTextCanvas = exports.dmValidateLiveTextItem = exports.dmGetLiveTextDataFeedGroupByGroupId = exports.dmGetLiveTextItemGroupDataFeedMapForCanvas = exports.dmGetAllNonCustomLiveTextItemIdsForGroup = exports.dmGetAllLiveTextItemIdsForGroup = exports.dmGetCanvasMediaRssGroupIds = exports.dmGetAllLiveTextItemIdsForSign = exports.dmGetAllLiveTextGroupIdsForCanvas = exports.dmGetAllLiveTextItemIdsForCanvas = exports.dmGetLiveTextItemStateById = exports.dmGetLiveTextLayerActiveIndexArrayForCanvas = exports.dmGetLiveTextLayerSequenceForCanvas = exports.dmGetLiveTextCanvasIdsForSign = exports.dmGetLiveTextCanvasById = exports.dmGetLiveTextCanvasStateById = exports.clearLiveTextSelectorCaches = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 var bsDmLiveText_1 = __webpack_require__(28);
-var bsDmCopyPaste_1 = __webpack_require__(22);
+var bsDmCopyPaste_1 = __webpack_require__(23);
 var selectorDataFeed_1 = __webpack_require__(35);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 function fnCreateDmcLiveTextItem(liveTextItem, dataFeedSequences, dataFeeds, assetMap, userVariableMap, itemIndex) {
     switch (liveTextItem.type) {
         case bsDmInterfaces_1.LiveTextItemType.StaticText: {
@@ -15633,9 +16864,12 @@ function dmValidateLiveTextItem(state, props) {
     var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.LiveTextItem, entityId: props.id };
     var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.LiveTextItem, props.id);
     var itemState = dmGetLiveTextItemStateById(state, { id: props.id });
-    var validateAssetId = function (assetId, entityProperty) {
+    var validateAssetId = function (assetId, entityProperty, entityInfo) {
         var error = selectorValidation_1.dmValidateAssetId(state, assetId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
         if (!lodash_1.isNil(error)) {
+            if (!lodash_1.isNil(entityInfo)) {
+                error.details.entityInfo = entityInfo;
+            }
             result.errorList.push(error);
         }
     };
@@ -15647,10 +16881,10 @@ function dmValidateLiveTextItem(state, props) {
     };
     switch (itemState.type) {
         case bsDmInterfaces_1.LiveTextItemType.MediaCounter:
-            validateAssetId(itemState.assetId, 'asset');
+            validateAssetId(itemState.assetId, 'asset', 'mediaCounter');
             break;
         case bsDmInterfaces_1.LiveTextItemType.Image:
-            validateAssetId(itemState.assetId, 'asset');
+            validateAssetId(itemState.assetId, 'asset', 'image');
             break;
         case bsDmInterfaces_1.LiveTextItemType.TitledDataFeed: {
             var error = selectorValidation_1.dmValidateEntityParameterizedString(state, itemState.title, __assign(__assign({}, entityDetails), { entityProperty: bsDmInterfaces_1.DmEntityType.LiveTextItem }), true);
@@ -15674,7 +16908,7 @@ function dmValidateLiveTextItem(state, props) {
             var dataFeedSequence = dmGetLiveTextDataFeedGroupByGroupId(state, { id: itemState.groupId });
             if (!lodash_1.isNil(dataFeedSequence)) {
                 dataFeedSequence.dataFeedIds.forEach(function (dataFeedId, index) {
-                    validateDataFeed(dataFeedId, 'dataFeed.' + (index + 1));
+                    validateDataFeed(dataFeedId, 'dataFeeds');
                 });
             }
             break;
@@ -15773,935 +17007,69 @@ exports.dmGetLiveTextCopySet = dmGetLiveTextCopySet;
 
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmIsMediaStateCopySetCompatibleWithZone = exports.dmGetMediaStateCopySet = exports.dmDoValidatePlayFileItem = exports.dmDoValidateMediaStateEvents = exports.dmDoValidateMediaState = exports.dmValidateMediaStateEvents = exports.dmValidateMediaState = exports.dmGetIncompatibleMediaStateEventIdsForContentItemType = exports.dmGpioEventAvailabilityForMediaStateEvents = exports.dmIrRemoteEventAvailabilityForMediaStateEvents = exports.dmBpEventAvailabilityForMediaStateEvents = exports.dmGetPlayFileItemByIndex = exports.dmGetPlayFileItemById = exports.dmIsMediaListGlobalIntrinsicEvent = exports.dmGetMediaListGlobalEventIds = exports.dmGetMediaListItemByIndex = exports.dmGetMediaListItemById = exports.dmGetMediaSequenceByMediaStateId = exports.dmGetMediaStateSequenceForContainer = exports.dmGetInitialMediaStateIdForSuperState = exports.dmGetInitialMediaStateForZone = exports.dmGetInitialMediaStateIdForZone = exports.dmGetMediaAssetItemForMediaStateId = exports.dmGetAllEventIdsForMediaState = exports.dmGetEventIdsForMediaState = exports.dmGetEventStatesForMediaStateId = exports.dmGetContentItemTypeForMediaStateId = exports.dmIsMediaStateContainer = exports.dmGetContainedMediaStateIdsForMediaState = exports.dmGetMediaStateIdsForSign = exports.dmGetMediaStateContainerById = exports.dmGetUniqueMediaStateNameForBaseNameInSign = exports.dmGetUniqueMediaStateNameForBaseNameInZone = exports.dmGetMediaStateNameMapForSign = exports.dmGetMediaStateNameMapForZone = exports.dmGetMediaStateByName = exports.dmGetMediaStateIdsForProps = exports.dmGetMediaStateStateByName = exports.dmGetMediaStateStateById = exports.dmGetMediaStateById = exports.clearMediaStateSelectorCaches = exports.fnGetMediaStateComponents = exports.fnGetDeNormalizedEventsForMediaState = void 0;
-var bscore_1 = __webpack_require__(1);
-var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmClasses_1 = __webpack_require__(11);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmHtmlSite_1 = __webpack_require__(37);
-var bsDmLiveText_1 = __webpack_require__(28);
-var bsDmCopyPaste_1 = __webpack_require__(22);
-var selectorSign_1 = __webpack_require__(47);
-var selectorZone_1 = __webpack_require__(40);
-var selectorEvent_1 = __webpack_require__(45);
-var selectorTransition_1 = __webpack_require__(48);
-var selectorCommand_1 = __webpack_require__(26);
-var selectorMediaSequence_1 = __webpack_require__(73);
-var selectorHtmlSite_1 = __webpack_require__(58);
-var selectorDataFeed_1 = __webpack_require__(35);
-var selectorLiveText_1 = __webpack_require__(60);
-var selectorUserVariable_1 = __webpack_require__(36);
-var selectorValidation_1 = __webpack_require__(16);
-var bsDmError_1 = __webpack_require__(4);
-var utils_1 = __webpack_require__(3);
-var lodash_1 = __webpack_require__(0);
-var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
-function fnGetEventIdsForMediaState(mediaStateMap, eventMap, msId) {
-    return Object.keys(eventMap)
-        .filter(function (id) { return eventMap[id].mediaStateId === msId
-        && !lodash_1.isNil(mediaStateMap[msId])
-        && !(mediaStateMap[msId].contentItem.type === bscore_1.ContentItemType.MediaList
-            && bsDmEvents_1.dmIsMediaListIntrinsicEvent(eventMap[id])); });
-}
-function fnGetEventStatesForMediaStateId(mediaStateMap, eventMap, msId) {
-    return fnGetEventIdsForMediaState(mediaStateMap, eventMap, msId).map(function (id) { return eventMap[id]; });
-}
-function fnGetDeNormalizedEventsForMediaState(mediaStateMap, eventMap, transitionState, msId) {
-    var events = fnGetEventStatesForMediaStateId(mediaStateMap, eventMap, msId);
-    return events.map(function (eventState) {
-        var deNormEvent = { eventState: eventState };
-        var transitionStates = selectorTransition_1.fnGetSortedTransitionStatesForEventId(transitionState, eventState.id);
-        if (!lodash_1.isNil(transitionStates)) {
-            deNormEvent.transitionStates = transitionStates;
-        }
-        return deNormEvent;
-    });
-}
-exports.fnGetDeNormalizedEventsForMediaState = fnGetDeNormalizedEventsForMediaState;
-function fnGetMediaAssetItemForMediaStateId(mediaStateMap, assetMap, msId) {
-    var mediaState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaState) && bsDmContentItems_1.dmContentItemIsMediaContentItem(mediaState.contentItem)) {
-        return assetMap[mediaState.contentItem.assetId];
-    }
-    return null;
-}
-function fnGetMediaStateComponents(mediaStateMap, eventMap, transitionState, commandMap, assetMap, msId) {
-    return {
-        deNormEvents: fnGetDeNormalizedEventsForMediaState(mediaStateMap, eventMap, transitionState, msId),
-        commands: selectorCommand_1.fnGetCommandStatesForMediaState(commandMap, msId),
-        mediaAssetItem: fnGetMediaAssetItemForMediaStateId(mediaStateMap, assetMap, msId),
-    };
-}
-exports.fnGetMediaStateComponents = fnGetMediaStateComponents;
-function fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, action, msId) {
-    var mediaStateState = mediaStateMap[msId];
-    if (mediaStateState.contentItem.type === bscore_1.ContentItemType.MediaList) {
-        return Object.keys(eventMap)
-            .filter(function (id) { return eventMap[id].mediaStateId === msId && eventMap[id].action === action; })
-            .map(function (id) { return eventMap[id]; });
-    }
-    return [];
-}
-function fnGetMediaListComponents(mediaStateMap, eventMap, commandState, dataFeedState, assetMap, msId) {
-    var sourceDataFeed = selectorMediaSequence_1.fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedState.feedsById, msId);
-    return {
-        forwardEvents: fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, bscore_1.EventIntrinsicAction.SequenceForward, msId),
-        backwardEvents: fnGetMediaListGlobalSequenceEvents(mediaStateMap, eventMap, bscore_1.EventIntrinsicAction.SequenceBackward, msId),
-        playNextCommands: selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, msId, bscore_1.CommandSequenceType.SequenceItemNext),
-        playPreviousCommands: selectorCommand_1.fnGetCommandStatesForParentAndType(commandState, msId, bscore_1.CommandSequenceType.SequenceItemPrevious),
-        sourceDataFeed: lodash_1.isNil(sourceDataFeed) ? null :
-            selectorDataFeed_1.fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, sourceDataFeed.id),
-    };
-}
-function fnGetPlayFileComponents(mediaStateMap, dataFeedState, assetMap, msId) {
-    var sourceDataFeed = selectorMediaSequence_1.fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedState.feedsById, msId);
-    return {
-        defaultMediaAssetItem: selectorMediaSequence_1.fnGetPlayFileDefaultMediaAssetItem(mediaStateMap, assetMap, msId),
-        sourceDataFeed: lodash_1.isNil(sourceDataFeed) ? null :
-            selectorDataFeed_1.fnGetDataFeedStateEntitiesByFeedId(dataFeedState, assetMap, sourceDataFeed.id),
-    };
-}
-var selGetMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState)) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        return new bsDmClasses_1.DmcMediaState(mediaStateState, components);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 200 }),
-});
-var selGetMediaListMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.dataFeeds; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, dataFeeds, assetMap) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState)) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        var mediaListComponents = fnGetMediaListComponents(mediaStateMap, eventMap, commands, dataFeeds, assetMap, msId);
-        return new bsDmClasses_1.DmcMediaListMediaState(mediaStateState, components, mediaListComponents);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 50 }),
-});
-var selGetMediaItemById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState) && mediaStateState.container.type === bsDmInterfaces_1.MediaStateContainerType.MediaList) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        return new bsDmClasses_1.DmcMediaListItem(mediaStateState, components);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 100 }),
-});
-var selGetPlayFileMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.dataFeeds; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, dataFeeds, assetMap) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState)) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        var playFileComponents = fnGetPlayFileComponents(mediaStateMap, dataFeeds, assetMap, msId);
-        return new bsDmClasses_1.DmcPlayFileMediaState(mediaStateState, components, playFileComponents);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 50 }),
-});
-var selGetPlayFileItemById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState) && mediaStateState.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        return new bsDmClasses_1.DmcPlayFileItem(mediaStateState, components);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 100 }),
-});
-var selGetLiveTextMediaStateById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (dmState) { return dmState.events; }, function (dmState) { return dmState.transitions; }, function (dmState) { return dmState.commands; }, function (dmState) { return dmState.assetMap; }, function (_, props) { return props.canvas; }, function (msId, mediaStateMap, eventMap, transitions, commands, assetMap, liveTextCanvas) {
-    var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState)) {
-        var components = fnGetMediaStateComponents(mediaStateMap, eventMap, transitions, commands, assetMap, msId);
-        return new bsDmClasses_1.DmcLiveTextMediaState(mediaStateState, components, liveTextCanvas);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 40 }),
-});
-var selGetNameMapForZone = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.mediaStates.mediaStatesById; }, function (zoneId, mediaStateMap) {
-    var mediaStateIds = selectorZone_1.fnGetTargetableMediaStateIdsFromContainerFromMediaStateMap(zoneId, mediaStateMap);
-    var mediaStateMapForZone = mediaStateIds.reduce(function (acc, id) {
-        acc[id] = mediaStateMap[id];
-        return acc;
-    }, {});
-    return fnGetNameMapForMediaStates(mediaStateMapForZone);
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 20 }),
-});
-function clearMediaStateSelectorCaches() {
-    selGetMediaStateById.clearCache();
-    selGetMediaListMediaStateById.clearCache();
-    selGetMediaItemById.clearCache();
-    selGetPlayFileMediaStateById.clearCache();
-    selGetPlayFileItemById.clearCache();
-    selGetLiveTextMediaStateById.clearCache();
-    selGetNameMapForZone.clearCache();
-}
-exports.clearMediaStateSelectorCaches = clearMediaStateSelectorCaches;
-function dmGetMediaStateById(state, props) {
-    var mediaState = null;
-    var mediaStateState = state.mediaStates.mediaStatesById[props.id];
-    if (!lodash_1.isNil(mediaStateState)) {
-        if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(mediaStateState.contentItem)) {
-            mediaState = selGetMediaListMediaStateById(state, props);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(mediaStateState.contentItem)) {
-            mediaState = selGetPlayFileMediaStateById(state, props);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(mediaStateState.contentItem)) {
-            var canvas = selectorLiveText_1.dmGetLiveTextCanvasById(state, { id: mediaStateState.contentItem.canvasId });
-            mediaState = selGetLiveTextMediaStateById(state, { id: props.id, canvas: canvas });
-        }
-        else {
-            mediaState = selGetMediaStateById(state, props);
-        }
-    }
-    return mediaState;
-}
-exports.dmGetMediaStateById = dmGetMediaStateById;
-function dmGetMediaStateStateById(state, props) {
-    var mediaState = state.mediaStates.mediaStatesById[props.id];
-    return mediaState ? mediaState : null;
-}
-exports.dmGetMediaStateStateById = dmGetMediaStateStateById;
-function dmGetMediaStateStateByName(state, props) {
-    var mediaStates = state.mediaStates.mediaStatesById;
-    var mediaStateId = lodash_1.find(Object.keys(mediaStates), function (id) { return mediaStates[id].name === props.name; });
-    return mediaStateId ? mediaStates[mediaStateId] : null;
-}
-exports.dmGetMediaStateStateByName = dmGetMediaStateStateByName;
-function dmGetMediaStateIdsForProps(state, props) {
-    var ignoreName = lodash_1.isNil(props.name);
-    var ignoreContainerType = lodash_1.isNil(props.containerType);
-    var ignoreContentItemType = lodash_1.isNil(props.contentItemType);
-    var contentTypeSet = Array.isArray(props.contentItemType) ?
-        new Set(props.contentItemType) : new Set([props.contentItemType]);
-    var doSearch = function (containerIds) {
-        var ignoreContainerIds = containerIds.length === 0;
-        var containerIdSet = new Set(containerIds);
-        return Object.keys(state.mediaStates.mediaStatesById).filter(function (id) {
-            var mediaState = state.mediaStates.mediaStatesById[id];
-            return (ignoreName || props.name === mediaState.name)
-                && (ignoreContainerIds || containerIdSet.has(mediaState.container.id))
-                && (ignoreContainerType || props.containerType === mediaState.container.type)
-                && (ignoreContentItemType || contentTypeSet.has(mediaState.contentItem.type));
-        });
-    };
-    var getContainedSuperStateIds = function (containerIds) {
-        var containerIdSet = new Set(containerIds);
-        var containedSuperStateIds = Object.keys(state.mediaStates.mediaStatesById)
-            .filter(function (id) {
-            var mediaState = state.mediaStates.mediaStatesById[id];
-            return containerIdSet.has(mediaState.container.id)
-                && mediaState.contentItem.type === bscore_1.ContentItemType.SuperState;
-        });
-        if (containedSuperStateIds.length > 0) {
-            return containedSuperStateIds.concat(getContainedSuperStateIds(containedSuperStateIds));
-        }
-        return [];
-    };
-    if (!lodash_1.isNil(props.searchContainedSuperStates)
-        && props.searchContainedSuperStates
-        && !lodash_1.isNil(props.containerId)) {
-        var searchContainerIds = getContainedSuperStateIds([props.containerId]);
-        searchContainerIds.unshift(props.containerId);
-        return doSearch(searchContainerIds);
-    }
-    return doSearch(lodash_1.isNil(props.containerId) ? [] : [props.containerId]);
-}
-exports.dmGetMediaStateIdsForProps = dmGetMediaStateIdsForProps;
-function dmGetMediaStateByName(state, props) {
-    var mediaStates = state.mediaStates.mediaStatesById;
-    var mediaStateId = lodash_1.find(Object.keys(mediaStates), function (id) { return mediaStates[id].name === props.name; });
-    return lodash_1.isNil(mediaStateId) ? null : dmGetMediaStateById(state, { id: mediaStateId });
-}
-exports.dmGetMediaStateByName = dmGetMediaStateByName;
-var fnGetNameMapForMediaStates = function (mediaStateMap, containerIds) {
-    var containerIdSet = lodash_1.isNil(containerIds) ? null : new Set(containerIds);
-    return Object.keys(mediaStateMap).reduce(function (acc, id) {
-        var mediaState = mediaStateMap[id];
-        if (!lodash_1.isNil(mediaState) && (lodash_1.isNil(containerIdSet) || containerIdSet.has(mediaState.container.id))) {
-            if (lodash_1.isNil(acc[mediaState.name])) {
-                acc[mediaState.name] = [id];
-            }
-            else {
-                acc[mediaState.name].push(id);
-            }
-        }
-        return acc;
-    }, {});
-};
-function dmGetMediaStateNameMapForZone(state, props) {
-    return selGetNameMapForZone(state, props);
-}
-exports.dmGetMediaStateNameMapForZone = dmGetMediaStateNameMapForZone;
-var selGetNameMapForSign = reselect_1.createSelector(function (dmState) { return dmState.mediaStates.mediaStatesById; }, fnGetNameMapForMediaStates);
-function dmGetMediaStateNameMapForSign(state) {
-    return selGetNameMapForSign(state);
-}
-exports.dmGetMediaStateNameMapForSign = dmGetMediaStateNameMapForSign;
-function dmGetUniqueMediaStateNameForBaseNameInZone(state, props) {
-    var proposedName = lodash_1.isString(props.name) && props.name.length ? props.name : 'State';
-    return utils_1.getUniqueNameForNameMap(proposedName, dmGetMediaStateNameMapForZone(state, props));
-}
-exports.dmGetUniqueMediaStateNameForBaseNameInZone = dmGetUniqueMediaStateNameForBaseNameInZone;
-function dmGetUniqueMediaStateNameForBaseNameInSign(state, props) {
-    var proposedName = lodash_1.isString(props.name) && props.name.length ? props.name : 'State';
-    return utils_1.getUniqueNameForNameMap(proposedName, dmGetMediaStateNameMapForSign(state));
-}
-exports.dmGetUniqueMediaStateNameForBaseNameInSign = dmGetUniqueMediaStateNameForBaseNameInSign;
-function dmGetMediaStateContainerById(state, props) {
-    var mediaState = state.mediaStates.mediaStatesById[props.id];
-    return lodash_1.isNil(mediaState) ? null : new bsDmClasses_1.DmcMediaStateContainer(mediaState.container.id, mediaState.container.type);
-}
-exports.dmGetMediaStateContainerById = dmGetMediaStateContainerById;
-function dmGetMediaStateIdsForSign(state) {
-    return Object.keys(state.mediaStates.mediaStatesById);
-}
-exports.dmGetMediaStateIdsForSign = dmGetMediaStateIdsForSign;
-function dmGetContainedMediaStateIdsForMediaState(state, props) {
-    var mediaStates = state.mediaStates.mediaStatesById;
-    return Object.keys(mediaStates).filter(function (id) {
-        var mediaState = mediaStates[id];
-        return mediaState.container.type !== bsDmInterfaces_1.MediaStateContainerType.Zone && mediaState.container.id === props.id;
-    });
-}
-exports.dmGetContainedMediaStateIdsForMediaState = dmGetContainedMediaStateIdsForMediaState;
-var containerContentItemTypes = [bscore_1.ContentItemType.MediaList, bscore_1.ContentItemType.PlayFile, bscore_1.ContentItemType.SuperState];
-function dmIsMediaStateContainer(state, props) {
-    var mediaState = state.mediaStates.mediaStatesById[props.id];
-    return mediaState ? containerContentItemTypes.indexOf(mediaState.contentItem.type) >= 0 : false;
-}
-exports.dmIsMediaStateContainer = dmIsMediaStateContainer;
-function dmGetContentItemTypeForMediaStateId(state, props) {
-    var mediaStateState = state.mediaStates.mediaStatesById[props.id];
-    return lodash_1.isNil(mediaStateState) ? null : mediaStateState.contentItem.type;
-}
-exports.dmGetContentItemTypeForMediaStateId = dmGetContentItemTypeForMediaStateId;
-function dmGetEventStatesForMediaStateId(state, props) {
-    return fnGetEventStatesForMediaStateId(state.mediaStates.mediaStatesById, state.events, props.id);
-}
-exports.dmGetEventStatesForMediaStateId = dmGetEventStatesForMediaStateId;
-function dmGetEventIdsForMediaState(state, props) {
-    return fnGetEventIdsForMediaState(state.mediaStates.mediaStatesById, state.events, props.id);
-}
-exports.dmGetEventIdsForMediaState = dmGetEventIdsForMediaState;
-function dmGetAllEventIdsForMediaState(state, props) {
-    var events = state.events;
-    return Object.keys(events).filter(function (id) { return events[id].mediaStateId === props.id; });
-}
-exports.dmGetAllEventIdsForMediaState = dmGetAllEventIdsForMediaState;
-function dmGetMediaAssetItemForMediaStateId(state, props) {
-    return fnGetMediaAssetItemForMediaStateId(state.mediaStates.mediaStatesById, state.assetMap, props.id);
-}
-exports.dmGetMediaAssetItemForMediaStateId = dmGetMediaAssetItemForMediaStateId;
-function dmGetInitialMediaStateIdForZone(state, props) {
-    var zone = state.zones.zonesById[props.id];
-    return zone ? zone.initialMediaStateId : null;
-}
-exports.dmGetInitialMediaStateIdForZone = dmGetInitialMediaStateIdForZone;
-function dmGetInitialMediaStateForZone(state, props) {
-    var zone = state.zones.zonesById[props.id];
-    return zone ? dmGetMediaStateById(state, { id: zone.initialMediaStateId }) : null;
-}
-exports.dmGetInitialMediaStateForZone = dmGetInitialMediaStateForZone;
-function dmGetInitialMediaStateIdForSuperState(state, props) {
-    var superState = dmGetMediaStateStateById(state, { id: props.id });
-    if (!lodash_1.isNil(superState) && bsDmContentItems_1.dmContentItemIsSuperStateContentItem(superState.contentItem)) {
-        return superState.contentItem.initialMediaStateId;
-    }
-    return null;
-}
-exports.dmGetInitialMediaStateIdForSuperState = dmGetInitialMediaStateIdForSuperState;
-function dmGetMediaStateSequenceForContainer(state, props) {
-    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
-    return lodash_1.isNil(mediaStateSequence) ? null : mediaStateSequence;
-}
-exports.dmGetMediaStateSequenceForContainer = dmGetMediaStateSequenceForContainer;
-exports.dmGetMediaSequenceByMediaStateId = dmGetMediaStateSequenceForContainer;
-function dmGetMediaListItemById(state, props) {
-    return selGetMediaItemById(state, props);
-}
-exports.dmGetMediaListItemById = dmGetMediaListItemById;
-function dmGetMediaListItemByIndex(state, props) {
-    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
-    if (mediaStateSequence && mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.MediaList) {
-        var index = props.index;
-        if (index >= 0 && index < mediaStateSequence.sequence.length) {
-            var mediaStateState = state.mediaStates.mediaStatesById[mediaStateSequence.sequence[index]];
-            if (!lodash_1.isNil(mediaStateState)) {
-                return selGetMediaItemById(state, { id: mediaStateState.id });
-            }
-        }
-    }
-    return null;
-}
-exports.dmGetMediaListItemByIndex = dmGetMediaListItemByIndex;
-function dmGetMediaListGlobalEventIds(state, props) {
-    var events = state.events;
-    if (dmGetContentItemTypeForMediaStateId(state, props) === bscore_1.ContentItemType.MediaList) {
-        return Object.keys(events)
-            .filter(function (id) {
-            return events[id].mediaStateId === props.id
-                && dmIsMediaListGlobalIntrinsicEvent(state, props.id, events[id]);
-        });
-    }
-    return [];
-}
-exports.dmGetMediaListGlobalEventIds = dmGetMediaListGlobalEventIds;
-function dmIsMediaListGlobalIntrinsicEvent(state, mediaStateId, eventSpec) {
-    var contentItemType = dmGetContentItemTypeForMediaStateId(state, { id: mediaStateId });
-    return contentItemType === bscore_1.ContentItemType.MediaList && bsDmEvents_1.dmIsMediaListIntrinsicEvent(eventSpec);
-}
-exports.dmIsMediaListGlobalIntrinsicEvent = dmIsMediaListGlobalIntrinsicEvent;
-function dmGetPlayFileItemById(state, props) {
-    return selGetPlayFileItemById(state, props);
-}
-exports.dmGetPlayFileItemById = dmGetPlayFileItemById;
-function dmGetPlayFileItemByIndex(state, props) {
-    var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
-    if (mediaStateSequence && mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
-        var index = props.index;
-        if (index >= 0 && index < mediaStateSequence.sequence.length) {
-            var mediaStateState = state.mediaStates.mediaStatesById[mediaStateSequence.sequence[index]];
-            if (!lodash_1.isNil(mediaStateState)) {
-                return selGetPlayFileItemById(state, { id: mediaStateState.id });
-            }
-        }
-    }
-    return null;
-}
-exports.dmGetPlayFileItemByIndex = dmGetPlayFileItemByIndex;
-function dmBpEventAvailabilityForMediaStateEvents(state, props) {
-    var events = state.events;
-    var eventList = Object.keys(events).reduce(function (list, eventId) {
-        var event = events[eventId];
-        if (event.mediaStateId === props.id) {
-            list.push(event);
-        }
-        return list;
-    }, []);
-    return bsDmEvents_1.dmGetBpAvailabilityForEventList(eventList);
-}
-exports.dmBpEventAvailabilityForMediaStateEvents = dmBpEventAvailabilityForMediaStateEvents;
-function dmIrRemoteEventAvailabilityForMediaStateEvents(state, props) {
-    var events = state.events;
-    var eventList = dmGetAllEventIdsForMediaState(state, props).map(function (id) { return events[id]; });
-    return bsDmEvents_1.dmGetIrRemoteAvailabilityForEventList(eventList, selectorSign_1.dmGetSignIrRemoteButtonDescriptions(state));
-}
-exports.dmIrRemoteEventAvailabilityForMediaStateEvents = dmIrRemoteEventAvailabilityForMediaStateEvents;
-function dmGpioEventAvailabilityForMediaStateEvents(state, props) {
-    var events = state.events;
-    var eventList = Object.keys(events).reduce(function (list, eventId) {
-        var event = events[eventId];
-        if (event.mediaStateId === props.id) {
-            list.push(event);
-        }
-        return list;
-    }, []);
-    return bsDmEvents_1.dmGetGpioAvailabilityForEventList(eventList, selectorSign_1.dmGetSignGpioList(state));
-}
-exports.dmGpioEventAvailabilityForMediaStateEvents = dmGpioEventAvailabilityForMediaStateEvents;
-function dmGetIncompatibleMediaStateEventIdsForContentItemType(state, props) {
-    var eventIds = dmGetEventIdsForMediaState(state, props);
-    return eventIds.filter(function (id) { return !selectorEvent_1.dmIsEventCompatibleWithContentItemType(state, { id: id, type: props.type }); });
-}
-exports.dmGetIncompatibleMediaStateEventIdsForContentItemType = dmGetIncompatibleMediaStateEventIdsForContentItemType;
-function dmValidateMediaState(state, props) {
-    var mediaState = dmGetMediaStateStateById(state, props);
-    if (!lodash_1.isNil(mediaState) && mediaState.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
-        return dmDoValidatePlayFileItem(state, props);
-    }
-    return dmDoValidateMediaState(state, props, false);
-}
-exports.dmValidateMediaState = dmValidateMediaState;
-function dmValidateMediaStateEvents(state, props) {
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
-    var eventComponentErrors = dmDoValidateMediaStateEvents(state, props);
-    if (eventComponentErrors.length) {
-        result.componentErrors = eventComponentErrors;
-        result.ok = false;
-    }
-    return result;
-}
-exports.dmValidateMediaStateEvents = dmValidateMediaStateEvents;
-function dmDoValidateMediaState(state, props, includeEvents) {
-    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState, entityId: props.id };
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
-    var validateParameterizedString = function (paramString, entityProperty, cannotBeEmpty) {
-        var error = selectorValidation_1.dmValidateEntityParameterizedString(state, paramString, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }), cannotBeEmpty);
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var validateUserVariableId = function (userVariableId, entityProperty) {
-        var error = selectorValidation_1.dmValidateUserVariableId(state, userVariableId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var validateDataFeed = function (dataFeedId, entityProperty) {
-        var error = selectorValidation_1.dmValidateEntityDataFeed(state, dataFeedId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var validateHtmlSite = function (htmlSiteId, entityProperty) {
-        var _a;
-        var errorList = selectorValidation_1.dmValidateEntityHtmlSite(state, htmlSiteId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(errorList)) {
-            (_a = result.errorList).push.apply(_a, errorList);
-        }
-    };
-    var validateAssetItem = function (assetId, entityProperty) {
-        var error = selectorValidation_1.dmValidateAssetId(state, assetId, __assign(__assign({}, entityDetails), { entityProperty: entityProperty }));
-        if (!lodash_1.isNil(error)) {
-            result.errorList.push(error);
-        }
-    };
-    var mediaState = dmGetMediaStateStateById(state, props);
-    if (!lodash_1.isNil(mediaState)) {
-        if (!lodash_1.isString(mediaState.name) || mediaState.name.length === 0) {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.nameNotSpecified, __assign(__assign({}, entityDetails), { entityProperty: 'name' })));
-        }
-        else if (!bsDmContentItems_1.dmIsMediaSequenceContainer(mediaState.container)) {
-            var zoneId = selectorZone_1.dmGetZoneIdForMediaStateId(state, props);
-            var zoneNameMap = dmGetMediaStateNameMapForZone(state, { id: zoneId });
-            if (zoneNameMap[mediaState.name].length > 1) {
-                result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.duplicateNameNotAllowed, __assign(__assign({}, entityDetails), { entityProperty: 'name' })));
-            }
-        }
-        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(mediaState.contentItem)) {
-            validateAssetItem(mediaState.contentItem.assetId, 'contentItem.assetId');
-        }
-        else if (bsDmContentItems_1.dmContentItemIsStreamContentItem(mediaState.contentItem)) {
-            validateParameterizedString(mediaState.contentItem.url, 'contentItem.url', true);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsHtmlContentItem(mediaState.contentItem)) {
-            validateHtmlSite(mediaState.contentItem.siteId, 'contentItem.htmlSite');
-        }
-        else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(mediaState.contentItem)) {
-            validateDataFeed(mediaState.contentItem.dataFeedId, 'contentItem.dataFeed');
-        }
-        else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaState.contentItem)) {
-            if (mediaState.contentItem.useDataFeed) {
-                validateDataFeed(mediaState.contentItem.dataFeedId, 'contentItem.dataFeed');
-            }
-        }
-        else if (bsDmContentItems_1.dmContentItemIsUserVariableContentItem(mediaState.contentItem)) {
-            validateUserVariableId(mediaState.contentItem.userVariableId, 'contentItem.userVariableId');
-        }
-        var componentErrors_1 = [];
-        if (includeEvents) {
-            componentErrors_1 = dmDoValidateMediaStateEvents(state, props);
-        }
-        var commandIds = selectorCommand_1.dmGetEntryCommandIdsForMediaState(state, props).slice();
-        commandIds.push.apply(commandIds, selectorCommand_1.dmGetExitCommandIdsForMediaState(state, props));
-        if (bsDmContentItems_1.dmContentItemIsMediaListContentItem(mediaState.contentItem)) {
-            commandIds.push.apply(commandIds, selectorCommand_1.dmGetSequenceItemNextCommandIdsForMediaState(state, props));
-            commandIds.push.apply(commandIds, selectorCommand_1.dmGetSequenceItemPreviousCommandIdsForMediaState(state, props));
-        }
-        componentErrors_1 = commandIds.reduce(function (acc, commandId) {
-            var cmdResult = selectorCommand_1.dmValidateCommand(state, { id: commandId });
-            if (!cmdResult.ok) {
-                acc.push(cmdResult);
-            }
-            return acc;
-        }, componentErrors_1);
-        if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(mediaState.contentItem)) {
-            var liveTextErrors = selectorLiveText_1.dmValidateLiveTextCanvas(state, { id: mediaState.contentItem.canvasId });
-            if (!liveTextErrors.ok) {
-                componentErrors_1.push(liveTextErrors);
-            }
-        }
-        if (bsDmContentItems_1.dmContentItemIsSuperStateContentItem(mediaState.contentItem)) {
-            var containedMediaStateIds = dmGetContainedMediaStateIdsForMediaState(state, props);
-            if (containedMediaStateIds.length > 0) {
-                var initialStateErrorType = null;
-                if (utils_1.isValidBsDmId(mediaState.contentItem.initialMediaStateId)) {
-                    var initialMediaState = dmGetMediaStateStateById(state, { id: mediaState.contentItem.initialMediaStateId });
-                    if (!lodash_1.isNil(initialMediaState)) {
-                        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(initialMediaState.contentItem)) {
-                            initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateCannotBeOnDemand;
-                        }
-                    }
-                    else {
-                        initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateInvalid;
-                    }
-                }
-                else {
-                    initialStateErrorType = bsDmError_1.DmErrorType.superStateInitialStateInvalid;
-                }
-                if (!lodash_1.isNil(initialStateErrorType)) {
-                    result.errorList.push(selectorValidation_1.dmGetEntityError(initialStateErrorType, __assign(__assign({}, entityDetails), { entityProperty: 'superState.initialMediaState' })));
-                }
-                containedMediaStateIds.forEach(function (containedStateId) {
-                    var containedStateErrors = dmDoValidateMediaState(state, { id: containedStateId }, true);
-                    if (!containedStateErrors.ok) {
-                        componentErrors_1.push(containedStateErrors);
-                    }
-                });
-            }
-        }
-        if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(mediaState.contentItem)
-            && !mediaState.contentItem.useDataFeed) {
-            var playFileItems = dmGetContainedMediaStateIdsForMediaState(state, props);
-            playFileItems.forEach(function (itemId) {
-                var containedItemErrors = dmDoValidatePlayFileItem(state, { id: itemId });
-                if (!containedItemErrors.ok) {
-                    componentErrors_1.push(containedItemErrors);
-                }
-            });
-        }
-        if (componentErrors_1.length) {
-            result.componentErrors = componentErrors_1;
-            result.ok = false;
-        }
-    }
-    result.ok = result.ok && result.errorList.length === 0;
-    return result;
-}
-exports.dmDoValidateMediaState = dmDoValidateMediaState;
-function dmDoValidateMediaStateEvents(state, props) {
-    var componentErrors = [];
-    var getEventListComponentErrors = function (eventList) {
-        return eventList.reduce(function (acc, event, index) {
-            var cmdResult = selectorEvent_1.dmValidateEvent(state, { id: event.id });
-            for (var i = 0; i < eventList.length; i++) {
-                if (i !== index) {
-                    var dupCheckResult = bsDmEvents_1.dmIsDuplicateEventData(event, eventList[i]);
-                    if (!dupCheckResult.ok) {
-                        dupCheckResult.error.details = {
-                            entityType: bsDmInterfaces_1.DmEntityType.Event, entityId: event.id, entityProperty: event.type + '.data'
-                        };
-                        cmdResult.errorList.push(dupCheckResult.error);
-                    }
-                }
-            }
-            if (cmdResult.errorList.length > 0) {
-                cmdResult.ok = false;
-            }
-            if (!cmdResult.ok) {
-                acc.push(cmdResult);
-            }
-            return acc;
-        }, componentErrors);
-    };
-    var eventIds = dmGetAllEventIdsForMediaState(state, props);
-    componentErrors = getEventListComponentErrors(eventIds.map(function (id) { return selectorEvent_1.dmGetEventStateById(state, { id: id }); }));
-    return componentErrors;
-}
-exports.dmDoValidateMediaStateEvents = dmDoValidateMediaStateEvents;
-function dmDoValidatePlayFileItem(state, props) {
-    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState, entityId: props.id };
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.MediaState, props.id);
-    var validateNonEmptyString = function (value, errorType, entityProperty) {
-        if (!lodash_1.isString(value) || value.length === 0) {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(errorType, __assign(__assign({}, entityDetails), { entityProperty: entityProperty })));
-        }
-    };
-    var playFileItem = dmGetMediaStateStateById(state, props);
-    if (!lodash_1.isNil(playFileItem) && playFileItem.container.type === bsDmInterfaces_1.MediaStateContainerType.PlayFile) {
-        var contentItem_1 = playFileItem.contentItem;
-        validateNonEmptyString(contentItem_1.name, bsDmError_1.DmErrorType.valueNotSpecifiedOrInvalid, 'label');
-        validateNonEmptyString(contentItem_1.key, bsDmError_1.DmErrorType.valueNotSpecifiedOrInvalid, 'key');
-        var itemStateIds = dmGetContainedMediaStateIdsForMediaState(state, { id: playFileItem.container.id });
-        var hasDuplicateKey = itemStateIds.some(function (id) {
-            if (id !== props.id) {
-                var itemStateToCheck = dmGetMediaStateStateById(state, { id: id });
-                return contentItem_1.key.toUpperCase() ===
-                    itemStateToCheck.contentItem.key.toUpperCase();
-            }
-            return false;
-        });
-        if (hasDuplicateKey) {
-            result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.duplicateNameNotAllowed, __assign(__assign({}, entityDetails), { entityProperty: 'key' })));
-        }
-    }
-    result.ok = result.ok && result.errorList.length === 0;
-    return result;
-}
-exports.dmDoValidatePlayFileItem = dmDoValidatePlayFileItem;
-function dmGetMediaStateCopySet(state, props) {
-    var mediaStateIdsToCopy = lodash_1.uniq(props.ids);
-    var contentType = bsDmInterfaces_1.DmCopySetContentType.Interactive;
-    var containerId = bsDmInterfaces_1.BsDmIdNone;
-    var containerType = bsDmInterfaces_1.MediaStateContainerType.Zone;
-    var zoneId = containerId;
-    var initialState = null;
-    if (mediaStateIdsToCopy.length > 0) {
-        initialState = dmGetMediaStateStateById(state, { id: mediaStateIdsToCopy[0] });
-        if (!lodash_1.isNil(initialState)) {
-            containerId = initialState.container.id;
-            containerType = initialState.container.type;
-            zoneId = selectorZone_1.dmGetZoneIdForMediaStateId(state, { id: initialState.id });
-            if (bsDmContentItems_1.dmIsMediaSequenceContainer(initialState.container)) {
-                contentType = bsDmInterfaces_1.DmCopySetContentType.MediaItemList;
-            }
-            else if (selectorZone_1.dmGetZoneNonInteractiveById(state, { id: initialState.container.id })) {
-                contentType = bsDmInterfaces_1.DmCopySetContentType.Playlist;
-            }
-        }
-    }
-    var copySet = bsDmCopyPaste_1.dmCreateNewMediaStateCopySet(contentType, containerId, zoneId, selectorSign_1.dmGetSignId(state));
-    if (mediaStateIdsToCopy.length === 0) {
-        return copySet;
-    }
-    if (bsDmCopyPaste_1.dmIsPlaylistMediaStateCopySet(copySet)) {
-        copySet.plStartingMediaStateId = mediaStateIdsToCopy[0];
-    }
-    var addHtmlSite = function (htmlSiteId) {
-        var htmlSite = selectorHtmlSite_1.dmGetHtmlSiteStateById(state, { id: htmlSiteId });
-        if (!lodash_1.isNil(htmlSite)) {
-            copySet.htmlSites[htmlSiteId] = lodash_1.cloneDeep(htmlSite);
-            if (bsDmHtmlSite_1.dmHtmlSiteIsHostedHtmlSite(htmlSite)) {
-                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, htmlSite.indexAssetId);
-            }
-        }
-    };
-    var addLiveTextCanvas = function (canvasId) {
-        var canvas = selectorLiveText_1.dmGetLiveTextCanvasStateById(state, { id: canvasId });
-        if (!lodash_1.isNil(canvas)) {
-            copySet.liveText.canvasesById[canvasId] = lodash_1.cloneDeep(canvas);
-            var itemIdSequence = selectorLiveText_1.dmGetLiveTextLayerSequenceForCanvas(state, { id: canvasId });
-            if (!lodash_1.isNil(itemIdSequence)) {
-                copySet.liveText.layersByCanvasId[canvasId] = lodash_1.cloneDeep(itemIdSequence);
-                itemIdSequence.forEach(function (itemId) {
-                    var liveTextItem = selectorLiveText_1.dmGetLiveTextItemStateById(state, { id: itemId });
-                    copySet.liveText.itemsById[itemId] = lodash_1.cloneDeep(liveTextItem);
-                    if (bsDmLiveText_1.dmIsLiveTextDataFromDataFeed(liveTextItem)) {
-                        bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, liveTextItem.dataFeedId);
-                    }
-                    else if (bsDmLiveText_1.dmIsLiveTextDataImageContent(liveTextItem) || bsDmLiveText_1.dmIsLiveTextDataMediaCounter(liveTextItem)) {
-                        bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, liveTextItem.assetId);
-                    }
-                });
-            }
-            var groupIds = selectorLiveText_1.dmGetAllLiveTextGroupIdsForCanvas(state, { id: canvasId });
-            groupIds.forEach(function (groupId) {
-                var dataFeedSequence = selectorLiveText_1.dmGetLiveTextDataFeedGroupByGroupId(state, { id: groupId });
-                copySet.liveText.dataFeedsByGroupId[groupId] = lodash_1.cloneDeep(dataFeedSequence);
-                dataFeedSequence.dataFeedIds.forEach(function (dataFeedId) { return bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, dataFeedId); });
-            });
-            if (utils_1.isValidBsDmId(canvas.backgroundImageId)) {
-                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, canvas.backgroundImageId);
-            }
-        }
-    };
-    var addCommandSequences = function (parentId) {
-        var commandSequenceIds = selectorCommand_1.dmGetCommandSequenceIdsForParentId(state, { id: parentId });
-        commandSequenceIds.forEach(function (cmdSeqId) {
-            var commandSequence = selectorCommand_1.dmGetCommandSequenceStateById(state, { id: cmdSeqId });
-            if (!lodash_1.isNil(commandSequence)) {
-                copySet.commands.sequencesById[cmdSeqId] = lodash_1.cloneDeep(commandSequence);
-                commandSequence.sequence.forEach(function (cmdId) {
-                    copySet.commands.commandsById[cmdId] = lodash_1.cloneDeep(selectorCommand_1.dmGetCommandStateById(state, { id: cmdId }));
-                });
-            }
-        });
-    };
-    var addMediaState = function (mediaState) {
-        copySet.mediaStates.mediaStatesById[mediaState.id] = lodash_1.cloneDeep(mediaState);
-        addCommandSequences(mediaState.id);
-        var deNormEvents = fnGetDeNormalizedEventsForMediaState(state.mediaStates.mediaStatesById, state.events, state.transitions, mediaState.id);
-        deNormEvents.forEach(function (deNormEvent) {
-            copySet.events[deNormEvent.eventState.id] = lodash_1.cloneDeep(deNormEvent.eventState);
-            addCommandSequences(deNormEvent.eventState.id);
-            var conditionalSequence = selectorTransition_1.dmGetConditionalTransitionSequenceForEvent(state, { id: deNormEvent.eventState.id });
-            if (!lodash_1.isNil(conditionalSequence)) {
-                copySet.transitions.sequencesByEventId[deNormEvent.eventState.id] = lodash_1.cloneDeep(conditionalSequence);
-            }
-            if (!lodash_1.isNil(deNormEvent.transitionStates)) {
-                deNormEvent.transitionStates.forEach(function (transitionState) {
-                    copySet.transitions.transitionsById[transitionState.id] = lodash_1.cloneDeep(transitionState);
-                    addCommandSequences(transitionState.id);
-                });
-            }
-        });
-        var contentItem = mediaState.contentItem;
-        if (bsDmContentItems_1.dmContentItemIsMediaContentItem(contentItem)) {
-            bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, contentItem.assetId);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsHtmlContentItem(contentItem)) {
-            addHtmlSite(contentItem.siteId);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsAnyDataFeedContentItem(contentItem)) {
-            bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, contentItem.dataFeedId);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsLiveTextContentItem(contentItem)) {
-            addLiveTextCanvas(contentItem.canvasId);
-        }
-        else if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(contentItem)) {
-            if (contentItem.useDataFeed) {
-                bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, contentItem.dataFeedId);
-            }
-            else {
-                var listItemSequence = dmGetMediaStateSequenceForContainer(state, { id: mediaState.id });
-                if (!lodash_1.isNil(listItemSequence)) {
-                    copySet.mediaStates.sequencesByParentId[mediaState.id] = listItemSequence;
-                    listItemSequence.sequence.forEach(function (itemId) {
-                        addMediaState(dmGetMediaStateStateById(state, { id: itemId }));
-                    });
-                }
-            }
-            if (bsDmContentItems_1.dmContentItemIsPlayFileContentItem(contentItem) && !lodash_1.isNil(contentItem.defaultMediaId)) {
-                bsDmCopyPaste_1.fnAddCopySetAssetItem(state, copySet, contentItem.defaultMediaId);
-            }
-            var mediaListGlobalEventIds = dmGetMediaListGlobalEventIds(state, { id: mediaState.id });
-            mediaListGlobalEventIds.forEach(function (eventId) {
-                copySet.events[eventId] = lodash_1.cloneDeep(selectorEvent_1.dmGetEventStateById(state, { id: eventId }));
-            });
-        }
-        else if (bsDmContentItems_1.dmContentItemIsSuperStateContentItem(contentItem)) {
-            var containedMediaStateIds = dmGetContainedMediaStateIdsForMediaState(state, { id: mediaState.id });
-            containedMediaStateIds.forEach(function (mediaStateId) {
-                addMediaState(dmGetMediaStateStateById(state, { id: mediaStateId }));
-            });
-        }
-    };
-    var checkContainer = function (mediaState) {
-        if (copySet.containerId === bsDmInterfaces_1.BsDmIdNone) {
-            copySet.containerId = mediaState.container.id;
-            return true;
-        }
-        return copySet.containerId === mediaState.container.id;
-    };
-    mediaStateIdsToCopy.forEach(function (id, index) {
-        var mediaState = dmGetMediaStateStateById(state, { id: id });
-        if (!lodash_1.isNil(mediaState) && checkContainer(mediaState)) {
-            addMediaState(mediaState);
-            if (bsDmCopyPaste_1.dmIsPlaylistMediaStateCopySet(copySet)) {
-                var targetMediaStateId = index < mediaStateIdsToCopy.length - 1 ? mediaStateIdsToCopy[index + 1] : bsDmInterfaces_1.BsDmIdNone;
-                var eventId_1 = lodash_1.find(Object.keys(copySet.events), function (evId) { return copySet.events[evId].mediaStateId === id; });
-                if (!lodash_1.isNil(eventId_1)) {
-                    var transitionId = lodash_1.find(Object.keys(copySet.transitions.transitionsById), function (trId) { return copySet.transitions.transitionsById[trId].eventId === eventId_1; });
-                    if (!lodash_1.isNil(transitionId)) {
-                        copySet.transitions.transitionsById[transitionId].targetMediaStateId = targetMediaStateId;
-                        if (targetMediaStateId === bsDmInterfaces_1.BsDmIdNone) {
-                            copySet.plLastTransitionId = transitionId;
-                        }
-                    }
-                }
-            }
-        }
-    });
-    if (contentType === bsDmInterfaces_1.DmCopySetContentType.Interactive) {
-        var mediaStateIdSet_1 = new Set(Object.keys(copySet.mediaStates.mediaStatesById));
-        copySet.transitions.transitionsById = lodash_1.pickBy(copySet.transitions.transitionsById, function (transition) {
-            return !utils_1.isValidBsDmId(transition.targetMediaStateId) || mediaStateIdSet_1.has(transition.targetMediaStateId);
-        });
-        var remainingTransitionIds_1 = Object.keys(copySet.transitions.transitionsById);
-        Object.keys(copySet.transitions.sequencesByEventId).forEach(function (eventId) {
-            var transitionSequence = copySet.transitions.sequencesByEventId[eventId];
-            transitionSequence.sequence = lodash_1.intersection(transitionSequence.sequence, remainingTransitionIds_1);
-        });
-        copySet.transitions.sequencesByEventId = lodash_1.pickBy(copySet.transitions.sequencesByEventId, function (transitionSequence) { return transitionSequence.sequence.length > 0; });
-        var transitionIdSet_1 = new Set(remainingTransitionIds_1);
-        var sequenceIdsToRemove = Object.keys(copySet.commands.sequencesById).filter(function (sequenceId) {
-            var commandSequence = copySet.commands.sequencesById[sequenceId];
-            return commandSequence.type === bscore_1.CommandSequenceType.Transition && !transitionIdSet_1.has(commandSequence.parentId);
-        });
-        var sequenceIdToRemoveSet_1 = new Set(sequenceIdsToRemove);
-        copySet.commands.commandsById = lodash_1.pickBy(copySet.commands.commandsById, function (command) { return !sequenceIdToRemoveSet_1.has(command.sequenceId); });
-        copySet.commands.sequencesById = lodash_1.pickBy(copySet.commands.sequencesById, function (commandSequence) { return !sequenceIdToRemoveSet_1.has(commandSequence.id); });
-    }
-    var referencedUserVarIds = selectorUserVariable_1.dmGetActiveUserVariablesIdsForMediaStateCopySet(state, copySet);
-    if (referencedUserVarIds.length > 0) {
-        var signUserVars = selectorUserVariable_1.dmGetUserVariableIdsForSign(state);
-        var uvIdSet_1 = new Set(referencedUserVarIds);
-        copySet.userVariables = signUserVars.reduce(function (uvState, uvId) {
-            if (uvIdSet_1.has(uvId)) {
-                var userVariable = lodash_1.cloneDeep(selectorUserVariable_1.dmGetUserVariableStateById(state, { id: uvId }));
-                uvState.variablesById[uvId] = userVariable;
-                uvState.sequence.push(uvId);
-                if (userVariable.isNetworked && utils_1.isValidBsDmId(userVariable.dataFeedId)) {
-                    bsDmCopyPaste_1.fnAddCopySetDataFeed(state, copySet, userVariable.dataFeedId);
-                }
-            }
-            return uvState;
-        }, copySet.userVariables);
-    }
-    var initialMediaStateId = null;
-    if (containerType === bsDmInterfaces_1.MediaStateContainerType.Zone) {
-        initialMediaStateId = dmGetInitialMediaStateIdForZone(state, { id: containerId });
-    }
-    else if (containerType === bsDmInterfaces_1.MediaStateContainerType.SuperState) {
-        initialMediaStateId = dmGetInitialMediaStateIdForSuperState(state, { id: containerId });
-    }
-    if (utils_1.isValidBsDmId(initialMediaStateId) && mediaStateIdsToCopy.indexOf(initialMediaStateId) >= 0) {
-        copySet.csInitialMediaStateId = initialMediaStateId;
-    }
-    return copySet;
-}
-exports.dmGetMediaStateCopySet = dmGetMediaStateCopySet;
-function dmIsMediaStateCopySetCompatibleWithZone(state, props) {
-    var entityDetails = { entityType: bsDmInterfaces_1.DmEntityType.MediaState };
-    var result = bsDmError_1.dmInitializeValidationResult(bsDmInterfaces_1.DmEntityType.Zone, props.zoneId);
-    var zoneType = selectorZone_1.dmGetZoneTypeById(state, { id: props.zoneId });
-    if (!lodash_1.isNil(zoneType)) {
-        var isContentItemValid_1 = selectorZone_1.dmGetZoneNonInteractiveById(state, { id: props.zoneId }) ?
-            bsDmContentItems_1.dmIsValidContentItemForPlaylist : bsDmContentItems_1.dmIsValidContentItemForZone;
-        var mediaStateIds = Object.keys(props.copySet.mediaStates.mediaStatesById);
-        mediaStateIds.forEach(function (id) {
-            var mediaStateState = props.copySet.mediaStates.mediaStatesById[id];
-            if (!isContentItemValid_1(mediaStateState.contentItem, zoneType)) {
-                result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.contentTypeNotCompatibleWithZone, __assign(__assign({}, entityDetails), { entityId: id, entityProperty: 'contentItem' })));
-            }
-        });
-    }
-    else {
-        result.errorList.push(selectorValidation_1.dmGetEntityError(bsDmError_1.DmErrorType.invalidParameters, { entityType: bsDmInterfaces_1.DmEntityType.Zone, entityId: props.zoneId, entityProperty: 'id' }));
-    }
-    result.ok = result.errorList.length === 0;
-    return result;
-}
-exports.dmIsMediaStateCopySetCompatibleWithZone = dmIsMediaStateCopySetCompatibleWithZone;
-
-
-/***/ }),
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmGetNodeAppByName = exports.dmGetNodeAppIdByName = exports.dmGetNodeAppIdsForSign = exports.dmGetNodeAppStateById = exports.dmGetNodeAppById = exports.clearNodeAppSelectorCaches = void 0;
+var bsDmClasses_1 = __webpack_require__(12);
+var lodash_1 = __webpack_require__(0);
+var re_reselect_1 = __webpack_require__(18);
+var selGetNodeAppById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.nodeApps; }, function (dmState) { return dmState.assetMap; }, function (siteId, nodeApps, assetMap) {
+    var nodeAppState = nodeApps[siteId];
+    if (!lodash_1.isNil(nodeAppState)) {
+        return new bsDmClasses_1.DmcNodeApp(nodeAppState, assetMap[nodeAppState.indexAssetId]);
+    }
+    return null;
+})({
+    keySelector: function (_, props) { return props.id; },
+    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 40 }),
+});
+function clearNodeAppSelectorCaches() {
+    selGetNodeAppById.clearCache();
+}
+exports.clearNodeAppSelectorCaches = clearNodeAppSelectorCaches;
+function dmGetNodeAppById(state, props) {
+    return selGetNodeAppById(state, props);
+}
+exports.dmGetNodeAppById = dmGetNodeAppById;
+function dmGetNodeAppStateById(state, props) {
+    var nodeAppState = state.nodeApps[props.id];
+    return lodash_1.isNil(nodeAppState) ? null : nodeAppState;
+}
+exports.dmGetNodeAppStateById = dmGetNodeAppStateById;
+function dmGetNodeAppIdsForSign(state) {
+    return Object.keys(state.nodeApps);
+}
+exports.dmGetNodeAppIdsForSign = dmGetNodeAppIdsForSign;
+function dmGetNodeAppIdByName(state, props) {
+    var nodeApps = state.nodeApps;
+    var id = lodash_1.find(Object.keys(nodeApps), function (nodeAppId) { return nodeApps[nodeAppId].name === props.name; });
+    return lodash_1.isNil(id) ? null : id;
+}
+exports.dmGetNodeAppIdByName = dmGetNodeAppIdByName;
+function dmGetNodeAppByName(state, props) {
+    var id = dmGetNodeAppIdByName(state, props);
+    return lodash_1.isNil(id) ? null : selGetNodeAppById(state, { id: id });
+}
+exports.dmGetNodeAppByName = dmGetNodeAppByName;
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetParserPluginNameMap = exports.dmGetActiveParserPluginWithDataFeedMap = exports.dmGetParserPluginAssetIds = exports.dmGetParserPluginIds = exports.dmGetParserPluginByName = exports.dmGetParserPluginStateByName = exports.dmGetParserPluginIdForName = exports.dmGetParserPluginById = exports.dmGetParserPluginStateById = exports.clearParserPluginSelectorCaches = void 0;
-var bsDmClasses_1 = __webpack_require__(11);
+var bsDmClasses_1 = __webpack_require__(12);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetParserPluginById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.parserPlugins; }, function (dmState) { return dmState.assetMap; }, function (pluginId, parserPlugins, assetMap) {
     var pluginState = parserPlugins[pluginId];
     if (!lodash_1.isNil(pluginState)) {
@@ -16792,7 +17160,7 @@ exports.dmGetParserPluginNameMap = dmGetParserPluginNameMap;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16814,8 +17182,8 @@ var bscore_1 = __webpack_require__(1);
 var bsDmState_1 = __webpack_require__(5);
 var utils_1 = __webpack_require__(3);
 var actionBase_1 = __webpack_require__(8);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
 var selectors_1 = __webpack_require__(6);
 var bsDmError_1 = __webpack_require__(4);
 exports.SET_CUSTOM_AUTORUN = 'DM_SET_CUSTOM_AUTORUN';
@@ -16871,7 +17239,7 @@ exports.dmSetEmptyCustomAutorun = dmSetEmptyCustomAutorun;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16892,21 +17260,24 @@ exports.dmMediaListAddGlobalEvent = exports.dmGetMediaSequenceDeleteAction = exp
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmAssetItems_1 = __webpack_require__(41);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmAssetItems_1 = __webpack_require__(43);
 var bsDmError_1 = __webpack_require__(4);
 var actionBase_1 = __webpack_require__(8);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionEvent_1 = __webpack_require__(20);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionAssetHelper_1 = __webpack_require__(12);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionAssetHelper_1 = __webpack_require__(13);
 var selectors_1 = __webpack_require__(6);
 var lodash_1 = __webpack_require__(0);
+var actionDataFeed_1 = __webpack_require__(21);
+var bsDmDataFeed_1 = __webpack_require__(15);
+var bsDmContentItems_2 = __webpack_require__(9);
 exports.MEDIASEQUENCE_ADD_ITEM_RANGE_AT_INDEX = 'DM_MEDIASEQUENCE_ADD_ITEM_RANGE_AT_INDEX';
 exports.MEDIASEQUENCE_MOVE_ITEM_INDICES = 'DM_MEDIASEQUENCE_MOVE_ITEM_INDICES';
 exports.MEDIASEQUENCE_DELETE_ITEMS = 'DM_MEDIASEQUENCE_DELETE_ITEMS';
-function dmMediaSequenceAddItemRange(index, container, assetItems, contentData) {
+function dmMediaSequenceAddItemRange(index, container, contentItems, contentData) {
     return function (dispatch, getState) {
         var mainAction = {
             type: exports.MEDIASEQUENCE_ADD_ITEM_RANGE_AT_INDEX,
@@ -16921,25 +17292,36 @@ function dmMediaSequenceAddItemRange(index, container, assetItems, contentData) 
         var mediaSequenceState = selectors_1.dmGetMediaStateStateById(dmState, { id: container.id });
         if (!bsDmContentItems_1.dmIsMediaSequenceContainer(container)
             || lodash_1.isNil(mediaSequenceState)
-            || !bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaSequenceState.contentItem)) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'MediaSequenceAddItemRange: container must be a MediaList or PlayFile state', { action: mainAction });
+            || (!bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaSequenceState.contentItem)
+                && !bsDmContentItems_2.dmContentItemIsLocalPlaylistContentItem(mediaSequenceState.contentItem))) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'MediaSequenceAddItemRange: container must be a MediaList, PlayFile, or LocalPlaylist state', { action: mainAction });
         }
-        if (!assetItems || assetItems.length === 0) {
-            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'MediaSequenceAddItemRange: no assetItems provided', { action: mainAction });
+        if (!contentItems || contentItems.length === 0) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'MediaSequenceAddItemRange: no items provided', { action: mainAction });
         }
         var containingZone = selectors_1.dmGetZoneStateForContainer(dmState, container);
         if (lodash_1.isNil(containingZone)) {
             throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'MediaSequenceAddItemRange: Invalid container', { functionName: 'dmMediaSequenceAddItemRange', action: mainAction });
         }
         var zoneType = containingZone.type;
-        assetItems.forEach(function (item) {
-            if (!bscore_1.bscIsAssetItemPlayableContent(item)) {
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Invalid assetItem for MediaSequence: asset must be a media file', { action: mainAction });
+        contentItems.forEach(function (item) {
+            if (actionMediaState_1.dmContentIsAssetItem(item)) {
+                if (!bscore_1.bscIsAssetItemPlayableContent(item)) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Invalid assetItem for MediaSequence: asset must be a media file', { action: mainAction });
+                }
+                else if (!bsDmAssetItems_1.dmIsValidAssetItemForZone(item, zoneType)) {
+                    var reason = 'MediaSequenceAddItemRange: Invalid assetItem for MediaSequence: '
+                        + item.mediaType + ' cannot be used in ' + zoneType + ' zone.';
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, reason, { action: mainAction });
+                }
             }
-            else if (!bsDmAssetItems_1.dmIsValidAssetItemForZone(item, zoneType)) {
-                var reason = 'MediaSequenceAddItemRange: Invalid assetItem for MediaSequence: '
-                    + item.mediaType + ' cannot be used in ' + zoneType + ' zone.';
-                throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, reason, { action: mainAction });
+            else if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(item)) {
+                if (item.type !== 'BSNDynamicPlaylist') {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Invalid data feed for MediaSequence: data feed must be a Dynamic Playlist', { action: mainAction });
+                }
+                if (container.type !== bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist) {
+                    throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, 'Invalid data feed for MediaSequence: container must be a LocalPlaylist', { action: mainAction });
+                }
             }
         });
         var itemSequenceObject = selectors_1.dmGetMediaStateSequenceForContainer(dmState, { id: mediaSequenceState.id });
@@ -16955,8 +17337,26 @@ function dmMediaSequenceAddItemRange(index, container, assetItems, contentData) 
             var autoAdvanceEventSpec = bsDmEvents_1.dmCreateDefaultEventSpecificationForEventType(bscore_1.EventType.MediaEndOrTimer, null, { contentItemType: bscore_1.ContentItemType.Image, action: bscore_1.EventIntrinsicAction.SequenceForward });
             batchedActions.push(actionEvent_1.dmAddEventFromSpecification(mediaSequenceState.name + '_auto_evf', container.id, autoAdvanceEventSpec));
         }
-        assetItems.forEach(function (item, itemIndex) {
-            if (bscore_1.bscIsAssetItemPlayableContent(item)) {
+        contentItems.forEach(function (item, itemIndex) {
+            var contentItem;
+            var name = '';
+            if (bsDmDataFeed_1.dmIsDataFeedSourceSpecification(item)) {
+                var localPlaylistContentItemData = (lodash_1.isArray(contentData) && contentData.length > itemIndex)
+                    ? contentData[itemIndex]
+                    : null;
+                contentItem =
+                    bsDmContentItems_1.dmCreateLocalPlaylistItem(mediaSequenceState.contentItem, localPlaylistContentItemData);
+                if (!lodash_1.isNil(contentItem)) {
+                    contentItem.name = contentItem.serialNumber;
+                    var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, null, item);
+                    var dataFeedParams = actionListParams.mainAction.payload;
+                    batchedActions.push.apply(batchedActions, actionListParams.actions);
+                    contentItem.dataFeedId = dataFeedParams.id;
+                    mainAction.payload.contentItems.push(contentItem);
+                }
+                name = contentItem.name;
+            }
+            else if (bscore_1.bscIsAssetItem(item) && bscore_1.bscIsAssetItemPlayableContent(item)) {
                 var assetItem = __assign({}, item);
                 assetItem = actionAssetHelper_1.dmSetAssetId(dmState, assetItem);
                 var addedAssetItemId = addedAssets.get(assetItem.locator);
@@ -16967,7 +17367,7 @@ function dmMediaSequenceAddItemRange(index, container, assetItems, contentData) 
                     addedAssets.set(assetItem.locator, assetItem.id);
                 }
                 batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
-                var contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
+                contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
                 if (mediaSequenceState.contentItem.type === bscore_1.ContentItemType.PlayFile) {
                     contentItem = bsDmContentItems_1.dmCreatePlayFileItemFromMediaContentItem(contentItem);
                 }
@@ -16986,11 +17386,13 @@ function dmMediaSequenceAddItemRange(index, container, assetItems, contentData) 
                         }
                     }
                     mainAction.payload.contentItems.push(contentItem);
-                    var addMediaStateAction = actionMediaState_1.dmAddMediaStateWithContentItem(assetItem.name, container, contentItem, containingZone.id, null, index + itemIndex);
-                    mainAction.payload.id.push(addMediaStateAction.payload.id);
-                    batchedActions.push(addMediaStateAction);
                 }
+                name = assetItem.name;
             }
+            mainAction.payload.contentItems.push(contentItem);
+            var addMediaStateAction = actionMediaState_1.dmAddMediaStateWithContentItem(name, container, contentItem, containingZone.id, null, index + itemIndex);
+            mainAction.payload.id.push(addMediaStateAction.payload.id);
+            batchedActions.push(addMediaStateAction);
         });
         dispatch(actionBase_1.dmBatchActions(batchedActions));
         return __assign(__assign({}, mainAction), { meta: { dispatchList: batchedActions } });
@@ -17020,7 +17422,8 @@ function dmMediaSequenceUpdateItem(params) {
                             throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, reason, { action: mainAction });
                         }
                         var assetItem = actionAssetHelper_1.dmPrepareAssetItem(dmState, params.assetItem, mainAction);
-                        batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(existingContentItem.assetId));
+                        var assetId = existingContentItem.assetId;
+                        batchedActions.push(actionAssetMap_1.dmRemoveAssetItems(assetId));
                         batchedActions.push(actionAssetMap_1.dmPutAssetItem(assetItem));
                         mainAction.payload.name = assetItem.name;
                         contentItem = bsDmContentItems_1.dmCreateMediaContentItem(assetItem.name, assetItem.id, assetItem.mediaType);
@@ -17175,7 +17578,7 @@ exports.dmMediaListAddGlobalEvent = dmMediaListAddGlobalEvent;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17216,7 +17619,7 @@ exports.dmDeletePartnerProduct = dmDeletePartnerProduct;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17236,7 +17639,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmValidateAuxiliaryFiles = exports.dmGetAuxiliaryFileStateByName = exports.dmGetAuxiliaryFileCount = exports.dmGetAuxiliaryFileAssetNames = exports.dmGetAuxiliaryFileAssetIds = exports.dmGetAuxiliaryFileList = exports.dmGetAuxiliaryFileIds = exports.dmGetAuxiliaryFileStateById = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmError_1 = __webpack_require__(4);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 var lodash_1 = __webpack_require__(0);
 function dmGetAuxiliaryFileStateById(state, props) {
     var file = state.auxiliaryFiles[props.id];
@@ -17292,7 +17695,7 @@ exports.dmValidateAuxiliaryFiles = dmValidateAuxiliaryFiles;
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17312,10 +17715,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmValidatePresentationWebPage = exports.dmGetPresentationWebPage = exports.dmGetSignPresentationWebPageDisplayMode = exports.dmGetDeviceWebPageIdByAssetId = exports.dmGetDeviceWebPageForPort = exports.dmGetDeviceWebPageByName = exports.dmGetDeviceWebPageIdByName = exports.dmGetDeviceWebPageIds = exports.dmGetDeviceWebPageById = exports.dmGetDeviceWebPageStateById = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bscore_1 = __webpack_require__(1);
-var bsDmClasses_1 = __webpack_require__(11);
+var bsDmClasses_1 = __webpack_require__(12);
 var bsDmError_1 = __webpack_require__(4);
 var selectorAssetMap_1 = __webpack_require__(39);
-var selectorValidation_1 = __webpack_require__(16);
+var selectorValidation_1 = __webpack_require__(17);
 var lodash_1 = __webpack_require__(0);
 function dmCreateDmcDeviceWebPage(state, props) {
     var deviceWebPageState = state.deviceWebPages[props.id];
@@ -17391,57 +17794,6 @@ exports.dmValidatePresentationWebPage = dmValidatePresentationWebPage;
 
 
 /***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetNodeAppByName = exports.dmGetNodeAppIdByName = exports.dmGetNodeAppIdsForSign = exports.dmGetNodeAppStateById = exports.dmGetNodeAppById = exports.clearNodeAppSelectorCaches = void 0;
-var bsDmClasses_1 = __webpack_require__(11);
-var lodash_1 = __webpack_require__(0);
-var re_reselect_1 = __webpack_require__(17);
-var selGetNodeAppById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.nodeApps; }, function (dmState) { return dmState.assetMap; }, function (siteId, nodeApps, assetMap) {
-    var nodeAppState = nodeApps[siteId];
-    if (!lodash_1.isNil(nodeAppState)) {
-        return new bsDmClasses_1.DmcNodeApp(nodeAppState, assetMap[nodeAppState.indexAssetId]);
-    }
-    return null;
-})({
-    keySelector: function (_, props) { return props.id; },
-    cacheObject: new re_reselect_1.LruObjectCache({ cacheSize: 40 }),
-});
-function clearNodeAppSelectorCaches() {
-    selGetNodeAppById.clearCache();
-}
-exports.clearNodeAppSelectorCaches = clearNodeAppSelectorCaches;
-function dmGetNodeAppById(state, props) {
-    return selGetNodeAppById(state, props);
-}
-exports.dmGetNodeAppById = dmGetNodeAppById;
-function dmGetNodeAppStateById(state, props) {
-    var nodeAppState = state.nodeApps[props.id];
-    return lodash_1.isNil(nodeAppState) ? null : nodeAppState;
-}
-exports.dmGetNodeAppStateById = dmGetNodeAppStateById;
-function dmGetNodeAppIdsForSign(state) {
-    return Object.keys(state.nodeApps);
-}
-exports.dmGetNodeAppIdsForSign = dmGetNodeAppIdsForSign;
-function dmGetNodeAppIdByName(state, props) {
-    var nodeApps = state.nodeApps;
-    var id = lodash_1.find(Object.keys(nodeApps), function (nodeAppId) { return nodeApps[nodeAppId].name === props.name; });
-    return lodash_1.isNil(id) ? null : id;
-}
-exports.dmGetNodeAppIdByName = dmGetNodeAppIdByName;
-function dmGetNodeAppByName(state, props) {
-    var id = dmGetNodeAppIdByName(state, props);
-    return lodash_1.isNil(id) ? null : selGetNodeAppById(state, { id: id });
-}
-exports.dmGetNodeAppByName = dmGetNodeAppByName;
-
-
-/***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17451,7 +17803,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetZoneSimplePlaylist = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmContentItems_1 = __webpack_require__(10);
+var bsDmContentItems_1 = __webpack_require__(9);
 var reselect_1 = __webpack_require__(27);
 var lodash_1 = __webpack_require__(0);
 var getOrderedMediaStateIdsForPlaylistInZone = function (zoneId, zoneType, initialMediaStateId, mediaStates, events, transitions) {
@@ -17526,10 +17878,10 @@ exports.dmGetZoneSimplePlaylist = dmGetZoneSimplePlaylist;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetVideoModePluginNameMap = exports.dmGetVideoModePluginAssetIds = exports.dmGetVideoModePluginIds = exports.dmGetVideoModePluginByName = exports.dmGetVideoModePluginStateByName = exports.dmGetVideoModePluginIdForName = exports.dmGetVideoModePluginById = exports.dmGetVideoModePluginStateById = exports.clearVideoModePluginSelectorCaches = void 0;
-var bsDmClasses_1 = __webpack_require__(11);
+var bsDmClasses_1 = __webpack_require__(12);
 var lodash_1 = __webpack_require__(0);
 var reselect_1 = __webpack_require__(27);
-var re_reselect_1 = __webpack_require__(17);
+var re_reselect_1 = __webpack_require__(18);
 var selGetVideoModePluginById = re_reselect_1.createCachedSelector(function (_, props) { return props.id; }, function (dmState) { return dmState.videoModePlugins; }, function (dmState) { return dmState.assetMap; }, function (pluginId, videoModePlugins, assetMap) {
     var pluginState = videoModePlugins[pluginId];
     if (!lodash_1.isNil(pluginState)) {
@@ -17673,16 +18025,94 @@ exports.dmIsRemoteHtmlSiteTemplate = dmIsRemoteHtmlSiteTemplate;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmGetMediaSequenceItemIdByIndex = exports.dmGetPlayFileDefaultMediaAssetItem = exports.fnGetPlayFileDefaultMediaAssetItem = exports.dmGetMediaSequenceSourceDataFeed = exports.fnGetMediaSequenceSourceDataFeed = exports.dmGetMediaSequenceItemCount = exports.dmGetMediaSequenceItemListIds = void 0;
+exports.dmGetDefaultEventHandlerContentItemData = exports.dmGetDefaultPlayFileContentItemData = exports.dmGetDefaultMediaListContentItemData = exports.dmGetDefaultMjpegStreamContentItemData = exports.dmGetDefaultAudioStreamContentItemData = exports.dmGetDefaultVideoStreamContentItemData = exports.dmGetDefaultLiveVideoContentItemData = exports.dmGetDefaultTwitterFeedContentItemData = exports.dmGetDefaultMrssDataFeedContentItemData = exports.dmGetDefaultHtmlContentItemData = exports.dmGetDefaultImageContentItemData = exports.dmGetDefaultAudioContentItemData = exports.dmGetDefaultVideoContentItemData = exports.dmGetDefaultDataFeedSourceProperties = exports.dmGetDefaultLiveTextItemTextProperties = exports.dmGetDefaultClockZoneProperties = exports.dmGetDefaultTickerZoneProperties = exports.dmGetDefaultVideoZoneProperties = exports.dmGetDefaultImageZoneProperties = exports.dmGetDefaultEnhancedAudioZoneProperties = exports.dmGetDefaultAudioZoneProperties = exports.dmGetDefaultAudioSignPropertyMap = exports.dmGetDefaultButtonPanelMap = exports.dmGetDefaultGpioList = exports.dmGetDefaultSerialPortList = exports.dmGetDefaultSignPropertyData = exports.dmGetDefaultPropertyValues = exports.dmResetDefaultPropertyValues = exports.dmSetDefaultPropertyValues = void 0;
+__exportStar(__webpack_require__(78), exports);
+__exportStar(__webpack_require__(76), exports);
+__exportStar(__webpack_require__(6), exports);
+__exportStar(__webpack_require__(2), exports);
+__exportStar(__webpack_require__(5), exports);
+__exportStar(__webpack_require__(12), exports);
+__exportStar(__webpack_require__(43), exports);
+__exportStar(__webpack_require__(9), exports);
+__exportStar(__webpack_require__(31), exports);
+__exportStar(__webpack_require__(24), exports);
+__exportStar(__webpack_require__(77), exports);
+__exportStar(__webpack_require__(22), exports);
+__exportStar(__webpack_require__(23), exports);
+__exportStar(__webpack_require__(50), exports);
+__exportStar(__webpack_require__(15), exports);
+__exportStar(__webpack_require__(37), exports);
+__exportStar(__webpack_require__(71), exports);
+__exportStar(__webpack_require__(28), exports);
+__exportStar(__webpack_require__(16), exports);
+__exportStar(__webpack_require__(38), exports);
+__exportStar(__webpack_require__(44), exports);
+__exportStar(__webpack_require__(72), exports);
+__exportStar(__webpack_require__(4), exports);
+var bsDmDefaults_1 = __webpack_require__(19);
+Object.defineProperty(exports, "dmSetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmSetDefaultPropertyValues; } });
+Object.defineProperty(exports, "dmResetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmResetDefaultPropertyValues; } });
+Object.defineProperty(exports, "dmGetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultPropertyValues; } });
+Object.defineProperty(exports, "dmGetDefaultSignPropertyData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultSignPropertyData; } });
+Object.defineProperty(exports, "dmGetDefaultSerialPortList", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultSerialPortList; } });
+Object.defineProperty(exports, "dmGetDefaultGpioList", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultGpioList; } });
+Object.defineProperty(exports, "dmGetDefaultButtonPanelMap", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultButtonPanelMap; } });
+Object.defineProperty(exports, "dmGetDefaultAudioSignPropertyMap", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioSignPropertyMap; } });
+Object.defineProperty(exports, "dmGetDefaultAudioZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultEnhancedAudioZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultEnhancedAudioZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultImageZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultImageZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultVideoZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultTickerZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultTickerZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultClockZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultClockZoneProperties; } });
+Object.defineProperty(exports, "dmGetDefaultLiveTextItemTextProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultLiveTextItemTextProperties; } });
+Object.defineProperty(exports, "dmGetDefaultDataFeedSourceProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultDataFeedSourceProperties; } });
+Object.defineProperty(exports, "dmGetDefaultVideoContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultAudioContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultImageContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultImageContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultHtmlContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultHtmlContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultMrssDataFeedContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMrssDataFeedContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultTwitterFeedContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultTwitterFeedContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultLiveVideoContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultLiveVideoContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultVideoStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoStreamContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultAudioStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioStreamContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultMjpegStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMjpegStreamContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultMediaListContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMediaListContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultPlayFileContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultPlayFileContentItemData; } });
+Object.defineProperty(exports, "dmGetDefaultEventHandlerContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultEventHandlerContentItemData; } });
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmCanConvertMediaStateListToMediaList = exports.dmGetMediaSequenceItemIdByIndex = exports.dmGetPlayFileDefaultMediaAssetItem = exports.fnGetPlayFileDefaultMediaAssetItem = exports.dmGetMediaSequenceSourceDataFeed = exports.fnGetMediaSequenceSourceDataFeed = exports.dmGetMediaSequenceItemCount = exports.dmGetMediaSequenceItemListIds = void 0;
+var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmContentItems_1 = __webpack_require__(10);
+var bsDmContentItems_1 = __webpack_require__(9);
 var lodash_1 = __webpack_require__(0);
+var selectorMediaState_1 = __webpack_require__(47);
+var selectorTransition_1 = __webpack_require__(41);
+var selectorEvent_1 = __webpack_require__(40);
 function dmGetMediaSequenceItemListIds(state, props) {
     var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
     if (mediaStateSequence
         && (mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.MediaList
-            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile)) {
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist)) {
         return mediaStateSequence.sequence;
     }
     return [];
@@ -17692,7 +18122,8 @@ function dmGetMediaSequenceItemCount(state, props) {
     var mediaStateSequence = state.mediaStates.sequencesByParentId[props.id];
     if (mediaStateSequence
         && (mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.MediaList
-            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile)) {
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist)) {
         return mediaStateSequence.sequence.length;
     }
     return 0;
@@ -17700,10 +18131,14 @@ function dmGetMediaSequenceItemCount(state, props) {
 exports.dmGetMediaSequenceItemCount = dmGetMediaSequenceItemCount;
 function fnGetMediaSequenceSourceDataFeed(mediaStateMap, dataFeedMap, msId) {
     var mediaStateState = mediaStateMap[msId];
-    if (!lodash_1.isNil(mediaStateState)
-        && bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaStateState.contentItem)
-        && mediaStateState.contentItem.useDataFeed) {
-        var dataFeedState = dataFeedMap[mediaStateState.contentItem.dataFeedId];
+    if (!lodash_1.isNil(mediaStateState)) {
+        var dataFeedState = void 0;
+        if (bsDmContentItems_1.dmContentItemIsMediaListOrPlayFileContentItem(mediaStateState.contentItem)) {
+            dataFeedState = dataFeedMap[mediaStateState.contentItem.dataFeedId];
+        }
+        else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(mediaStateState.contentItem)) {
+            dataFeedState = dataFeedMap[mediaStateState.contentItem.defaultDataFeedId];
+        }
         return lodash_1.isNil(dataFeedState) ? null : dataFeedState;
     }
     return null;
@@ -17734,28 +18169,76 @@ function dmGetMediaSequenceItemIdByIndex(state, props) {
     var index = props.index;
     if (mediaStateSequence
         && (mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.MediaList
-            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile)
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.PlayFile
+            || mediaStateSequence.parentType === bsDmInterfaces_1.MediaStateContainerType.LocalPlaylist)
         && index >= 0 && index < mediaStateSequence.sequence.length) {
         return mediaStateSequence.sequence[index];
     }
     return null;
 }
 exports.dmGetMediaSequenceItemIdByIndex = dmGetMediaSequenceItemIdByIndex;
+function dmCanConvertMediaStateListToMediaList(state, props) {
+    var isValid = true;
+    var initialMediaStateId = props.ids[0];
+    var lastMediaStateId = props.ids[props.ids.length - 1];
+    var nextMediaStateId = initialMediaStateId;
+    for (var _i = 0, _a = props.ids; _i < _a.length; _i++) {
+        var id = _a[_i];
+        var mediaStateState = selectorMediaState_1.dmGetMediaStateStateById(state, { id: id });
+        if (!mediaStateState || !bsDmContentItems_1.dmContentItemIsMediaContentItem(mediaStateState.contentItem)) {
+            isValid = false;
+            break;
+        }
+        var eventListIds = selectorMediaState_1.dmGetEventIdsForMediaState(state, { id: id });
+        if (!eventListIds || eventListIds.length !== 1) {
+            isValid = false;
+            break;
+        }
+        var contentItemType = selectorMediaState_1.dmGetContentItemTypeForMediaStateId(state, { id: id });
+        if (contentItemType === bscore_1.ContentItemType.Video
+            || contentItemType === bscore_1.ContentItemType.Audio) {
+            var eventState = selectorEvent_1.dmGetEventStateById(state, { id: eventListIds[0] });
+            if (!lodash_1.isNil(eventState) && eventState.type !== bscore_1.EventType.MediaEnd) {
+                isValid = false;
+                break;
+            }
+        }
+        var transitionIds = selectorTransition_1.dmGetTransitionIdsForEvent(state, { id: eventListIds[0] });
+        if (!transitionIds || transitionIds.length !== 1) {
+            isValid = false;
+            break;
+        }
+        var transitionState = selectorTransition_1.dmGetTransitionStateById(state, { id: transitionIds[0] });
+        if (nextMediaStateId === (transitionState === null || transitionState === void 0 ? void 0 : transitionState.targetMediaStateId)) {
+            isValid = false;
+            break;
+        }
+        nextMediaStateId = transitionState.targetMediaStateId;
+        if (nextMediaStateId === lastMediaStateId) {
+            break;
+        }
+    }
+    return isValid;
+}
+exports.dmCanConvertMediaStateListToMediaList = dmCanConvertMediaStateListToMediaList;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 module.exports = require("base64-js");
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.dmPlaylistAddMediaState = exports.dmDuplicateCommand = exports.dmPasteCommandCopySet = exports.dmDeleteCommand = exports.dmMoveCommandsAtIndices = exports.dmUpdateCommand = exports.dmAddCommand = exports.dmDeleteTransition = exports.dmMoveTransitionConditionsAtIndices = exports.dmUpdateTransitionCondition = exports.dmUpdateTransition = exports.dmAddConditionalTransition = exports.dmAddDefaultTransition = exports.dmDeleteEvent = exports.dmUpdateEventType = exports.dmUpdateEvent = exports.dmAddMultipleEvents = exports.dmAddEventFromSpecification = exports.dmAddEvent = exports.dmPasteMediaStateCopySet = exports.dmDeleteMediaState = exports.dmUpdateMediaState = exports.dmAddLiveTextMediaState = exports.dmAddMediaState = exports.dmMoveZoneLayersAtIndices = exports.dmMoveMosaicZonesAtIndices = exports.dmClearZone = exports.dmDeleteZone = exports.dmUpdateZoneAudioOutputAssignments = exports.dmUpdateZoneProperties = exports.dmUpdateZone = exports.dmAddDefaultZone = exports.dmAddZone = exports.dmNewSignFromTemplateSpecification = exports.dmUpdateVideoMode = exports.dmClearSignWssDeviceSpec = exports.dmUpdateSignWssDeviceSpec = exports.dmUpdateSignIrRemoteControl = exports.dmScaleSignRectangles = exports.dmUpdateSignAudioPropertyMap = exports.dmUpdateSignIrOutConfiguration = exports.dmUpdateSignIrInConfiguration = exports.dmUpdateSignButtonPanelMap = exports.dmUpdateSignGpio = exports.dmUpdateSignSerialPorts = exports.dmUpdateSignProperties = exports.dmVerifyAndOpenSign = exports.dmOpenSign = exports.dmNewSign = exports.dmGetActionDispatchList = void 0;
+exports.dmDeleteUserVariable = exports.dmMergeUserVariableCopySet = exports.dmReSequenceUserVariables = exports.dmMoveUserVariablesAtIndices = exports.dmUpdateUserVariable = exports.dmAddUserVariable = exports.dmDeleteNodeApp = exports.dmUpdateNodeApp = exports.dmAddNodeAppWithoutValidation = exports.dmAddNodeApp = exports.dmDeleteHtmlSite = exports.dmUpdateHtmlSite = exports.dmAddRemoteHtmlSite = exports.dmAddHostedHtmlSite = exports.dmDeleteDataFeed = exports.dmUpdateDataFeedSourceProperties = exports.dmUpdateDataFeed = exports.dmAddDataFeed = exports.dmSetEnableForLiveTextGroupedItem = exports.dmDeleteDataFeedsFromLiveTextGroup = exports.dmMoveLiveTextDataFeedsInGroup = exports.dmUpdateDataFeedLiveTextGroup = exports.dmAddDataFeedToLiveTextGroup = exports.dmPasteLiveTextCopySet = exports.dmDeleteLiveTextItem = exports.dmUpdateLiveTextItem = exports.dmAddLiveTextItem = exports.dmDeleteLiveTextCanvas = exports.dmUpdateLiveTextCanvas = exports.dmAddLiveTextCanvas = exports.dmMediaListAddGlobalEvent = exports.dmMediaSequenceDeleteItemsAtIndices = exports.dmMediaSequenceDeleteItemRange = exports.dmMediaSequenceMoveItemsAtIndices = exports.dmMediaSequenceUpdateItem = exports.dmMediaSequenceAddItemRange = exports.dmConvertMediaStatesToMediaList = exports.dmChangeNonInteractiveZoneToInteractive = exports.dmUpdateEventAndDefaultTransition = exports.dmInteractiveAddTransitionForEventSpecification = exports.dmInteractiveAddTransitionForEventType = exports.dmChangeInteractiveZoneToNonInteractive = exports.dmPlaylistPasteMediaStateCopySet = exports.dmPlaylistMoveMediaStatesAtIndices = exports.dmPlaylistMoveMediaStateRange = exports.dmPlaylistDeleteMediaStatesAtIndices = exports.dmPlaylistDeleteMediaStateRange = exports.dmPlaylistUpdateMediaState = exports.dmPlaylistAddMediaStateRange = exports.dmPlaylistAppendMediaState = void 0;
+exports.dmDeleteThumbnail = exports.dmSetThumbnail = exports.dmUpdateDeviceWebPageAssetLocation = exports.dmUpdateAssetLocation = exports.dmUpdateAssetItem = exports.dmSetEmptyCustomAutorun = exports.dmResetCustomAutorun = exports.dmSetCustomAutorun = exports.dmDeleteDeviceWebPage = exports.dmUpdateDeviceWebPage = exports.dmAddDeviceWebPage = exports.dmSetPresentationWebPage = exports.dmDeletePartnerProduct = exports.dmUpdatePartnerProduct = exports.dmAddPartnerProduct = exports.dmRemoveLinkedPresentation = exports.dmUpdateLinkedPresentationWithoutValidation = exports.dmUpdateLinkedPresentation = exports.dmPutLinkedPresentationWithoutValidation = exports.dmPutLinkedPresentation = exports.dmRemoveAuxiliaryFiles = exports.dmUpdateAuxiliaryFileWithoutValidation = exports.dmUpdateAuxiliaryFile = exports.dmPutAuxiliaryFileWithoutValidation = exports.dmPutAuxiliaryFile = exports.dmRemoveVideoModeBrightScriptPlugin = exports.dmUpdateVideoModeBrightScriptPluginWithoutValidation = exports.dmUpdateVideoModeBrightScriptPlugin = exports.dmAddVideoModeBrightScriptPluginWithoutValidation = exports.dmAddVideoModeBrightScriptPlugin = exports.dmRemoveParserBrightScriptPlugin = exports.dmUpdateParserBrightScriptPluginWithoutValidation = exports.dmUpdateParserBrightScriptPlugin = exports.dmAddParserBrightScriptPluginWithoutValidation = exports.dmAddParserBrightScriptPlugin = exports.dmRemoveBrightScriptPlugin = exports.dmUpdateBrightScriptPluginWithoutValidation = exports.dmUpdateBrightScriptPlugin = exports.dmAddBrightScriptPluginWithoutValidation = exports.dmAddBrightScriptPlugin = exports.dmResolveUserVariablePlaceholderNames = void 0;
 var actionBase_1 = __webpack_require__(8);
 Object.defineProperty(exports, "dmGetActionDispatchList", { enumerable: true, get: function () { return actionBase_1.dmGetActionDispatchList; } });
 var actionSign_1 = __webpack_require__(7);
@@ -17773,7 +18256,8 @@ Object.defineProperty(exports, "dmScaleSignRectangles", { enumerable: true, get:
 Object.defineProperty(exports, "dmUpdateSignIrRemoteControl", { enumerable: true, get: function () { return actionSign_1.dmUpdateSignIrRemoteControl; } });
 Object.defineProperty(exports, "dmUpdateSignWssDeviceSpec", { enumerable: true, get: function () { return actionSign_1.dmUpdateSignWssDeviceSpec; } });
 Object.defineProperty(exports, "dmClearSignWssDeviceSpec", { enumerable: true, get: function () { return actionSign_1.dmClearSignWssDeviceSpec; } });
-var actionSignTemplate_1 = __webpack_require__(81);
+Object.defineProperty(exports, "dmUpdateVideoMode", { enumerable: true, get: function () { return actionSign_1.dmUpdateVideoMode; } });
+var actionSignTemplate_1 = __webpack_require__(82);
 Object.defineProperty(exports, "dmNewSignFromTemplateSpecification", { enumerable: true, get: function () { return actionSignTemplate_1.dmNewSignFromTemplateSpecification; } });
 var actionZone_1 = __webpack_require__(14);
 Object.defineProperty(exports, "dmAddZone", { enumerable: true, get: function () { return actionZone_1.dmAddZone; } });
@@ -17785,7 +18269,7 @@ Object.defineProperty(exports, "dmDeleteZone", { enumerable: true, get: function
 Object.defineProperty(exports, "dmClearZone", { enumerable: true, get: function () { return actionZone_1.dmClearZone; } });
 Object.defineProperty(exports, "dmMoveMosaicZonesAtIndices", { enumerable: true, get: function () { return actionZone_1.dmMoveMosaicZonesAtIndices; } });
 Object.defineProperty(exports, "dmMoveZoneLayersAtIndices", { enumerable: true, get: function () { return actionZone_1.dmMoveZoneLayersAtIndices; } });
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 Object.defineProperty(exports, "dmAddMediaState", { enumerable: true, get: function () { return actionMediaState_1.dmAddMediaState; } });
 Object.defineProperty(exports, "dmAddLiveTextMediaState", { enumerable: true, get: function () { return actionMediaState_1.dmAddLiveTextMediaState; } });
 Object.defineProperty(exports, "dmUpdateMediaState", { enumerable: true, get: function () { return actionMediaState_1.dmUpdateMediaState; } });
@@ -17812,7 +18296,7 @@ Object.defineProperty(exports, "dmMoveCommandsAtIndices", { enumerable: true, ge
 Object.defineProperty(exports, "dmDeleteCommand", { enumerable: true, get: function () { return actionCommand_1.dmDeleteCommand; } });
 Object.defineProperty(exports, "dmPasteCommandCopySet", { enumerable: true, get: function () { return actionCommand_1.dmPasteCommandCopySet; } });
 Object.defineProperty(exports, "dmDuplicateCommand", { enumerable: true, get: function () { return actionCommand_1.dmDuplicateCommand; } });
-var actionPlaylist_1 = __webpack_require__(80);
+var actionPlaylist_1 = __webpack_require__(81);
 Object.defineProperty(exports, "dmPlaylistAddMediaState", { enumerable: true, get: function () { return actionPlaylist_1.dmPlaylistAddMediaState; } });
 Object.defineProperty(exports, "dmPlaylistAppendMediaState", { enumerable: true, get: function () { return actionPlaylist_1.dmPlaylistAppendMediaState; } });
 Object.defineProperty(exports, "dmPlaylistAddMediaStateRange", { enumerable: true, get: function () { return actionPlaylist_1.dmPlaylistAddMediaStateRange; } });
@@ -17823,12 +18307,13 @@ Object.defineProperty(exports, "dmPlaylistMoveMediaStateRange", { enumerable: tr
 Object.defineProperty(exports, "dmPlaylistMoveMediaStatesAtIndices", { enumerable: true, get: function () { return actionPlaylist_1.dmPlaylistMoveMediaStatesAtIndices; } });
 Object.defineProperty(exports, "dmPlaylistPasteMediaStateCopySet", { enumerable: true, get: function () { return actionPlaylist_1.dmPlaylistPasteMediaStateCopySet; } });
 Object.defineProperty(exports, "dmChangeInteractiveZoneToNonInteractive", { enumerable: true, get: function () { return actionPlaylist_1.dmChangeInteractiveZoneToNonInteractive; } });
-var actionInteractive_1 = __webpack_require__(78);
+var actionInteractive_1 = __webpack_require__(79);
 Object.defineProperty(exports, "dmInteractiveAddTransitionForEventType", { enumerable: true, get: function () { return actionInteractive_1.dmInteractiveAddTransitionForEventType; } });
 Object.defineProperty(exports, "dmInteractiveAddTransitionForEventSpecification", { enumerable: true, get: function () { return actionInteractive_1.dmInteractiveAddTransitionForEventSpecification; } });
 Object.defineProperty(exports, "dmUpdateEventAndDefaultTransition", { enumerable: true, get: function () { return actionInteractive_1.dmUpdateEventAndDefaultTransition; } });
 Object.defineProperty(exports, "dmChangeNonInteractiveZoneToInteractive", { enumerable: true, get: function () { return actionInteractive_1.dmChangeNonInteractiveZoneToInteractive; } });
-var actionMediaSequence_1 = __webpack_require__(64);
+Object.defineProperty(exports, "dmConvertMediaStatesToMediaList", { enumerable: true, get: function () { return actionInteractive_1.dmConvertMediaStatesToMediaList; } });
+var actionMediaSequence_1 = __webpack_require__(65);
 Object.defineProperty(exports, "dmMediaSequenceAddItemRange", { enumerable: true, get: function () { return actionMediaSequence_1.dmMediaSequenceAddItemRange; } });
 Object.defineProperty(exports, "dmMediaSequenceUpdateItem", { enumerable: true, get: function () { return actionMediaSequence_1.dmMediaSequenceUpdateItem; } });
 Object.defineProperty(exports, "dmMediaSequenceMoveItemsAtIndices", { enumerable: true, get: function () { return actionMediaSequence_1.dmMediaSequenceMoveItemsAtIndices; } });
@@ -17848,7 +18333,7 @@ Object.defineProperty(exports, "dmUpdateDataFeedLiveTextGroup", { enumerable: tr
 Object.defineProperty(exports, "dmMoveLiveTextDataFeedsInGroup", { enumerable: true, get: function () { return actionLiveText_1.dmMoveLiveTextDataFeedsInGroup; } });
 Object.defineProperty(exports, "dmDeleteDataFeedsFromLiveTextGroup", { enumerable: true, get: function () { return actionLiveText_1.dmDeleteDataFeedsFromLiveTextGroup; } });
 Object.defineProperty(exports, "dmSetEnableForLiveTextGroupedItem", { enumerable: true, get: function () { return actionLiveText_1.dmSetEnableForLiveTextGroupedItem; } });
-var actionDataFeed_1 = __webpack_require__(24);
+var actionDataFeed_1 = __webpack_require__(21);
 Object.defineProperty(exports, "dmAddDataFeed", { enumerable: true, get: function () { return actionDataFeed_1.dmAddDataFeed; } });
 Object.defineProperty(exports, "dmUpdateDataFeed", { enumerable: true, get: function () { return actionDataFeed_1.dmUpdateDataFeed; } });
 Object.defineProperty(exports, "dmUpdateDataFeedSourceProperties", { enumerable: true, get: function () { return actionDataFeed_1.dmUpdateDataFeedSourceProperties; } });
@@ -17858,7 +18343,7 @@ Object.defineProperty(exports, "dmAddHostedHtmlSite", { enumerable: true, get: f
 Object.defineProperty(exports, "dmAddRemoteHtmlSite", { enumerable: true, get: function () { return actionHtmlSite_1.dmAddRemoteHtmlSite; } });
 Object.defineProperty(exports, "dmUpdateHtmlSite", { enumerable: true, get: function () { return actionHtmlSite_1.dmUpdateHtmlSite; } });
 Object.defineProperty(exports, "dmDeleteHtmlSite", { enumerable: true, get: function () { return actionHtmlSite_1.dmDeleteHtmlSite; } });
-var actionNodeApp_1 = __webpack_require__(43);
+var actionNodeApp_1 = __webpack_require__(45);
 Object.defineProperty(exports, "dmAddNodeApp", { enumerable: true, get: function () { return actionNodeApp_1.dmAddNodeApp; } });
 Object.defineProperty(exports, "dmAddNodeAppWithoutValidation", { enumerable: true, get: function () { return actionNodeApp_1.dmAddNodeAppWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateNodeApp", { enumerable: true, get: function () { return actionNodeApp_1.dmUpdateNodeApp; } });
@@ -17867,63 +18352,64 @@ var actionUserVariable_1 = __webpack_require__(34);
 Object.defineProperty(exports, "dmAddUserVariable", { enumerable: true, get: function () { return actionUserVariable_1.dmAddUserVariable; } });
 Object.defineProperty(exports, "dmUpdateUserVariable", { enumerable: true, get: function () { return actionUserVariable_1.dmUpdateUserVariable; } });
 Object.defineProperty(exports, "dmMoveUserVariablesAtIndices", { enumerable: true, get: function () { return actionUserVariable_1.dmMoveUserVariablesAtIndices; } });
+Object.defineProperty(exports, "dmReSequenceUserVariables", { enumerable: true, get: function () { return actionUserVariable_1.dmReSequenceUserVariables; } });
 Object.defineProperty(exports, "dmMergeUserVariableCopySet", { enumerable: true, get: function () { return actionUserVariable_1.dmMergeUserVariableCopySet; } });
 Object.defineProperty(exports, "dmDeleteUserVariable", { enumerable: true, get: function () { return actionUserVariable_1.dmDeleteUserVariable; } });
 Object.defineProperty(exports, "dmResolveUserVariablePlaceholderNames", { enumerable: true, get: function () { return actionUserVariable_1.dmResolveUserVariablePlaceholderNames; } });
-var actionScriptPlugin_1 = __webpack_require__(44);
+var actionScriptPlugin_1 = __webpack_require__(46);
 Object.defineProperty(exports, "dmAddBrightScriptPlugin", { enumerable: true, get: function () { return actionScriptPlugin_1.dmAddBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmAddBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionScriptPlugin_1.dmAddBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateBrightScriptPlugin", { enumerable: true, get: function () { return actionScriptPlugin_1.dmUpdateBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmUpdateBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionScriptPlugin_1.dmUpdateBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmRemoveBrightScriptPlugin", { enumerable: true, get: function () { return actionScriptPlugin_1.dmRemoveBrightScriptPlugin; } });
-var actionParserPlugin_1 = __webpack_require__(53);
+var actionParserPlugin_1 = __webpack_require__(54);
 Object.defineProperty(exports, "dmAddParserBrightScriptPlugin", { enumerable: true, get: function () { return actionParserPlugin_1.dmAddParserBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmAddParserBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionParserPlugin_1.dmAddParserBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateParserBrightScriptPlugin", { enumerable: true, get: function () { return actionParserPlugin_1.dmUpdateParserBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmUpdateParserBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionParserPlugin_1.dmUpdateParserBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmRemoveParserBrightScriptPlugin", { enumerable: true, get: function () { return actionParserPlugin_1.dmRemoveParserBrightScriptPlugin; } });
-var actionVideoModePlugin_1 = __webpack_require__(55);
+var actionVideoModePlugin_1 = __webpack_require__(56);
 Object.defineProperty(exports, "dmAddVideoModeBrightScriptPlugin", { enumerable: true, get: function () { return actionVideoModePlugin_1.dmAddVideoModeBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmAddVideoModeBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionVideoModePlugin_1.dmAddVideoModeBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateVideoModeBrightScriptPlugin", { enumerable: true, get: function () { return actionVideoModePlugin_1.dmUpdateVideoModeBrightScriptPlugin; } });
 Object.defineProperty(exports, "dmUpdateVideoModeBrightScriptPluginWithoutValidation", { enumerable: true, get: function () { return actionVideoModePlugin_1.dmUpdateVideoModeBrightScriptPluginWithoutValidation; } });
 Object.defineProperty(exports, "dmRemoveVideoModeBrightScriptPlugin", { enumerable: true, get: function () { return actionVideoModePlugin_1.dmRemoveVideoModeBrightScriptPlugin; } });
-var actionAuxiliaryFile_1 = __webpack_require__(50);
+var actionAuxiliaryFile_1 = __webpack_require__(51);
 Object.defineProperty(exports, "dmPutAuxiliaryFile", { enumerable: true, get: function () { return actionAuxiliaryFile_1.dmPutAuxiliaryFile; } });
 Object.defineProperty(exports, "dmPutAuxiliaryFileWithoutValidation", { enumerable: true, get: function () { return actionAuxiliaryFile_1.dmPutAuxiliaryFileWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateAuxiliaryFile", { enumerable: true, get: function () { return actionAuxiliaryFile_1.dmUpdateAuxiliaryFile; } });
 Object.defineProperty(exports, "dmUpdateAuxiliaryFileWithoutValidation", { enumerable: true, get: function () { return actionAuxiliaryFile_1.dmUpdateAuxiliaryFileWithoutValidation; } });
 Object.defineProperty(exports, "dmRemoveAuxiliaryFiles", { enumerable: true, get: function () { return actionAuxiliaryFile_1.dmRemoveAuxiliaryFiles; } });
-var actionLinkedPresentation_1 = __webpack_require__(52);
+var actionLinkedPresentation_1 = __webpack_require__(53);
 Object.defineProperty(exports, "dmPutLinkedPresentation", { enumerable: true, get: function () { return actionLinkedPresentation_1.dmPutLinkedPresentation; } });
 Object.defineProperty(exports, "dmPutLinkedPresentationWithoutValidation", { enumerable: true, get: function () { return actionLinkedPresentation_1.dmPutLinkedPresentationWithoutValidation; } });
 Object.defineProperty(exports, "dmUpdateLinkedPresentation", { enumerable: true, get: function () { return actionLinkedPresentation_1.dmUpdateLinkedPresentation; } });
 Object.defineProperty(exports, "dmUpdateLinkedPresentationWithoutValidation", { enumerable: true, get: function () { return actionLinkedPresentation_1.dmUpdateLinkedPresentationWithoutValidation; } });
 Object.defineProperty(exports, "dmRemoveLinkedPresentation", { enumerable: true, get: function () { return actionLinkedPresentation_1.dmRemoveLinkedPresentation; } });
-var actionPartnerProduct_1 = __webpack_require__(65);
+var actionPartnerProduct_1 = __webpack_require__(66);
 Object.defineProperty(exports, "dmAddPartnerProduct", { enumerable: true, get: function () { return actionPartnerProduct_1.dmAddPartnerProduct; } });
 Object.defineProperty(exports, "dmUpdatePartnerProduct", { enumerable: true, get: function () { return actionPartnerProduct_1.dmUpdatePartnerProduct; } });
 Object.defineProperty(exports, "dmDeletePartnerProduct", { enumerable: true, get: function () { return actionPartnerProduct_1.dmDeletePartnerProduct; } });
-var actionDeviceWebPage_1 = __webpack_require__(51);
+var actionDeviceWebPage_1 = __webpack_require__(52);
 Object.defineProperty(exports, "dmSetPresentationWebPage", { enumerable: true, get: function () { return actionDeviceWebPage_1.dmSetPresentationWebPage; } });
 Object.defineProperty(exports, "dmAddDeviceWebPage", { enumerable: true, get: function () { return actionDeviceWebPage_1.dmAddDeviceWebPage; } });
 Object.defineProperty(exports, "dmUpdateDeviceWebPage", { enumerable: true, get: function () { return actionDeviceWebPage_1.dmUpdateDeviceWebPage; } });
 Object.defineProperty(exports, "dmDeleteDeviceWebPage", { enumerable: true, get: function () { return actionDeviceWebPage_1.dmDeleteDeviceWebPage; } });
-var actionCustomAutorun_1 = __webpack_require__(63);
+var actionCustomAutorun_1 = __webpack_require__(64);
 Object.defineProperty(exports, "dmSetCustomAutorun", { enumerable: true, get: function () { return actionCustomAutorun_1.dmSetCustomAutorun; } });
 Object.defineProperty(exports, "dmResetCustomAutorun", { enumerable: true, get: function () { return actionCustomAutorun_1.dmResetCustomAutorun; } });
 Object.defineProperty(exports, "dmSetEmptyCustomAutorun", { enumerable: true, get: function () { return actionCustomAutorun_1.dmSetEmptyCustomAutorun; } });
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetMap_1 = __webpack_require__(10);
 Object.defineProperty(exports, "dmUpdateAssetItem", { enumerable: true, get: function () { return actionAssetMap_1.dmUpdateAssetItem; } });
 Object.defineProperty(exports, "dmUpdateAssetLocation", { enumerable: true, get: function () { return actionAssetMap_1.dmUpdateAssetLocation; } });
 Object.defineProperty(exports, "dmUpdateDeviceWebPageAssetLocation", { enumerable: true, get: function () { return actionAssetMap_1.dmUpdateDeviceWebPageAssetLocation; } });
-var actionThumbnail_1 = __webpack_require__(54);
+var actionThumbnail_1 = __webpack_require__(55);
 Object.defineProperty(exports, "dmSetThumbnail", { enumerable: true, get: function () { return actionThumbnail_1.dmSetThumbnail; } });
 Object.defineProperty(exports, "dmDeleteThumbnail", { enumerable: true, get: function () { return actionThumbnail_1.dmDeleteThumbnail; } });
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17931,7 +18417,7 @@ Object.defineProperty(exports, "dmDeleteThumbnail", { enumerable: true, get: fun
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmCreateTransitionCondition = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 function dmCreateTransitionCondition(userVariableName, compareOperator, compareValue1, compareValue2) {
     var condition = {
         userVariableId: bsDmInterfaces_1.BsDmIdNone,
@@ -17948,7 +18434,7 @@ exports.dmCreateTransitionCondition = dmCreateTransitionCondition;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18014,17 +18500,17 @@ exports.bsDmReducer = enableBatching(redux_1.combineReducers({
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmChangeNonInteractiveZoneToInteractive = exports.dmUpdateEventAndDefaultTransition = exports.dmInteractiveAddTransitionForEventSpecification = exports.dmInteractiveAddTransitionForEventType = exports.CHANGE_TO_INTERACTIVE = exports.INTERACTIVE_UPDATE_EVENT_TRANSITION_LINK = exports.INTERACTIVE_ADD_EVENT_TRANSITION_LINK = void 0;
+exports.dmConvertMediaStatesToMediaList = exports.dmChangeNonInteractiveZoneToInteractive = exports.dmUpdateEventAndDefaultTransition = exports.dmInteractiveAddTransitionForEventSpecification = exports.dmInteractiveAddTransitionForEventType = exports.CONVERT_MEDIASTATES_TO_MEDIALIST = exports.CHANGE_TO_INTERACTIVE = exports.INTERACTIVE_UPDATE_EVENT_TRANSITION_LINK = exports.INTERACTIVE_ADD_EVENT_TRANSITION_LINK = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmValidate_1 = __webpack_require__(49);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmValidate_1 = __webpack_require__(50);
 var bsDmState_1 = __webpack_require__(5);
 var actionBase_1 = __webpack_require__(8);
 var actionEvent_1 = __webpack_require__(20);
@@ -18034,9 +18520,12 @@ var selectors_1 = __webpack_require__(6);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
+var actionMediaState_1 = __webpack_require__(11);
+var bsDmContentItems_1 = __webpack_require__(9);
 exports.INTERACTIVE_ADD_EVENT_TRANSITION_LINK = 'DM_INTERACTIVE_ADD_EVENT_TRANSITION_LINK';
 exports.INTERACTIVE_UPDATE_EVENT_TRANSITION_LINK = 'DM_INTERACTIVE_UPDATE_EVENT_TRANSITION_LINK';
 exports.CHANGE_TO_INTERACTIVE = 'DM_INTERACTIVE_CHANGE_TO_INTERACTIVE';
+exports.CONVERT_MEDIASTATES_TO_MEDIALIST = 'DM_CONVERT_MEDIASTATES_TO_MEDIALIST';
 function dmInteractiveAddTransitionForEventType(nameBase, source, target, eventType, eventData, action) {
     return function (dispatch, getState) {
         var dmState = bsDmState_1.dmFilterDmState(getState());
@@ -18176,37 +18665,98 @@ function dmChangeNonInteractiveZoneToInteractive(zoneId) {
     };
 }
 exports.dmChangeNonInteractiveZoneToInteractive = dmChangeNonInteractiveZoneToInteractive;
+function dmConvertMediaStatesToMediaList(mediaStateIds) {
+    return function (dispatch, getState) {
+        var dmState = bsDmState_1.dmFilterDmState(getState());
+        var invalidIds = [];
+        var invalidContainerIds = new Set();
+        var zoneSet = new Set();
+        mediaStateIds.forEach(function (id) {
+            var mediaStateState = selectors_1.dmGetMediaStateStateById(dmState, { id: id });
+            if (!mediaStateState) {
+                invalidIds.push(id);
+            }
+            else {
+                var container = mediaStateState.container;
+                if (container.type === bsDmInterfaces_1.MediaStateContainerType.Zone) {
+                    var zoneState = selectors_1.dmGetZoneStateById(dmState, { id: container.id });
+                    if (!(zoneState === null || zoneState === void 0 ? void 0 : zoneState.nonInteractive)) {
+                        zoneSet.add(container.id);
+                    }
+                    else {
+                        invalidContainerIds.add(container.id);
+                    }
+                }
+            }
+        });
+        if (invalidIds.length > 0) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidParameters, "dmConvertMediaStatesToMediaList - invalid ids:" + invalidIds.join(','));
+        }
+        if (invalidContainerIds.size > 0) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, "dmConvertMediaStatesToMediaList - invalid container ids:" + Array.from(invalidContainerIds).join(',') + ". Containers should be interactive");
+        }
+        if (zoneSet.size !== 1) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, "dmConvertMediaStatesToMediaList - mediaStateIds should belong to same zone");
+        }
+        if (!selectors_1.dmCanConvertMediaStateListToMediaList(dmState, { ids: mediaStateIds })) {
+            throw new bsDmError_1.BsDmError(bsDmError_1.DmErrorType.invalidOperation, "dmConvertMediaStatesToMediaList - mediaStateIds should form a linked playlist for interactive zones");
+        }
+        var zoneId = Array.from(zoneSet)[0];
+        var mediaListStateName = selectors_1.dmGetUniqueMediaStateNameForBaseNameInZone(dmState, { id: zoneId, name: 'MediaList1' });
+        var mediaListContentItem = bsDmContentItems_1.dmCreateMediaListContentItem(mediaListStateName);
+        var mediaListContainer = selectors_1.dmGetMediaStateContainerById(dmState, { id: mediaStateIds[0] });
+        var batchedActions = [];
+        var addMediaListAction = actionMediaState_1.dmAddMediaStateWithContentItem(mediaListStateName, mediaListContainer, mediaListContentItem, zoneId, '1');
+        var mediaListStateId = addMediaListAction.payload.id;
+        batchedActions.push(addMediaListAction);
+        var mediaStatesContainer = bsDmContentItems_1.dmGetMediaStateContainer(mediaListStateId, bsDmInterfaces_1.MediaStateContainerType.MediaList);
+        batchedActions.push(actionMediaState_1.dmUpdateMediaStatesContainers(mediaStateIds, mediaStatesContainer));
+        batchedActions.push(actionMediaState_1.dmAddSequencedMediaStates(mediaStateIds, mediaStatesContainer));
+        var deleteParams = actionMediaState_1.dmGetMediaStateDeleteParams(dmState, mediaStateIds, true);
+        deleteParams.mediaStateIds = [];
+        deleteParams.assetIds = [];
+        batchedActions.push(actionMediaState_1.dmDeleteMediaStateWithParams(deleteParams));
+        dispatch(actionBase_1.dmBatchActions(batchedActions));
+        var mainAction = {
+            type: exports.CONVERT_MEDIASTATES_TO_MEDIALIST,
+            payload: { mediaListId: mediaListStateId },
+        };
+        mainAction.meta = { dispatchList: batchedActions };
+        return mainAction;
+    };
+}
+exports.dmConvertMediaStatesToMediaList = dmConvertMediaStatesToMediaList;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmActionModifiesDmState = void 0;
-var actionAssetMap_1 = __webpack_require__(9);
-var actionAuxiliaryFile_1 = __webpack_require__(50);
-var actionCustomAutorun_1 = __webpack_require__(63);
-var actionDataFeed_1 = __webpack_require__(24);
-var actionDeviceWebPage_1 = __webpack_require__(51);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionAuxiliaryFile_1 = __webpack_require__(51);
+var actionCustomAutorun_1 = __webpack_require__(64);
+var actionDataFeed_1 = __webpack_require__(21);
+var actionDeviceWebPage_1 = __webpack_require__(52);
 var actionEvent_1 = __webpack_require__(20);
 var actionHtmlSite_1 = __webpack_require__(32);
-var actionNodeApp_1 = __webpack_require__(43);
-var actionMediaState_1 = __webpack_require__(13);
-var actionMediaSequence_1 = __webpack_require__(64);
-var actionPartnerProduct_1 = __webpack_require__(65);
-var actionParserPlugin_1 = __webpack_require__(53);
-var actionVideoModePlugin_1 = __webpack_require__(55);
-var actionScriptPlugin_1 = __webpack_require__(44);
+var actionNodeApp_1 = __webpack_require__(45);
+var actionMediaState_1 = __webpack_require__(11);
+var actionMediaSequence_1 = __webpack_require__(65);
+var actionPartnerProduct_1 = __webpack_require__(66);
+var actionParserPlugin_1 = __webpack_require__(54);
+var actionVideoModePlugin_1 = __webpack_require__(56);
+var actionScriptPlugin_1 = __webpack_require__(46);
 var actionSign_1 = __webpack_require__(7);
 var actionTransition_1 = __webpack_require__(25);
 var actionCommand_1 = __webpack_require__(33);
 var actionUserVariable_1 = __webpack_require__(34);
 var actionLiveText_1 = __webpack_require__(29);
 var actionZone_1 = __webpack_require__(14);
-var actionThumbnail_1 = __webpack_require__(54);
+var actionThumbnail_1 = __webpack_require__(55);
 var modifyingActionTypesArray = [
     actionAssetMap_1.PUT_ASSET_ITEM, actionAssetMap_1.REMOVE_ASSET_ITEMS, actionAssetMap_1.UPDATE_ASSET_ITEM,
     actionAuxiliaryFile_1.PUT_AUX_FILE, actionAuxiliaryFile_1.UPDATE_AUX_FILE, actionAuxiliaryFile_1.REMOVE_AUX_FILES,
@@ -18221,8 +18771,8 @@ var modifyingActionTypesArray = [
     actionLiveText_1.ADD_LIVE_TEXT_ITEM, actionLiveText_1.UPDATE_LIVE_TEXT_ITEM, actionLiveText_1.DELETE_LIVE_TEXT_ITEM,
     actionLiveText_1.ADD_LIVE_TEXT_DATA_FEED_GROUP, actionLiveText_1.UPDATE_LIVE_TEXT_DATA_FEED_GROUP,
     actionLiveText_1.ADD_LIVE_TEXT_DATA_FEED, actionLiveText_1.MOVE_LIVE_TEXT_DATA_FEED, actionLiveText_1.DELETE_LIVE_TEXT_DATA_FEED, actionLiveText_1.PASTE_LIVE_TEXT_ITEMS,
-    actionMediaState_1.ADD_MEDIA_STATE, actionMediaState_1.ADD_SEQUENCED_MEDIA_STATE, actionMediaState_1.UPDATE_MEDIA_STATE, actionMediaState_1.DELETE_MEDIA_STATE, actionMediaState_1.PASTE_MEDIA_STATES,
-    actionMediaSequence_1.MEDIASEQUENCE_MOVE_ITEM_INDICES,
+    actionMediaState_1.ADD_MEDIA_STATE, actionMediaState_1.ADD_SEQUENCED_MEDIA_STATE, actionMediaState_1.ADD_MEDIA_STATE_SEQUENCE, actionMediaState_1.UPDATE_MEDIA_STATE,
+    actionMediaState_1.UPDATE_MEDIA_STATES_CONTAINERS, actionMediaState_1.DELETE_MEDIA_STATE, actionMediaState_1.PASTE_MEDIA_STATES, actionMediaSequence_1.MEDIASEQUENCE_MOVE_ITEM_INDICES,
     actionPartnerProduct_1.ADD_PARTNER_PRODUCT, actionPartnerProduct_1.UPDATE_PARTNER_PRODUCT, actionPartnerProduct_1.DELETE_PARTNER_PRODUCT,
     actionParserPlugin_1.ADD_PARSER_PLUGIN, actionParserPlugin_1.UPDATE_PARSER_PLUGIN, actionParserPlugin_1.REMOVE_PARSER_PLUGIN,
     actionVideoModePlugin_1.ADD_VIDEOMODE_PLUGIN, actionVideoModePlugin_1.UPDATE_VIDEOMODE_PLUGIN, actionVideoModePlugin_1.REMOVE_VIDEOMODE_PLUGIN,
@@ -18230,7 +18780,8 @@ var modifyingActionTypesArray = [
     actionTransition_1.ADD_TRANSITION, actionTransition_1.ADD_CONDITIONAL_TRANSITION, actionTransition_1.UPDATE_TRANSITION,
     actionTransition_1.UPDATE_TRANSITION_CONDITION, actionTransition_1.MOVE_TRANSITION_CONDITION, actionTransition_1.DELETE_TRANSITION,
     actionCommand_1.ADD_COMMAND, actionCommand_1.UPDATE_COMMAND, actionCommand_1.MOVE_COMMAND, actionCommand_1.DELETE_COMMAND, actionCommand_1.PASTE_COMMANDS,
-    actionUserVariable_1.ADD_USER_VARIABLE, actionUserVariable_1.UPDATE_USER_VARIABLE, actionUserVariable_1.MOVE_USER_VARIABLES, actionUserVariable_1.MERGE_USER_VARIABLES, actionUserVariable_1.DELETE_USER_VARIABLE,
+    actionUserVariable_1.ADD_USER_VARIABLE, actionUserVariable_1.UPDATE_USER_VARIABLE, actionUserVariable_1.MOVE_USER_VARIABLES,
+    actionUserVariable_1.RESEQUENCE_USER_VARIABLES, actionUserVariable_1.MERGE_USER_VARIABLES, actionUserVariable_1.DELETE_USER_VARIABLE,
     actionZone_1.ADD_ZONE, actionZone_1.UPDATE_ZONE, actionZone_1.UPDATE_ZONE_PROPS, actionZone_1.DELETE_ZONE,
     actionSign_1.NEW_SIGN, actionSign_1.UPDATE_SIGN_PROPS, actionSign_1.UPDATE_SIGN_SERIAL_PORTS,
     actionSign_1.UPDATE_SIGN_GPIO, actionSign_1.UPDATE_SIGN_BPMAP, actionSign_1.UPDATE_SIGN_AUDIO_CONFIG,
@@ -18245,7 +18796,7 @@ exports.dmActionModifiesDmState = dmActionModifiesDmState;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18273,20 +18824,20 @@ exports.dmChangeInteractiveZoneToNonInteractive = exports.dmPlaylistPasteMediaSt
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmState_1 = __webpack_require__(5);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmEvents_1 = __webpack_require__(23);
-var bsDmDataFeed_1 = __webpack_require__(18);
-var bsDmCopyPaste_1 = __webpack_require__(22);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmEvents_1 = __webpack_require__(24);
+var bsDmDataFeed_1 = __webpack_require__(15);
+var bsDmCopyPaste_1 = __webpack_require__(23);
 var bsDmError_1 = __webpack_require__(4);
 var selectors_1 = __webpack_require__(6);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionEvent_1 = __webpack_require__(20);
 var actionTransition_1 = __webpack_require__(25);
 var actionZone_1 = __webpack_require__(14);
 var actionHtmlSite_1 = __webpack_require__(32);
-var actionDataFeed_1 = __webpack_require__(24);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionAssetHelper_1 = __webpack_require__(12);
+var actionDataFeed_1 = __webpack_require__(21);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionAssetHelper_1 = __webpack_require__(13);
 var actionBase_1 = __webpack_require__(8);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
@@ -18305,6 +18856,7 @@ var getDefaultEventTypeForContentItem = function (contentItem) {
     if (contentItem.type === bscore_1.ContentItemType.Video
         || contentItem.type === bscore_1.ContentItemType.Audio
         || contentItem.type === bscore_1.ContentItemType.MrssFeed
+        || contentItem.type === bscore_1.ContentItemType.LocalPlaylist
         || contentItem.type === bscore_1.ContentItemType.DataFeed) {
         eventType = bscore_1.EventType.MediaEnd;
     }
@@ -18317,8 +18869,22 @@ var enforceContentItemDataPlaylistRequirements = function (contentItemData) {
     }
     return contentItemData;
 };
-function dmPlaylistAddMediaState(index, container, content, name, contentData, transitionType, eventType, eventData) {
+function dmPlaylistAddMediaState(index, container, content, options) {
     return function (dispatch, getState) {
+        var name;
+        var contentData;
+        var contentAdditionalAsset;
+        var transitionType;
+        var eventType;
+        var eventData;
+        if (!lodash_1.isNil(options)) {
+            name = options.name;
+            contentData = options.contentData;
+            contentAdditionalAsset = options.contentAdditionalAsset;
+            transitionType = options.transitionType;
+            eventType = options.eventType;
+            eventData = options.eventData;
+        }
         var newMediaStateId = utils_1.newBsDmId();
         var contentItem;
         var assetItem;
@@ -18494,14 +19060,24 @@ function dmPlaylistAddMediaState(index, container, content, name, contentData, t
     };
 }
 exports.dmPlaylistAddMediaState = dmPlaylistAddMediaState;
-function dmPlaylistAppendMediaState(container, content, name, contentData, transitionType, eventType, eventData) {
-    return dmPlaylistAddMediaState(-1, container, content, name, contentData, transitionType, eventType, eventData);
+function dmPlaylistAppendMediaState(container, content, options) {
+    return dmPlaylistAddMediaState(-1, container, content, options);
 }
 exports.dmPlaylistAppendMediaState = dmPlaylistAppendMediaState;
-function dmPlaylistAddMediaStateRange(index, container, content, name, contentData) {
+function dmPlaylistAddMediaStateRange(index, container, content, options) {
     return function (dispatch, getState) {
         var getName = function (i) {
-            var nameVal = lodash_1.isNil(name) || lodash_1.isNil(name[i]) ? '' : name[i];
+            var nameVal = lodash_1.isNil(options)
+                || lodash_1.isNil(options[i])
+                || lodash_1.isNil(options[i].name)
+                ? '' : options[i].name;
+            return nameVal;
+        };
+        var getDataFeedName = function (i) {
+            var nameVal = lodash_1.isNil(options)
+                || lodash_1.isNil(options[i])
+                || lodash_1.isNil(options[i].name)
+                ? '' : options[i].name;
             return nameVal;
         };
         var mainAction = {
@@ -18552,7 +19128,7 @@ function dmPlaylistAddMediaStateRange(index, container, content, name, contentDa
                     if (zoneType_1 === bscore_1.ZoneType.Ticker) {
                         item.usage = bscore_1.DataFeedUsageType.Text;
                     }
-                    var dataFeedName = lodash_1.isNil(name) || lodash_1.isNil(name[contentIndex]) ? '' : name[contentIndex];
+                    var dataFeedName = getDataFeedName(contentIndex);
                     if (bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(item)) {
                         dataFeedName = item.assetItem.name;
                     }
@@ -18561,6 +19137,10 @@ function dmPlaylistAddMediaStateRange(index, container, content, name, contentDa
                         bsDmContentItems_1.dmCreateMrssDataFeedContentItem(dataFeedName, bsDmInterfaces_1.BsDmIdNone);
                     assetItems_1.push(undefined);
                     dataFeedSpecs_1.push(item);
+                }
+                else if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(item)) {
+                    contentItem = item;
+                    assetItems_1.push(undefined);
                 }
                 else {
                     if (bsDmContentItems_1.dmContentItemIsMediaContentItem(item)) {
@@ -18576,10 +19156,22 @@ function dmPlaylistAddMediaStateRange(index, container, content, name, contentDa
                     assetItems_1.push(undefined);
                     dataFeedSpecs_1.push(undefined);
                 }
-                if (!lodash_1.isNil(contentData)) {
-                    var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, contentData[contentIndex]);
-                    if (!lodash_1.isNil(contentItemData)) {
-                        contentItem = Object.assign({}, contentItem, contentItemData);
+                if (!lodash_1.isNil(options)) {
+                    var itemOptions = options[contentIndex];
+                    if (!lodash_1.isNil(itemOptions === null || itemOptions === void 0 ? void 0 : itemOptions.contentData)) {
+                        var contentItemData = bsDmContentItems_1.dmFilterContentItemData(contentItem.type, itemOptions.contentData);
+                        if (!lodash_1.isNil(contentItemData)) {
+                            contentItem = __assign(__assign({}, contentItem), contentItemData);
+                        }
+                    }
+                    if (!lodash_1.isNil(itemOptions === null || itemOptions === void 0 ? void 0 : itemOptions.contentAdditionalAsset)) {
+                        var contentAdditionalAsset = itemOptions.contentAdditionalAsset;
+                        if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(contentItem)) {
+                            var dataFeedSpec = contentAdditionalAsset.dataFeedSpec;
+                            if (!lodash_1.isNil(dataFeedSpec)) {
+                                dataFeedSpecs_1.push(dataFeedSpec);
+                            }
+                        }
                     }
                 }
                 contentItems_1.push(contentItem);
@@ -18654,7 +19246,12 @@ function dmPlaylistAddMediaStateRange(index, container, content, name, contentDa
                         var dataFeedName = bsDmDataFeed_1.dmIsBsnDataFeedSourceSpecification(dataFeedSpec) ? dataFeedSpec.assetItem.name : contentItem.name;
                         var actionListParams = actionDataFeed_1.dmGetAddDataFeedActionList(dmState, dataFeedName, dataFeedSpec);
                         batchedActions_1.push.apply(batchedActions_1, actionListParams.actions);
-                        contentItem.dataFeedId = actionListParams.mainAction.payload.id;
+                        if (bsDmContentItems_1.dmContentItemIsLocalPlaylistContentItem(contentItem)) {
+                            contentItem.defaultDataFeedId = actionListParams.mainAction.payload.id;
+                        }
+                        else {
+                            contentItem.dataFeedId = actionListParams.mainAction.payload.id;
+                        }
                     }
                 }
                 contentItem =
@@ -19181,7 +19778,7 @@ exports.dmChangeInteractiveZoneToNonInteractive = dmChangeInteractiveZoneToNonIn
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19202,21 +19799,21 @@ exports.dmNewSignFromTemplateSpecification = exports.NEW_SIGN_FROM_TEMPLATE = vo
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmTemplate_1 = __webpack_require__(72);
-var bsDmContentItems_1 = __webpack_require__(10);
-var bsDmParameterizedStrings_1 = __webpack_require__(15);
+var bsDmContentItems_1 = __webpack_require__(9);
+var bsDmParameterizedStrings_1 = __webpack_require__(16);
 var actionBase_1 = __webpack_require__(8);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
 var actionHtmlSite_1 = __webpack_require__(32);
-var actionNodeApp_1 = __webpack_require__(43);
-var actionMediaState_1 = __webpack_require__(13);
+var actionNodeApp_1 = __webpack_require__(45);
+var actionMediaState_1 = __webpack_require__(11);
 var actionEvent_1 = __webpack_require__(20);
 var actionTransition_1 = __webpack_require__(25);
-var actionAssetHelper_1 = __webpack_require__(12);
-var actionAssetMap_1 = __webpack_require__(9);
-var actionScriptPlugin_1 = __webpack_require__(44);
-var actionLinkedPresentation_1 = __webpack_require__(52);
-var actionThumbnail_1 = __webpack_require__(54);
+var actionAssetHelper_1 = __webpack_require__(13);
+var actionAssetMap_1 = __webpack_require__(10);
+var actionScriptPlugin_1 = __webpack_require__(46);
+var actionLinkedPresentation_1 = __webpack_require__(53);
+var actionThumbnail_1 = __webpack_require__(55);
 var lodash_1 = __webpack_require__(0);
 var bsDmError_1 = __webpack_require__(4);
 var utils_1 = __webpack_require__(3);
@@ -19524,7 +20121,7 @@ exports.dmNewSignFromTemplateSpecification = dmNewSignFromTemplateSpecification;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19541,14 +20138,14 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dmUpdateSignStateForVersionChanges = exports.dmUpdateInvalidBsDmIdInstances = exports.dmUpdatePluginMessageEventReferences = exports.updateRemoteEventData = exports.dmUpdateIrRemoteProperties = exports.dmUpdateMediaStateTagSupport = exports.dmUpdateZoneCollectionState = exports.dmUpdateSignSerialPortConfiguration = exports.dmUpdateSignAudioSignProperties = exports.dmUpdateSignProperties = exports.dmUpdateMediaStateCollectionState = exports.dmUpdateAuxiliaryFiles = exports.dmUpdateEventProperties = exports.dmCreateZoneLayerMapForZoneState = exports.dmUpdatePriorVersionZone = void 0;
+exports.dmUpdateSignStateForVersionChanges = exports.dmUpdateIncorrectSerialParityValues = exports.dmUpdateInvalidBsDmIdInstances = exports.dmUpdatePluginMessageEventReferences = exports.updateRemoteEventData = exports.dmUpdateIrRemoteProperties = exports.dmUpdateMediaStateTagSupport = exports.dmUpdateZoneCollectionState = exports.dmUpdateSignSerialPortConfiguration = exports.dmUpdateSignAudioSignProperties = exports.dmUpdateSignProperties = exports.dmUpdateMediaStateCollectionState = exports.dmUpdateAuxiliaryFiles = exports.dmUpdateEventProperties = exports.dmCreateZoneLayerMapForZoneState = exports.dmUpdatePriorVersionZone = void 0;
 var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmZone_1 = __webpack_require__(31);
-var bsDmContentItems_1 = __webpack_require__(10);
+var bsDmContentItems_1 = __webpack_require__(9);
 var bsDmDefaults_1 = __webpack_require__(19);
 var selectors_1 = __webpack_require__(6);
-var bsDmSign_1 = __webpack_require__(56);
+var bsDmSign_1 = __webpack_require__(57);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 function dmUpdatePriorVersionZone(zone) {
@@ -19860,6 +20457,16 @@ function dmUpdateInvalidBsDmIdInstances(state) {
     });
 }
 exports.dmUpdateInvalidBsDmIdInstances = dmUpdateInvalidBsDmIdInstances;
+var parityValueMap = new Map([['none', bsDmInterfaces_1.SerialParity.None], ['even', bsDmInterfaces_1.SerialParity.Even], ['odd', bsDmInterfaces_1.SerialParity.Odd]]);
+function dmUpdateIncorrectSerialParityValues(state) {
+    var serialConfig = state.sign.serialPortConfigurations;
+    serialConfig.forEach(function (config) {
+        if (parityValueMap.has(config.parity)) {
+            config.parity = parityValueMap.get(config.parity);
+        }
+    });
+}
+exports.dmUpdateIncorrectSerialParityValues = dmUpdateIncorrectSerialParityValues;
 function dmUpdateSignStateForVersionChanges(state) {
     var updatedState = __assign({}, state);
     if (!utils_1.isValidBsDmId(updatedState.sign.properties.id)) {
@@ -19876,81 +20483,10 @@ function dmUpdateSignStateForVersionChanges(state) {
     dmUpdateIrRemoteProperties(updatedState);
     dmUpdatePluginMessageEventReferences(updatedState);
     dmUpdateInvalidBsDmIdInstances(updatedState);
+    dmUpdateIncorrectSerialParityValues(updatedState);
     return updatedState;
 }
 exports.dmUpdateSignStateForVersionChanges = dmUpdateSignStateForVersionChanges;
-
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(__webpack_require__(77), exports);
-__exportStar(__webpack_require__(75), exports);
-__exportStar(__webpack_require__(6), exports);
-__exportStar(__webpack_require__(2), exports);
-__exportStar(__webpack_require__(5), exports);
-__exportStar(__webpack_require__(11), exports);
-__exportStar(__webpack_require__(41), exports);
-__exportStar(__webpack_require__(10), exports);
-__exportStar(__webpack_require__(31), exports);
-__exportStar(__webpack_require__(23), exports);
-__exportStar(__webpack_require__(76), exports);
-__exportStar(__webpack_require__(21), exports);
-__exportStar(__webpack_require__(22), exports);
-__exportStar(__webpack_require__(49), exports);
-__exportStar(__webpack_require__(18), exports);
-__exportStar(__webpack_require__(37), exports);
-__exportStar(__webpack_require__(71), exports);
-__exportStar(__webpack_require__(28), exports);
-__exportStar(__webpack_require__(15), exports);
-__exportStar(__webpack_require__(38), exports);
-__exportStar(__webpack_require__(42), exports);
-__exportStar(__webpack_require__(72), exports);
-__exportStar(__webpack_require__(4), exports);
-var bsDmDefaults_1 = __webpack_require__(19);
-Object.defineProperty(exports, "dmSetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmSetDefaultPropertyValues; } });
-Object.defineProperty(exports, "dmResetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmResetDefaultPropertyValues; } });
-Object.defineProperty(exports, "dmGetDefaultPropertyValues", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultPropertyValues; } });
-Object.defineProperty(exports, "dmGetDefaultSignPropertyData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultSignPropertyData; } });
-Object.defineProperty(exports, "dmGetDefaultSerialPortList", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultSerialPortList; } });
-Object.defineProperty(exports, "dmGetDefaultGpioList", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultGpioList; } });
-Object.defineProperty(exports, "dmGetDefaultButtonPanelMap", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultButtonPanelMap; } });
-Object.defineProperty(exports, "dmGetDefaultAudioSignPropertyMap", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioSignPropertyMap; } });
-Object.defineProperty(exports, "dmGetDefaultAudioZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultEnhancedAudioZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultEnhancedAudioZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultImageZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultImageZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultVideoZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultTickerZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultTickerZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultClockZoneProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultClockZoneProperties; } });
-Object.defineProperty(exports, "dmGetDefaultLiveTextItemTextProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultLiveTextItemTextProperties; } });
-Object.defineProperty(exports, "dmGetDefaultDataFeedSourceProperties", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultDataFeedSourceProperties; } });
-Object.defineProperty(exports, "dmGetDefaultVideoContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultAudioContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultImageContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultImageContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultHtmlContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultHtmlContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultMrssDataFeedContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMrssDataFeedContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultTwitterFeedContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultTwitterFeedContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultLiveVideoContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultLiveVideoContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultVideoStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultVideoStreamContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultAudioStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultAudioStreamContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultMjpegStreamContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMjpegStreamContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultMediaListContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultMediaListContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultPlayFileContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultPlayFileContentItemData; } });
-Object.defineProperty(exports, "dmGetDefaultEventHandlerContentItemData", { enumerable: true, get: function () { return bsDmDefaults_1.dmGetDefaultEventHandlerContentItemData; } });
 
 
 /***/ }),
@@ -19978,11 +20514,11 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var actionAssetMap_1 = __webpack_require__(9);
+var actionAssetMap_1 = __webpack_require__(10);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionMediaState_1 = __webpack_require__(11);
+var actionDataFeed_1 = __webpack_require__(21);
 var actionUserVariable_1 = __webpack_require__(34);
 var actionLiveText_1 = __webpack_require__(29);
 var lodash_1 = __webpack_require__(0);
@@ -20082,7 +20618,7 @@ exports.default = assetMapReducer;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidAuxiliaryFileState = void 0;
-var actionAuxiliaryFile_1 = __webpack_require__(50);
+var actionAuxiliaryFile_1 = __webpack_require__(51);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var auxiliaryFiles = function (state, _a) {
@@ -20117,9 +20653,10 @@ var auxiliaryFiles = function (state, _a) {
 };
 var auxiliaryFilesReducer = auxiliaryFiles;
 exports.default = auxiliaryFilesReducer;
-exports.isValidAuxiliaryFileState = function (state) {
+var isValidAuxiliaryFileState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidAuxiliaryFileState = isValidAuxiliaryFileState;
 
 
 /***/ }),
@@ -20152,11 +20689,11 @@ var lodash_1 = __webpack_require__(0);
 var actionCommand_1 = __webpack_require__(33);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionEvent_1 = __webpack_require__(20);
 var actionTransition_1 = __webpack_require__(25);
 var actionLiveText_1 = __webpack_require__(29);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionDataFeed_1 = __webpack_require__(21);
 var actionUserVariable_1 = __webpack_require__(34);
 var utils_1 = __webpack_require__(3);
 var commandsById = function (state, action) {
@@ -20300,7 +20837,7 @@ exports.default = commandReducer;
 Object.defineProperty(exports, "__esModule", { value: true });
 var bscore_1 = __webpack_require__(1);
 var actionSign_1 = __webpack_require__(7);
-var actionCustomAutorun_1 = __webpack_require__(63);
+var actionCustomAutorun_1 = __webpack_require__(64);
 var customAutorun = function (state, _a) {
     if (state === void 0) { state = bscore_1.BsAssetIdNone; }
     var type = _a.type, payload = _a.payload;
@@ -20340,10 +20877,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidDataFeedState = void 0;
 var redux_1 = __webpack_require__(30);
 var lodash_1 = __webpack_require__(0);
-var actionDataFeed_1 = __webpack_require__(24);
+var actionDataFeed_1 = __webpack_require__(21);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionUserVariable_1 = __webpack_require__(34);
 var actionLiveText_1 = __webpack_require__(29);
 var feedsById = function (state, action) {
@@ -20478,13 +21015,14 @@ var sourcesById = function (state, action) {
 };
 var dataFeedReducer = redux_1.combineReducers({ feedsById: feedsById, sourcesById: sourcesById });
 exports.default = dataFeedReducer;
-exports.isValidDataFeedState = function (state) {
+var isValidDataFeedState = function (state) {
     if (typeof state === 'object') {
         return (state.hasOwnProperty('feedsById') && state.hasOwnProperty('sourcesById'))
             || Object.keys(state).length === 0;
     }
     return false;
 };
+exports.isValidDataFeedState = isValidDataFeedState;
 
 
 /***/ }),
@@ -20495,7 +21033,7 @@ exports.isValidDataFeedState = function (state) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidDeviceWebPageState = void 0;
-var actionDeviceWebPage_1 = __webpack_require__(51);
+var actionDeviceWebPage_1 = __webpack_require__(52);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var getDeviceWebPageParams = function (payload) {
@@ -20531,9 +21069,10 @@ var deviceWebPagesById = function (state, action) {
 };
 var deviceWebPageReducer = deviceWebPagesById;
 exports.default = deviceWebPageReducer;
-exports.isValidDeviceWebPageState = function (state) {
+var isValidDeviceWebPageState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidDeviceWebPageState = isValidDeviceWebPageState;
 
 
 /***/ }),
@@ -20559,7 +21098,7 @@ var bscore_1 = __webpack_require__(1);
 var actionEvent_1 = __webpack_require__(20);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var createEventState = function (id, name, type, mediaStateId, disabled, data, intrinsicAction) {
     var eventState = {
         id: id,
@@ -20668,7 +21207,7 @@ exports.isValidHtmlSiteState = void 0;
 var bscore_1 = __webpack_require__(1);
 var actionHtmlSite_1 = __webpack_require__(32);
 var actionSign_1 = __webpack_require__(7);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var lodash_1 = __webpack_require__(0);
 var filterHtmlSitePropsForType = function (params) {
     var type = params.type;
@@ -20731,9 +21270,10 @@ var htmlSitesById = function (state, action) {
 };
 var htmlSiteReducer = htmlSitesById;
 exports.default = htmlSiteReducer;
-exports.isValidHtmlSiteState = function (state) {
+var isValidHtmlSiteState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidHtmlSiteState = isValidHtmlSiteState;
 
 
 /***/ }),
@@ -20744,7 +21284,7 @@ exports.isValidHtmlSiteState = function (state) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidLinkedPresentationState = void 0;
-var actionLinkedPresentation_1 = __webpack_require__(52);
+var actionLinkedPresentation_1 = __webpack_require__(53);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var linkedPresentations = function (state, _a) {
@@ -20779,9 +21319,10 @@ var linkedPresentations = function (state, _a) {
 };
 var linkedPresentationsReducer = linkedPresentations;
 exports.default = linkedPresentationsReducer;
-exports.isValidLinkedPresentationState = function (state) {
+var isValidLinkedPresentationState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidLinkedPresentationState = isValidLinkedPresentationState;
 
 
 /***/ }),
@@ -20818,7 +21359,7 @@ var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var itemsById = function (state, action) {
     var _a, _b;
     if (state === void 0) { state = {}; }
@@ -21155,8 +21696,8 @@ var redux_1 = __webpack_require__(30);
 var lodash_1 = __webpack_require__(0);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
-var actionMediaSequence_1 = __webpack_require__(64);
+var actionMediaState_1 = __webpack_require__(11);
+var actionMediaSequence_1 = __webpack_require__(65);
 var utils_1 = __webpack_require__(3);
 var mediaStatesById = function (state, action) {
     var _a, _b;
@@ -21187,6 +21728,14 @@ var mediaStatesById = function (state, action) {
             }
             break;
         }
+        case actionMediaState_1.UPDATE_MEDIA_STATES_CONTAINERS: {
+            var _d = payload, ids = _d.ids, container_1 = _d.container;
+            var updatedMediaStates_1 = {};
+            ids.forEach(function (id) {
+                updatedMediaStates_1[id] = __assign(__assign({}, state[id]), { container: container_1 });
+            });
+            return __assign(__assign({}, state), updatedMediaStates_1);
+        }
         case actionMediaState_1.PASTE_MEDIA_STATES: {
             var copySet = payload.copySet;
             if (Object.keys(copySet.mediaStates.mediaStatesById).length > 0) {
@@ -21206,7 +21755,7 @@ var mediaStatesById = function (state, action) {
     return state;
 };
 var sequencesByParentId = function (state, action) {
-    var _a, _b;
+    var _a, _b, _c;
     if (state === void 0) { state = {}; }
     var type = action.type, payload = action.payload;
     switch (type) {
@@ -21216,9 +21765,9 @@ var sequencesByParentId = function (state, action) {
             var newState = payload.newState;
             return newState.mediaStates.sequencesByParentId;
         case actionMediaState_1.ADD_SEQUENCED_MEDIA_STATE: {
-            var _c = payload, id = _c.id, container = _c.container, index = _c.index;
-            if (!lodash_1.isNil(container)) {
-                var sequence = state[container.id];
+            var _d = payload, id = _d.id, container_2 = _d.container, index = _d.index;
+            if (!lodash_1.isNil(container_2)) {
+                var sequence = state[container_2.id];
                 var newMediaStateSequence = void 0;
                 if (sequence) {
                     if (index < 0 || index >= sequence.sequence.length) {
@@ -21231,23 +21780,29 @@ var sequencesByParentId = function (state, action) {
                 else {
                     newMediaStateSequence = [id];
                 }
-                var newSequence = {
-                    id: container.id, parentType: container.type, sequence: newMediaStateSequence
+                var newSequence_1 = {
+                    id: container_2.id, parentType: container_2.type, sequence: newMediaStateSequence,
                 };
-                return __assign(__assign({}, state), (_a = {}, _a[container.id] = newSequence, _a));
+                return __assign(__assign({}, state), (_a = {}, _a[container_2.id] = newSequence_1, _a));
             }
             break;
         }
+        case actionMediaState_1.ADD_MEDIA_STATE_SEQUENCE:
+            var _e = payload, ids = _e.ids, container = _e.container;
+            var newSequence = {
+                id: container.id, parentType: container.type, sequence: ids,
+            };
+            return __assign(__assign({}, state), (_b = {}, _b[container.id] = newSequence, _b));
         case actionMediaSequence_1.MEDIASEQUENCE_MOVE_ITEM_INDICES: {
-            var _d = payload, container = _d.container, indices = _d.indices, targetIndex = _d.targetIndex;
-            var sequence = state[container.id];
+            var _f = payload, container_3 = _f.container, indices = _f.indices, targetIndex = _f.targetIndex;
+            var sequence = state[container_3.id];
             if (!lodash_1.isNil(sequence)) {
                 var newMediaStateSequence = utils_1.moveIdsInSequence(sequence.sequence, indices, targetIndex);
                 if (newMediaStateSequence !== sequence.sequence) {
-                    var newSequence = {
-                        id: container.id, parentType: container.type, sequence: newMediaStateSequence
+                    var newSequence_2 = {
+                        id: container_3.id, parentType: container_3.type, sequence: newMediaStateSequence,
                     };
-                    return __assign(__assign({}, state), (_b = {}, _b[container.id] = newSequence, _b));
+                    return __assign(__assign({}, state), (_c = {}, _c[container_3.id] = newSequence_2, _c));
                 }
             }
             break;
@@ -21307,7 +21862,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var actionNodeApp_1 = __webpack_require__(43);
+var actionNodeApp_1 = __webpack_require__(45);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var nodeAppsById = function (state, action) {
@@ -21347,7 +21902,7 @@ exports.default = nodeAppReducer;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidParserPluginState = void 0;
-var actionParserPlugin_1 = __webpack_require__(53);
+var actionParserPlugin_1 = __webpack_require__(54);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var parserPluginsById = function (state, action) {
@@ -21381,9 +21936,10 @@ var parserPluginsById = function (state, action) {
 };
 var parserPluginReducer = parserPluginsById;
 exports.default = parserPluginReducer;
-exports.isValidParserPluginState = function (state) {
+var isValidParserPluginState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidParserPluginState = isValidParserPluginState;
 
 
 /***/ }),
@@ -21394,7 +21950,7 @@ exports.isValidParserPluginState = function (state) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidPartnerProductState = void 0;
-var actionPartnerProduct_1 = __webpack_require__(65);
+var actionPartnerProduct_1 = __webpack_require__(66);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var createPartnerProduct = function (id, partnerName, productName, port) { return ({
@@ -21432,9 +21988,10 @@ var partnerProductsById = function (state, action) {
 };
 var partnerProductReducer = partnerProductsById;
 exports.default = partnerProductReducer;
-exports.isValidPartnerProductState = function (state) {
+var isValidPartnerProductState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidPartnerProductState = isValidPartnerProductState;
 
 
 /***/ }),
@@ -21445,7 +22002,7 @@ exports.isValidPartnerProductState = function (state) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidScriptPluginState = void 0;
-var actionScriptPlugin_1 = __webpack_require__(44);
+var actionScriptPlugin_1 = __webpack_require__(46);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var scriptPluginsById = function (state, action) {
@@ -21479,9 +22036,10 @@ var scriptPluginsById = function (state, action) {
 };
 var scriptPluginReducer = scriptPluginsById;
 exports.default = scriptPluginReducer;
-exports.isValidScriptPluginState = function (state) {
+var isValidScriptPluginState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidScriptPluginState = isValidScriptPluginState;
 
 
 /***/ }),
@@ -21505,10 +22063,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var redux_1 = __webpack_require__(30);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var bsDmDefaults_1 = __webpack_require__(19);
-var bsDmSign_1 = __webpack_require__(56);
+var bsDmSign_1 = __webpack_require__(57);
 var actionSign_1 = __webpack_require__(7);
-var actionModification_1 = __webpack_require__(79);
-var bsDmVersion_1 = __webpack_require__(57);
+var actionModification_1 = __webpack_require__(80);
+var bsDmVersion_1 = __webpack_require__(58);
 var lodash_1 = __webpack_require__(0);
 var newSignProperties = bsDmSign_1.createDefaultSignProperties(bsDmInterfaces_1.BsDmIdNone, 'Untitled');
 var properties = function (state, _a) {
@@ -21669,7 +22227,7 @@ exports.default = signReducer;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var actionThumbnail_1 = __webpack_require__(54);
+var actionThumbnail_1 = __webpack_require__(55);
 var actionSign_1 = __webpack_require__(7);
 var thumbnail = function (state, action) {
     if (state === void 0) { state = null; }
@@ -21719,7 +22277,7 @@ var lodash_1 = __webpack_require__(0);
 var actionTransition_1 = __webpack_require__(25);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var actionEvent_1 = __webpack_require__(20);
 var utils_1 = __webpack_require__(3);
 var createTransitionState = function (id, name, eventId, targetMediaStateId, transitionType, duration, condition, conditionalAction) {
@@ -21976,6 +22534,14 @@ var sequence = function (state, _a) {
             }
             break;
         }
+        case actionUserVariable_1.RESEQUENCE_USER_VARIABLES: {
+            var indices = payload.indices;
+            var newState = utils_1.reSequenceIds(state, indices);
+            if (newState !== state) {
+                return newState;
+            }
+            break;
+        }
         case actionUserVariable_1.MERGE_USER_VARIABLES: {
             var userVariables = payload.userVariables;
             return __spreadArrays(state, userVariables.sequence);
@@ -21989,9 +22555,10 @@ var sequence = function (state, _a) {
 };
 var userVariableReducer = redux_1.combineReducers({ variablesById: variablesById, sequence: sequence });
 exports.default = userVariableReducer;
-exports.isValidUserVariableState = function (state) {
+var isValidUserVariableState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidUserVariableState = isValidUserVariableState;
 
 
 /***/ }),
@@ -22002,7 +22569,7 @@ exports.isValidUserVariableState = function (state) {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValidVideoModePluginState = void 0;
-var actionVideoModePlugin_1 = __webpack_require__(55);
+var actionVideoModePlugin_1 = __webpack_require__(56);
 var actionSign_1 = __webpack_require__(7);
 var lodash_1 = __webpack_require__(0);
 var videoModePluginsById = function (state, action) {
@@ -22036,9 +22603,10 @@ var videoModePluginsById = function (state, action) {
 };
 var videoModePluginReducer = videoModePluginsById;
 exports.default = videoModePluginReducer;
-exports.isValidVideoModePluginState = function (state) {
+var isValidVideoModePluginState = function (state) {
     return typeof state === 'object';
 };
+exports.isValidVideoModePluginState = isValidVideoModePluginState;
 
 
 /***/ }),
@@ -22071,7 +22639,7 @@ var bscore_1 = __webpack_require__(1);
 var bsDmInterfaces_1 = __webpack_require__(2);
 var actionSign_1 = __webpack_require__(7);
 var actionZone_1 = __webpack_require__(14);
-var actionMediaState_1 = __webpack_require__(13);
+var actionMediaState_1 = __webpack_require__(11);
 var utils_1 = __webpack_require__(3);
 var lodash_1 = __webpack_require__(0);
 var zonesById = function (state, _a) {
@@ -22141,42 +22709,50 @@ var zoneLayersById = function (state, _a) {
     var type = _a.type, payload = _a.payload;
     switch (type) {
         case actionSign_1.NEW_SIGN: {
-            var zoneLayerMap = payload.zoneLayerMap;
-            return __assign({}, zoneLayerMap);
+            var zoneLayerMap_1 = payload.zoneLayerMap;
+            return __assign({}, zoneLayerMap_1);
         }
         case actionSign_1.OPEN_SIGN: {
-            var newState = payload.newState;
-            return newState.zones.zoneLayersById;
+            var newState_1 = payload.newState;
+            return newState_1.zones.zoneLayersById;
         }
         case actionZone_1.ADD_ZONE: {
-            var zoneLayerMap = payload.zoneLayerMap;
-            return __assign(__assign({}, state), zoneLayerMap);
+            var zoneLayerMap_2 = payload.zoneLayerMap;
+            return __assign(__assign({}, state), zoneLayerMap_2);
         }
         case actionZone_1.MOVE_MOSAIC_ZONES: {
             var _b = payload, layerId = _b.layerId, indices = _b.indices, targetIndex = _b.targetIndex;
-            var newState = lodash_1.cloneDeep(state);
-            var zoneLayer = newState[layerId];
+            var newState_2 = lodash_1.cloneDeep(state);
+            var zoneLayer = newState_2[layerId];
             zoneLayer.zoneSequence = utils_1.moveIdsInSequence(zoneLayer.zoneSequence, indices, targetIndex);
-            return newState;
+            return newState_2;
         }
         case actionZone_1.UPDATE_ZONE: {
-            var zoneLayerMap = payload.zoneLayerMap;
-            if (!lodash_1.isNil(zoneLayerMap)) {
-                return __assign(__assign({}, state), zoneLayerMap);
+            var zoneLayerMap_3 = payload.zoneLayerMap;
+            if (!lodash_1.isNil(zoneLayerMap_3)) {
+                return __assign(__assign({}, state), zoneLayerMap_3);
             }
             break;
         }
         case actionZone_1.DELETE_ZONE: {
             var zoneId_1 = payload.zoneId;
-            var newState_1 = lodash_1.cloneDeep(state);
-            Object.keys(newState_1).forEach(function (id) {
+            var newState_3 = lodash_1.cloneDeep(state);
+            Object.keys(newState_3).forEach(function (id) {
                 var zoneSequence = state[id].zoneSequence;
                 if (zoneSequence.length) {
-                    newState_1[id].zoneSequence = lodash_1.without(zoneSequence, zoneId_1);
+                    newState_3[id].zoneSequence = lodash_1.without(zoneSequence, zoneId_1);
                 }
             });
-            return newState_1;
+            return newState_3;
         }
+        case actionZone_1.DELETE_ZONE_LAYER:
+            var zoneLayerId = payload.zoneLayerId;
+            var newState = __assign({}, state);
+            delete newState[zoneLayerId];
+            return newState;
+        case actionZone_1.ADD_ZONE_LAYER:
+            var zoneLayerMap = payload.zoneLayerMap;
+            return __assign(__assign({}, state), zoneLayerMap);
     }
     return state;
 };
@@ -22194,6 +22770,13 @@ var zoneLayerSequence = function (state, _a) {
             var newMoveState = lodash_1.cloneDeep(state);
             newMoveState = utils_1.moveIdsInSequence(newMoveState, indices, targetIndex);
             return newMoveState;
+        case actionZone_1.DELETE_ZONE_LAYER: {
+            var zoneLayerId_1 = payload.zoneLayerId;
+            return lodash_1.without(state, zoneLayerId_1);
+        }
+        case actionZone_1.ADD_ZONE_LAYER:
+            var zoneLayerId = payload.zoneLayerId;
+            return state.concat(zoneLayerId);
     }
     return state;
 };
@@ -22272,18 +22855,18 @@ exports.default = zoneReducer;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmClearSelectorCaches = void 0;
-var selectorZone_1 = __webpack_require__(40);
-var selectorMediaState_1 = __webpack_require__(61);
-var selectorEvent_1 = __webpack_require__(45);
-var selectorTransition_1 = __webpack_require__(48);
+var selectorZone_1 = __webpack_require__(42);
+var selectorMediaState_1 = __webpack_require__(47);
+var selectorEvent_1 = __webpack_require__(40);
+var selectorTransition_1 = __webpack_require__(41);
 var selectorCommand_1 = __webpack_require__(26);
-var selectorHtmlSite_1 = __webpack_require__(58);
-var selectorNodeApp_1 = __webpack_require__(68);
+var selectorHtmlSite_1 = __webpack_require__(59);
+var selectorNodeApp_1 = __webpack_require__(62);
 var selectorDataFeed_1 = __webpack_require__(35);
-var selectorLiveText_1 = __webpack_require__(60);
+var selectorLiveText_1 = __webpack_require__(61);
 var selectorUserVariable_1 = __webpack_require__(36);
-var selectorScriptPlugin_1 = __webpack_require__(46);
-var selectorParserPlugin_1 = __webpack_require__(62);
+var selectorScriptPlugin_1 = __webpack_require__(48);
+var selectorParserPlugin_1 = __webpack_require__(63);
 var selectorVideoModePlugin_1 = __webpack_require__(70);
 function dmClearSelectorCaches() {
     selectorZone_1.clearZoneSelectorCaches();
@@ -22359,20 +22942,21 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dmGetTransitionTree = exports.dmGetEventTree = exports.dmGetMediaStateTree = exports.dmGetZoneTree = exports.dmGetSignTree = exports.dmIsEntityContainerType = void 0;
 var bsDmInterfaces_1 = __webpack_require__(2);
-var bsDmSign_1 = __webpack_require__(56);
-var bsDmContentItems_1 = __webpack_require__(10);
-var selectorSign_1 = __webpack_require__(47);
-var selectorZone_1 = __webpack_require__(40);
-var selectorMediaState_1 = __webpack_require__(61);
+var bsDmSign_1 = __webpack_require__(57);
+var bsDmContentItems_1 = __webpack_require__(9);
+var selectorSign_1 = __webpack_require__(49);
+var selectorZone_1 = __webpack_require__(42);
+var selectorMediaState_1 = __webpack_require__(47);
 var selectorPlaylist_1 = __webpack_require__(69);
-var selectorLiveText_1 = __webpack_require__(60);
+var selectorLiveText_1 = __webpack_require__(61);
 var selectorCommand_1 = __webpack_require__(26);
 var selectorUserVariable_1 = __webpack_require__(36);
 var selectorDataFeed_1 = __webpack_require__(35);
-var selectorScriptPlugin_1 = __webpack_require__(46);
-var selectorParserPlugin_1 = __webpack_require__(62);
-var selectorLinkedPresentation_1 = __webpack_require__(59);
-var selectorAuxiliaryFile_1 = __webpack_require__(66);
+var selectorScriptPlugin_1 = __webpack_require__(48);
+var selectorParserPlugin_1 = __webpack_require__(63);
+var selectorLinkedPresentation_1 = __webpack_require__(60);
+var selectorAuxiliaryFile_1 = __webpack_require__(67);
+var selectorNodeApp_1 = __webpack_require__(62);
 var lodash_1 = __webpack_require__(0);
 var utils_1 = __webpack_require__(3);
 var containerTypeSet = new Set([
@@ -22458,6 +23042,15 @@ function dmGetSignTree(state) {
             return bsDmSign_1.dmCreateSignTreeNode(id, bsDmInterfaces_1.DmEntityType.AuxiliaryFile, auxFileSetId_1);
         });
         root.children.push(auxFileNode);
+    }
+    var nodeAppIds = selectorNodeApp_1.dmGetNodeAppIdsForSign(state);
+    if (nodeAppIds.length > 0) {
+        var nodeAppSetId_1 = bsDmInterfaces_1.DmEntityContainerType.NodeAppSet + '-' + signId;
+        var nodeAppNode = bsDmSign_1.dmCreateSignTreeNode(nodeAppSetId_1, bsDmInterfaces_1.DmEntityContainerType.NodeAppSet, signId);
+        nodeAppNode.children = nodeAppIds.map(function (id) {
+            return bsDmSign_1.dmCreateSignTreeNode(id, bsDmInterfaces_1.DmEntityType.NodeApp, nodeAppSetId_1);
+        });
+        root.children.push(nodeAppNode);
     }
     return root;
 }
@@ -22611,7 +23204,7 @@ exports.dmGetThumbnail = void 0;
 var bscore_1 = __webpack_require__(1);
 var reselect_1 = __webpack_require__(27);
 var lodash_1 = __webpack_require__(0);
-var base64 = __webpack_require__(74);
+var base64 = __webpack_require__(75);
 var selGetThumbnail = reselect_1.createSelector(function (dmState) { return dmState.thumbnail; }, function (thumbnailState) {
     return lodash_1.isNil(thumbnailState) ? null : bscore_1.bscCreateLocalAssetThumbnail(base64.toByteArray(thumbnailState.data), thumbnailState.type, thumbnailState.size, thumbnailState.hash);
 });

@@ -86,7 +86,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -97,6 +97,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BsTmError = exports.BsTmErrorType = void 0;
 var BsTmErrorType;
 (function (BsTmErrorType) {
     BsTmErrorType[BsTmErrorType["invalidParameters"] = 0] = "invalidParameters";
@@ -137,6 +138,7 @@ exports.BsTmError = BsTmError;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BsTaskType = exports.BsTaskStatus = exports.BsTaskIdNone = void 0;
 exports.BsTaskIdNone = '0';
 var BsTaskStatus;
 (function (BsTaskStatus) {
@@ -178,6 +180,7 @@ var BsTaskType;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BsTaskManager = exports.tmGetTaskManager = void 0;
 var interfaces_1 = __webpack_require__(1);
 var error_1 = __webpack_require__(0);
 var lodash_1 = __webpack_require__(4);
@@ -201,44 +204,44 @@ var BsTaskManager = (function () {
             }
             return null;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(BsTaskManager.prototype, "taskIsInProgress", {
         get: function () {
             var currentTask = this.currentTask;
-            return currentTask
+            return !lodash_1.isNil(currentTask)
                 && (currentTask.status === interfaces_1.BsTaskStatus.Initializing || currentTask.status === interfaces_1.BsTaskStatus.InProgress);
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(BsTaskManager.prototype, "pendingTasks", {
         get: function () {
             return this._tasks.map(function (task) { return task.id; });
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(BsTaskManager.prototype, "pendingTaskCount", {
         get: function () {
             return this._tasks.length;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(BsTaskManager.prototype, "completedTasks", {
         get: function () {
             return this._tasksCompleted.map(function (task) { return task.id; });
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(BsTaskManager.prototype, "completedTaskCount", {
         get: function () {
             return this._tasksCompleted.length;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     BsTaskManager.prototype.addTask = function (task) {
@@ -251,7 +254,7 @@ var BsTaskManager = (function () {
             return Promise.reject(new error_1.BsTmError(error_1.BsTmErrorType.taskBusy));
         }
         var currentTask = this.currentTask;
-        if (!currentTask || currentTask.status !== interfaces_1.BsTaskStatus.Pending) {
+        if (lodash_1.isNil(currentTask) || currentTask.status !== interfaces_1.BsTaskStatus.Pending) {
             return Promise.reject(new error_1.BsTmError(error_1.BsTmErrorType.taskToStartNotFound));
         }
         return currentTask.start()
@@ -273,7 +276,7 @@ var BsTaskManager = (function () {
     };
     BsTaskManager.prototype.cancelCurrentTask = function () {
         var currentTask = this.currentTask;
-        if (currentTask) {
+        if (!lodash_1.isNil(currentTask)) {
             currentTask.cancel();
         }
     };
@@ -328,13 +331,20 @@ exports.BsTaskManager = BsTaskManager;
 
 "use strict";
 
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(1));
-__export(__webpack_require__(0));
-__export(__webpack_require__(2));
+__exportStar(__webpack_require__(1), exports);
+__exportStar(__webpack_require__(0), exports);
+__exportStar(__webpack_require__(2), exports);
 
 
 /***/ }),

@@ -1,5 +1,7 @@
 Sub ParseAutoplayCommon(setupParams as object, setup_sync as object)
   
+  setupParams.version = setup_sync.LookupMetadata("client", "version")
+
   setupParams.base = setup_sync.LookupMetadata("client", "base")
   setupParams.recoveryHandler = setup_sync.LookupMetadata("client", "recoveryHandler")
   setupParams.recoverySetup = setup_sync.LookupMetadata("client", "recoverySetup")
@@ -149,6 +151,9 @@ Sub ParseAutoplayCommon(setupParams as object, setup_sync as object)
 
   ' Set lower case setup type
   setupParams.setupType = lcase(setup_sync.LookupMetadata("client", "setupType"))
+
+  ' BCN-6317. If inheritNetworkProperties is true, do not apply network settings
+  setupParams.inheritNetworkProperties = GetBoolFromNumericString(setup_sync.LookupMetadata("client", "inheritNetworkProperties"))
   
 end sub
 
@@ -178,6 +183,37 @@ Function CreateDatagramSocket(setupParams as object, msgPort as object, networki
   return dgSocket
 
 end function
+
+
+Sub SendStatusPayload(dgSocket as object, version as string, wsUdpSocketPort% as integer)
+
+  if dgSocket <> invalid then
+    ' use the same format as websocket messages
+    ' Constructing jsonArray.payload.body.script
+    script = CreateObject("roAssociativeArray")
+    script.AddReplace("type", "Setup")
+    script.AddReplace("version", version)
+
+    ' Constructing jsonArray.payload.body
+    body = CreateObject("roAssociativeArray")
+    body.AddReplace("script", script)
+
+    ' Constructing jsonArray.payload
+    payload = CreateObject("roAssociativeArray")
+    payload.AddReplace("route", "/v1/script-status")
+    payload.AddReplace("body", body)
+    
+    ' Constructing jsonArray
+    jsonArray = CreateObject("roAssociativeArray")
+    jsonArray.AddReplace("payload", payload)
+
+    jsonString = FormatJson(jsonArray)
+
+    result = dgSocket.SendTo("127.0.0.1", wsUdpSocketPort%, jsonString)
+
+  end if
+
+end sub
 
 
 Sub ParseJsonLogging(setupParams as object, setup_sync as object)
@@ -296,7 +332,7 @@ Sub CheckFirmwareVersion()
 end sub
 
 
-Sub ClearRegistryKeys(registrySection as object)
+Sub ClearRegistryKeys(registrySection as object, inp as boolean)
   
   ' Clear legacy registry keys
   registrySection.Delete("next")
@@ -328,42 +364,48 @@ Sub ClearRegistryKeys(registrySection as object)
   registrySection.Delete("group")
   
   ' Clear other keys in case they're no longer used
-  registrySection.Delete("cdrs")
-  registrySection.Delete("cdrl")
-  registrySection.Delete("ps")
-  registrySection.Delete("ss")
-  registrySection.Delete("pp")
-  registrySection.Delete("ncp2")
-  registrySection.Delete("cwf")
-  registrySection.Delete("twf")
-  registrySection.Delete("hwf")
-  registrySection.Delete("mwf")
-  registrySection.Delete("lwf")
-  registrySection.Delete("sip")
-  registrySection.Delete("sip")
-  registrySection.Delete("sm")
-  registrySection.Delete("gw")
-  registrySection.Delete("d1")
-  registrySection.Delete("d2")
-  registrySection.Delete("d3")
-  registrySection.Delete("rlmow")
-  registrySection.Delete("rlrow")
-  registrySection.Delete("rlmiw")
-  registrySection.Delete("rlriw")
-  registrySection.Delete("rlmid")
-  registrySection.Delete("rlrid")
-  registrySection.Delete("sip2")
-  registrySection.Delete("sm2")
-  registrySection.Delete("gw2")
-  registrySection.Delete("d12")
-  registrySection.Delete("d22")
-  registrySection.Delete("d32")
-  registrySection.Delete("rlmow2")
-  registrySection.Delete("rlrow2")
-  registrySection.Delete("rlmiw2")
-  registrySection.Delete("rlriw2")
-  registrySection.Delete("rlmid2")
-  registrySection.Delete("rlrid2")
+  ' If user specifies to inherit network properties,
+  ' we do not delete previous network settings
+  if not inp then
+    registrySection.Delete("cdrs")
+    registrySection.Delete("cdrl")
+    registrySection.Delete("ps")
+    registrySection.Delete("ss")
+    registrySection.Delete("pp")
+    registrySection.Delete("ncp2")
+    registrySection.Delete("cwf")
+    registrySection.Delete("twf")
+    registrySection.Delete("hwf")
+    registrySection.Delete("mwf")
+    registrySection.Delete("lwf")
+    registrySection.Delete("sip")
+    registrySection.Delete("sip")
+    registrySection.Delete("sm")
+    registrySection.Delete("gw")
+    registrySection.Delete("d1")
+    registrySection.Delete("d2")
+    registrySection.Delete("d3")
+    registrySection.Delete("rlmow")
+    registrySection.Delete("rlrow")
+    registrySection.Delete("rlmiw")
+    registrySection.Delete("rlriw")
+    registrySection.Delete("rlmid")
+    registrySection.Delete("rlrid")
+    registrySection.Delete("sip2")
+    registrySection.Delete("sm2")
+    registrySection.Delete("gw2")
+    registrySection.Delete("d12")
+    registrySection.Delete("d22")
+    registrySection.Delete("d32")
+    registrySection.Delete("rlmow2")
+    registrySection.Delete("rlrow2")
+    registrySection.Delete("rlmiw2")
+    registrySection.Delete("rlriw2")
+    registrySection.Delete("rlmid2")
+    registrySection.Delete("rlrid2")
+    registrySection.Delete("inp")
+  end if
+
   registrySection.Delete("uup")
   registrySection.Delete("cfv")
   
@@ -377,7 +419,41 @@ Sub ClearRegistryKeys(registrySection as object)
 
   registrySection.Delete("su")
 
+  'BCN-7431: prevent unexpected LFN setup workflow error, but still allow LFN support application setup
+  registrySection.Delete("ru")
 end sub
+
+
+Function RegistrationReset(registrySection as object)
+
+  registration_flag = registrySection.Read("registered_with_bsn")
+  registration_in_progress = registrySection.Read("registration_in_progress")
+
+  ' if found registration flag set and it's the first time setup script rebooted
+  ' means flag was left over from previous setup
+  ' delete registered_with_bsn flag so that player can re-register
+  if (IsTruthy(registration_flag) = true) and (not (IsTruthy(registration_in_progress) = true)) then
+    registrySection.Delete("registered_with_bsn")
+    registrySection.Delete("access_token")
+    registrySection.Delete("access_token_expiration")
+    registrySection.Delete("refresh_token")
+    registrySection.Delete("bsnrt")
+    registrySection.Delete("a")
+    registrySection.Write("registration_in_progress", "yes")
+    registrySection.Flush()
+    return true
+  end if
+
+  return false
+
+end function
+
+
+Sub WriteRegistryVersion(registrySection as object, version as string)
+
+  registrySection.Write("version", version)
+
+End sub
 
 
 Function GetRateLimits(setupParams as object, rateLimitModeKey$ as string, rateLimitRateKey$ as string)
@@ -407,29 +483,60 @@ Function GetRateLimits(setupParams as object, rateLimitModeKey$ as string, rateL
 end function
 
 
-Function SetNetworkConfiguration(setupParams as object, registrySection as object, keySuffix$ as string, registrySuffix$ as string)
+Function SetNetworkConfiguration(interfaceNum% as integer, setupParams as object, registrySection as object, keySuffix$ as string, registrySuffix$ as string)
   
   networkingParameters = { }
-  
-  networkingParameters.useDHCP = setupParams["useDHCP" + keySuffix$]
-  
-  if not networkingParameters.useDHCP then
-    networkingParameters.staticIPAddress$ = setupParams["staticIPAddress" + keySuffix$]
-    networkingParameters.subnetMask$ = setupParams["subnetMask" + keySuffix$]
-    networkingParameters.gateway$ = setupParams["gateway" + keySuffix$]
-    networkingParameters.dns1$ = setupParams["dns1" + keySuffix$]
-    networkingParameters.dns2$ = setupParams["dns2" + keySuffix$]
-    networkingParameters.dns3$ = setupParams["dns3" + keySuffix$]
-    
-    registrySection.Write("dhcp" + registrySuffix$, "no")
-    registrySection.Write("sip" + registrySuffix$, networkingParameters.staticIPAddress$)
-    registrySection.Write("sm" + registrySuffix$, networkingParameters.subnetMask$)
-    registrySection.Write("gw" + registrySuffix$, networkingParameters.gateway$)
-    registrySection.Write("d1" + registrySuffix$, networkingParameters.dns1$)
-    registrySection.Write("d2" + registrySuffix$, networkingParameters.dns2$)
-    registrySection.Write("d3" + registrySuffix$, networkingParameters.dns3$)
+  if setupParams.inheritNetworkProperties then
+    nc = CreateObject("roNetworkConfiguration", interfaceNum%)
+
+    useDHCP = true
+    if type(nc) = "roNetworkConfiguration" then
+      ' GetCurrentConfig().dhcp is of type roBoolean
+      ' Doc: https://docs.brightsign.biz/display/DOC/roNetworkConfiguration#roNetworkConfiguration-GetCurrentConfig()AsObject
+      useDHCP = nc.GetCurrentConfig().dhcp
+    end if
+
+    if useDHCP = false then
+      currentConfig = nc.GetCurrentConfig()
+      registrySection.Write("dhcp" + registrySuffix$, "no")
+      registrySection.Write("sip" + registrySuffix$, currentConfig.ip4_address)
+      registrySection.Write("sm" + registrySuffix$, currentConfig.ip4_netmask)
+      registrySection.Write("gw" + registrySuffix$, currentConfig.ip4_gateway)
+      ' dns_servers is an roArray of Strings
+      dnsServers = currentConfig.dns_servers
+      for i = 1 to 3
+        currentDns = dnsServers[i-1]
+        if IsString(currentDns) then
+          registrySection.Write("d"+StripLeadingSpaces(stri(i))+registrySuffix$, currentDns)
+        else
+          registrySection.Write("d"+StripLeadingSpaces(stri(i))+registrySuffix$, "")
+        end if
+      next
+    else
+      registrySection.Write("dhcp" + registrySuffix$, "yes")
+    end if
+
   else
-    registrySection.Write("dhcp" + registrySuffix$, "yes")
+    networkingParameters.useDHCP = setupParams["useDHCP" + keySuffix$]
+    
+    if not networkingParameters.useDHCP then
+      networkingParameters.staticIPAddress$ = setupParams["staticIPAddress" + keySuffix$]
+      networkingParameters.subnetMask$ = setupParams["subnetMask" + keySuffix$]
+      networkingParameters.gateway$ = setupParams["gateway" + keySuffix$]
+      networkingParameters.dns1$ = setupParams["dns1" + keySuffix$]
+      networkingParameters.dns2$ = setupParams["dns2" + keySuffix$]
+      networkingParameters.dns3$ = setupParams["dns3" + keySuffix$]
+      
+      registrySection.Write("dhcp" + registrySuffix$, "no")
+      registrySection.Write("sip" + registrySuffix$, networkingParameters.staticIPAddress$)
+      registrySection.Write("sm" + registrySuffix$, networkingParameters.subnetMask$)
+      registrySection.Write("gw" + registrySuffix$, networkingParameters.gateway$)
+      registrySection.Write("d1" + registrySuffix$, networkingParameters.dns1$)
+      registrySection.Write("d2" + registrySuffix$, networkingParameters.dns2$)
+      registrySection.Write("d3" + registrySuffix$, networkingParameters.dns3$)
+    else
+      registrySection.Write("dhcp" + registrySuffix$, "yes")
+    end if
   end if
   
   rateLimits = GetRateLimits(setupParams, "rateLimitModeOutsideWindow" + keySuffix$, "rateLimitRateOutsideWindow" + keySuffix$)
@@ -635,12 +742,21 @@ end sub
 Sub SetWiredParameters(setupParams as object, registrySection as object, useWireless as boolean)
   
   if useWireless then
-    registrySection.Write("ncp", GetNumericStringFromNumber(setupParams.networkConnectionPriorityWired%))
-    registrySection.Write("cwf", GetTrueFalseFromBoolean(setupParams.contentDataTypeEnabledWired))
-    registrySection.Write("twf", GetTrueFalseFromBoolean(setupParams.textFeedsDataTypeEnabledWired))
-    registrySection.Write("hwf", GetTrueFalseFromBoolean(setupParams.healthDataTypeEnabledWired))
-    registrySection.Write("mwf", GetTrueFalseFromBoolean(setupParams.mediaFeedsDataTypeEnabledWired))
-    registrySection.Write("lwf", GetTrueFalseFromBoolean(setupParams.logUploadsXfersEnabledWired))
+    if setupParams.inheritNetworkProperties then
+      ' get wired priority from OS
+      nc0 = CreateObject("roNetworkConfiguration", 0)
+      if type(nc0) = "roNetworkConfiguration" then
+        registrySection.Write("ncp", GetNumericStringFromNumber(nc0.GetCurrentConfig().metric))
+        ' Content data types enabled keep previous settings
+      end if
+    else
+      registrySection.Write("ncp", GetNumericStringFromNumber(setupParams.networkConnectionPriorityWired%))
+      registrySection.Write("cwf", GetTrueFalseFromBoolean(setupParams.contentDataTypeEnabledWired))
+      registrySection.Write("twf", GetTrueFalseFromBoolean(setupParams.textFeedsDataTypeEnabledWired))
+      registrySection.Write("hwf", GetTrueFalseFromBoolean(setupParams.healthDataTypeEnabledWired))
+      registrySection.Write("mwf", GetTrueFalseFromBoolean(setupParams.mediaFeedsDataTypeEnabledWired))
+      registrySection.Write("lwf", GetTrueFalseFromBoolean(setupParams.logUploadsXfersEnabledWired))
+    end if
   else
     registrySection.Write("ncp", "0")
     registrySection.Write("cwr", "True")
@@ -654,26 +770,68 @@ end sub
 
 
 Function SetWirelessParameters(setupParams as object, registrySection as object, modelSupportsWifi as boolean) as boolean
-  
-  if setupParams.useWireless and modelSupportsWifi then
-    
-    registrySection.Write("wifi", "yes")
-    registrySection.Write("ss", setupParams.ssid$)
-    registrySection.Write("pp", setupParams.passphrase$)
-    
-    registrySection.Write("ncp2", GetNumericStringFromNumber(setupParams.networkConnectionPriorityWireless%))
-    registrySection.Write("cwf", GetTrueFalseFromBoolean(setupParams.contentDataTypeEnabledWireless))
-    registrySection.Write("twf", GetTrueFalseFromBoolean(setupParams.textFeedsDataTypeEnabledWireless))
-    registrySection.Write("hwf", GetTrueFalseFromBoolean(setupParams.healthDataTypeEnabledWireless))
-    registrySection.Write("mwf", GetTrueFalseFromBoolean(setupParams.mediaFeedsDataTypeEnabledWireless))
-    registrySection.Write("lwf", GetTrueFalseFromBoolean(setupParams.logUploadsXfersEnabledWireless))
-    return true
-    
+
+  if setupParams.inheritNetworkProperties then
+    setupParams.useWireless = IsWifiConnected()
+    if setupParams.useWireless then
+      registrySection.Write("wifi", "yes")
+
+      ' get wireless priority from OS
+      nc1 = CreateObject("roNetworkConfiguration", 1)
+      if type(nc1) = "roNetworkConfiguration" then
+        ' TODO: overwrite wifi ssid and passpharse in registry once OS-11064 is ready to return wifi passphrase
+        ' registrySection.Write("ss", nc1.GetWiFiESSID())
+        ' registrySection.Write("pp", nc1.??())
+        registrySection.Write("ncp2", GetNumericStringFromNumber(nc1.GetCurrentConfig().metric))
+      end if
+      ' Content data types enabled keep previous settings
+      return true
+    end if
+  else
+    if setupParams.useWireless and modelSupportsWifi then
+      registrySection.Write("wifi", "yes")
+      registrySection.Write("ss", setupParams.ssid$)
+      registrySection.Write("pp", setupParams.passphrase$)
+      
+      registrySection.Write("ncp2", GetNumericStringFromNumber(setupParams.networkConnectionPriorityWireless%))
+      registrySection.Write("cwf", GetTrueFalseFromBoolean(setupParams.contentDataTypeEnabledWireless))
+      registrySection.Write("twf", GetTrueFalseFromBoolean(setupParams.textFeedsDataTypeEnabledWireless))
+      registrySection.Write("hwf", GetTrueFalseFromBoolean(setupParams.healthDataTypeEnabledWireless))
+      registrySection.Write("mwf", GetTrueFalseFromBoolean(setupParams.mediaFeedsDataTypeEnabledWireless))
+      registrySection.Write("lwf", GetTrueFalseFromBoolean(setupParams.logUploadsXfersEnabledWireless))
+      return true
+    end if
   end if
-  
+
   registrySection.Write("wifi", "no")
   return false
   
+end function
+
+
+Function IsWifiConnected() as boolean
+    ' Wifi interface
+    wifiAvailable = false
+    nc1 = CreateObject("roNetworkConfiguration", 1)
+
+    if type(nc1) = "roNetworkConfiguration" then
+
+      wifiConfig = nc1.GetCurrentConfig()
+      if (wifiConfig.DoesExist("ip4_address")) then
+        wifiIpAddressAvailable = (wifiConfig.Lookup("ip4_address") <> "")
+      else
+        wifiIpAddressAvailable = false
+      end if
+
+      if (wifiConfig.DoesExist("link")) then
+        wifiLinkAvailable = wifiConfig.Lookup("link")
+      end if
+
+      wifiAvailable = (wifiIpAddressAvailable and wifiLinkAvailable)
+    end if
+
+    return wifiAvailable
+
 end function
 
 
@@ -688,16 +846,29 @@ End Sub
 Function GetProxy(setupParams as object, registrySection as object) as string
   
   proxySpec$ = ""
+  if setupParams.inheritNetworkProperties then
+
+    nc = CreateObject("roNetworkConfiguration", 0)
+    if type(nc) = "roNetworkConfiguration" then
+      proxySpec$ = nc.GetProxy()
+      if IsString(proxySpec$) and proxySpec$ <> "" then
+        registrySection.Write("up", "yes")
+        registrySection.Write("ps", proxySpec$)
+        return proxySpec$
+      end if
+    end if
+
+  else
+    if setupParams.useProxy then
+      
+      proxySpec$ = ""
+      registrySection.Write("up", "yes")
+      registrySection.Write("ps", setupParams.proxySpec$)
+      
+      return setupParams.proxySpec$
+      
+    end if
   
-  if setupParams.useProxy then
-    
-    proxySpec$ = ""
-    
-    registrySection.Write("up", "yes")
-    registrySection.Write("ps", setupParams.proxySpec$)
-    
-    return setupParams.proxySpec$
-    
   end if
   
   registrySection.Write("up", "no")
@@ -732,6 +903,30 @@ Sub ParseProxyBypass(bypassProxyHosts as object, networkHost as object)
     end if
   end if
   
+end sub
+
+
+Sub WriteTimeServer(setupParams as object, registrySection as object)
+  if setupParams.inheritNetworkProperties then
+    ' Time server
+    nc = CreateObject("roNetworkConfiguration", 0)
+    if type(nc) = "roNetworkConfiguration" then
+      timeServer = nc.GetTimeServer()
+      if IsString(timeServer) and timeServer <> "" then
+        ' apply time server in the case after factory reset
+        if timeServer = "default://" then
+          timeServer = "ntp://time.brightsignnetwork.com"
+          nc.SetTimeServer(timeServer)
+          nc.Apply()
+        end if
+        registrySection.Write("ts", timeServer)
+        print "time server in setup script = ";timeServer
+      end if
+    end if
+  else
+    registrySection.Write("ts", setupParams.timeServer$)
+    print "time server in setup script = ";setupParams.timeServer$
+  end if
 end sub
 
 
@@ -803,6 +998,19 @@ end function
 Function GetNumericStringFromNumber(value% as integer) as string
   return stri(value%)
 end function
+
+
+Function StripLeadingSpaces(inputString$ as string) as string
+  
+  while true
+    if left(inputString$, 1) <> " " then return inputString$
+    inputString$ = right(inputString$, len(inputString$) - 1)
+  end while
+  
+  return inputString$
+  
+end function
+
 
 ' The pair function syncSpecValueFalse can be found in autoxml.brs
 ' only add this function because only it is being used in autorun-setup-simple-networking.brs
@@ -1206,6 +1414,32 @@ Sub WaitRegistrationUdpMessage(timerIntervalInSeconds as integer, proceedSignal 
   end while
 
 end sub
+
+
+Sub TriggerRegistrationRequest(registrySection as object, msgPort as object)
+
+  url = CreateObject("roUrlTransfer")
+  bootstrapRestBase = "http://127.0.0.1"
+  registrationRequestUrl = bootstrapRestBase + "/api/v1/system/supervisor/registration"
+
+  url.SetUrl(registrationRequestUrl)
+  url.SetPort(msgPort)
+
+  ok = url.PutFromString("")
+  if ok = 404 then
+    ' 404 means endpoint does not exist
+    ' we are probably talking to an old OS
+    ' restart supervisor to trigger a registration request
+    RestartApplication()
+    stop
+  else if ok = 200 then
+    print "Sent a registration request to supervisor"
+  else
+    print "Failed to trigger registration request. Error code:";ok
+  end if
+
+end sub
+
 
 Function EnableDebugging(filePath$) as object
   

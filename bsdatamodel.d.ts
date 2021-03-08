@@ -1,6 +1,6 @@
 /* tslint:disable:quotemark max-line-length trailing-comma */
 import {Reducer, Action, Dispatch, ActionCreator} from 'redux';
-import {AccessType, AudioConfiguration, AudioMappingType, AudioMixModeType, AudioModeType, AudioOutputName, AudioOutputSelectionType, AudioOutputType, BlcBlink, BlcEffect, BlcIndex, BlcPlaybackMode, BlcTransitionMode, BpAction, BpIndex, BpType, BsAssetId, BsAssetItem, BsColor, BsnDataFeedAssetType, BsRect, BsSize, ButtonDirection, CommandSequenceType, CommandType, CompareOperator, ContentItemType, DataFeedUsageType, DeviceWebPageDisplay, DistanceUnits, EventIntrinsicAction, EventType, GpioType, HtmlSiteType, ImageModeType, LanguageKeyType, LanguageType, MediaListPlaybackType, MonitorOrientationType, MonitorOverscanType, MosaicMaxContentResolutionType, NumberParameterType, PlayerModel, PlayerTagMatchingType, PlayFileTriggerType, RegionDirection, RotationType, StringParameterType, SystemVariableType, TextHAlignmentType, TextScrollingMethodType, TouchCursorDisplayModeType, TransitionType, TwitterFeedRestrictionType, UdpAddressType, UsbConnectorName, VideoConnectorType, VideoDecoderMode, VideoDecoderSize, VideoDisplayModeType, VideoMode, VideoZoneLayerType, ViewModeType, ZoneLayerType, ZoneType, IrReceiverSource, IrTransmitterDestination, BsIrRemoteControl, WssDeviceSpec, DataFeedType, BscFileTypeInfo, AssetType, MediaType, BsLocalAssetThumbnail, BsAssetLocator, BsnPresentationAssetItemSpecification} from './bscore';
+import {AccessType, AudioConfiguration, AudioMappingType, AudioMixModeType, AudioModeType, AudioOutputName, AudioOutputSelectionType, AudioOutputType, BlcBlink, BlcEffect, BlcIndex, BlcPlaybackMode, BlcTransitionMode, BpAction, BpIndex, BpType, BsAssetId, BsAssetItem, BsColor, BsnDataFeedAssetType, BsRect, BsSize, ButtonDirection, CommandSequenceType, CommandType, CompareOperator, ContentItemType, DataFeedType, DataFeedUsageType, DeviceWebPageDisplay, DistanceUnits, EventIntrinsicAction, EventType, GpioType, HtmlSiteType, ImageModeType, LanguageKeyType, LanguageType, MediaListPlaybackType, MonitorOrientationType, MonitorOverscanType, MosaicMaxContentResolutionType, NumberParameterType, PlayerModel, PlayerTagMatchingType, PlayFileTriggerType, RegionDirection, RotationType, StringParameterType, SystemVariableType, TextHAlignmentType, TextScrollingMethodType, TouchCursorDisplayModeType, TransitionType, TwitterFeedRestrictionType, UdpAddressType, UsbConnectorName, VideoConnectorType, VideoDecoderMode, VideoDecoderSize, VideoDisplayModeType, VideoMode, VideoZoneLayerType, ViewModeType, ZoneLayerType, ZoneType, IrReceiverSource, IrTransmitterDestination, BsIrRemoteControl, WssDeviceSpec, BscFileTypeInfo, AssetType, MediaType, BsLocalAssetThumbnail, BsAssetLocator, BsnPresentationAssetItemSpecification} from './bscore';
 /** @module Interfaces */
 /**
  * @type BsDmId {string} - a GUID string that identifies a data model object. These IDs are typically generated
@@ -8,7 +8,7 @@ import {AccessType, AudioConfiguration, AudioMappingType, AudioMixModeType, Audi
  */
 export type BsDmId = string;
 export const BsDmIdNone = "0";
-export const BsDmStateVersion = "1.1.5";
+export const BsDmStateVersion = "1.2.1";
 /**
  * @interface String component for use in DmParameterizedString
  * value: if type === 'Text', value = text string
@@ -78,55 +78,57 @@ export interface DmBaseObject {
 export interface DmObject extends DmBaseObject {
     name: string;
 }
-export class DmEntityType {
-    static Sign: string;
-    static Zone: string;
-    static MediaState: string;
-    static Event: string;
-    static Transition: string;
-    static Command: string;
-    static DataFeed: string;
-    static DataFeedSource: string;
-    static HtmlSite: string;
-    static NodeApp: string;
-    static UserVariable: string;
-    static LiveText: string;
-    static Plugin: string;
-    static ScriptPlugin: string;
-    static ParserPlugin: string;
-    static DeviceWebPage: string;
-    static LinkedPresentation: string;
-    static AuxiliaryFile: string;
-    static PartnerProduct: string;
-    static LiveTextItem: string;
+export enum DmEntityType {
+    Sign = "Sign",
+    Zone = "Zone",
+    MediaState = "MediaState",
+    Event = "Event",
+    Transition = "Transition",
+    Command = "Command",
+    DataFeed = "DataFeed",
+    DataFeedSource = "DataFeedSource",
+    HtmlSite = "HtmlSite",
+    NodeApp = "NodeApp",
+    UserVariable = "UserVariable",
+    LiveText = "LiveText",
+    /** @deprecated - use ScriptPlugin or ParserPlugin */
+    Plugin = "Plugin",
+    ScriptPlugin = "ScriptPlugin",
+    ParserPlugin = "ParserPlugin",
+    DeviceWebPage = "DeviceWebPage",
+    LinkedPresentation = "LinkedPresentation",
+    AuxiliaryFile = "AuxiliaryFile",
+    PartnerProduct = "PartnerProduct",
+    LiveTextItem = "LiveTextItem"
 }
-export class DmEntityContainerType {
-    static ZoneSet: string;
-    static MediaStateSet: string;
-    static MediaStateItemSet: string;
-    static EventSet: string;
-    static TransitionSequence: string;
-    static CommandSequence: string;
-    static CommandSequenceStateEntry: string;
-    static CommandSequenceStateExit: string;
-    static CommandSequenceItemEntry: string;
-    static CommandSequenceItemExit: string;
-    static LiveTextItemSet: string;
-    static UserVariableSet: string;
-    static ScriptPluginSet: string;
-    static ParserPluginSet: string;
-    static LinkedPresentationSet: string;
-    static SystemDataFeedSet: string;
-    static AuxiliaryFileSet: string;
+export enum DmEntityContainerType {
+    ZoneSet = "ZoneSet",
+    MediaStateSet = "MSSet",
+    MediaStateItemSet = "ItemSet",
+    EventSet = "EvSet",
+    TransitionSequence = "TranS",
+    CommandSequence = "CmdS",
+    CommandSequenceStateEntry = "CmdSEntry",
+    CommandSequenceStateExit = "CmdSExit",
+    CommandSequenceItemEntry = "CmdSItemEntry",
+    CommandSequenceItemExit = "CmdSItemExit",
+    LiveTextItemSet = "LiveTextSet",
+    UserVariableSet = "UserVariableSet",
+    ScriptPluginSet = "ScriptPluginSet",
+    ParserPluginSet = "ParserPluginSet",
+    LinkedPresentationSet = "LinkedPresSet",
+    SystemDataFeedSet = "SysDataFeeds",
+    AuxiliaryFileSet = "AuxFiles",
+    NodeAppSet = "NodeAppSet"
 }
 export type DmEntityTreeNodeType = DmEntityType | DmEntityContainerType;
-export class DmCopySetContentType {
-    static Playlist: string;
-    static Interactive: string;
-    static MediaItemList: string;
-    static LiveText: string;
-    static Command: string;
-    static UserVariable: string;
+export enum DmCopySetContentType {
+    Playlist = "Playlist",
+    Interactive = "Interactive",
+    MediaItemList = "MediaItemList",
+    LiveText = "LiveText",
+    Command = "Command",
+    UserVariable = "UserVariable"
 }
 /**
  * For a given entity type, this represents a map where the keys are the entity names, and the values are an array of
@@ -149,12 +151,12 @@ export interface DmHtmlSite extends DmObject {
     queryString: DmParameterizedString;
 }
 export interface DmHostedHtmlSite extends DmHtmlSite {
-    readonly type: 'Hosted';
+    readonly type: HtmlSiteType.Hosted;
     indexAssetId: BsAssetId;
     enableNode: boolean;
 }
 export interface DmRemoteHtmlSite extends DmHtmlSite {
-    readonly type: 'Remote';
+    readonly type: HtmlSiteType.Remote;
     url: DmParameterizedString;
 }
 export interface DmDeviceWebPage extends DmObject {
@@ -169,7 +171,7 @@ export interface DmDataFeedSourceBase extends DmBaseObject, DmDataFeedSourceBase
     refCount?: number;
 }
 export interface DmRemoteDataFeedSource extends DmDataFeedSourceBase {
-    type: 'URLDataFeed';
+    type: DataFeedType.URLDataFeed;
     url: DmParameterizedString;
 }
 export interface DmBsnDataFeedSource extends DmDataFeedSourceBase {
@@ -237,15 +239,17 @@ export interface DmContentItem {
  * The actual contentItem of a MediaState will always be of type DmDerivedContentItem
  * In other words - it will be one of the derived content item types.
  */
-export type DmDerivedContentItem = DmMediaContentItem | DmHtmlContentItem | DmDataFeedContentItem | DmMrssDataFeedContentItem | DmTwitterFeedContentItem | DmUserVariableContentItem | DmLiveVideoContentItem | DmVideoStreamContentItem | DmAudioStreamContentItem | DmMjpegStreamContentItem | DmMediaListContentItem | DmPlayFileContentItem | DmEventHandlerContentItem | DmTimeContentItem | DmDateContentItem | DmLiveTextContentItem | DmSuperStateContentItem;
-export type DmDerivedNonMediaContentItem = DmHtmlContentItem | DmDataFeedContentItem | DmMrssDataFeedContentItem | DmTwitterFeedContentItem | DmUserVariableContentItem | DmLiveVideoContentItem | DmVideoStreamContentItem | DmAudioStreamContentItem | DmMjpegStreamContentItem | DmMediaListContentItem | DmPlayFileContentItem | DmEventHandlerContentItem | DmTimeContentItem | DmDateContentItem | DmLiveTextContentItem | DmSuperStateContentItem;
-export type DmContentItemData = DmVideoContentItemData | DmAudioContentItemData | DmImageContentItemData | DmHtmlContentItemData | DmMrssDataFeedContentItemData | DmTwitterFeedContentItemData | DmLiveVideoContentItemData | DmStreamContentItemData | DmMjpegStreamContentItemData | DmMediaListContentItemData | DmPlayFileContentItemData | DmPlayFileItemContentItemData | DmEventHandlerContentItemData | DmLiveTextContentItemData | DmSuperStateContentItemData;
+export type DmDerivedContentItem = DmMediaContentItem | DmHtmlContentItem | DmDataFeedContentItem | DmMrssDataFeedContentItem | DmTwitterFeedContentItem | DmUserVariableContentItem | DmLiveVideoContentItem | DmVideoStreamContentItem | DmAudioStreamContentItem | DmMjpegStreamContentItem | DmMediaListContentItem | DmLocalPlaylistContentItem | DmPlayFileContentItem | DmEventHandlerContentItem | DmTimeContentItem | DmDateContentItem | DmLiveTextContentItem | DmSuperStateContentItem;
+export type DmDerivedNonMediaContentItem = DmHtmlContentItem | DmDataFeedContentItem | DmMrssDataFeedContentItem | DmTwitterFeedContentItem | DmUserVariableContentItem | DmLiveVideoContentItem | DmVideoStreamContentItem | DmAudioStreamContentItem | DmMjpegStreamContentItem | DmMediaListContentItem | DmLocalPlaylistContentItem | DmPlayFileContentItem | DmEventHandlerContentItem | DmTimeContentItem | DmDateContentItem | DmLiveTextContentItem | DmSuperStateContentItem;
+export type DmContentItemData = DmVideoContentItemData | DmAudioContentItemData | DmImageContentItemData | DmHtmlContentItemData | DmMrssDataFeedContentItemData | DmTwitterFeedContentItemData | DmLiveVideoContentItemData | DmStreamContentItemData | DmMjpegStreamContentItemData | DmMediaListContentItemData | DmLocalPlaylistContentItemData | DmLocalPlaylistItemContentItemData | DmPlayFileContentItemData | DmPlayFileItemContentItemData | DmEventHandlerContentItemData | DmLiveTextContentItemData | DmSuperStateContentItemData;
 export type DmMediaContentItemData = DmVideoContentItemData | DmAudioContentItemData | DmImageContentItemData;
-export type DmNonMediaContentAdditionalAssetData = DmMediaListContentItemAssetData | DmPlayFileContentItemAssetData;
+export type DmNonMediaContentAdditionalAssetData = DmMediaListContentItemAssetData | DmPlayFileContentItemAssetData | DmLocalPlaylistContentItemAssetData;
+export type DmSequenceContentItemSpec = BsAssetItem | DmBsnDataFeedSourceSpecification;
 export type DmMediaStateContentItemSpecification = DmDerivedNonMediaContentItem | BsAssetItem | DmDataFeedSourceSpecification;
 export interface DmMediaContentItem extends DmContentItem {
     assetId: BsAssetId;
 }
+export type DmSequenceContentItem = DmMediaContentItem | DmMrssDataFeedContentItem;
 export interface DmVideoContentItemData {
     volume: number;
     videoDisplayMode: VideoDisplayModeType;
@@ -369,6 +373,20 @@ export type DmMediaListContentItem = DmContentItem & DmMediaListContentItemData;
 export interface DmMediaListContentItemAssetData {
     dataFeedSpec: DmDataFeedSourceSpecification | null;
 }
+export interface DmLocalPlaylistContentItemData {
+    defaultDataFeedId: BsDmId;
+}
+export const DmLocalPlaylistContentItemDataNameArray: string[];
+export type DmLocalPlaylistContentItem = DmContentItem & DmLocalPlaylistContentItemData;
+export interface DmLocalPlaylistContentItemAssetData {
+    dataFeedSpec: DmDataFeedSourceSpecification | null;
+}
+export interface DmLocalPlaylistItemData {
+    serialNumber: string;
+}
+export const DmLocalPlaylistItemDataNameArray: string[];
+export type DmLocalPlaylistItemContentItemData = DmMrssDataFeedContentItemData & DmLocalPlaylistItemData;
+export type DmLocalPlaylistItemContentItem = DmMrssDataFeedContentItem & DmLocalPlaylistItemData;
 export interface DmPlayFileContentItemDefaults {
     triggerType: PlayFileTriggerType;
     useDefaultMedia: boolean;
@@ -399,8 +417,8 @@ export interface DmPlayFileContentItemAssetData {
     defaultMedia?: BsAssetItem | null;
     dataFeedSpec?: DmDataFeedSourceSpecification | null;
 }
-export type DmMediaSequenceContentItemData = DmMediaContentItemData | DmPlayFileItemContentItemData;
-export type DmMediaSequenceContentItem = DmMediaContentItem | DmPlayFileItemContentItem;
+export type DmMediaSequenceContentItemData = DmMediaContentItemData | DmPlayFileItemContentItemData | DmLocalPlaylistItemData;
+export type DmMediaSequenceContentItem = DmMediaContentItem | DmPlayFileItemContentItem | DmLocalPlaylistItemContentItem;
 export type DmMediaSequenceContainerContentItem = DmMediaListContentItem | DmPlayFileContentItem;
 export interface DmEventHandlerContentItemDefaults {
     stopPlayback: boolean;
@@ -471,11 +489,11 @@ export interface DmSerialEventData extends DmEventDataUserVariableAssignments {
     port: string;
     data: string;
 }
-export class DmTimeClockEventType {
-    static DateTime: string;
-    static ByUserVariable: string;
-    static DailyOnce: string;
-    static DailyPeriodic: string;
+export enum DmTimeClockEventType {
+    DateTime = "timeClockDateTime",
+    ByUserVariable = "timeClockDateTimeByUserVariable",
+    DailyOnce = "timeClockDailyOnce",
+    DailyPeriodic = "timeClockDailyPeriodic"
 }
 export interface DmTimeClockDateTimeEventData {
     dateTime: Date;
@@ -751,7 +769,8 @@ export enum MediaStateContainerType {
     Zone = 0,
     MediaList = 1,
     PlayFile = 2,
-    SuperState = 3
+    SuperState = 3,
+    LocalPlaylist = 4
 }
 export interface DmMediaStateContainer {
     id: BsDmId;
@@ -843,7 +862,7 @@ export interface DmZoneLayer extends DmBaseObject {
     zoneSequence: BsDmId[];
 }
 export interface DmVideoZoneLayer extends DmZoneLayer {
-    readonly type: 'Video';
+    readonly type: ZoneLayerType.Video;
     zoneLayerSpecificProperties: DmVideoZoneLayerProperties;
 }
 export interface DmZoneLayerIdsByType {
@@ -954,23 +973,23 @@ export interface DmSignHardwareConfiguration {
     readonly audioSignPropertyMap: Readonly<DmAudioSignPropertyMap>;
     readonly irRemote: Readonly<DmIrRemote>;
 }
-export class SerialParity {
-    static None: string;
-    static Even: string;
-    static Odd: string;
+export enum SerialParity {
+    None = "N",
+    Even = "E",
+    Odd = "O"
 }
-export class SerialProtocol {
-    static Ascii: string;
-    static Binary: string;
+export enum SerialProtocol {
+    Ascii = "ASCII",
+    Binary = "Binary"
 }
-export class SerialEol {
-    static CR: string;
-    static LF: string;
-    static CRLF: string;
+export enum SerialEol {
+    CR = "CR",
+    LF = "LF",
+    CRLF = "CRLF"
 }
-export class SerialConnectedDeviceType {
-    static None: string;
-    static Gps: string;
+export enum SerialConnectedDeviceType {
+    None = "None",
+    Gps = "GPS"
 }
 export interface DmSerialPortConfiguration {
     port: string;
@@ -1041,41 +1060,41 @@ export interface DmAuxiliaryFile extends DmObject {
 export interface DmLinkedPresentation extends DmObject {
     readonly assetId: BsAssetId;
 }
-export class DmTapProtocolType {
-    static Serial: string;
-    static Cdc: string;
-    static Hid: string;
+export enum DmTapProtocolType {
+    Serial = "Serial",
+    Cdc = "CDC",
+    Hid = "HID"
 }
-export class DmPartnerCommandLibraryType {
-    static None: string;
-    static Riviera: string;
+export enum DmPartnerCommandLibraryType {
+    None = "None",
+    Riviera = "Riviera"
 }
 export interface DmPartnerProduct extends DmObject {
     partnerName: string;
     productName: string;
     port: string;
 }
-export class LiveTextItemType {
-    static StaticText: string;
-    static SystemVariable: string;
-    static MediaCounter: string;
-    static UserVariable: string;
-    static SimpleRss: string;
-    static MediaRssText: string;
-    static MediaRssMedia: string;
-    static Image: string;
-    static IndexedDataFeed: string;
-    static TitledDataFeed: string;
+export enum LiveTextItemType {
+    StaticText = "StaticText",
+    SystemVariable = "SystemVariable",
+    MediaCounter = "MediaCounter",
+    UserVariable = "UserVariable",
+    SimpleRss = "SimpleRss",
+    MediaRssText = "MediaRssText",
+    MediaRssMedia = "MediaRssMedia",
+    Image = "Image",
+    IndexedDataFeed = "IndexedDataFeed",
+    TitledDataFeed = "TitledDataFeed"
 }
-export class LiveTextEntityType {
-    static StaticText: string;
-    static SystemVariable: string;
-    static MediaCounter: string;
-    static UserVariable: string;
-    static Image: string;
-    static SimpleRss: string;
-    static MediaRss: string;
-    static DataFeed: string;
+export enum LiveTextEntityType {
+    StaticText = "StaticText",
+    SystemVariable = "SystemVariable",
+    MediaCounter = "MediaCounter",
+    UserVariable = "UserVariable",
+    Image = "Image",
+    SimpleRss = "SimpleRss",
+    MediaRss = "MediaRss",
+    DataFeed = "DataFeed"
 }
 export interface DmLiveTextItemBase extends DmBaseObject {
     canvasId: BsDmId;
@@ -1087,39 +1106,39 @@ export interface DmLiveTextItemTextProperties {
     useBackgroundColor: boolean;
 }
 export interface DmStaticLiveTextItemData {
-    type: 'StaticText';
+    type: LiveTextItemType.StaticText;
     text: string;
 }
 export type DmStaticLiveTextItem = DmLiveTextItemBase & DmStaticLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmSystemVariableLiveTextItemData {
-    type: 'SystemVariable';
+    type: LiveTextItemType.SystemVariable;
     variable: SystemVariableType;
 }
 export type DmSystemVariableLiveTextItem = DmLiveTextItemBase & DmSystemVariableLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmMediaCounterLiveTextItemData {
-    type: 'MediaCounter';
+    type: LiveTextItemType.MediaCounter;
     assetId: BsAssetId;
 }
 export type DmMediaCounterLiveTextItem = DmLiveTextItemBase & DmMediaCounterLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmUserVariableLiveTextItemData {
-    type: 'UserVariable';
+    type: LiveTextItemType.UserVariable;
     userVariableIdOrName: BsDmId | string;
 }
 export type DmUserVariableLiveTextItem = DmLiveTextItemBase & DmUserVariableLiveTextItemData & DmLiveTextItemTextProperties;
-export class RssTextElementName {
-    static Title: string;
-    static Description: string;
-    static Custom: string;
+export enum RssTextElementName {
+    Title = "Title",
+    Description = "Description",
+    Custom = "Custom"
 }
 export interface DmSimpleRssLiveTextItemData {
-    type: 'SimpleRss';
+    type: LiveTextItemType.SimpleRss;
     element: RssTextElementName;
     groupId: BsDmId;
     enabled?: boolean;
 }
 export type DmSimpleRssLiveTextItem = DmLiveTextItemBase & DmSimpleRssLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmMediaRssLiveTextItemData {
-    type: 'MediaRssText';
+    type: LiveTextItemType.MediaRssText;
     element: RssTextElementName;
     customFieldName?: string | null;
     groupId: BsDmId;
@@ -1127,24 +1146,24 @@ export interface DmMediaRssLiveTextItemData {
 }
 export type DmMediaRssLiveTextItem = DmLiveTextItemBase & DmMediaRssLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmMediaRssMediaLiveTextItemData {
-    type: 'MediaRssMedia';
+    type: LiveTextItemType.MediaRssMedia;
     groupId: BsDmId;
     enabled?: boolean;
 }
 export type DmMediaRssMediaLiveTextItem = DmLiveTextItemBase & DmMediaRssMediaLiveTextItemData;
 export interface DmImageLiveTextItemData {
-    type: 'Image';
+    type: LiveTextItemType.Image;
     assetId: BsAssetId;
 }
 export type DmImageLiveTextItem = DmLiveTextItemBase & DmImageLiveTextItemData;
 export interface DmIndexedDataFeedLiveTextItemData {
-    type: 'IndexedDataFeed';
+    type: LiveTextItemType.IndexedDataFeed;
     dataFeedId: BsDmId;
     index: DmParameterizedNumber;
 }
 export type DmIndexedDataFeedLiveTextItem = DmLiveTextItemBase & DmIndexedDataFeedLiveTextItemData & DmLiveTextItemTextProperties;
 export interface DmTitledDataFeedLiveTextItemData {
-    type: 'TitledDataFeed';
+    type: LiveTextItemType.TitledDataFeed;
     dataFeedId: BsDmId;
     title: DmParameterizedString;
 }
@@ -1406,6 +1425,40 @@ export class DmcPlayFileItem extends DmcMediaState {
 }
 /**
  * @class
+ * @classdesc Objects of this class represent LocalPlaylist MediaState objects. Additional components
+ *  related to the LocalPlaylist state can be directly accessed from this object.
+ * @param mediaStateState {DmMediaState} - simple normalized state for MediaObject from the bsDataModel Redux store.
+ * @param components {DmMediaStateComponents} - a simple object holding all events associated with the media state,
+ *  along with all transitions associated with each event, all commands for the mediaState, and the assetItem for the
+ *  mediaState, if there is one.
+ * @param localPlaylistComponents {DmLocalPlaylistMediaStateComponents} - an object holding assets used by the
+ * LocalPlaylist state (defaultDynamicPlaylistDataFeed.)
+ * @property defaultDynamicPlaylistDataFeed {DmcDataFeed | null}- the data feed for the default dynamic playlist
+ *  if defined, null if not defined
+ */
+export class DmcLocalPlaylistMediaState extends DmcMediaState {
+    readonly contentItem: DmLocalPlaylistContentItem;
+    readonly defaultDynamicPlaylistDataFeed: DmcDataFeed | null;
+    constructor(mediaStateState: DmMediaState, components: DmMediaStateComponents, localPlaylistComponents: DmLocalPlaylistMediaStateComponents);
+}
+export function dmIsDmcLocalPlaylistMediaState(object: any): object is DmcLocalPlaylistMediaState;
+/**
+ * @class
+ * @classdesc Objects of this class represent items within a LocalPlaylist sequence.
+ *  LocalPlaylist sequences are composed of mediaStates holding a DmLocalPlaylistItemContentItem,
+ *  which is an extension of DmMrssDataFeedContentItem.
+ *
+ * @param mediaStateState {DmMediaState} - simple normalized state for MediaObject from the bsDataModel Redux store.
+ * @param components {DmMediaStateComponents} - a simple object holding all events associated with the media state,
+ *  along with all transitions associated with each event, all commands for the mediaState, and the assetItem for the
+ *  mediaState.
+ */
+export class DmcLocalPlaylistItem extends DmcMediaState {
+    readonly contentItem: DmLocalPlaylistItemContentItem;
+    constructor(mediaStateState: DmMediaState, components: DmMediaStateComponents);
+}
+/**
+ * @class
  * @classdesc Objects of this class represent LiveText MediaState objects. This object provides
  *  direct access to the contained LiveText canvas.
  * @param mediaStateState {DmMediaState} - simple normalized state for MediaObject from the bsDataModel Redux store.
@@ -1602,7 +1655,7 @@ export function dmIsDmcZoneLayer(object: any): object is DmcZoneLayer;
  * @property zoneCount {number} - the count of zones currently in the zoneLayer
  */
 export class DmcVideoZoneLayer extends DmcZoneLayer implements DmVideoZoneLayer, DmVideoDecoderProperties, DmVideoDecoderStatus {
-    readonly type: 'Video';
+    readonly type: ZoneLayerType.Video;
     readonly zoneLayerSpecificProperties: DmVideoZoneLayerProperties;
     get videoZoneLayerType(): VideoZoneLayerType;
     get index(): number;
@@ -2383,7 +2436,7 @@ export function dmGetZoneMediaStateContainer(zoneId: BsDmId): DmMediaStateContai
 export function dmGetMediaStateContainer(id: BsDmId, type: MediaStateContainerType): DmMediaStateContainer;
 /**
  * Return true if the given mediaStateContainer represents a mediaState that can contain a media sequence.
- * This is true for mediaStates with a MediaList and PlayFile content item.
+ * This is true for mediaStates with a MediaList, PlayFile, or a LocalPlaylist content item.
  * @param container {DmMediaStateContainer}
  * @returns {boolean}
  */
@@ -2681,7 +2734,7 @@ export function dmCreateMrssDataFeedContentItem(name: string, dataFeedId: BsDmId
 export function dmContentItemIsMrssDataFeedContentItem(contentItem: DmDerivedContentItem | null | undefined): contentItem is DmMrssDataFeedContentItem;
 /**
  * Return true if the given content item is of type DmDataFeedContentItem.
- * This is true if the content item is either type DataFeed or MrssFeed.
+ * This is true if the content item is either type DataFeed, MrssFeed or LocalPlaylistItem.
  *
  * @param contentItem {DmDerivedContentItem | null | undefined} - content item to test
  * @returns {boolean} - true if content item is DmDataFeedContentItem
@@ -2837,6 +2890,24 @@ export function dmCreateMediaListContentItem(name: string, props?: MediaListCont
  * @returns {boolean} - true if content item is DmMediaListContentItem
  */
 export function dmContentItemIsMediaListContentItem(contentItem: DmDerivedContentItem | null | undefined): contentItem is DmMediaListContentItem;
+export function dmCreateLocalPlaylistItem(contentItem: DmLocalPlaylistContentItem, contentData: DmLocalPlaylistItemData | null): DmLocalPlaylistItemContentItem | null;
+export function dmCreateLocalPlaylistContentItem(name: string): DmLocalPlaylistContentItem;
+/**
+ * Return true if the given content item is of type DmLocalPlaylistContentItem.
+ * This also serves as a Typescript type guard.
+ *
+ * @param contentItem {DmDerivedContentItem | null | undefined} - content item to test
+ * @returns {boolean} - true if content item is DmLocalPlaylistContentItem
+ */
+export function dmContentItemIsLocalPlaylistContentItem(contentItem: DmDerivedContentItem | null | undefined): contentItem is DmLocalPlaylistContentItem;
+/**
+ * Return true if the given content item is of type DmLocalPlaylistItemContentItem.
+ * This also serves as a Typescript type guard.
+ *
+ * @param contentItem {DmDerivedContentItem | null | undefined} - content item to test
+ * @returns {boolean} - true if content item is DmLocalPlaylistItemContentItem
+ */
+export function dmContentItemIsLocalPlaylistItem(contentItem: DmDerivedContentItem | null | undefined): contentItem is DmLocalPlaylistItemContentItem;
 export interface PlayFileContentItemProperties {
     triggerType?: PlayFileTriggerType;
     useDefaultMedia?: boolean;
@@ -3549,40 +3620,40 @@ export class DmcLiveTextItemWithTextContent extends DmcLiveTextItem implements D
     constructor(item: DmLiveTextItemBase & DmLiveTextItemTextProperties, layerIndex: number);
 }
 export class DmcStaticLiveTextItem extends DmcLiveTextItemWithTextContent implements DmStaticLiveTextItem {
-    readonly type: 'StaticText';
+    readonly type: LiveTextItemType.StaticText;
     readonly text: string;
     constructor(item: DmStaticLiveTextItem, layerIndex: number);
 }
 export function dmIsDmcLiveTextItemStaticTextItem(item: DmcLiveTextItem): item is DmcStaticLiveTextItem;
 export class DmcSystemVariableLiveTextItem extends DmcLiveTextItemWithTextContent implements DmSystemVariableLiveTextItem {
-    readonly type: 'SystemVariable';
+    readonly type: LiveTextItemType.SystemVariable;
     readonly variable: SystemVariableType;
     constructor(item: DmSystemVariableLiveTextItem, layerIndex: number);
 }
 export function dmIsDmcLiveTextItemSystemVariableItem(item: DmcLiveTextItem): item is DmcSystemVariableLiveTextItem;
 export class DmcMediaCounterLiveTextItem extends DmcLiveTextItemWithTextContent implements DmMediaCounterLiveTextItem {
-    readonly type: 'MediaCounter';
+    readonly type: LiveTextItemType.MediaCounter;
     readonly assetId: BsAssetId;
     readonly assetItem: BsAssetItem | null;
     constructor(item: DmMediaCounterLiveTextItem, layerIndex: number, assetItem: BsAssetItem | null);
 }
 export function dmIsDmcLiveTextItemMediaCounterItem(item: DmcLiveTextItem): item is DmcMediaCounterLiveTextItem;
 export class DmcUserVariableLiveTextItem extends DmcLiveTextItemWithTextContent implements DmUserVariableLiveTextItem {
-    readonly type: 'UserVariable';
+    readonly type: LiveTextItemType.UserVariable;
     readonly userVariableIdOrName: BsDmId | string;
     readonly userVariable: DmcUserVariable | null;
     constructor(item: DmUserVariableLiveTextItem, layerIndex: number, userVariable?: DmUserVariable | null);
 }
 export function dmIsDmcLiveTextItemUserVariableItem(item: DmcLiveTextItem): item is DmcUserVariableLiveTextItem;
 export class DmcImageLiveTextItem extends DmcLiveTextItem implements DmImageLiveTextItem {
-    readonly type: 'Image';
+    readonly type: LiveTextItemType.Image;
     readonly assetId: BsAssetId;
     readonly assetItem: BsAssetItem | null;
     constructor(item: DmImageLiveTextItem, layerIndex: number, assetItem: BsAssetItem | null);
 }
 export function dmIsDmcLiveTextItemImageItem(item: DmcLiveTextItem): item is DmcImageLiveTextItem;
 export class DmcTitledDataFeedTextItem extends DmcLiveTextItemWithTextContent implements DmTitledDataFeedLiveTextItem {
-    readonly type: 'TitledDataFeed';
+    readonly type: LiveTextItemType.TitledDataFeed;
     readonly title: DmParameterizedString;
     readonly dataFeedId: BsDmId;
     readonly dataFeed: DmcDataFeed | null;
@@ -3590,7 +3661,7 @@ export class DmcTitledDataFeedTextItem extends DmcLiveTextItemWithTextContent im
 }
 export function dmIsDmcLiveTextItemTitledDataFeedItem(item: DmcLiveTextItem): item is DmcTitledDataFeedTextItem;
 export class DmcIndexedDataFeedTextItem extends DmcLiveTextItemWithTextContent implements DmIndexedDataFeedLiveTextItem {
-    readonly type: 'IndexedDataFeed';
+    readonly type: LiveTextItemType.IndexedDataFeed;
     readonly index: DmParameterizedNumber;
     readonly dataFeedId: BsDmId;
     readonly dataFeed: DmcDataFeed | null;
@@ -3598,7 +3669,7 @@ export class DmcIndexedDataFeedTextItem extends DmcLiveTextItemWithTextContent i
 }
 export function dmIsDmcLiveTextItemIndexedDataFeedItem(item: DmcLiveTextItem): item is DmcIndexedDataFeedTextItem;
 export class DmcSimpleRssTextItem extends DmcLiveTextItemWithTextContent implements DmSimpleRssLiveTextItemData {
-    readonly type: 'SimpleRss';
+    readonly type: LiveTextItemType.SimpleRss;
     readonly element: RssTextElementName;
     readonly groupId: BsDmId;
     readonly displayTime: number;
@@ -3610,7 +3681,7 @@ export class DmcSimpleRssTextItem extends DmcLiveTextItemWithTextContent impleme
 }
 export function dmIsDmcLiveTextItemSimpleRssItem(item: DmcLiveTextItem): item is DmcSimpleRssTextItem;
 export class DmcMediaRssTextItem extends DmcLiveTextItemWithTextContent implements DmMediaRssLiveTextItemData {
-    readonly type: 'MediaRssText';
+    readonly type: LiveTextItemType.MediaRssText;
     readonly element: RssTextElementName;
     readonly groupId: BsDmId;
     readonly enabled: boolean;
@@ -3623,7 +3694,7 @@ export class DmcMediaRssTextItem extends DmcLiveTextItemWithTextContent implemen
 }
 export function dmIsDmcLiveTextItemMediaRssTextItem(item: DmcLiveTextItem): item is DmcMediaRssTextItem;
 export class DmcMediaRssMediaItem extends DmcLiveTextItem implements DmMediaRssMediaLiveTextItemData {
-    readonly type: 'MediaRssMedia';
+    readonly type: LiveTextItemType.MediaRssMedia;
     readonly groupId: BsDmId;
     readonly enabled: boolean;
     dataFeeds: DmcDataFeed[];
@@ -3961,13 +4032,13 @@ export interface DmHtmlSiteTemplateBase {
  * indexAssetItem may be a variable string, which should resolve to a BsAssetItem
  */
 export interface DmHostedHtmlSiteTemplate extends DmHtmlSiteTemplateBase {
-    type: 'Hosted';
+    type: HtmlSiteType.Hosted;
     indexAssetItem: BsAssetItem | string;
     enableNode?: boolean;
 }
 export function dmIsHostedHtmlSiteTemplate(base: DmHtmlSiteTemplateBase): base is DmHostedHtmlSiteTemplate;
 export interface DmRemoteHtmlSiteTemplate extends DmHtmlSiteTemplateBase {
-    type: 'Remote';
+    type: HtmlSiteType.Remote;
     url: string;
 }
 export function dmIsRemoteHtmlSiteTemplate(base: DmHtmlSiteTemplateBase): base is DmRemoteHtmlSiteTemplate;
@@ -4029,47 +4100,49 @@ export enum DmErrorType {
     userVariableNameNotFound = 8,
     assetNotFound = 9,
     eventNotCompatibleWithContentType = 10,
-    eventDuplicated = 11,
-    eventNotCompatibleWithPlayerModel = 12,
-    eventCannotBeAddedToMediaSequenceItem = 13,
-    eventActionIsIncompatible = 14,
-    synchronizeEventNotCompatibleWithContentType = 15,
-    synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled = 16,
-    pluginEventRequiresDefinedPlugins = 17,
-    gpioEventRequiresGpioInput = 18,
-    commandNotCompatibleWithPlayerModel = 19,
-    gpioCommandRequiresGpioOutput = 20,
-    gpioConfigurationChangeCreatesInvalidEventsOrCommands = 21,
-    irRemoteChangeCreatesInvalidEventsOrCommands = 22,
-    nameNotSpecified = 23,
-    valueNotSpecifiedOrInvalid = 24,
-    duplicateNameNotAllowed = 25,
-    eventDataMissing = 26,
-    stringDataValueIsEmpty = 27,
-    keyboardEventDataFormatIsIncorrect = 28,
-    remoteEventDataFormatIsIncorrect = 29,
-    byteStringCommandDataIsIncorrect = 30,
-    userVariableNotSpecified = 31,
-    userVariableIdInvalid = 32,
-    userVariableNameNotDefined = 33,
-    userVariableInputStringFormatIsIncorrect = 34,
-    switchPresentationTargetNotSpecified = 35,
-    dataFeedNotSpecified = 36,
-    invalidDataFeedSource = 37,
-    invalidHexString = 38,
-    invalidUrlString = 39,
-    linkedPresentationIdInvalid = 40,
-    invalidContainerForPaste = 41,
-    invalidPlugin = 42,
-    invalidCustomPresentationWebPage = 43,
-    superStateInitialStateInvalid = 44,
-    superStateInitialStateCannotBeOnDemand = 45,
-    noAudioDecodersAvailable = 46,
-    contentTypeNotCompatibleWithZone = 47,
-    irRemoteEventRequiresIrInSource = 48,
-    videoModePluginFunctionNameInUse = 49,
-    nodeAppNameInUse = 50,
-    invalidNodeApp = 51
+    eventNotAllowedWithTarget = 11,
+    eventDuplicated = 12,
+    eventNotCompatibleWithPlayerModel = 13,
+    eventCannotBeAddedToMediaSequenceItem = 14,
+    eventActionIsIncompatible = 15,
+    synchronizeEventNotCompatibleWithContentType = 16,
+    synchronizeEventNotCompatibleWithPlayFileWhenEnhancedSynchronizationDisabled = 17,
+    pluginEventRequiresDefinedPlugins = 18,
+    gpioEventRequiresGpioInput = 19,
+    commandNotCompatibleWithPlayerModel = 20,
+    gpioCommandRequiresGpioOutput = 21,
+    gpioConfigurationChangeCreatesInvalidEventsOrCommands = 22,
+    irRemoteChangeCreatesInvalidEventsOrCommands = 23,
+    nameNotSpecified = 24,
+    valueNotSpecifiedOrInvalid = 25,
+    duplicateNameNotAllowed = 26,
+    eventDataMissing = 27,
+    stringDataValueIsEmpty = 28,
+    keyboardEventDataFormatIsIncorrect = 29,
+    remoteEventDataFormatIsIncorrect = 30,
+    byteStringCommandDataIsIncorrect = 31,
+    userVariableNotSpecified = 32,
+    userVariableIdInvalid = 33,
+    userVariableNameNotDefined = 34,
+    userVariableInputStringFormatIsIncorrect = 35,
+    switchPresentationTargetNotSpecified = 36,
+    dataFeedNotSpecified = 37,
+    invalidDataFeedSource = 38,
+    invalidHexString = 39,
+    invalidUrlString = 40,
+    linkedPresentationIdInvalid = 41,
+    invalidContainerForPaste = 42,
+    invalidPlugin = 43,
+    invalidCustomPresentationWebPage = 44,
+    superStateInitialStateInvalid = 45,
+    superStateInitialStateCannotBeOnDemand = 46,
+    noAudioDecodersAvailable = 47,
+    contentTypeNotCompatibleWithZone = 48,
+    irRemoteEventRequiresIrInSource = 49,
+    videoModePluginFunctionNameInUse = 50,
+    nodeAppNameInUse = 51,
+    invalidNodeApp = 52,
+    invalidVolume = 53
 }
 export interface BsDmTestResult {
     ok: boolean;
@@ -4079,6 +4152,7 @@ export interface BsDmEntityErrorDetails {
     entityType?: DmEntityType | null;
     entityId?: BsDmId | null;
     entityProperty?: string | null;
+    entityInfo?: string | null;
 }
 export interface BsDmErrorDetails extends BsDmEntityErrorDetails {
     action?: BsDmBaseAction | null;
@@ -4260,23 +4334,23 @@ export interface DmMediaStateCopySet extends DmCopySetBase {
     nextMediaStateTagIndex: number;
 }
 export interface DmPlaylistMediaStateCopySet extends DmMediaStateCopySet {
-    contentType: 'Playlist';
+    contentType: DmCopySetContentType.Playlist;
     plStartingMediaStateId: BsDmId;
     plLastTransitionId: BsDmId;
 }
 export interface DmLiveTextCopySet extends DmCopySetWithDataFeeds {
-    contentType: 'LiveText';
+    contentType: DmCopySetContentType.LiveText;
     liveText: {
         itemsById: DmLiveTextItemMap;
         dataFeedsByGroupId: DmLiveTextDataFeedSequenceMap;
     };
 }
 export interface DmCommandCopySet extends DmCopySetBase {
-    contentType: 'Command';
+    contentType: DmCopySetContentType.Command;
     commands: DmCommandCollectionState;
 }
 export interface DmUserVariableCopySet extends DmCopySetWithDataFeeds {
-    contentType: 'UserVariable';
+    contentType: DmCopySetContentType.UserVariable;
     userVariables: DmUserVariableCollectionState;
 }
 /**
@@ -4392,6 +4466,7 @@ export interface NewSignParams {
 export type NewSignAction = BsDmAction<NewSignParams>;
 /**
  * Return action to create a new, empty sign with the given parameters
+ * Note: leading and trailing spaces are trimmed from the name
  *
  * @param name {string} - name of the sign
  * @param [mode] {VideoMode} - default: user default, initial value = 1920x1080x60p
@@ -4550,6 +4625,15 @@ export type ScaleRectangleAction = BsDmAction<ScaleRectangleParams>;
  * @returns {ScaleRectangleAction}
  */
 export function dmScaleSignRectangles(increase: boolean, scaleFactorX: number, scaleFactorY?: number): ScaleRectangleAction;
+/**
+ * Update's videoMode based on certain conditions. If update is allowed videoZoneLayers can
+ * be added or removed, fullResGraphicsEnabled can be disabled. If not allowed an invalidOperation error is thrown
+ *
+ * @param targetVideoMode {VideoMode}
+ * @returns {BsDmThunkAction<SignParams>}
+ *
+ */
+export function dmUpdateVideoMode(targetVideoMode: VideoMode): BsDmThunkAction<SignParams>;
 
 /** @module Actions:SignTemplate */
 export interface NewSignFromTemplateParams {
@@ -5205,7 +5289,7 @@ export interface MediaSequenceAddItemRangeParams {
     index: number;
     container: DmMediaStateContainer;
     id: BsDmId[];
-    contentItems: DmMediaContentItem[];
+    contentItems: DmSequenceContentItem[];
 }
 export type MediaSequenceAddItemRangeAction = BsDmAction<MediaSequenceAddItemRangeParams>;
 /**
@@ -5215,13 +5299,13 @@ export type MediaSequenceAddItemRangeAction = BsDmAction<MediaSequenceAddItemRan
  * @param {DmMediaStateContainer} container - container for the items - must be of type
  *  MediaStateContainerType.MediaList or MediaStateContainerType.PlayFile, with the ID of a MediaState
  *  with ContentItemType.MediaList or ContentItemType.PlayFile
- * @param {BsAssetItem[]} assetItems - assetItems to add
+ * @param {DmSequenceContentItemSpec[]} contentItems - BsAssetItems or DmBsnDataFeedSourceSpecifications to add
  * @param {Array<Partial<DmMediaSequenceContentItemData>>} [contentData] - optional array of extra data for each item
  *  to be added to the media sequence - each item in this array corresponds to the contentItem for the assetItem in
  *  the corresponding position in the assetItems array. Items in this array can be null.
  * @returns {BsDmThunkAction<MediaSequenceAddItemRangeParams>}
  */
-export function dmMediaSequenceAddItemRange(index: number, container: DmMediaStateContainer, assetItems: BsAssetItem[], contentData?: Array<Partial<DmMediaSequenceContentItemData>>): BsDmThunkAction<MediaSequenceAddItemRangeParams>;
+export function dmMediaSequenceAddItemRange(index: number, container: DmMediaStateContainer, contentItems: DmSequenceContentItemSpec[], contentData?: Array<Partial<DmMediaSequenceContentItemData>>): BsDmThunkAction<MediaSequenceAddItemRangeParams>;
 export interface MediaSequenceUpdateItemParams {
     id: BsDmId;
     assetItem?: BsAssetItem;
@@ -5636,6 +5720,17 @@ export type UserVariableMoveAtIndicesAction = BsDmAction<UserVariableMoveAtIndic
  * @returns {UserVariableMoveAtIndicesAction}
  */
 export function dmMoveUserVariablesAtIndices(indices: number[] | number, targetIndex: number): UserVariableMoveAtIndicesAction;
+export interface UserVariableReSequenceParams {
+    indices: number[];
+}
+export type UserVariableReSequenceAction = BsDmAction<UserVariableReSequenceParams>;
+/**
+ * Re-sequence user variables according to specified index array. There must be an index in the array for each
+ *  currently defined user variable, or an exception will be thrown.
+ * @param indices {number[]} - array of zero-based sequence indices specifying desired sequence of user variables
+ * @returns {UserVariableReSequenceAction}
+ */
+export function dmReSequenceUserVariables(indices: number[]): BsDmThunkAction<UserVariableReSequenceParams>;
 export interface UserVariableDeleteParams extends DataFeedDeleteParams {
     userVariableIds: BsDmId[];
 }
@@ -5934,6 +6029,30 @@ export interface PlaylistAddMediaStateParams {
 }
 export type PlaylistAddMediaStateAction = BsDmAction<PlaylistAddMediaStateParams>;
 /**
+ * Specification of options for PlaylistAddMediaStateAction action.
+ * @property [name=fileName or 'StateX'] {string | null} - desired mediaState name.
+ *   Default: media fileName if contentItem has a media file, "State" + a numeric index otherwise
+ * @property [contentData=default values] {DmContentItemData} - contains values for one or more contentItem
+ *   properties. This can be used to set ancillary contentItem properties when the 'content' param
+ *   is an assetItem.
+ * @property [contentAdditionalAsset=null] {DmNonMediaContentAdditionalAssetData} - Certain contentItem types hold
+ *  one or more additional asset properties. This object holds the specification for such assets.
+ *  Example: PlayFile contentItem holds a defaultMedia assetId. The assetItem for these assets can be supplied
+ *  by this property. This parameter is ignored for ContentItem types that do not hold such an additional assetItem.
+ * @property [transitionType=NoEffect] {TransitionType} - type of Transition into new state from previous state.
+ * @property [eventType] {EventType} - type of event that triggers the transition.
+ *   Default: MediaEnd for video/audio, Timer for images
+ * @property [eventData=undefined] {object} - data for event. For timer events, this be be a DmTimer object
+ */
+export interface DmPlaylistAddMediaStateOptions {
+    name?: string;
+    contentData?: Partial<DmContentItemData>;
+    contentAdditionalAsset?: DmNonMediaContentAdditionalAssetData | null;
+    transitionType?: TransitionType;
+    eventType?: EventType;
+    eventData?: any;
+}
+/**
  * Add a new MediaState to the playlist at a given index.
  * This function will fail if the MediaState container does not contain a valid simple playlist.
  *
@@ -5945,21 +6064,13 @@ export type PlaylistAddMediaStateAction = BsDmAction<PlaylistAddMediaStateParams
  *   or a BsAssetItem (for media file, html site or data feed content.) If a BsAssetItem is given,
  *   the asset will be added to the AssetMap (and/or HtmlSite/DataFeed list) if necessary, and a ContentItem
  *   of the correct type will be generated for the MediaState with the correct referencing information
- * @param [name=fileName or 'StateX'] {string | null} - desired mediaState name.
- *   Default: media fileName if contentItem has a media file, "State" + a numeric index otherwise
- * @param [contentData=default values] {DmContentItemData} - contains values for one or more contentItem
- *   properties. This can be used to set ancillary contentItem properties when the 'content' param
- *   is an assetItem.
- * @param [transitionType=NoEffect] {TransitionType} - type of Transition into new state from previous state.
- * @param [eventType] {EventType} - type of event that triggers the transition.
- *   Default: MediaEnd for video/audio, Timer for images
- * @param [eventData=undefined] {object} - data for event. For timer events, this be be a DmTimer object
+ * @param [options] {DmPlaylistAddMediaStateOptions} - add media state options
  * @returns {BsDmThunkAction} When dispatched, the thunk function will return a PlaylistAddMediaStateAction object.
  *   If the thunk function succeeds, the action properties returned will be the ones used, including substitutions
  *   made for optional input.
  *   If the function fails, a BsDmError is thrown.
  */
-export function dmPlaylistAddMediaState(index: number, container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification, name?: string | null, contentData?: Partial<DmContentItemData>, transitionType?: TransitionType, eventType?: EventType, eventData?: any): BsDmThunkAction<PlaylistAddMediaStateParams>;
+export function dmPlaylistAddMediaState(index: number, container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification, options?: DmPlaylistAddMediaStateOptions): BsDmThunkAction<PlaylistAddMediaStateParams>;
 /**
  * Append a new MediaState to the end of the playlist.
  *  This function will fail if the MediaState container does not contain a valid simple playlist.
@@ -5970,21 +6081,13 @@ export function dmPlaylistAddMediaState(index: number, container: DmMediaStateCo
  *   or a BsAssetItem (for media file, html site or data feed content.) If a BsAssetItem is given,
  *   the asset will be added to the AssetMap (and/or HtmlSite/DataFeed list) if necessary, and a ContentItem
  *   of the correct type will be generated for the MediaState with the correct referencing information
- * @param [name=fileName or 'StateX'] {string | null} - desired mediaState name.
- *   Default: media fileName if contentItem has a media file, "State" + a numeric index otherwise
- * @param [contentData=default values] {DmContentItemData} - contains values for one or more contentItem
- *   properties. This can be used to set ancillary contentItem properties when the 'content' param
- *   is an assetItem.
- * @param [transitionType=NoEffect] {TransitionType} - type of Transition into new state from previous state.
- * @param [eventType] {EventType} - type of event that triggers the transition.
- *   Default: MediaEnd for video/audio, Timer for images
- * @param [eventData] {object} - data for event. For timer events, this be be a DmTimer object
+ * @param [options] {DmPlaylistAddMediaStateOptions} - add media state options
  * @returns {BsDmThunkAction} When dispatched, the thunk function will return a PlaylistAddMediaStateAction object.
  *   If the thunk function succeeds, the action properties returned will be the ones used, including substitutions
  *   made for optional input.
  *   If the function fails, a BsDmError is thrown.
  */
-export function dmPlaylistAppendMediaState(container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification, name?: string | null, contentData?: Partial<DmContentItemData>, transitionType?: TransitionType, eventType?: EventType, eventData?: any): BsDmThunkAction<PlaylistAddMediaStateParams>;
+export function dmPlaylistAppendMediaState(container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification, options?: DmPlaylistAddMediaStateOptions): BsDmThunkAction<PlaylistAddMediaStateParams>;
 export interface PlaylistAddMediaStateRangeParams {
     index: number;
     container: DmMediaStateContainer;
@@ -6006,22 +6109,13 @@ export type PlaylistAddMediaStateRangeAction = BsDmAction<PlaylistAddMediaStateR
  *   or a BsAssetItem (for media file, html site or data feed content.) If a BsAssetItem is given,
  *   the asset will be added to the AssetMap (and/or HtmlSite/DataFeed list) if necessary, and a ContentItem
  *   of the correct type will be generated for the MediaState with the correct referencing information
- * @param [name=fileName or 'StateX'] {Array<string | null> | null} - array of desired mediaState name corresponding
- *   to order of contentItem array. Pass null in any position  to indicate the default name should be
- *   used for the corresponding content item.
- *   Default: for any names that are missing, the filename is used if contentItem has a media file,
- *   "State" + a numeric index otherwise
- * @param [contentData=default values] {Array<DmContentItemData[] | null>} - an array of objects, each of which
- *   contains values for one or more contentItem properties associated with the corresponding content
- *   object on the 'content' array parameter. This can be used to set ancillary contentItem properties
- *   when a 'content' param is an assetItem. If default values are desired for one or more of the
- *   content items, set the corresponding member in this array to null.
+ * @param [options] {DmPlaylistAddMediaStateOptions} - add media state options
  * @returns {BsDmThunkAction} When dispatched, the thunk function will return a PlaylistAddMediaStateRangeAction object.
  *   If the thunk function succeeds, the action properties returned will be the ones used, including substitutions
  *   made for optional input.
  *   If the function fails, a BsDmError is thrown.
  */
-export function dmPlaylistAddMediaStateRange(index: number, container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification[], name?: Array<string | null> | null, contentData?: Array<Partial<DmContentItemData> | null>): BsDmThunkAction<PlaylistAddMediaStateRangeParams>;
+export function dmPlaylistAddMediaStateRange(index: number, container: DmMediaStateContainer, content: DmMediaStateContentItemSpecification[], options?: Array<DmPlaylistAddMediaStateOptions | null>): BsDmThunkAction<PlaylistAddMediaStateRangeParams>;
 /**
  * Update a mediaState with new parameters for a mediaStates in a playlist.
  * A BsDmError will be thrown if the contentItem is not valid for the zone,
@@ -6229,6 +6323,17 @@ export type ChangeZoneToInteractiveAction = BsDmAction<ChangeZoneToInteractivePa
  * @returns {BsDmThunkAction<ChangeZoneToInteractiveParams>}
  */
 export function dmChangeNonInteractiveZoneToInteractive(zoneId: BsDmId): BsDmThunkAction<ChangeZoneToInteractiveParams>;
+export interface ConvertMediaStatesToMediaListParams {
+    mediaListId: BsDmId;
+}
+export type ConvertMediaStatesToMediaListAction = BsDmAction<ConvertMediaStatesToMediaListParams>;
+/**
+ * For an interactive presentation, converts MediaStates to a MediaList
+ *
+ * @param mediaStateIds {BsDmId[]}
+ * @returns {BsDmThunkAction<ConvertMediaStatesToMediaListParams>}
+ */
+export function dmConvertMediaStatesToMediaList(mediaStateIds: BsDmId[]): BsDmThunkAction<ConvertMediaStatesToMediaListParams>;
 
 /** @module Actions:Thumbnail */
 export type ThumbnailParam = DmThumbnail | null;
@@ -7026,6 +7131,7 @@ export function dmGetPlayFileDefaultMediaAssetItem(state: DmState, props: DmIdPa
  * @returns {BsDmId | null}
  */
 export function dmGetMediaSequenceItemIdByIndex(state: DmState, props: DmIdAndIndexParam): BsDmId | null;
+export function dmCanConvertMediaStateListToMediaList(state: DmState, props: DmIdListParam): boolean;
 
 /** @module Selectors:MediaState */
 /**
@@ -7078,6 +7184,15 @@ export interface DmMediaListMediaStateComponents {
 export interface DmPlayFileMediaStateComponents {
     defaultMediaAssetItem: BsAssetItem | null;
     sourceDataFeed: DmDataFeedEntityGroup | null;
+}
+/**
+ * @interface DmLocalPlaylistMediaStateComponents - contains components for use in construction of
+ *  MediaState objects with ContentItemType.LocalPlaylist.
+ * @property defaultDynamicPlaylistDataFeed {DmDataFeedEntityGroup | null} - object containing the
+ *  DmDataFeed, DmDataFeedSource, and BsAssetItem associated with the default dynamic playlist data feed source
+ */
+export interface DmLocalPlaylistMediaStateComponents {
+    defaultDynamicPlaylistDataFeed: DmDataFeedEntityGroup | null;
 }
 /**
  * Return DmcMediaState object for a given MediaState ID
@@ -7308,6 +7423,14 @@ export function dmGetMediaListGlobalEventIds(state: DmState, props: DmIdParam): 
  */
 export function dmGetPlayFileItemById(state: DmState, props: DmIdParam): DmcPlayFileItem | null;
 /**
+ * Return DmcLocalPlaylistItem for the mediaState that represents the LocalPlaylistItem corresponding to the given ID.
+ *  Returns null if the ID does not correspond to a LocalPlaylist item.
+ * @param {DmState} state
+ * @param {DmIdParam} props - ID of mediaState that represents the LocalPlaylistItem
+ * @returns {DmcLocalPlaylistItem | null}
+ */
+export function dmGetLocalPlaylistItemById(state: DmState, props: DmIdParam): DmcLocalPlaylistItem | null;
+/**
  * Return DmcPlayFileItem for the mediaState that represents the PlayFile item corresponding to the given
  *  indexed position in the MediaSequence. Returns null if the index value is out of range.
  * @param {DmState} state
@@ -7317,7 +7440,7 @@ export function dmGetPlayFileItemById(state: DmState, props: DmIdParam): DmcPlay
  */
 export function dmGetPlayFileItemByIndex(state: DmState, props: DmIdAndIndexParam): DmcPlayFileItem | null;
 /**
- * Return DmBpEventAvailability denoting the unused BP buttons (inputs) in all events in the given mediaState.
+ * Return DmBpEventAvailability d3enoting the unused BP buttons (inputs) in all events in the given mediaState.
  * @param {DmState} state
  * @param {DmIdParam} props - ID of mediaState for which to check the event list.
  */
@@ -7693,6 +7816,13 @@ export function dmGetSignPlayerModel(state: DmState): PlayerModel;
  */
 export function dmGetSignMonitorOrientation(state: DmState): MonitorOrientationType;
 /**
+ * Return sign fullResGraphicsEnabled
+ *
+ * @param state {DmState} - bsDataModel state
+ * @returns {boolean} sign fullResGraphicsEnabled value
+ */
+export function dmIsFullResGraphicsEnabled(state: DmState): boolean;
+/**
  * Return true if the sign dolbyVisionEnabled property is true, AND the PlayerModel is one that
  *  supports DolbyVision.
  * @param state {DmState} - bsDataModel state
@@ -7783,6 +7913,15 @@ export function dmGetSignLastModifiedTime(state: DmState): Date;
  * @returns {BsDmEntityValidationResult}
  */
 export function dmValidateSign(state: DmState): BsDmEntityValidationResult;
+export interface DmVideoModeParams {
+    videoMode: VideoMode;
+}
+/**
+ * Return true if videoMode can be changed
+ * @param state {DmState}
+ * @param targetVideoMode {VideoMode}
+ */
+export function dmCanChangeVideoMode(state: DmState, props: DmVideoModeParams): boolean;
 
 /** @module Selectors:SignTree */
 export function dmIsEntityContainerType(type: DmEntityTreeNodeType): type is DmEntityContainerType;
@@ -7906,6 +8045,21 @@ export function dmGetUserVariableByName(state: DmState, props: DmNameParam): Dmc
  * @return {string} - a standard string for displaying the parameterized string, with delimited user variable names
  */
 export function dmGetDisplayStringFromParameterizedString(state: DmState, props: DmParameterizedStringParam): string;
+/**
+ * Return number from a ParameterizedNumber by resolving the user variable default.
+ * Return -1 if user variable default is not a number or is not specified.
+ * @param {DmState} state - bsDataModel state
+ * @param {DmParameterizedNumber} props
+ * @return {number}
+ */
+export function dmGetParameterizedNumberWithDefaultUserVariables(state: DmState, props: DmParameterizedNumber): number;
+/**
+ * Return a string from a ParameterizedString by resolving the user variable default.
+ * Return blank string if user variable default is not specified.
+ * @param {DmState} state - bsDataModel state
+ * @param {DmParameterizedNumber} props
+ * @return {string}
+ */
 export function dmGetParameterizedStringWithDefaultUserVariables(state: DmState, props: DmParameterizedStringParam): string;
 /**
  * Return a DmParameterizedString object for a given parameterized string display string. The display string may

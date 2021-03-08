@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("./bscore"), require("fs-extra"), require("path"), require("lodash"), require("crypto"), require("isomorphic-path"), require("junk"), require("fs"), require("archiver"), require("dexie"), require("image-size"), require("os"), require("unzip-stream"), require("workerpool"));
+		module.exports = factory(require("./bscore"), require("fs-extra"), require("path"), require("lodash"), require("fs"), require("crypto"), require("isomorphic-path"), require("junk"), require("archiver"), require("dexie"), require("events"), require("os"), require("unzip-stream"), (function webpackLoadOptionalExternalModule() { try { return require("util"); } catch(e) {} }()), require("workerpool"));
 	else if(typeof define === 'function' && define.amd)
-		define(["./bscore", "fs-extra", "path", "lodash", "crypto", "isomorphic-path", "junk", "fs", "archiver", "dexie", "image-size", "os", "unzip-stream", "workerpool"], factory);
+		define(["./bscore", "fs-extra", "path", "lodash", "fs", "crypto", "isomorphic-path", "junk", "archiver", "dexie", "events", "os", "unzip-stream", "util", "workerpool"], factory);
 	else if(typeof exports === 'object')
-		exports["fsConnector"] = factory(require("./bscore"), require("fs-extra"), require("path"), require("lodash"), require("crypto"), require("isomorphic-path"), require("junk"), require("fs"), require("archiver"), require("dexie"), require("image-size"), require("os"), require("unzip-stream"), require("workerpool"));
+		exports["fsConnector"] = factory(require("./bscore"), require("fs-extra"), require("path"), require("lodash"), require("fs"), require("crypto"), require("isomorphic-path"), require("junk"), require("archiver"), require("dexie"), require("events"), require("os"), require("unzip-stream"), (function webpackLoadOptionalExternalModule() { try { return require("util"); } catch(e) {} }()), require("workerpool"));
 	else
-		root["fsConnector"] = factory(root["./bscore"], root["fs-extra"], root["path"], root["lodash"], root["crypto"], root["isomorphic-path"], root["junk"], root["fs"], root["archiver"], root["dexie"], root["image-size"], root["os"], root["unzip-stream"], root["workerpool"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_13__, __WEBPACK_EXTERNAL_MODULE_20__, __WEBPACK_EXTERNAL_MODULE_28__, __WEBPACK_EXTERNAL_MODULE_29__, __WEBPACK_EXTERNAL_MODULE_48__, __WEBPACK_EXTERNAL_MODULE_68__, __WEBPACK_EXTERNAL_MODULE_69__, __WEBPACK_EXTERNAL_MODULE_70__, __WEBPACK_EXTERNAL_MODULE_71__, __WEBPACK_EXTERNAL_MODULE_72__, __WEBPACK_EXTERNAL_MODULE_73__) {
+		root["fsConnector"] = factory(root["./bscore"], root["fs-extra"], root["path"], root["lodash"], root["fs"], root["crypto"], root["isomorphic-path"], root["junk"], root["archiver"], root["dexie"], root["events"], root["os"], root["unzip-stream"], root["util"], root["workerpool"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_7__, __WEBPACK_EXTERNAL_MODULE_8__, __WEBPACK_EXTERNAL_MODULE_11__, __WEBPACK_EXTERNAL_MODULE_16__, __WEBPACK_EXTERNAL_MODULE_21__, __WEBPACK_EXTERNAL_MODULE_29__, __WEBPACK_EXTERNAL_MODULE_30__, __WEBPACK_EXTERNAL_MODULE_92__, __WEBPACK_EXTERNAL_MODULE_93__, __WEBPACK_EXTERNAL_MODULE_94__, __WEBPACK_EXTERNAL_MODULE_95__, __WEBPACK_EXTERNAL_MODULE_96__, __WEBPACK_EXTERNAL_MODULE_97__, __WEBPACK_EXTERNAL_MODULE_98__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 57);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -107,7 +107,7 @@ module.exports = {
  * Copyright (c) 2010-2018 Digital Bazaar, Inc.
  */
 var forge = __webpack_require__(0);
-var baseN = __webpack_require__(59);
+var baseN = __webpack_require__(82);
 
 /* Utilities API */
 var util = module.exports = forge.util = forge.util || {};
@@ -3104,7 +3104,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -3180,8 +3180,8 @@ exports.FsError = FsError;
  */
 var forge = __webpack_require__(0);
 __webpack_require__(9);
-__webpack_require__(45);
-__webpack_require__(43);
+__webpack_require__(49);
+__webpack_require__(47);
 __webpack_require__(1);
 
 (function() {
@@ -4827,8 +4827,8 @@ module.exports = require("path");
  * Copyright (c) 2010-2014 Digital Bazaar, Inc.
  */
 var forge = __webpack_require__(0);
-__webpack_require__(23);
-__webpack_require__(33);
+__webpack_require__(24);
+__webpack_require__(37);
 __webpack_require__(1);
 
 /* AES API */
@@ -6073,13 +6073,19 @@ _IN('1.3.6.1.5.5.7.3.8', 'timeStamping');
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsCloseConnectorPool = exports.getConnectorPool = exports.getFsMetadataPath = void 0;
-var workerPool = __webpack_require__(73);
+var workerPool = __webpack_require__(98);
 var fse = __webpack_require__(7);
 var error_1 = __webpack_require__(2);
 var DEFAULT_FS_METADATA_PATH = './fsmetadata.js';
@@ -6120,12 +6126,13 @@ function fsCloseConnectorPool() {
             connectorPool = null;
         });
     }
+    return Promise.resolve();
 }
 exports.fsCloseConnectorPool = fsCloseConnectorPool;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6359,12 +6366,6 @@ function ltrim(str) {
   return str.replace(/^\s+/, '');
 }
 
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash");
 
 /***/ }),
 /* 14 */
@@ -6845,20 +6846,26 @@ function _update(s, w, bytes) {
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fsDecryptRsa = exports.fsEncryptRsa = exports.fsGetDataSha1 = exports.fsGetObjectFileSha1 = exports.fsGetLocalFileSha1 = exports.fsGetFileSha1 = void 0;
+exports.fsDecryptRsa = exports.fsEncryptRsa = exports.fsGetDataSha1AsBuffer = exports.fsGetDataSha1 = exports.fsGetObjectFileSha1 = exports.fsGetLocalFileSha1 = exports.fsGetDataSha1AsArray = exports.fsGetFileSha1 = void 0;
 var bscore_1 = __webpack_require__(4);
-var crypto = __webpack_require__(20);
-var forge = __webpack_require__(61);
-var lodash_1 = __webpack_require__(13);
+var crypto = __webpack_require__(21);
+var forge = __webpack_require__(84);
+var lodash_1 = __webpack_require__(11);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
 var error_1 = __webpack_require__(2);
-var worker_1 = __webpack_require__(11);
+var worker_1 = __webpack_require__(12);
 function fsGetFileSha1(file) {
     if (typeof window !== 'undefined' && 'File' in window && file instanceof File) {
         throw new error_1.FsError(error_1.FsErrorType.fsNotAvailableError);
@@ -6870,6 +6877,12 @@ function fsGetFileSha1(file) {
     return fsGetLocalFileSha1(file);
 }
 exports.fsGetFileSha1 = fsGetFileSha1;
+function fsGetDataSha1AsArray(data) {
+    var buf = lodash_1.isString(data) ? Buffer.from(data) : data;
+    var hash = fsGetDataSha1AsBuffer(buf);
+    return new Uint8Array(hash);
+}
+exports.fsGetDataSha1AsArray = fsGetDataSha1AsArray;
 function fsGetLocalFileSha1(file) {
     var filePath;
     if (typeof (file) === 'string') {
@@ -6898,6 +6911,12 @@ function fsGetDataSha1(data) {
     return hash.digest('hex');
 }
 exports.fsGetDataSha1 = fsGetDataSha1;
+function fsGetDataSha1AsBuffer(data) {
+    var hash = crypto.createHash('sha1');
+    hash.update(data);
+    return hash.digest();
+}
+exports.fsGetDataSha1AsBuffer = fsGetDataSha1AsBuffer;
 function fsEncryptRsa(text, publicKey) {
     if (!lodash_1.isString(text) || text.length < 1) {
         throw new error_1.FsError(error_1.FsErrorType.invalidParameters, 'text must be a non-empty string');
@@ -6927,7 +6946,7 @@ exports.fsDecryptRsa = fsDecryptRsa;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6962,8 +6981,8 @@ exports.fsDecryptRsa = fsDecryptRsa;
  * Copyright (c) 2012-2014 Digital Bazaar, Inc.
  */
 var forge = __webpack_require__(0);
-__webpack_require__(23);
-__webpack_require__(33);
+__webpack_require__(24);
+__webpack_require__(37);
 __webpack_require__(1);
 
 /* DES API */
@@ -7429,7 +7448,7 @@ function _createCipher(options) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Copyright (c) 2005  Tom Wu
@@ -8699,7 +8718,7 @@ BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -8767,10 +8786,10 @@ BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
  */
 var forge = __webpack_require__(0);
 __webpack_require__(5);
-__webpack_require__(18);
+__webpack_require__(19);
 __webpack_require__(10);
-__webpack_require__(38);
 __webpack_require__(42);
+__webpack_require__(46);
 __webpack_require__(3);
 __webpack_require__(1);
 
@@ -8778,7 +8797,7 @@ if(typeof BigInteger === 'undefined') {
   var BigInteger = forge.jsbn.BigInteger;
 }
 
-var _crypto = forge.util.isNodejs ? __webpack_require__(20) : null;
+var _crypto = forge.util.isNodejs ? __webpack_require__(21) : null;
 
 // shortcut for asn.1 API
 var asn1 = forge.asn1;
@@ -10563,13 +10582,13 @@ function _base64ToBigInt(b64) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = require("crypto");
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10580,7 +10599,7 @@ var bscore_1 = __webpack_require__(4);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
 var error_1 = __webpack_require__(2);
-var worker_1 = __webpack_require__(11);
+var worker_1 = __webpack_require__(12);
 function fsGetExifData(assetItem) {
     if (assetItem.location !== bscore_1.AssetLocation.Local) {
         return Promise.reject(new error_1.FsError(error_1.FsErrorType.invalidParameters, 'fsGetExifData: assetItem must specify a local file'));
@@ -10607,22 +10626,30 @@ exports.fsGetExifDataForPath = fsGetExifDataForPath;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fsGetAssetItemFromFileStats = exports.fsGetBscFileTypeInfo = exports.fsGetLocalAssetThumbnailFromFile = exports.fsCheckFolderForFiles = exports.fsCheckFolderForSubFolders = exports.fsGetAssetItemFromFileWithSubFolderCheck = exports.fsGetAssetItemForFileBlob = exports.fsGetAssetItemFromFile = exports.fsDeleteDirectory = exports.fsRemoveDirectory = exports.fsCreateNestedDirectory = exports.fsCreateDirectory = exports.fsJoinPath = exports.fsDeleteFile = exports.fsFilesMatch = exports.fsGetFileSpecSize = exports.fsLocalFolderExists = exports.fsLocalFileExists = exports.fsSaveStreamAsLocalFile = exports.fsSaveBufferAsLocalFile = exports.fsSaveStringAsLocalFile = exports.fsSaveObjectAsLocalJsonFile = exports.fsCopyLocalFile = exports.fsMoveLocalFile = exports.fsLocalFileIsDirectory = exports.fsGetLocalFileSize = exports.fsGetLocalFileAsArrayBuffer = exports.fsGetLocalJsonFileAsObject = void 0;
+exports.fsGetAssetItemFromFileStats = exports.fsGetBscFileTypeInfo = exports.fsGetLocalAssetThumbnailFromFile = exports.fsCheckFolderForFiles = exports.fsCheckFolderForSubFolders = exports.fsGetAssetItemFromFileWithSubFolderCheck = exports.fsGetAssetItemFromFileWithFileAndFolderCheck = exports.fsGetAssetItemForFileBlob = exports.fsGetAssetItemFromFile = exports.fsDeleteDirectory = exports.fsRemoveDirectory = exports.fsCreateNestedDirectory = exports.fsCreateDirectory = exports.fsJoinPath = exports.fsDeleteFile = exports.fsFilesMatch = exports.fsGetFileSpecSize = exports.fsLocalFolderExists = exports.fsLocalFileExists = exports.fsSaveStreamAsLocalFile = exports.fsSaveBufferAsLocalFile = exports.fsSaveStringAsLocalFile = exports.fsSaveObjectAsLocalJsonFile = exports.fsCopyLocalFile = exports.fsMoveLocalFile = exports.fsLocalFileIsDirectory = exports.fsGetLocalFileSize = exports.fsGetLocalFileAsArrayBuffer = exports.fsGetLocalJsonFileAsObject = exports.fsGetLocalFileAsString = void 0;
 var fse = __webpack_require__(7);
-var path = __webpack_require__(28);
-var junk = __webpack_require__(29);
-var lodash_1 = __webpack_require__(13);
+var path = __webpack_require__(29);
+var junk = __webpack_require__(30);
+var lodash_1 = __webpack_require__(11);
 var bscore_1 = __webpack_require__(4);
 var error_1 = __webpack_require__(2);
-var systemOperations_1 = __webpack_require__(31);
-var cryptoOperations_1 = __webpack_require__(16);
-var image_size_1 = __webpack_require__(70);
+var systemOperations_1 = __webpack_require__(32);
+var cryptoOperations_1 = __webpack_require__(17);
+var image_size_1 = __webpack_require__(63);
+function fsGetLocalFileAsString(fullPath) {
+    if (!fse.existsSync(fullPath)) {
+        return Promise.reject(new error_1.FsError(error_1.FsErrorType.fileNotFoundError, fullPath));
+    }
+    return fse.readFile(fullPath, 'utf8')
+        .then(function (str) { return (str); });
+}
+exports.fsGetLocalFileAsString = fsGetLocalFileAsString;
 function fsGetLocalJsonFileAsObject(fullPath) {
     if (!fse.existsSync(fullPath)) {
         return Promise.reject(new error_1.FsError(error_1.FsErrorType.fileNotFoundError, fullPath));
@@ -10799,7 +10826,7 @@ function fsGetAssetItemForFileBlob(file, scope, origin) {
     return null;
 }
 exports.fsGetAssetItemForFileBlob = fsGetAssetItemForFileBlob;
-function fsGetAssetItemFromFileWithSubFolderCheck(fullPath) {
+function fsGetAssetItemFromFileWithFileAndFolderCheck(fullPath) {
     return fse.stat(fullPath)
         .then(function (stats) { return fsGetAssetItemFromFileStats(path.basename(fullPath), path.dirname(fullPath), stats); })
         .then(function (assetItem) {
@@ -10807,6 +10834,10 @@ function fsGetAssetItemFromFileWithSubFolderCheck(fullPath) {
             return fsCheckFolderForSubFolders(bscore_1.bscGetAssetFullPath(assetItem))
                 .then(function (hasSubFolders) {
                 assetItem.hasSubFolders = hasSubFolders;
+                return fsCheckFolderForFiles(path.join(fullPath));
+            })
+                .then(function (hasFiles) {
+                assetItem.hasFiles = hasFiles;
                 return assetItem;
             });
         }
@@ -10815,7 +10846,8 @@ function fsGetAssetItemFromFileWithSubFolderCheck(fullPath) {
         }
     });
 }
-exports.fsGetAssetItemFromFileWithSubFolderCheck = fsGetAssetItemFromFileWithSubFolderCheck;
+exports.fsGetAssetItemFromFileWithFileAndFolderCheck = fsGetAssetItemFromFileWithFileAndFolderCheck;
+exports.fsGetAssetItemFromFileWithSubFolderCheck = fsGetAssetItemFromFileWithFileAndFolderCheck;
 function fsCheckFolderForSubFolders(dirPath) {
     var checkSubFolders = function (fileNames) {
         return new Promise(function (resolve, reject) {
@@ -10932,7 +10964,7 @@ exports.fsGetAssetItemFromFileStats = fsGetAssetItemFromFileStats;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11168,7 +11200,7 @@ BlockCipher.prototype.finish = function(pad) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11463,7 +11495,7 @@ function _update(s, w, bytes) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11484,7 +11516,7 @@ var pkcs5 = forge.pkcs5 = forge.pkcs5 || {};
 
 var crypto;
 if(forge.util.isNodejs && !forge.options.usePureJavaScript) {
-  crypto = __webpack_require__(20);
+  crypto = __webpack_require__(21);
 }
 
 /**
@@ -11680,7 +11712,7 @@ module.exports = forge.pbkdf2 = pkcs5.pbkdf2 = function(
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -11927,7 +11959,7 @@ pss.create = function(options) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -12042,13 +12074,13 @@ pss.create = function(options) {
 var forge = __webpack_require__(0);
 __webpack_require__(9);
 __webpack_require__(5);
-__webpack_require__(17);
+__webpack_require__(18);
 __webpack_require__(6);
-__webpack_require__(64);
+__webpack_require__(87);
 __webpack_require__(10);
-__webpack_require__(12);
-__webpack_require__(26);
-__webpack_require__(19);
+__webpack_require__(13);
+__webpack_require__(27);
+__webpack_require__(20);
 __webpack_require__(1);
 
 // shortcut for asn.1 API
@@ -15266,19 +15298,19 @@ pki.verifyCertificateChain = function(caStore, chain, options) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = require("isomorphic-path");
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = require("junk");
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15288,16 +15320,16 @@ exports.fsGetDecoderTimeSliceMaxCount = exports.fsGetDecoderName = exports.fsCan
 var bscore_1 = __webpack_require__(4);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
-var lodash_1 = __webpack_require__(13);
-var exif_1 = __webpack_require__(21);
+var lodash_1 = __webpack_require__(11);
+var exif_1 = __webpack_require__(22);
 var error_1 = __webpack_require__(2);
-var worker_1 = __webpack_require__(11);
+var worker_1 = __webpack_require__(12);
 function fsParseProbeData(probData) {
     return worker_1.getConnectorPool().exec('parseProbeString', [probData]);
 }
 exports.fsParseProbeData = fsParseProbeData;
 function fsGetFileProbeData(file) {
-    var filePath;
+    var filePath = '';
     if (typeof (file) === 'string') {
         filePath = file;
     }
@@ -15325,15 +15357,15 @@ function fsGetFileProbeData(file) {
 }
 exports.fsGetFileProbeData = fsGetFileProbeData;
 function fsGetMediaFileMetadata(file) {
-    var mediaType;
-    var filePath;
+    var mediaType = bscore_1.MediaType.Other;
+    var filePath = '';
     if (typeof (file) === 'string') {
         mediaType = bscore_1.bscGetFileMediaType(file);
         filePath = file;
     }
     else if (bscore_1.bscIsAssetItem(file)) {
         mediaType = file.location === bscore_1.AssetLocation.Local && file.assetType === bscore_1.AssetType.Content ?
-            file.mediaType : bscore_1.AssetType.Other;
+            file.mediaType : bscore_1.MediaType.Other;
         filePath = path.join(file.path, file.name);
     }
     if (mediaType === bscore_1.MediaType.Image) {
@@ -15377,15 +15409,15 @@ exports.fsGetDecoderTimeSliceMaxCount = fsGetDecoderTimeSliceMaxCount;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsGetLocalSystemScopeId = void 0;
-var os = __webpack_require__(71);
-var cryptoOperations_1 = __webpack_require__(16);
+var os = __webpack_require__(95);
+var cryptoOperations_1 = __webpack_require__(17);
 var localScopeId = cryptoOperations_1.fsGetDataSha1(Buffer.from(os.hostname())).slice(0, 16);
 function fsGetLocalSystemScopeId() {
     return localScopeId;
@@ -15394,7 +15426,7 @@ exports.fsGetLocalSystemScopeId = fsGetLocalSystemScopeId;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15402,11 +15434,11 @@ exports.fsGetLocalSystemScopeId = fsGetLocalSystemScopeId;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsGetFileSpecBaseName = exports.fsGetUploadObjectFileSource = exports.fsGetUploadBufferFileSource = exports.fsGetUploadLocalFileSource = exports.fsGetUploadFileSource = void 0;
 var bscore_1 = __webpack_require__(4);
-var fs = __webpack_require__(48);
-var isomorphicPath = __webpack_require__(28);
-var cryptoOperations_1 = __webpack_require__(16);
+var fs = __webpack_require__(16);
+var isomorphicPath = __webpack_require__(29);
+var cryptoOperations_1 = __webpack_require__(17);
 var error_1 = __webpack_require__(2);
-var lodash_1 = __webpack_require__(13);
+var lodash_1 = __webpack_require__(11);
 function fsGetUploadFileSource(file) {
     if (bscore_1.bscIsLocalFileBuffer(file)) {
         return fsGetUploadBufferFileSource(file);
@@ -15628,7 +15660,141 @@ var UploadBufferFileSource = (function () {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// Abstract reading multi-byte unsigned integers
+function readUInt(buffer, bits, offset, isBigEndian) {
+    offset = offset || 0;
+    const endian = isBigEndian ? 'BE' : 'LE';
+    const methodName = ('readUInt' + bits + endian);
+    const method = buffer[methodName];
+    return method.call(buffer, offset);
+}
+exports.readUInt = readUInt;
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const bmp_1 = __webpack_require__(64);
+const cur_1 = __webpack_require__(65);
+const dds_1 = __webpack_require__(66);
+const gif_1 = __webpack_require__(67);
+const icns_1 = __webpack_require__(68);
+const ico_1 = __webpack_require__(36);
+const j2c_1 = __webpack_require__(69);
+const jp2_1 = __webpack_require__(70);
+const jpg_1 = __webpack_require__(71);
+const ktx_1 = __webpack_require__(72);
+const png_1 = __webpack_require__(73);
+const pnm_1 = __webpack_require__(74);
+const psd_1 = __webpack_require__(75);
+const svg_1 = __webpack_require__(76);
+const tiff_1 = __webpack_require__(77);
+const webp_1 = __webpack_require__(78);
+exports.typeHandlers = {
+    bmp: bmp_1.BMP,
+    cur: cur_1.CUR,
+    dds: dds_1.DDS,
+    gif: gif_1.GIF,
+    icns: icns_1.ICNS,
+    ico: ico_1.ICO,
+    j2c: j2c_1.J2C,
+    jp2: jp2_1.JP2,
+    jpg: jpg_1.JPG,
+    ktx: ktx_1.KTX,
+    png: png_1.PNG,
+    pnm: pnm_1.PNM,
+    psd: psd_1.PSD,
+    svg: svg_1.SVG,
+    tiff: tiff_1.TIFF,
+    webp: webp_1.WEBP,
+};
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const TYPE_ICON = 1;
+/**
+ * ICON Header
+ *
+ * | Offset | Size | Purpose |
+ * | 0	    | 2    | Reserved. Must always be 0.  |
+ * | 2      | 2    | Image type: 1 for icon (.ICO) image, 2 for cursor (.CUR) image. Other values are invalid. |
+ * | 4      | 2    | Number of images in the file. |
+ *
+ */
+const SIZE_HEADER = 2 + 2 + 2; // 6
+/**
+ * Image Entry
+ *
+ * | Offset | Size | Purpose |
+ * | 0	    | 1    | Image width in pixels. Can be any number between 0 and 255. Value 0 means width is 256 pixels. |
+ * | 1      | 1    | Image height in pixels. Can be any number between 0 and 255. Value 0 means height is 256 pixels. |
+ * | 2      | 1    | Number of colors in the color palette. Should be 0 if the image does not use a color palette. |
+ * | 3      | 1    | Reserved. Should be 0. |
+ * | 4      | 2    | ICO format: Color planes. Should be 0 or 1. |
+ * |        |      | CUR format: The horizontal coordinates of the hotspot in number of pixels from the left. |
+ * | 6      | 2    | ICO format: Bits per pixel. |
+ * |        |      | CUR format: The vertical coordinates of the hotspot in number of pixels from the top. |
+ * | 8      | 4    | The size of the image's data in bytes |
+ * | 12     | 4    | The offset of BMP or PNG data from the beginning of the ICO/CUR file |
+ *
+ */
+const SIZE_IMAGE_ENTRY = 1 + 1 + 1 + 1 + 2 + 2 + 4 + 4; // 16
+function getSizeFromOffset(buffer, offset) {
+    const value = buffer.readUInt8(offset);
+    return value === 0 ? 256 : value;
+}
+function getImageSize(buffer, imageIndex) {
+    const offset = SIZE_HEADER + (imageIndex * SIZE_IMAGE_ENTRY);
+    return {
+        height: getSizeFromOffset(buffer, offset + 1),
+        width: getSizeFromOffset(buffer, offset)
+    };
+}
+exports.ICO = {
+    validate(buffer) {
+        if (buffer.readUInt16LE(0) !== 0) {
+            return false;
+        }
+        return buffer.readUInt16LE(2) === TYPE_ICON;
+    },
+    calculate(buffer) {
+        const nbImages = buffer.readUInt16LE(4);
+        const imageSize = getImageSize(buffer, 0);
+        if (nbImages === 1) {
+            return imageSize;
+        }
+        const imgs = [imageSize];
+        for (let imageIndex = 1; imageIndex < nbImages; imageIndex += 1) {
+            imgs.push(getImageSize(buffer, imageIndex));
+        }
+        const result = {
+            height: imageSize.height,
+            images: imgs,
+            width: imageSize.width
+        };
+        return result;
+    }
+};
+
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -16621,7 +16787,7 @@ function from64To32(num) {
 
 
 /***/ }),
-/* 34 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -16705,7 +16871,7 @@ forge.debug.clear = function(cat, name) {
 
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17028,7 +17194,7 @@ forge.log.consoleLogger = sConsoleLogger;
 
 
 /***/ }),
-/* 36 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17091,7 +17257,7 @@ mgf1.create = function(md) {
 
 
 /***/ }),
-/* 37 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17116,14 +17282,14 @@ mgf1.create = function(md) {
 var forge = __webpack_require__(0);
 __webpack_require__(9);
 __webpack_require__(5);
-__webpack_require__(17);
+__webpack_require__(18);
 __webpack_require__(6);
 __webpack_require__(10);
-__webpack_require__(25);
-__webpack_require__(12);
+__webpack_require__(26);
+__webpack_require__(13);
 __webpack_require__(3);
-__webpack_require__(44);
-__webpack_require__(19);
+__webpack_require__(48);
+__webpack_require__(20);
 __webpack_require__(1);
 
 if(typeof BigInteger === 'undefined') {
@@ -18120,7 +18286,7 @@ function createPbkdf2Params(salt, countBytes, dkLen, prfAlgorithm) {
 
 
 /***/ }),
-/* 38 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -18402,7 +18568,7 @@ function rsa_mgf1(seed, maskLength, hash) {
 
 
 /***/ }),
-/* 39 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -18504,13 +18670,13 @@ var forge = __webpack_require__(0);
 __webpack_require__(5);
 __webpack_require__(14);
 __webpack_require__(10);
-__webpack_require__(40);
-__webpack_require__(37);
+__webpack_require__(44);
+__webpack_require__(41);
 __webpack_require__(3);
-__webpack_require__(19);
+__webpack_require__(20);
 __webpack_require__(15);
 __webpack_require__(1);
-__webpack_require__(27);
+__webpack_require__(28);
 
 // shortcut for asn.1 & PKI API
 var asn1 = forge.asn1;
@@ -19482,7 +19648,7 @@ p12.generateKey = forge.pbe.generatePkcs12Key;
 
 
 /***/ }),
-/* 40 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -19897,7 +20063,7 @@ p7v.recipientInfoValidator = {
 
 
 /***/ }),
-/* 41 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -19911,14 +20077,14 @@ p7v.recipientInfoValidator = {
 var forge = __webpack_require__(0);
 __webpack_require__(5);
 __webpack_require__(10);
-__webpack_require__(37);
-__webpack_require__(12);
-__webpack_require__(25);
-__webpack_require__(39);
+__webpack_require__(41);
+__webpack_require__(13);
 __webpack_require__(26);
-__webpack_require__(19);
-__webpack_require__(1);
+__webpack_require__(43);
 __webpack_require__(27);
+__webpack_require__(20);
+__webpack_require__(1);
+__webpack_require__(28);
 
 // shortcut for asn.1 API
 var asn1 = forge.asn1;
@@ -20005,7 +20171,7 @@ pki.privateKeyInfoToPem = function(pki, maxline) {
 
 
 /***/ }),
-/* 42 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -20017,7 +20183,7 @@ pki.privateKeyInfoToPem = function(pki, maxline) {
  */
 var forge = __webpack_require__(0);
 __webpack_require__(1);
-__webpack_require__(18);
+__webpack_require__(19);
 __webpack_require__(3);
 
 (function() {
@@ -20308,7 +20474,7 @@ function getMillerRabinTests(bits) {
 
 
 /***/ }),
-/* 43 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -20328,7 +20494,7 @@ __webpack_require__(1);
 var _crypto = null;
 if(forge.util.isNodejs && !forge.options.usePureJavaScript &&
   !process.versions['node-webkit']) {
-  _crypto = __webpack_require__(20);
+  _crypto = __webpack_require__(21);
 }
 
 /* PRNG API */
@@ -20733,7 +20899,7 @@ prng.create = function(plugin) {
 
 
 /***/ }),
-/* 44 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21149,7 +21315,7 @@ forge.rc2.createDecryptionCipher = function(key, bits) {
 
 
 /***/ }),
-/* 45 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21482,7 +21648,7 @@ function _update(s, w, bytes) {
 
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -22049,7 +22215,7 @@ function _update(s, w, bytes) {
 
 
 /***/ }),
-/* 47 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -22287,9 +22453,9 @@ function _update(s, w, bytes) {
 var forge = __webpack_require__(0);
 __webpack_require__(5);
 __webpack_require__(14);
-__webpack_require__(24);
-__webpack_require__(12);
-__webpack_require__(41);
+__webpack_require__(25);
+__webpack_require__(13);
+__webpack_require__(45);
 __webpack_require__(3);
 __webpack_require__(15);
 __webpack_require__(1);
@@ -26337,13 +26503,7 @@ forge.tls.createConnection = tls.createConnection;
 
 
 /***/ }),
-/* 48 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26353,9 +26513,9 @@ exports.FsFolderEnumerator = exports.fsIsLocalFileSystemAvailable = void 0;
 var bscore_1 = __webpack_require__(4);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
-var junk = __webpack_require__(29);
-var lodash_1 = __webpack_require__(13);
-var fileOperations_1 = __webpack_require__(22);
+var junk = __webpack_require__(30);
+var lodash_1 = __webpack_require__(11);
+var fileOperations_1 = __webpack_require__(23);
 function fsIsLocalFileSystemAvailable() {
     return true;
 }
@@ -26426,7 +26586,8 @@ var FsFolderEnumerator = (function () {
                 return assetItem_1;
             }
             return null;
-        });
+        })
+            .catch(function () { return null; });
     };
     FsFolderEnumerator.prototype.isLocalAssetInAssetTypeSet = function (name, dirPath) {
         var _this = this;
@@ -26439,16 +26600,16 @@ var FsFolderEnumerator = (function () {
             var mediaTypeOk = lodash_1.isNil(_this._mediaTypeSet)
                 || typeInfo.assetType !== bscore_1.AssetType.Content
                 || _this._mediaTypeSet.has(typeInfo.mediaType);
-            return _this._assetTypeSet.has(typeInfo.assetType) && mediaTypeOk;
+            return !lodash_1.isNil(_this._assetTypeSet) && _this._assetTypeSet.has(typeInfo.assetType) && mediaTypeOk;
         });
     };
     FsFolderEnumerator.prototype.initAssetTypes = function (assetTypes, mediaTypes) {
         this._assetTypeSet = null;
         this._mediaTypeSet = null;
-        if (assetTypes) {
+        if (!lodash_1.isNil(assetTypes)) {
             this._assetTypeSet = Array.isArray(assetTypes) ? new Set(assetTypes) : new Set([assetTypes]);
         }
-        if (mediaTypes) {
+        if (!lodash_1.isNil(mediaTypes)) {
             this._mediaTypeSet = Array.isArray(mediaTypes) ? new Set(mediaTypes) : new Set([mediaTypes]);
         }
     };
@@ -26458,7 +26619,7 @@ exports.FsFolderEnumerator = FsFolderEnumerator;
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26468,12 +26629,13 @@ exports.fsGetUploadHtmlSiteSessionSpec = exports.fsGetLocalHtmlSiteSessionSpecFo
 var bscore_1 = __webpack_require__(4);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
-var junk = __webpack_require__(29);
-var uploadFileSource_1 = __webpack_require__(32);
+var junk = __webpack_require__(30);
+var uploadFileSource_1 = __webpack_require__(33);
 var error_1 = __webpack_require__(2);
+var lodash_1 = __webpack_require__(11);
 function fsGetLocalHtmlSiteSessionSpecForIndexFile(indexFile, destinationPath) {
     if (destinationPath === void 0) { destinationPath = null; }
-    var indexFullPath;
+    var indexFullPath = '';
     var indexName;
     var indexPath;
     var assetFiles = [];
@@ -26535,7 +26697,7 @@ function fsGetUploadHtmlSiteSessionSpec(siteName, indexFile, siteType, destinati
     if (siteType === void 0) { siteType = bscore_1.AssetType.HtmlSite; }
     if (destinationPath === void 0) { destinationPath = null; }
     var indexFileSource = uploadFileSource_1.fsGetUploadLocalFileSource(indexFile);
-    if (indexFileSource) {
+    if (!lodash_1.isNil(indexFileSource)) {
         return fsGetLocalHtmlSiteSessionSpecForIndexFile(indexFile, destinationPath)
             .then(function (sessionFileSpec) { return ({
             siteName: siteName,
@@ -26543,7 +26705,7 @@ function fsGetUploadHtmlSiteSessionSpec(siteName, indexFile, siteType, destinati
             targetName: siteName,
             indexUploadFile: {
                 file: indexFileSource,
-                destinationPath: destinationPath,
+                destinationPath: lodash_1.isNil(destinationPath) ? '' : destinationPath,
                 targetName: indexFileSource.fileName,
                 fileSpec: sessionFileSpec.indexFile.file,
             },
@@ -26551,7 +26713,7 @@ function fsGetUploadHtmlSiteSessionSpec(siteName, indexFile, siteType, destinati
                 var fileSource = uploadFileSource_1.fsGetUploadLocalFileSource(siteFileSpec.file);
                 return {
                     file: fileSource,
-                    destinationPath: siteFileSpec.destinationPath,
+                    destinationPath: lodash_1.isNil(siteFileSpec.destinationPath) ? '' : siteFileSpec.destinationPath,
                     targetName: fileSource.fileName,
                     fileSpec: siteFileSpec.file,
                 };
@@ -26571,7 +26733,7 @@ var promiseSerial = function (funcs) {
 
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26579,9 +26741,9 @@ var promiseSerial = function (funcs) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsDownsampleImage = void 0;
 var bscore_1 = __webpack_require__(4);
-var worker_1 = __webpack_require__(11);
-var fs = __webpack_require__(48);
-var path = __webpack_require__(28);
+var worker_1 = __webpack_require__(12);
+var fs = __webpack_require__(16);
+var path = __webpack_require__(29);
 var error_1 = __webpack_require__(2);
 function downsampleImage(image, width, height, destinationPath) {
     var source = '';
@@ -26627,7 +26789,7 @@ exports.fsDownsampleImage = fsDownsampleImage;
 
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26635,11 +26797,11 @@ exports.fsDownsampleImage = fsDownsampleImage;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsGetIsMediaLegal = void 0;
 var path = __webpack_require__(8);
-var lodash_1 = __webpack_require__(13);
+var lodash_1 = __webpack_require__(11);
 var bscore_1 = __webpack_require__(4);
-var fileOperations_1 = __webpack_require__(22);
-var probeOperations_1 = __webpack_require__(30);
-var exif_1 = __webpack_require__(21);
+var fileOperations_1 = __webpack_require__(23);
+var probeOperations_1 = __webpack_require__(31);
+var exif_1 = __webpack_require__(22);
 function fsGetIsMediaLegal(legalityCheckEntity) {
     var filePath = getFilePath(legalityCheckEntity.file);
     if (lodash_1.isNil(filePath)) {
@@ -26720,6 +26882,11 @@ function getFileProbeData(file) {
     return probeOperations_1.fsGetFileProbeData(filePath);
 }
 function getIsVideoLegal(model, file) {
+    if (lodash_1.isNil(model)) {
+        return Promise.resolve({
+            mediaPlayable: false,
+        });
+    }
     return getFileProbeData(file)
         .then(function (probeData) {
         if (probeData === '') {
@@ -26753,6 +26920,11 @@ function getIsVideoLegal(model, file) {
     });
 }
 function getIsAudioLegal(model, file) {
+    if (lodash_1.isNil(model)) {
+        return Promise.resolve({
+            mediaPlayable: false,
+        });
+    }
     return getFileProbeData(file)
         .then(function (probeData) {
         if (probeData === '') {
@@ -26848,9 +27020,12 @@ function getImageDimensions(file) {
     if (bscore_1.bscIsAssetItem(file) && file.location === bscore_1.AssetLocation.Bsn) {
         return Promise.resolve(null);
     }
-    var assetItem = fileOperations_1.fsGetAssetItemFromFile(getFilePath(file));
-    if (!lodash_1.isNil(assetItem)) {
-        return exif_1.fsGetExifData(assetItem);
+    var filePath = getFilePath(file);
+    if (!lodash_1.isNil(filePath)) {
+        var assetItem = fileOperations_1.fsGetAssetItemFromFile(filePath);
+        if (!lodash_1.isNil(assetItem)) {
+            return exif_1.fsGetExifData(assetItem);
+        }
     }
     return Promise.resolve(null);
 }
@@ -26866,14 +27041,14 @@ function getMaximumImageSize(videoMode, fullResGraphics) {
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsProfileCount = exports.fsDeleteAllProfiles = exports.fsDeleteProfileValue = exports.fsUpdateProfileValue = exports.fsCreateProfileValue = exports.fsGetProfileMap = void 0;
-var dbManager_1 = __webpack_require__(56);
+var dbManager_1 = __webpack_require__(59);
 var error_1 = __webpack_require__(2);
 function getProfileMapFromRead(profileAttributes) {
     var profile = {};
@@ -26983,7 +27158,7 @@ exports.fsProfileCount = fsProfileCount;
 
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26993,7 +27168,7 @@ exports.fsGetThumbnail = exports.getFfMpegPath = void 0;
 var bscore_1 = __webpack_require__(4);
 var path = __webpack_require__(8);
 var fse = __webpack_require__(7);
-var worker_1 = __webpack_require__(11);
+var worker_1 = __webpack_require__(12);
 function getFfMpegPath() {
     try {
         if (process.env.FFMPEG_PATH && fse.existsSync(process.env.FFMPEG_PATH)) {
@@ -27043,7 +27218,7 @@ function processThumbnailResponse(response) {
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27051,8 +27226,8 @@ function processThumbnailResponse(response) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsZipFileObjects = exports.fsUnzipFileObjects = exports.fsZipLocalFiles = exports.fsCreateZipAsset = exports.fsUnzipLocalFiles = void 0;
 var error_1 = __webpack_require__(2);
-var archiver = __webpack_require__(68);
-var unzip = __webpack_require__(72);
+var archiver = __webpack_require__(92);
+var unzip = __webpack_require__(96);
 var fse = __webpack_require__(7);
 var path = __webpack_require__(8);
 function fsUnzipLocalFiles(src, dest) {
@@ -27123,7 +27298,7 @@ exports.fsZipFileObjects = fsZipFileObjects;
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27132,7 +27307,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -27143,14 +27318,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsGetDbManager = exports.DbManager = void 0;
-var dexie_1 = __webpack_require__(69);
+var dexie_1 = __webpack_require__(93);
 var isInitialized = false;
 var DbManager = (function (_super) {
     __extends(DbManager, _super);
     function DbManager() {
-        var _this = this;
+        var _this = _super.call(this, 'bsFsDB') || this;
         if (!isInitialized) {
-            _this = _super.call(this, 'bsFsDB') || this;
             _this.initialize();
             isInitialized = true;
         }
@@ -27181,7 +27355,7 @@ exports.fsGetDbManager = fsGetDbManager;
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27194,28 +27368,1124 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     o[k2] = m[k];
 }));
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(__webpack_require__(16), exports);
-__exportStar(__webpack_require__(22), exports);
-__exportStar(__webpack_require__(50), exports);
-__exportStar(__webpack_require__(51), exports);
+__exportStar(__webpack_require__(17), exports);
+__exportStar(__webpack_require__(23), exports);
 __exportStar(__webpack_require__(53), exports);
+__exportStar(__webpack_require__(54), exports);
+__exportStar(__webpack_require__(56), exports);
+__exportStar(__webpack_require__(32), exports);
+__exportStar(__webpack_require__(58), exports);
+__exportStar(__webpack_require__(52), exports);
+__exportStar(__webpack_require__(57), exports);
+__exportStar(__webpack_require__(22), exports);
+__exportStar(__webpack_require__(33), exports);
 __exportStar(__webpack_require__(31), exports);
 __exportStar(__webpack_require__(55), exports);
-__exportStar(__webpack_require__(49), exports);
-__exportStar(__webpack_require__(54), exports);
-__exportStar(__webpack_require__(21), exports);
-__exportStar(__webpack_require__(32), exports);
-__exportStar(__webpack_require__(30), exports);
-__exportStar(__webpack_require__(52), exports);
-__exportStar(__webpack_require__(11), exports);
+__exportStar(__webpack_require__(12), exports);
 __exportStar(__webpack_require__(2), exports);
 
 
 /***/ }),
-/* 58 */
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const types_1 = __webpack_require__(35);
+const keys = Object.keys(types_1.typeHandlers);
+// This map helps avoid validating for every single image type
+const firstBytes = {
+    0x38: 'psd',
+    0x42: 'bmp',
+    0x44: 'dds',
+    0x47: 'gif',
+    0x49: 'tiff',
+    0x4d: 'tiff',
+    0x52: 'webp',
+    0x69: 'icns',
+    0x89: 'png',
+    0xff: 'jpg'
+};
+function detector(buffer) {
+    const byte = buffer[0];
+    if (byte in firstBytes) {
+        const type = firstBytes[byte];
+        if (types_1.typeHandlers[type].validate(buffer)) {
+            return type;
+        }
+    }
+    const finder = (key) => types_1.typeHandlers[key].validate(buffer);
+    return keys.find(finder);
+}
+exports.detector = detector;
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs = __webpack_require__(16);
+// fs.promises polyfill for node 8.x
+if (!('promises' in fs)) {
+    class FileHandle {
+        constructor(fd) {
+            this.fd = fd;
+        }
+        stat() {
+            return new Promise((resolve, reject) => {
+                fs.fstat(this.fd, (err, stats) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(stats);
+                    }
+                });
+            });
+        }
+        read(buffer, offset, length, position) {
+            return new Promise((resolve, reject) => {
+                fs.read(this.fd, buffer, offset, length, position, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            });
+        }
+        close() {
+            return new Promise((resolve, reject) => {
+                fs.close(this.fd, (err) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            });
+        }
+    }
+    Object.defineProperty(fs, 'promises', {
+        value: {
+            open: (filepath, flags) => (new Promise((resolve, reject) => {
+                fs.open(filepath, flags, (err, fd) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(new FileHandle(fd));
+                    }
+                });
+            })),
+        },
+        writable: false
+    });
+}
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs = __webpack_require__(16);
+const path = __webpack_require__(8);
+const queue_1 = __webpack_require__(91);
+const types_1 = __webpack_require__(35);
+const detector_1 = __webpack_require__(61);
+__webpack_require__(62);
+// Maximum buffer size, with a default of 512 kilobytes.
+// TO-DO: make this adaptive based on the initial signature of the image
+const MaxBufferSize = 512 * 1024;
+// This queue is for async `fs` operations, to avoid reaching file-descriptor limits
+const queue = new queue_1.default({ concurrency: 100, autostart: true });
+/**
+ * Return size information based on a buffer
+ *
+ * @param {Buffer} buffer
+ * @param {String} filepath
+ * @returns {Object}
+ */
+function lookup(buffer, filepath) {
+    // detect the file type.. don't rely on the extension
+    const type = detector_1.detector(buffer);
+    // find an appropriate handler for this file type
+    if (type && type in types_1.typeHandlers) {
+        const size = types_1.typeHandlers[type].calculate(buffer, filepath);
+        if (size !== undefined) {
+            size.type = type;
+            return size;
+        }
+    }
+    // throw up, if we don't understand the file
+    throw new TypeError('unsupported file type: ' + type + ' (file: ' + filepath + ')');
+}
+/**
+ * Reads a file into a buffer.
+ * @param {String} filepath
+ * @returns {Promise<Buffer>}
+ */
+function asyncFileToBuffer(filepath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const handle = yield fs.promises.open(filepath, 'r');
+        const { size } = yield handle.stat();
+        if (size <= 0) {
+            throw new Error('Empty file');
+        }
+        const bufferSize = Math.min(size, MaxBufferSize);
+        const buffer = Buffer.alloc(bufferSize);
+        yield handle.read(buffer, 0, bufferSize, 0);
+        yield handle.close();
+        return buffer;
+    });
+}
+/**
+ * Synchronously reads a file into a buffer, blocking the nodejs process.
+ *
+ * @param {String} filepath
+ * @returns {Buffer}
+ */
+function syncFileToBuffer(filepath) {
+    // read from the file, synchronously
+    const descriptor = fs.openSync(filepath, 'r');
+    const size = fs.fstatSync(descriptor).size;
+    const bufferSize = Math.min(size, MaxBufferSize);
+    const buffer = Buffer.alloc(bufferSize);
+    fs.readSync(descriptor, buffer, 0, bufferSize, 0);
+    fs.closeSync(descriptor);
+    return buffer;
+}
+module.exports = exports = imageSize; // backwards compatibility
+/**
+ * @param {Buffer|string} input - buffer or relative/absolute path of the image file
+ * @param {Function=} [callback] - optional function for async detection
+ */
+function imageSize(input, callback) {
+    // Handle buffer input
+    if (Buffer.isBuffer(input)) {
+        return lookup(input);
+    }
+    // input should be a string at this point
+    if (typeof input !== 'string') {
+        throw new TypeError('invalid invocation');
+    }
+    // resolve the file path
+    const filepath = path.resolve(input);
+    if (typeof callback === 'function') {
+        queue.push(() => asyncFileToBuffer(filepath)
+            .then((buffer) => process.nextTick(callback, null, lookup(buffer, filepath)))
+            .catch(callback));
+    }
+    else {
+        const buffer = syncFileToBuffer(filepath);
+        return lookup(buffer, filepath);
+    }
+}
+exports.imageSize = imageSize;
+exports.setConcurrency = (c) => { queue.concurrency = c; };
+exports.types = Object.keys(types_1.typeHandlers);
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BMP = {
+    validate(buffer) {
+        return ('BM' === buffer.toString('ascii', 0, 2));
+    },
+    calculate(buffer) {
+        return {
+            height: Math.abs(buffer.readInt32LE(22)),
+            width: buffer.readUInt32LE(18)
+        };
+    }
+};
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const ico_1 = __webpack_require__(36);
+const TYPE_CURSOR = 2;
+exports.CUR = {
+    validate(buffer) {
+        if (buffer.readUInt16LE(0) !== 0) {
+            return false;
+        }
+        return buffer.readUInt16LE(2) === TYPE_CURSOR;
+    },
+    calculate(buffer) {
+        return ico_1.ICO.calculate(buffer);
+    }
+};
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DDS = {
+    validate(buffer) {
+        return buffer.readUInt32LE(0) === 0x20534444;
+    },
+    calculate(buffer) {
+        return {
+            height: buffer.readUInt32LE(12),
+            width: buffer.readUInt32LE(16)
+        };
+    }
+};
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const gifRegexp = /^GIF8[79]a/;
+exports.GIF = {
+    validate(buffer) {
+        const signature = buffer.toString('ascii', 0, 6);
+        return (gifRegexp.test(signature));
+    },
+    calculate(buffer) {
+        return {
+            height: buffer.readUInt16LE(8),
+            width: buffer.readUInt16LE(6)
+        };
+    }
+};
+
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * ICNS Header
+ *
+ * | Offset | Size | Purpose                                                |
+ * | 0	    | 4    | Magic literal, must be "icns" (0x69, 0x63, 0x6e, 0x73) |
+ * | 4      | 4    | Length of file, in bytes, msb first.                   |
+ *
+ */
+const SIZE_HEADER = 4 + 4; // 8
+const FILE_LENGTH_OFFSET = 4; // MSB => BIG ENDIAN
+/**
+ * Image Entry
+ *
+ * | Offset | Size | Purpose                                                          |
+ * | 0	    | 4    | Icon type, see OSType below.                                     |
+ * | 4      | 4    | Length of data, in bytes (including type and length), msb first. |
+ * | 8      | n    | Icon data                                                        |
+ */
+const ENTRY_LENGTH_OFFSET = 4; // MSB => BIG ENDIAN
+/* tslint:disable:object-literal-sort-keys */
+const ICON_TYPE_SIZE = {
+    ICON: 32,
+    'ICN#': 32,
+    // m => 16 x 16
+    'icm#': 16,
+    icm4: 16,
+    icm8: 16,
+    // s => 16 x 16
+    'ics#': 16,
+    ics4: 16,
+    ics8: 16,
+    is32: 16,
+    s8mk: 16,
+    icp4: 16,
+    // l => 32 x 32
+    icl4: 32,
+    icl8: 32,
+    il32: 32,
+    l8mk: 32,
+    icp5: 32,
+    ic11: 32,
+    // h => 48 x 48
+    ich4: 48,
+    ich8: 48,
+    ih32: 48,
+    h8mk: 48,
+    // . => 64 x 64
+    icp6: 64,
+    ic12: 32,
+    // t => 128 x 128
+    it32: 128,
+    t8mk: 128,
+    ic07: 128,
+    // . => 256 x 256
+    ic08: 256,
+    ic13: 256,
+    // . => 512 x 512
+    ic09: 512,
+    ic14: 512,
+    // . => 1024 x 1024
+    ic10: 1024,
+};
+/* tslint:enable:object-literal-sort-keys */
+function readImageHeader(buffer, imageOffset) {
+    const imageLengthOffset = imageOffset + ENTRY_LENGTH_OFFSET;
+    return [
+        buffer.toString('ascii', imageOffset, imageLengthOffset),
+        buffer.readUInt32BE(imageLengthOffset)
+    ];
+}
+function getImageSize(type) {
+    const size = ICON_TYPE_SIZE[type];
+    return { width: size, height: size, type };
+}
+exports.ICNS = {
+    validate(buffer) {
+        return ('icns' === buffer.toString('ascii', 0, 4));
+    },
+    calculate(buffer) {
+        const bufferLength = buffer.length;
+        const fileLength = buffer.readUInt32BE(FILE_LENGTH_OFFSET);
+        let imageOffset = SIZE_HEADER;
+        let imageHeader = readImageHeader(buffer, imageOffset);
+        let imageSize = getImageSize(imageHeader[0]);
+        imageOffset += imageHeader[1];
+        if (imageOffset === fileLength) {
+            return imageSize;
+        }
+        const result = {
+            height: imageSize.height,
+            images: [imageSize],
+            width: imageSize.width
+        };
+        while (imageOffset < fileLength && imageOffset < bufferLength) {
+            imageHeader = readImageHeader(buffer, imageOffset);
+            imageSize = getImageSize(imageHeader[0]);
+            imageOffset += imageHeader[1];
+            result.images.push(imageSize);
+        }
+        return result;
+    }
+};
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.J2C = {
+    validate(buffer) {
+        // TODO: this doesn't seem right. SIZ marker doesnt have to be right after the SOC
+        return buffer.toString('hex', 0, 4) === 'ff4fff51';
+    },
+    calculate(buffer) {
+        return {
+            height: buffer.readUInt32BE(12),
+            width: buffer.readUInt32BE(8),
+        };
+    }
+};
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const BoxTypes = {
+    ftyp: '66747970',
+    ihdr: '69686472',
+    jp2h: '6a703268',
+    jp__: '6a502020',
+    rreq: '72726571',
+    xml_: '786d6c20'
+};
+const calculateRREQLength = (box) => {
+    const unit = box.readUInt8(0);
+    let offset = 1 + (2 * unit);
+    const numStdFlags = box.readUInt16BE(offset);
+    const flagsLength = numStdFlags * (2 + unit);
+    offset = offset + 2 + flagsLength;
+    const numVendorFeatures = box.readUInt16BE(offset);
+    const featuresLength = numVendorFeatures * (16 + unit);
+    return offset + 2 + featuresLength;
+};
+const parseIHDR = (box) => {
+    return {
+        height: box.readUInt32BE(4),
+        width: box.readUInt32BE(8),
+    };
+};
+exports.JP2 = {
+    validate(buffer) {
+        const signature = buffer.toString('hex', 4, 8);
+        const signatureLength = buffer.readUInt32BE(0);
+        if (signature !== BoxTypes.jp__ || signatureLength < 1) {
+            return false;
+        }
+        const ftypeBoxStart = signatureLength + 4;
+        const ftypBoxLength = buffer.readUInt32BE(signatureLength);
+        const ftypBox = buffer.slice(ftypeBoxStart, ftypeBoxStart + ftypBoxLength);
+        return ftypBox.toString('hex', 0, 4) === BoxTypes.ftyp;
+    },
+    calculate(buffer) {
+        const signatureLength = buffer.readUInt32BE(0);
+        const ftypBoxLength = buffer.readUInt16BE(signatureLength + 2);
+        let offset = signatureLength + 4 + ftypBoxLength;
+        const nextBoxType = buffer.toString('hex', offset, offset + 4);
+        switch (nextBoxType) {
+            case BoxTypes.rreq:
+                // WHAT ARE THESE 4 BYTES?????
+                const MAGIC = 4;
+                offset = offset + 4 + MAGIC + calculateRREQLength(buffer.slice(offset + 4));
+                return parseIHDR(buffer.slice(offset + 8, offset + 24));
+            case BoxTypes.jp2h:
+                return parseIHDR(buffer.slice(offset + 8, offset + 24));
+            default:
+                throw new TypeError('Unsupported header found: ' + buffer.toString('ascii', offset, offset + 4));
+        }
+    }
+};
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// NOTE: we only support baseline and progressive JPGs here
+// due to the structure of the loader class, we only get a buffer
+// with a maximum size of 4096 bytes. so if the SOF marker is outside
+// if this range we can't detect the file size correctly.
+Object.defineProperty(exports, "__esModule", { value: true });
+const readUInt_1 = __webpack_require__(34);
+const EXIF_MARKER = '45786966';
+const APP1_DATA_SIZE_BYTES = 2;
+const EXIF_HEADER_BYTES = 6;
+const TIFF_BYTE_ALIGN_BYTES = 2;
+const BIG_ENDIAN_BYTE_ALIGN = '4d4d';
+const LITTLE_ENDIAN_BYTE_ALIGN = '4949';
+// Each entry is exactly 12 bytes
+const IDF_ENTRY_BYTES = 12;
+const NUM_DIRECTORY_ENTRIES_BYTES = 2;
+function isEXIF(buffer) {
+    return (buffer.toString('hex', 2, 6) === EXIF_MARKER);
+}
+function extractSize(buffer, index) {
+    return {
+        height: buffer.readUInt16BE(index),
+        width: buffer.readUInt16BE(index + 2)
+    };
+}
+function validateExifBlock(buffer, index) {
+    // Skip APP1 Data Size
+    const exifBlock = buffer.slice(APP1_DATA_SIZE_BYTES, index);
+    // Consider byte alignment
+    const byteAlign = exifBlock.toString('hex', EXIF_HEADER_BYTES, EXIF_HEADER_BYTES + TIFF_BYTE_ALIGN_BYTES);
+    // Ignore Empty EXIF. Validate byte alignment
+    const isBigEndian = byteAlign === BIG_ENDIAN_BYTE_ALIGN;
+    const isLittleEndian = byteAlign === LITTLE_ENDIAN_BYTE_ALIGN;
+    if (isBigEndian || isLittleEndian) {
+        return extractOrientation(exifBlock, isBigEndian);
+    }
+}
+function extractOrientation(exifBlock, isBigEndian) {
+    // TODO: assert that this contains 0x002A
+    // let STATIC_MOTOROLA_TIFF_HEADER_BYTES = 2
+    // let TIFF_IMAGE_FILE_DIRECTORY_BYTES = 4
+    // TODO: derive from TIFF_IMAGE_FILE_DIRECTORY_BYTES
+    const idfOffset = 8;
+    // IDF osset works from right after the header bytes
+    // (so the offset includes the tiff byte align)
+    const offset = EXIF_HEADER_BYTES + idfOffset;
+    const idfDirectoryEntries = readUInt_1.readUInt(exifBlock, 16, offset, isBigEndian);
+    for (let directoryEntryNumber = 0; directoryEntryNumber < idfDirectoryEntries; directoryEntryNumber++) {
+        const start = offset + NUM_DIRECTORY_ENTRIES_BYTES + (directoryEntryNumber * IDF_ENTRY_BYTES);
+        const end = start + IDF_ENTRY_BYTES;
+        // Skip on corrupt EXIF blocks
+        if (start > exifBlock.length) {
+            return;
+        }
+        const block = exifBlock.slice(start, end);
+        const tagNumber = readUInt_1.readUInt(block, 16, 0, isBigEndian);
+        // 0x0112 (decimal: 274) is the `orientation` tag ID
+        if (tagNumber === 274) {
+            const dataFormat = readUInt_1.readUInt(block, 16, 2, isBigEndian);
+            if (dataFormat !== 3) {
+                return;
+            }
+            // unsinged int has 2 bytes per component
+            // if there would more than 4 bytes in total it's a pointer
+            const numberOfComponents = readUInt_1.readUInt(block, 32, 4, isBigEndian);
+            if (numberOfComponents !== 1) {
+                return;
+            }
+            return readUInt_1.readUInt(block, 16, 8, isBigEndian);
+        }
+    }
+}
+function validateBuffer(buffer, index) {
+    // index should be within buffer limits
+    if (index > buffer.length) {
+        throw new TypeError('Corrupt JPG, exceeded buffer limits');
+    }
+    // Every JPEG block must begin with a 0xFF
+    if (buffer[index] !== 0xFF) {
+        throw new TypeError('Invalid JPG, marker table corrupted');
+    }
+}
+exports.JPG = {
+    validate(buffer) {
+        const SOIMarker = buffer.toString('hex', 0, 2);
+        return ('ffd8' === SOIMarker);
+    },
+    calculate(buffer) {
+        // Skip 4 chars, they are for signature
+        buffer = buffer.slice(4);
+        let orientation;
+        let next;
+        while (buffer.length) {
+            // read length of the next block
+            const i = buffer.readUInt16BE(0);
+            if (isEXIF(buffer)) {
+                orientation = validateExifBlock(buffer, i);
+            }
+            // ensure correct format
+            validateBuffer(buffer, i);
+            // 0xFFC0 is baseline standard(SOF)
+            // 0xFFC1 is baseline optimized(SOF)
+            // 0xFFC2 is progressive(SOF2)
+            next = buffer[i + 1];
+            if (next === 0xC0 || next === 0xC1 || next === 0xC2) {
+                const size = extractSize(buffer, i + 5);
+                // TODO: is orientation=0 a valid answer here?
+                if (!orientation) {
+                    return size;
+                }
+                return {
+                    height: size.height,
+                    orientation,
+                    width: size.width
+                };
+            }
+            // move to the next block
+            buffer = buffer.slice(i + 2);
+        }
+        throw new TypeError('Invalid JPG, no size found');
+    }
+};
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const SIGNATURE = 'KTX 11';
+exports.KTX = {
+    validate(buffer) {
+        return SIGNATURE === buffer.toString('ascii', 1, 7);
+    },
+    calculate(buffer) {
+        return {
+            height: buffer.readUInt32LE(40),
+            width: buffer.readUInt32LE(36),
+        };
+    }
+};
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const pngSignature = 'PNG\r\n\x1a\n';
+const pngImageHeaderChunkName = 'IHDR';
+// Used to detect "fried" png's: http://www.jongware.com/pngdefry.html
+const pngFriedChunkName = 'CgBI';
+exports.PNG = {
+    validate(buffer) {
+        if (pngSignature === buffer.toString('ascii', 1, 8)) {
+            let chunkName = buffer.toString('ascii', 12, 16);
+            if (chunkName === pngFriedChunkName) {
+                chunkName = buffer.toString('ascii', 28, 32);
+            }
+            if (chunkName !== pngImageHeaderChunkName) {
+                throw new TypeError('Invalid PNG');
+            }
+            return true;
+        }
+        return false;
+    },
+    calculate(buffer) {
+        if (buffer.toString('ascii', 12, 16) === pngFriedChunkName) {
+            return {
+                height: buffer.readUInt32BE(36),
+                width: buffer.readUInt32BE(32)
+            };
+        }
+        return {
+            height: buffer.readUInt32BE(20),
+            width: buffer.readUInt32BE(16)
+        };
+    }
+};
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const PNMTypes = {
+    P1: 'pbm/ascii',
+    P2: 'pgm/ascii',
+    P3: 'ppm/ascii',
+    P4: 'pbm',
+    P5: 'pgm',
+    P6: 'ppm',
+    P7: 'pam',
+    PF: 'pfm'
+};
+const Signatures = Object.keys(PNMTypes);
+const handlers = {
+    default: (lines) => {
+        let dimensions = [];
+        while (lines.length > 0) {
+            const line = lines.shift();
+            if (line[0] === '#') {
+                continue;
+            }
+            dimensions = line.split(' ');
+            break;
+        }
+        if (dimensions.length === 2) {
+            return {
+                height: parseInt(dimensions[1], 10),
+                width: parseInt(dimensions[0], 10),
+            };
+        }
+        else {
+            throw new TypeError('Invalid PNM');
+        }
+    },
+    pam: (lines) => {
+        const size = {};
+        while (lines.length > 0) {
+            const line = lines.shift();
+            if (line.length > 16 || line.charCodeAt(0) > 128) {
+                continue;
+            }
+            const [key, value] = line.split(' ');
+            if (key && value) {
+                size[key.toLowerCase()] = parseInt(value, 10);
+            }
+            if (size.height && size.width) {
+                break;
+            }
+        }
+        if (size.height && size.width) {
+            return {
+                height: size.height,
+                width: size.width
+            };
+        }
+        else {
+            throw new TypeError('Invalid PAM');
+        }
+    }
+};
+exports.PNM = {
+    validate(buffer) {
+        const signature = buffer.toString('ascii', 0, 2);
+        return Signatures.includes(signature);
+    },
+    calculate(buffer) {
+        const signature = buffer.toString('ascii', 0, 2);
+        const type = PNMTypes[signature];
+        // TODO: this probably generates garbage. move to a stream based parser
+        const lines = buffer.toString('ascii', 3).split(/[\r\n]+/);
+        const handler = handlers[type] || handlers.default;
+        return handler(lines);
+    }
+};
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PSD = {
+    validate(buffer) {
+        return ('8BPS' === buffer.toString('ascii', 0, 4));
+    },
+    calculate(buffer) {
+        return {
+            height: buffer.readUInt32BE(14),
+            width: buffer.readUInt32BE(18)
+        };
+    }
+};
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const svgReg = /<svg\s([^>"']|"[^"]*"|'[^']*')*>/;
+const extractorRegExps = {
+    height: /\sheight=(['"])([^%]+?)\1/,
+    root: svgReg,
+    viewbox: /\sviewBox=(['"])(.+?)\1/,
+    width: /\swidth=(['"])([^%]+?)\1/,
+};
+const INCH_CM = 2.54;
+const units = {
+    cm: 96 / INCH_CM,
+    em: 16,
+    ex: 8,
+    m: 96 / INCH_CM * 100,
+    mm: 96 / INCH_CM / 10,
+    pc: 96 / 72 / 12,
+    pt: 96 / 72,
+};
+function parseLength(len) {
+    const m = /([0-9.]+)([a-z]*)/.exec(len);
+    if (!m) {
+        return undefined;
+    }
+    return Math.round(parseFloat(m[1]) * (units[m[2]] || 1));
+}
+function parseViewbox(viewbox) {
+    const bounds = viewbox.split(' ');
+    return {
+        height: parseLength(bounds[3]),
+        width: parseLength(bounds[2])
+    };
+}
+function parseAttributes(root) {
+    const width = root.match(extractorRegExps.width);
+    const height = root.match(extractorRegExps.height);
+    const viewbox = root.match(extractorRegExps.viewbox);
+    return {
+        height: height && parseLength(height[2]),
+        viewbox: viewbox && parseViewbox(viewbox[2]),
+        width: width && parseLength(width[2]),
+    };
+}
+function calculateByDimensions(attrs) {
+    return {
+        height: attrs.height,
+        width: attrs.width,
+    };
+}
+function calculateByViewbox(attrs, viewbox) {
+    const ratio = viewbox.width / viewbox.height;
+    if (attrs.width) {
+        return {
+            height: Math.floor(attrs.width / ratio),
+            width: attrs.width,
+        };
+    }
+    if (attrs.height) {
+        return {
+            height: attrs.height,
+            width: Math.floor(attrs.height * ratio),
+        };
+    }
+    return {
+        height: viewbox.height,
+        width: viewbox.width,
+    };
+}
+exports.SVG = {
+    validate(buffer) {
+        const str = String(buffer);
+        return svgReg.test(str);
+    },
+    calculate(buffer) {
+        const root = buffer.toString('utf8').match(extractorRegExps.root);
+        if (root) {
+            const attrs = parseAttributes(root[0]);
+            if (attrs.width && attrs.height) {
+                return calculateByDimensions(attrs);
+            }
+            if (attrs.viewbox) {
+                return calculateByViewbox(attrs, attrs.viewbox);
+            }
+        }
+        throw new TypeError('Invalid SVG');
+    }
+};
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+// based on http://www.compix.com/fileformattif.htm
+// TO-DO: support big-endian as well
+const fs = __webpack_require__(16);
+const readUInt_1 = __webpack_require__(34);
+// Read IFD (image-file-directory) into a buffer
+function readIFD(buffer, filepath, isBigEndian) {
+    const ifdOffset = readUInt_1.readUInt(buffer, 32, 4, isBigEndian);
+    // read only till the end of the file
+    let bufferSize = 1024;
+    const fileSize = fs.statSync(filepath).size;
+    if (ifdOffset + bufferSize > fileSize) {
+        bufferSize = fileSize - ifdOffset - 10;
+    }
+    // populate the buffer
+    const endBuffer = Buffer.alloc(bufferSize);
+    const descriptor = fs.openSync(filepath, 'r');
+    fs.readSync(descriptor, endBuffer, 0, bufferSize, ifdOffset);
+    return endBuffer.slice(2);
+}
+// TIFF values seem to be messed up on Big-Endian, this helps
+function readValue(buffer, isBigEndian) {
+    const low = readUInt_1.readUInt(buffer, 16, 8, isBigEndian);
+    const high = readUInt_1.readUInt(buffer, 16, 10, isBigEndian);
+    return (high << 16) + low;
+}
+// move to the next tag
+function nextTag(buffer) {
+    if (buffer.length > 24) {
+        return buffer.slice(12);
+    }
+}
+// Extract IFD tags from TIFF metadata
+function extractTags(buffer, isBigEndian) {
+    const tags = {};
+    let temp = buffer;
+    while (temp && temp.length) {
+        const code = readUInt_1.readUInt(temp, 16, 0, isBigEndian);
+        const type = readUInt_1.readUInt(temp, 16, 2, isBigEndian);
+        const length = readUInt_1.readUInt(temp, 32, 4, isBigEndian);
+        // 0 means end of IFD
+        if (code === 0) {
+            break;
+        }
+        else {
+            // 256 is width, 257 is height
+            // if (code === 256 || code === 257) {
+            if (length === 1 && (type === 3 || type === 4)) {
+                tags[code] = readValue(temp, isBigEndian);
+            }
+            // move to the next tag
+            temp = nextTag(temp);
+        }
+    }
+    return tags;
+}
+// Test if the TIFF is Big Endian or Little Endian
+function determineEndianness(buffer) {
+    const signature = buffer.toString('ascii', 0, 2);
+    if ('II' === signature) {
+        return 'LE';
+    }
+    else if ('MM' === signature) {
+        return 'BE';
+    }
+}
+const signatures = [
+    // '492049', // currently not supported
+    '49492a00',
+    '4d4d002a',
+];
+exports.TIFF = {
+    validate(buffer) {
+        return signatures.includes(buffer.toString('hex', 0, 4));
+    },
+    calculate(buffer, filepath) {
+        if (!filepath) {
+            throw new TypeError('Tiff doesn\'t support buffer');
+        }
+        // Determine BE/LE
+        const isBigEndian = determineEndianness(buffer) === 'BE';
+        // read the IFD
+        const ifdBuffer = readIFD(buffer, filepath, isBigEndian);
+        // extract the tags from the IFD
+        const tags = extractTags(ifdBuffer, isBigEndian);
+        const width = tags[256];
+        const height = tags[257];
+        if (!width || !height) {
+            throw new TypeError('Invalid Tiff. Missing tags');
+        }
+        return { height, width };
+    }
+};
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function calculateExtended(buffer) {
+    return {
+        height: 1 + buffer.readUIntLE(7, 3),
+        width: 1 + buffer.readUIntLE(4, 3)
+    };
+}
+function calculateLossless(buffer) {
+    return {
+        height: 1 + (((buffer[4] & 0xF) << 10) | (buffer[3] << 2) | ((buffer[2] & 0xC0) >> 6)),
+        width: 1 + (((buffer[2] & 0x3F) << 8) | buffer[1])
+    };
+}
+function calculateLossy(buffer) {
+    // `& 0x3fff` returns the last 14 bits
+    // TO-DO: include webp scaling in the calculations
+    return {
+        height: buffer.readInt16LE(8) & 0x3fff,
+        width: buffer.readInt16LE(6) & 0x3fff
+    };
+}
+exports.WEBP = {
+    validate(buffer) {
+        const riffHeader = 'RIFF' === buffer.toString('ascii', 0, 4);
+        const webpHeader = 'WEBP' === buffer.toString('ascii', 8, 12);
+        const vp8Header = 'VP8' === buffer.toString('ascii', 12, 15);
+        return (riffHeader && webpHeader && vp8Header);
+    },
+    calculate(buffer) {
+        const chunkHeader = buffer.toString('ascii', 12, 16);
+        buffer = buffer.slice(20, 30);
+        // Extended webp stream signature
+        if (chunkHeader === 'VP8X') {
+            const extendedHeader = buffer[0];
+            const validStart = (extendedHeader & 0xc0) === 0;
+            const validEnd = (extendedHeader & 0x01) === 0;
+            if (validStart && validEnd) {
+                return calculateExtended(buffer);
+            }
+            else {
+                // TODO: breaking change
+                throw new TypeError('Invalid WebP');
+            }
+        }
+        // Lossless webp stream signature
+        if (chunkHeader === 'VP8 ' && buffer[0] !== 0x2f) {
+            return calculateLossy(buffer);
+        }
+        // Lossy webp stream signature
+        const signature = buffer.toString('hex', 3, 6);
+        if (chunkHeader === 'VP8L' && signature !== '9d012a') {
+            return calculateLossless(buffer);
+        }
+        throw new TypeError('Invalid WebP');
+    }
+};
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+try {
+  var util = __webpack_require__(97);
+  /* istanbul ignore next */
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  /* istanbul ignore next */
+  module.exports = __webpack_require__(80);
+}
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports) {
+
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
+  }
+}
+
+
+/***/ }),
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -27228,7 +28498,7 @@ __exportStar(__webpack_require__(2), exports);
  */
 var forge = __webpack_require__(0);
 __webpack_require__(9);
-__webpack_require__(47);
+__webpack_require__(51);
 
 var tls = module.exports = forge.tls;
 
@@ -27503,7 +28773,7 @@ function compareMacs(key, mac1, mac2) {
 
 
 /***/ }),
-/* 59 */
+/* 82 */
 /***/ (function(module, exports) {
 
 /**
@@ -27695,7 +28965,7 @@ function _encodeWithByteBuffer(input, alphabet) {
 
 
 /***/ }),
-/* 60 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -27709,9 +28979,9 @@ function _encodeWithByteBuffer(input, alphabet) {
  * https://github.com/dchest/tweetnacl-js
  */
 var forge = __webpack_require__(0);
-__webpack_require__(18);
+__webpack_require__(19);
 __webpack_require__(3);
-__webpack_require__(46);
+__webpack_require__(50);
 __webpack_require__(1);
 
 if(typeof BigInteger === 'undefined') {
@@ -28697,7 +29967,7 @@ function M(o, a, b) {
 
 
 /***/ }),
-/* 61 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -28709,36 +29979,36 @@ function M(o, a, b) {
  */
 module.exports = __webpack_require__(0);
 __webpack_require__(9);
-__webpack_require__(58);
+__webpack_require__(81);
 __webpack_require__(5);
-__webpack_require__(23);
-__webpack_require__(34);
-__webpack_require__(17);
-__webpack_require__(60);
-__webpack_require__(14);
-__webpack_require__(62);
-__webpack_require__(35);
-__webpack_require__(63);
-__webpack_require__(36);
-__webpack_require__(25);
-__webpack_require__(12);
+__webpack_require__(24);
 __webpack_require__(38);
+__webpack_require__(18);
+__webpack_require__(83);
+__webpack_require__(14);
+__webpack_require__(85);
 __webpack_require__(39);
-__webpack_require__(65);
-__webpack_require__(41);
+__webpack_require__(86);
+__webpack_require__(40);
+__webpack_require__(26);
+__webpack_require__(13);
 __webpack_require__(42);
 __webpack_require__(43);
-__webpack_require__(26);
-__webpack_require__(3);
-__webpack_require__(44);
-__webpack_require__(66);
-__webpack_require__(67);
+__webpack_require__(88);
+__webpack_require__(45);
+__webpack_require__(46);
 __webpack_require__(47);
+__webpack_require__(27);
+__webpack_require__(3);
+__webpack_require__(48);
+__webpack_require__(89);
+__webpack_require__(90);
+__webpack_require__(51);
 __webpack_require__(1);
 
 
 /***/ }),
-/* 62 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -28753,7 +30023,7 @@ __webpack_require__(1);
 var forge = __webpack_require__(0);
 __webpack_require__(1);
 __webpack_require__(3);
-__webpack_require__(18);
+__webpack_require__(19);
 
 module.exports = forge.kem = forge.kem || {};
 
@@ -28912,7 +30182,7 @@ function _createKDF(kdf, md, counterStart, digestLength) {
 
 
 /***/ }),
-/* 63 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -28924,14 +30194,14 @@ function _createKDF(kdf, md, counterStart, digestLength) {
  */
 module.exports = __webpack_require__(6);
 
-__webpack_require__(24);
+__webpack_require__(25);
 __webpack_require__(15);
-__webpack_require__(45);
-__webpack_require__(46);
+__webpack_require__(49);
+__webpack_require__(50);
 
 
 /***/ }),
-/* 64 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -28942,14 +30212,14 @@ __webpack_require__(46);
  * Copyright 2012 Stefan Siegl <stesie@brokenpipe.de>
  */
 var forge = __webpack_require__(0);
-__webpack_require__(36);
+__webpack_require__(40);
 
 module.exports = forge.mgf = forge.mgf || {};
 forge.mgf.mgf1 = forge.mgf1;
 
 
 /***/ }),
-/* 65 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -28973,13 +30243,13 @@ forge.mgf.mgf1 = forge.mgf1;
 var forge = __webpack_require__(0);
 __webpack_require__(9);
 __webpack_require__(5);
-__webpack_require__(17);
+__webpack_require__(18);
 __webpack_require__(10);
-__webpack_require__(12);
-__webpack_require__(40);
+__webpack_require__(13);
+__webpack_require__(44);
 __webpack_require__(3);
 __webpack_require__(1);
-__webpack_require__(27);
+__webpack_require__(28);
 
 // shortcut for ASN.1 API
 var asn1 = forge.asn1;
@@ -30212,7 +31482,7 @@ function _decryptContent(msg) {
 
 
 /***/ }),
-/* 66 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -30228,7 +31498,7 @@ function _decryptContent(msg) {
 var forge = __webpack_require__(0);
 __webpack_require__(9);
 __webpack_require__(14);
-__webpack_require__(24);
+__webpack_require__(25);
 __webpack_require__(15);
 __webpack_require__(1);
 
@@ -30454,7 +31724,7 @@ function _sha1() {
 
 
 /***/ }),
-/* 67 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -30467,8 +31737,8 @@ function _sha1() {
  * Copyright (c) 2009-2013 Digital Bazaar, Inc.
  */
 var forge = __webpack_require__(0);
-__webpack_require__(34);
-__webpack_require__(35);
+__webpack_require__(38);
+__webpack_require__(39);
 __webpack_require__(1);
 
 // logging category
@@ -31185,37 +32455,244 @@ forge.task.createCondition = function() {
 
 
 /***/ }),
-/* 68 */
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var inherits = __webpack_require__(79)
+var EventEmitter = __webpack_require__(94).EventEmitter
+
+module.exports = Queue
+module.exports.default = Queue
+
+function Queue (options) {
+  if (!(this instanceof Queue)) {
+    return new Queue(options)
+  }
+
+  EventEmitter.call(this)
+  options = options || {}
+  this.concurrency = options.concurrency || Infinity
+  this.timeout = options.timeout || 0
+  this.autostart = options.autostart || false
+  this.results = options.results || null
+  this.pending = 0
+  this.session = 0
+  this.running = false
+  this.jobs = []
+  this.timers = {}
+}
+inherits(Queue, EventEmitter)
+
+var arrayMethods = [
+  'pop',
+  'shift',
+  'indexOf',
+  'lastIndexOf'
+]
+
+arrayMethods.forEach(function (method) {
+  Queue.prototype[method] = function () {
+    return Array.prototype[method].apply(this.jobs, arguments)
+  }
+})
+
+Queue.prototype.slice = function (begin, end) {
+  this.jobs = this.jobs.slice(begin, end)
+  return this
+}
+
+Queue.prototype.reverse = function () {
+  this.jobs.reverse()
+  return this
+}
+
+var arrayAddMethods = [
+  'push',
+  'unshift',
+  'splice'
+]
+
+arrayAddMethods.forEach(function (method) {
+  Queue.prototype[method] = function () {
+    var methodResult = Array.prototype[method].apply(this.jobs, arguments)
+    if (this.autostart) {
+      this.start()
+    }
+    return methodResult
+  }
+})
+
+Object.defineProperty(Queue.prototype, 'length', {
+  get: function () {
+    return this.pending + this.jobs.length
+  }
+})
+
+Queue.prototype.start = function (cb) {
+  if (cb) {
+    callOnErrorOrEnd.call(this, cb)
+  }
+
+  this.running = true
+
+  if (this.pending >= this.concurrency) {
+    return
+  }
+
+  if (this.jobs.length === 0) {
+    if (this.pending === 0) {
+      done.call(this)
+    }
+    return
+  }
+
+  var self = this
+  var job = this.jobs.shift()
+  var once = true
+  var session = this.session
+  var timeoutId = null
+  var didTimeout = false
+  var resultIndex = null
+  var timeout = job.timeout || this.timeout
+
+  function next (err, result) {
+    if (once && self.session === session) {
+      once = false
+      self.pending--
+      if (timeoutId !== null) {
+        delete self.timers[timeoutId]
+        clearTimeout(timeoutId)
+      }
+
+      if (err) {
+        self.emit('error', err, job)
+      } else if (didTimeout === false) {
+        if (resultIndex !== null) {
+          self.results[resultIndex] = Array.prototype.slice.call(arguments, 1)
+        }
+        self.emit('success', result, job)
+      }
+
+      if (self.session === session) {
+        if (self.pending === 0 && self.jobs.length === 0) {
+          done.call(self)
+        } else if (self.running) {
+          self.start()
+        }
+      }
+    }
+  }
+
+  if (timeout) {
+    timeoutId = setTimeout(function () {
+      didTimeout = true
+      if (self.listeners('timeout').length > 0) {
+        self.emit('timeout', next, job)
+      } else {
+        next()
+      }
+    }, timeout)
+    this.timers[timeoutId] = timeoutId
+  }
+
+  if (this.results) {
+    resultIndex = this.results.length
+    this.results[resultIndex] = null
+  }
+
+  this.pending++
+  self.emit('start', job)
+  var promise = job(next)
+  if (promise && promise.then && typeof promise.then === 'function') {
+    promise.then(function (result) {
+      return next(null, result)
+    }).catch(function (err) {
+      return next(err || true)
+    })
+  }
+
+  if (this.running && this.jobs.length > 0) {
+    this.start()
+  }
+}
+
+Queue.prototype.stop = function () {
+  this.running = false
+}
+
+Queue.prototype.end = function (err) {
+  clearTimers.call(this)
+  this.jobs.length = 0
+  this.pending = 0
+  done.call(this, err)
+}
+
+function clearTimers () {
+  for (var key in this.timers) {
+    var timeoutId = this.timers[key]
+    delete this.timers[key]
+    clearTimeout(timeoutId)
+  }
+}
+
+function callOnErrorOrEnd (cb) {
+  var self = this
+  this.on('error', onerror)
+  this.on('end', onend)
+
+  function onerror (err) { self.end(err) }
+  function onend (err) {
+    self.removeListener('error', onerror)
+    self.removeListener('end', onend)
+    cb(err, this.results)
+  }
+}
+
+function done (err) {
+  this.session++
+  this.running = false
+  this.emit('end', err)
+}
+
+
+/***/ }),
+/* 92 */
 /***/ (function(module, exports) {
 
 module.exports = require("archiver");
 
 /***/ }),
-/* 69 */
+/* 93 */
 /***/ (function(module, exports) {
 
 module.exports = require("dexie");
 
 /***/ }),
-/* 70 */
+/* 94 */
 /***/ (function(module, exports) {
 
-module.exports = require("image-size");
+module.exports = require("events");
 
 /***/ }),
-/* 71 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");
 
 /***/ }),
-/* 72 */
+/* 96 */
 /***/ (function(module, exports) {
 
 module.exports = require("unzip-stream");
 
 /***/ }),
-/* 73 */
+/* 97 */
+/***/ (function(module, exports) {
+
+module.exports = require("util");
+
+/***/ }),
+/* 98 */
 /***/ (function(module, exports) {
 
 module.exports = require("workerpool");

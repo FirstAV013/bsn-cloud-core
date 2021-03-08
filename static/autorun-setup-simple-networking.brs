@@ -131,6 +131,8 @@ Sub EventLoop()
         if m.networking.contentDownloadComplete then
           m.networking.deviceSetupSplashScreen = invalid
           m.logging.FlushLogFile()
+          m.logging.registrySection.Delete("registration_in_progress")
+          m.logging.registrySection.Flush()
           a = RestartApplication()
           stop
         else
@@ -161,6 +163,8 @@ Sub EventLoop()
           if m.networking.contentDownloadComplete then
             m.networking.deviceSetupSplashScreen = invalid
             m.logging.FlushLogFile()
+            m.logging.registrySection.Delete("registration_in_progress")
+            m.logging.registrySection.Flush()
             a = RestartApplication()
             stop
           else
@@ -284,6 +288,8 @@ Function InitializeNetworkDownloads(setupParams as object) as boolean
   m.dgSocket = CreateDatagramSocket(setupParams, m.msgPort, registrySection)
   m.wsUdpSocketPort% = setupParams.wsUdpSocketPort%
 
+  SendStatusPayload(m.dgSocket, m.setupVersion$, m.wsUdpSocketPort%)
+
   m.proceedAfterRegistrationProcessComplete = false
   registrationFlag = registrySection.Read("registered_with_bsn")
   if registrationFlag = "yes" then
@@ -306,68 +312,86 @@ Function InitializeNetworkDownloads(setupParams as object) as boolean
   oldBsnce = supervisorRegistrySection.Read("bsnce")
   ClearBsnce(supervisorRegistrySection, setupParams.bsnCloudEnabled)
 
-  ClearRegistryKeys(registrySection)
-  
-  ClearRegistryKeys(supervisorRegistrySection)
-  
+  ClearRegistryKeys(registrySection, setupParams.inheritNetworkProperties)
+
+  if setupParams.inheritNetworkProperties then
+    registrySection.Write("inp", "yes")
+  end if
+
+  registrationRequired = RegistrationReset(registrySection)
+
+  ' BSN.cloud
+  SetBsnCloudParameters(setupParams, registrySection)
+
+  if registrationRequired then
+    TriggerRegistrationRequest(registrySection, m.msgPort)
+  end if
+
+  WriteRegistryVersion(registrySection, setupParams.version)
+
   ' retrieve and parse featureMinRevs.json
   featureMinRevs = ParseFeatureMinRevs()
   
   modelSupportsWifi = GetModelSupportsWifi()
-  
-  ' BSN.cloud
-  SetBsnCloudParameters(setupParams, registrySection)
-  
-  ' Hostname
-  SetHostname(setupParams.specifyHostname, setupParams.hostName$)
+
+  registrySection.Write("sut", "SFN")
   
   ' Wireless parameters
   useWireless = SetWirelessParameters(setupParams, registrySection, modelSupportsWifi)
   
   ' Wired parameters
   SetWiredParameters(setupParams, registrySection, useWireless)
-  
+
   ' Network configurations
   if setupParams.useWireless then
     if modelSupportsWifi then
-      wifiNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "2")
+      wifiNetworkingParameters = SetNetworkConfiguration(1, setupParams, registrySection, "", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "2")
     else
       ' if the user specified wireless but the system doesn't support it, use the parameters specified for wired (the secondary parameters)
-      ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "_2", "")
+      ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "_2", "")
     end if
   else
-    ethernetNetworkingParameters = SetNetworkConfiguration(setupParams, registrySection, "", "")
+    ethernetNetworkingParameters = SetNetworkConfiguration(0, setupParams, registrySection, "", "")
   end if
-  
+
+  ' BCN-6317
+  if setupParams.inheritNetworkProperties then
+    WriteTimeServer(setupParams, registrySection)
+    GetProxy(setupParams, registrySection)
+  else
+    ' Hostname
+    SetHostname(setupParams.specifyHostname, setupParams.hostName$)
+    
+    ' network configuration parameters. read from setupParams, set roNetworkConfiguration, write to registry
+    proxySpec$ = GetProxy(setupParams, registrySection)
+    bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
+
+    'Timer server
+    WriteTimeServer(setupParams, registrySection)
+
+    ' Network connection priorities
+    networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
+    networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
+    
+    ' configure ethernet
+    ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    
+    ' configure wifi if specified and device supports wifi
+    if useWireless
+      ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
+    end if
+    
+    ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
+    if not useWireless and modelSupportsWifi then
+      DisableWireless()
+    end if
+  end if
+
   ' determine bindings
   
   m.contentXfersBinding% = GetBinding(setupParams.contentDataTypeEnabledWired, setupParams.contentDataTypeEnabledWireless)
   m.logUploadsXfersBinding% = GetBinding(setupParams.logUploadsXfersEnabledWired, setupParams.logUploadsXfersEnabledWireless)
-  
-  ' network configuration parameters. read from setupParams, set roNetworkConfiguration, write to registry
-  proxySpec$ = GetProxy(setupParams, registrySection)
-  bypassProxyHosts = GetBypassProxyHosts(proxySpec$, setupParams)
-  
-  registrySection.Write("ts", setupParams.timeServer$)
-  registrySection.Write("sut", "SFN")
-  
-  ' Network connection priorities
-  networkConnectionPriorityWired% = setupParams.networkConnectionPriorityWired%
-  networkConnectionPriorityWireless% = setupParams.networkConnectionPriorityWireless%
-  
-  ' configure ethernet
-  ConfigureEthernet(ethernetNetworkingParameters, networkConnectionPriorityWired%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  
-  ' configure wifi if specified and device supports wifi
-  if useWireless
-    ConfigureWifi(wifiNetworkingParameters, setupParams.ssid$, setupParams.passphrase$, networkConnectionPriorityWireless%, setupParams.timeServer$, proxySpec$, bypassProxyHosts, featureMinRevs)
-  end if
-  
-  ' if a device is setup to not use wireless, ensure that wireless is not used (for wireless model only)
-  if not useWireless and modelSupportsWifi then
-    DisableWireless()
-  end if
   
   ' net connect parameters. read from setupParams, write to registry
   if type(registrySection) <> "roRegistrySection" then print "Error: Unable to create roRegistrySection": stop
@@ -698,6 +722,8 @@ Sub PoolEvent(msg as object)
         if m.proceedAfterRegistrationProcessComplete then
           m.deviceSetupSplashScreen = invalid
           m.logging.FlushLogFile()
+          m.logging.registrySection.Delete("registration_in_progress")
+          m.logging.registrySection.Flush()
           a = RestartApplication()
           stop
         end if
@@ -1509,16 +1535,7 @@ Function newDiagnosticCodes() as object
 end function
 
 
-Function StripLeadingSpaces(inputString$ as string) as string
-  
-  while true
-    if left(inputString$, 1) <> " " then return inputString$
-    inputString$ = right(inputString$, len(inputString$) - 1)
-  end while
-  
-  return inputString$
-  
-end function
+' function StripLeadingSpaces moved to setupCommon.brs
 
 
 Function ParseAutoplay(setupSync as object) as object
