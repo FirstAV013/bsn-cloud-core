@@ -1,4 +1,5 @@
 "use strict";
+/* tslint:disable:no-console no-var-requires */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var util_1 = require("util");
 var isomorphicPath = require("isomorphic-path");
 var main_1 = require("../main");
@@ -47,6 +48,9 @@ try {
 catch (error) {
     console.log('There must be a credentials.json file in the /examples directory with valid BSN credentials');
 }
+// mediaPath is the path to examples/testMedia
+// To alter this example to use additional media files, this can be changed here to point to a different base directory,
+//  or you can add additional media files to this directory.
 var mediaPath = isomorphicPath.resolve('./examples/testMedia');
 var siteName = 'SimpleTestWebPage';
 var htmlSitePath = isomorphicPath.join(mediaPath, 'htmlSites', 'simpleWebPage');
@@ -86,12 +90,14 @@ function progressHandler(progress) {
 }
 var indexUploadFile = {
     file: isomorphicPath.join(htmlSitePath, 'index.html'),
-    destinationPath: '',
+    destinationPath: ''
 };
 var assetUploadFiles = [
     {
         file: isomorphicPath.join(htmlSitePath, 'number1.jpg'),
-        destinationPath: '',
+        // For asset files, destination path is relative to base directory where index file is located
+        // In this case, the asset file will be in the same directory as the index file
+        destinationPath: ''
     },
 ];
 function uploadLocalWebSite() {
@@ -104,22 +110,22 @@ function uploadLocalWebSite() {
                         siteName: siteName,
                         siteType: siteType,
                         indexUploadFile: indexUploadFile,
-                        assetUploadFiles: assetUploadFiles,
+                        assetUploadFiles: assetUploadFiles
                     };
-                    uploadJob = main_1.cmCreateBsnUploadJob('TestJob', null, webPageSpec, progressHandler);
-                    uploader = main_1.tmGetTaskManager();
-                    return [4, uploadJob.check()];
+                    uploadJob = (0, main_1.cmCreateBsnUploadJob)('TestJob', null, webPageSpec, progressHandler);
+                    uploader = (0, main_1.tmGetTaskManager)();
+                    return [4 /*yield*/, uploadJob.check()];
                 case 1:
                     checkResult = _a.sent();
                     if (checkResult.hasDuplicates) {
                         console.log('There is an existing Html Site with the same name. The existing site will be overwritten');
                     }
-                    main_1.cmScheduleBsnUploadJob(uploadJob, uploader);
-                    return [4, uploader.startNextTask()];
+                    (0, main_1.cmScheduleBsnUploadJob)(uploadJob, uploader);
+                    return [4 /*yield*/, uploader.startNextTask()];
                 case 2:
                     taskResult = _a.sent();
                     uploader.removeCompletedTask(taskResult.id);
-                    return [2, taskResult];
+                    return [2 /*return*/, taskResult];
             }
         });
     });
@@ -131,36 +137,45 @@ function doUploadLocalWebSite() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 6, , 8]);
-                    return [4, main_1.bsnGetSession().activate(credentials.user, credentials.password, credentials.network, credentials.serverUrl)];
+                    return [4 /*yield*/, (0, main_1.bsnGetSession)().activate(credentials.user, credentials.password, credentials.network, credentials.serverUrl)];
                 case 1:
                     _a.sent();
-                    return [4, uploadLocalWebSite()];
+                    return [4 /*yield*/, uploadLocalWebSite()];
                 case 2:
                     uploadResult = _a.sent();
                     webPageUploadResult = uploadResult.webPageUploadResults[0];
-                    if (!webPageUploadResult.error) return [3, 3];
+                    if (!webPageUploadResult.error) return [3 /*break*/, 3];
                     throw new Error('Upload:' + webPageUploadResult.error.message);
                 case 3:
                     console.log('Upload succeeded, status:', webPageUploadResult.status);
                     console.log('Upload time:', ((new Date()).getTime() - uploadResult.startTime.getTime()) / 1000, 'seconds');
-                    console.log(util_1.inspect(webPageUploadResult, { depth: null, colors: true }));
+                    console.log((0, util_1.inspect)(webPageUploadResult, { depth: null, colors: true }));
                     console.log('');
-                    return [4, main_1.cmShutdown()];
+                    // You may want to delete the uploaded webPage here to run the example multiple times without
+                    //  overwriting the same existing webPage
+                    // console.log('Deleting web site ...');
+                    // console.time('htmlSiteDelete');
+                    // await htmlSiteCollection.deleteHtmlSiteAsset(siteName);
+                    return [4 /*yield*/, (0, main_1.cmShutdown)()];
                 case 4:
+                    // You may want to delete the uploaded webPage here to run the example multiple times without
+                    //  overwriting the same existing webPage
+                    // console.log('Deleting web site ...');
+                    // console.time('htmlSiteDelete');
+                    // await htmlSiteCollection.deleteHtmlSiteAsset(siteName);
                     _a.sent();
                     _a.label = 5;
-                case 5: return [3, 8];
+                case 5: return [3 /*break*/, 8];
                 case 6:
                     error_1 = _a.sent();
                     console.log('Error: ', error_1.message);
-                    return [4, main_1.cmShutdown()];
+                    return [4 /*yield*/, (0, main_1.cmShutdown)()];
                 case 7:
                     _a.sent();
-                    return [3, 8];
-                case 8: return [2];
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     });
 }
 doUploadLocalWebSite();
-//# sourceMappingURL=uploadWebSiteToBsn.js.map
