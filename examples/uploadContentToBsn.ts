@@ -70,15 +70,15 @@ async function uploadLocalFile(
     return taskResult as BsUploadJobResult;
 }
 
-const fileToUpload = isomorphicPath.resolve(
-    "./examples/testMedia/images/test-bestand.jpg"
-);
-
-async function doUploadLocalFile() {
+export async function doUploadLocalFile(fileTargetLocation, fileToUploadReq) {
+    const fileToUpload = isomorphicPath.resolve(
+        //./examples/testMedia/images/moon.jpg
+        `${fileToUploadReq}`
+    );
     try {
         const uploadResult = await uploadLocalFile(
             fileToUpload,
-            "/Shared/testlieke"
+            `${fileTargetLocation}`
         );
         const fileResult = uploadResult.fileUploadResults[0];
         // Note: file upload errors are not thrown, but are reported in the UploadJobResult
@@ -106,5 +106,3 @@ async function doUploadLocalFile() {
         await cmShutdown();
     }
 }
-
-doUploadLocalFile();
