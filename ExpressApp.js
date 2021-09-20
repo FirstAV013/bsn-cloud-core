@@ -19,7 +19,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/postContentToBsn", (req, res) => {
-    // file location | file
+    // example upload
+    // { "fileTargetLocation": "/Shared/testlieke", "fileToUpload": "./examples/testMedia/images/moon-3.jpg" }
     doUploadLocalFile(req.body.fileTargetLocation, req.body.fileToUpload);
     const content = req.body;
     contentDatabase.push(content);
