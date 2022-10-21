@@ -81,9 +81,9 @@ function createLocalHtmlPresentation(): DmBsProjectState {
   let htmlSiteAction = store.dispatch(dmAddHostedHtmlSite(testHtmlSiteName, htmlAsset1, 'first'));
   let htmlStateContentItem = dmCreateHtmlContentItem('HTML Site State 1', htmlSiteAction.payload.id);
   store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, htmlStateContentItem));
-  htmlSiteAction = store.dispatch(dmAddHostedHtmlSite(testHtmlSiteName, htmlAsset1, 'second'));
-  htmlStateContentItem = dmCreateHtmlContentItem('HTML Site State 2', htmlSiteAction.payload.id);
-  store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, htmlStateContentItem));
+  //  htmlSiteAction = store.dispatch(dmAddHostedHtmlSite(testHtmlSiteName, htmlAsset1, 'second'));
+  // htmlStateContentItem = dmCreateHtmlContentItem('HTML Site State 2', htmlSiteAction.payload.id);
+  // store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, htmlStateContentItem));
   // Set the standard presentation web page for this presentation. This is a web page served out of the player
   //  on port 8008.
   store.dispatch(dmSetPresentationWebPage(DeviceWebPageDisplay.Standard));
@@ -125,12 +125,12 @@ async function doUploadExample() {
       console.log('');
 
       // Delete the presentation
-      console.log('Deleting', presentationName);
-      await bsnPresentationCollection.deletePresentation(presentationName);
+      console.log('NOT Deleting', presentationName);
+      // await bsnPresentationCollection.deletePresentation(presentationName);
 
       // Delete the htmlSite
-      console.log('Deleting HTML Site', testHtmlSiteName);
-      await bsnGetSession().deleteHtmlSite(testHtmlSiteName);
+      console.log('NOT Deleting HTML Site', testHtmlSiteName);
+      // await bsnGetSession().deleteHtmlSite(testHtmlSiteName);
 
       // Shut down worker processes
       await cmShutdown();

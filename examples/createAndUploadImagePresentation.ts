@@ -25,7 +25,7 @@ import {
   dmGetZoneMediaStateContainer,
   dmNewSign,
   dmPlaylistAppendMediaState,
-  fsGetAssetItemFromFile, 
+  fsGetAssetItemFromFile,
   PlayerModel,
   tmGetTaskManager,
   VideoMode,
@@ -120,8 +120,8 @@ async function doUploadExample() {
       console.log('');
 
       // Delete the presentation
-      console.log('Deleting', presentationName);
-      await bsnPresentationCollection.deletePresentation(presentationName);
+      console.log('NOT Deleting', presentationName);
+      //await bsnPresentationCollection.deletePresentation(presentationName);
 
       // Shut down worker processes
       await cmShutdown();
