@@ -1,5 +1,8 @@
 /* tslint:disable:no-console no-var-requires */
 
+// Usage:
+// npx ts-node examples/createAndUploadImagePresentation.ts
+
 import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {isNil} from 'lodash';
@@ -120,8 +123,12 @@ async function doUploadExample() {
       console.log('');
 
       // Delete the presentation
-      console.log('NOT Deleting', presentationName);
-      //await bsnPresentationCollection.deletePresentation(presentationName);
+      if ((process.env.DELETE_PRESENTATION || 'true').toLowerCase() == 'true') {
+        console.log('Deleting', presentationName);
+        await bsnPresentationCollection.deletePresentation(presentationName);
+      } else {
+        console.log('NOT Deleting', presentationName);
+      }
 
       // Shut down worker processes
       await cmShutdown();
