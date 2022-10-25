@@ -1,5 +1,11 @@
 /* tslint:disable:no-console no-var-requires */
 
+/*
+ * Make a presentation from multiple images and upload to Content Cloud.
+ * If you do not want to delete the presentation on success, please set:
+ *  export DELETE_PRESENTATION=False
+ */
+
 import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {isNil} from 'lodash';
@@ -52,20 +58,18 @@ process.env.FS_METADATA_PATH =
 // Presentation publish may need to access the default deviceWebPage, so it needs this path
 bsDaSetDeviceArtifactPath(isomorphicPath.resolve('./static/'));
 
-// Presentation name.
-// TODO: pass this to functions instead of having this a top-level variable.
-const presentationName = 'CharlieSign';
-
 const bsnContentPath = '/Shared/Incoming/';
 
-function createLocalPresentation(images: string[]): DmBsProjectState {
+function createLocalPresentation(presentationName: string, images: string[]): DmBsProjectState {
 
-  //
   const store = createStore(bsDmReducer, applyMiddleware(thunk));
+
+  // TODO: hypothetically the model should come from (e.g.) command line arguments
+  // or existing player state.
   //  store.dispatch(dmNewSign(presentationName, VideoMode.v1920x1080x60p, PlayerModel.XT1143));
   store.dispatch(dmNewSign(presentationName, VideoMode.v1920x1080x60p, PlayerModel.HD1024));
 
-  // Zone
+  // Video Zone
   const action = store.dispatch(dmAddZone('Zone1', ZoneType.VideoOrImages, 'vi1'));
   const videoZoneContainer = dmGetZoneMediaStateContainer(action.payload.id);
 
@@ -94,10 +98,10 @@ function progressHandler(progress: BsUploadJobProgress) {
     (progress.totalProgressFraction * 100).toFixed(2), 'percent complete');
 }
 
-async function createAndUploadImagePresentation(images: string[]): Promise<BsPresentationUploadJobResult> {
+async function createAndUploadImagePresentation(presentationName: string, images: string[]): Promise<BsPresentationUploadJobResult> {
   const uploader = tmGetTaskManager();
-  const localPresentationState = createLocalPresentation(images);
-  //process.exit(0);
+  const localPresentationState = createLocalPresentation(presentationName, images);
+
   const uploadJob = cmCreateBsnPresentationUploadJob(
     'PresentationUpload', localPresentationState, bsnContentPath, progressHandler);
   // The check function checks to see if file names are duplicated form files with different contents.
@@ -112,7 +116,7 @@ async function createAndUploadImagePresentation(images: string[]): Promise<BsPre
   return taskResult as BsPresentationUploadJobResult;
 }
 
-async function doUploadExample(images: string[]) {
+async function doUploadExample(presentationName: string, images: string[]) {
 
   try {
     // Authenticate.
@@ -120,10 +124,9 @@ async function doUploadExample(images: string[]) {
 
     const bsnPresentationCollection: CmiPresentationAssetCollection =
       cmGetBsAssetCollection(AssetLocation.Bsn, AssetType.Project) as CmiPresentationAssetCollection;
-    return;  // TO REMOVE
 
     // Create and upload the image presentation.
-    const uploadResult = await createAndUploadImagePresentation(images);
+    const uploadResult = await createAndUploadImagePresentation(presentationName, images);
 
     // Handle failure and success cases.
     if (uploadResult.status === BsTaskStatus.Failed) {
@@ -137,9 +140,14 @@ async function doUploadExample(images: string[]) {
       console.log(inspect(uploadResult.presentationAsset!.assetItem, {depth: null, colors: true}));
       console.log('');
 
-      // Delete the presentation
-      console.log('NOT Deleting', presentationName);
-      //await bsnPresentationCollection.deletePresentation(presentationName);
+
+      if ((process.env.DELETE_PRESENTATION || 'true').toLowerCase() == 'true') {
+        // Delete the presentation.
+        console.log('Deleting', presentationName);
+        await bsnPresentationCollection.deletePresentation(presentationName);
+      } else {
+        console.log('NOT Deleting', presentationName);
+      }
 
       // Shut down worker processes
       await cmShutdown();
@@ -150,25 +158,19 @@ async function doUploadExample(images: string[]) {
   }
 }
 
-//doUploadExample();
-
-console.log('PlayerModel: ', PlayerModel);
-console.log('');
-
-
-
 // Parse command line arguments.
-// TODO
-const usage = 'path/to/image [path/to/image2] [...]'
-const args = process.argv.slice(2);
-console.log('argv: ', args);
+const usage = 'presentationName path/to/image [path/to/image2] [...]'
+const args : string[] = process.argv.slice(2);  // E.g. `['ts-node', 'createAndUploadImagesSign.ts']`
 
-if (args.length == 0) {
+if (args.length < 2) {
   console.log("Usage: ", usage);
   process.exit(1);
 } else {
-  doUploadExample(args);
+  // Make + upload the presentation.
+  var presentationName : string = args[0];
+  args.shift();
+  console.log("Presentation name: ", presentationName);
+  console.log("Presentation images: ", args);
+  doUploadExample(presentationName, args);
   console.log('Done!');
 }
-
-
