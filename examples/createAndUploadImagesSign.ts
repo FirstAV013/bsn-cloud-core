@@ -1,7 +1,10 @@
 /* tslint:disable:no-console no-var-requires */
 
-// Usage:
-// npx ts-node examples/createAndUploadImagePresentation.ts
+/*
+ * Make a presentation from multiple images and upload to Content Cloud.
+ * If you do not want to delete the presentation on success, please set:
+ *  export DELETE_PRESENTATION=False
+ */
 
 import {applyMiddleware, createStore} from 'redux';
 import thunk from 'redux-thunk';
@@ -34,9 +37,12 @@ import {
   VideoMode,
   ZoneType,
 } from '../main';
+import {
+  BsAssetItem
+} from '../bscore';
 
+// Load credentials.
 const credentialsPath = isomorphicPath.resolve('./examples/credentials.json');
-
 let credentials;
 try {
   credentials = require(credentialsPath);
@@ -52,34 +58,38 @@ process.env.FS_METADATA_PATH =
 // Presentation publish may need to access the default deviceWebPage, so it needs this path
 bsDaSetDeviceArtifactPath(isomorphicPath.resolve('./static/'));
 
-// mediaPath is the path to examples/testMedia
-// To alter this example to use additional media files, this can be changed here to point to a different base directory,
-//  or you can add additional media files to this directory.
-const mediaPath = isomorphicPath.resolve('./examples/testMedia');
-
-let presentationName = 'TestLocalBsnPresentation1';
 const bsnContentPath = '/Shared/Incoming/';
 
-const imageAsset1 = fsGetAssetItemFromFile(isomorphicPath.join(mediaPath, 'images/Amazon Moon.jpg'));
-const imageAsset2 = fsGetAssetItemFromFile(isomorphicPath.join(mediaPath, 'images/Ecuador Flower.jpg'));
+function createLocalPresentation(presentationName: string, images: string[]): DmBsProjectState {
 
-function createLocalPresentation(): DmBsProjectState {
   const store = createStore(bsDmReducer, applyMiddleware(thunk));
-  store.dispatch(dmNewSign(presentationName, VideoMode.v1920x1080x60p, PlayerModel.XT1143));
-  // Zone
+
+  // TODO: hypothetically the model should come from (e.g.) command line arguments
+  // or existing player state.
+  //  store.dispatch(dmNewSign(presentationName, VideoMode.v1920x1080x60p, PlayerModel.XT1143));
+  store.dispatch(dmNewSign(presentationName, VideoMode.v1920x1080x60p, PlayerModel.HD1024));
+
+  // Video Zone
   const action = store.dispatch(dmAddZone('Zone1', ZoneType.VideoOrImages, 'vi1'));
   const videoZoneContainer = dmGetZoneMediaStateContainer(action.payload.id);
 
-  if (!isNil(imageAsset1)) {
-    store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, imageAsset1));
-  } else {
-    throw new Error('Invalid path to imageAsset1 file.');
-  }
-  if (!isNil(imageAsset2)) {
-    store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, imageAsset2));
-  } else {
-    throw new Error('Invalid path to imageAsset2 file.');
-  }
+  // Transform image paths to image assets.
+  var imageAssets:BsAssetItem[] = [];
+  images.forEach(function(item, index) {
+    console.log('Item: ', item);
+    let itemPath = isomorphicPath.resolve(item);
+    let imageAsset = fsGetAssetItemFromFile(itemPath);
+    if (isNil(imageAsset)) {
+      throw new Error('Invalid path to image file: ' + item);
+    }
+    imageAssets.push(imageAsset);
+  });
+
+  // Store the image assets.
+  imageAssets.forEach(function(item, index) {
+    store.dispatch(dmPlaylistAppendMediaState(videoZoneContainer, item));
+  });
+
   return {bsdm: dmGetSignState(store.getState())};
 }
 
@@ -88,9 +98,10 @@ function progressHandler(progress: BsUploadJobProgress) {
     (progress.totalProgressFraction * 100).toFixed(2), 'percent complete');
 }
 
-async function createAndUploadImagePresentation(): Promise<BsPresentationUploadJobResult> {
+async function createAndUploadImagePresentation(presentationName: string, images: string[]): Promise<BsPresentationUploadJobResult> {
   const uploader = tmGetTaskManager();
-  const localPresentationState = createLocalPresentation();
+  const localPresentationState = createLocalPresentation(presentationName, images);
+
   const uploadJob = cmCreateBsnPresentationUploadJob(
     'PresentationUpload', localPresentationState, bsnContentPath, progressHandler);
   // The check function checks to see if file names are duplicated form files with different contents.
@@ -105,12 +116,19 @@ async function createAndUploadImagePresentation(): Promise<BsPresentationUploadJ
   return taskResult as BsPresentationUploadJobResult;
 }
 
-async function doUploadExample() {
+async function doUploadExample(presentationName: string, images: string[]) {
+
   try {
+    // Authenticate.
     await bsnGetSession().activate(credentials.user, credentials.password, credentials.network, credentials.serverUrl);
+
     const bsnPresentationCollection: CmiPresentationAssetCollection =
       cmGetBsAssetCollection(AssetLocation.Bsn, AssetType.Project) as CmiPresentationAssetCollection;
-    const uploadResult = await createAndUploadImagePresentation();
+
+    // Create and upload the image presentation.
+    const uploadResult = await createAndUploadImagePresentation(presentationName, images);
+
+    // Handle failure and success cases.
     if (uploadResult.status === BsTaskStatus.Failed) {
       console.error(uploadResult.exceptionError);
     } else {
@@ -122,8 +140,9 @@ async function doUploadExample() {
       console.log(inspect(uploadResult.presentationAsset!.assetItem, {depth: null, colors: true}));
       console.log('');
 
-      // Delete the presentation
+
       if ((process.env.DELETE_PRESENTATION || 'true').toLowerCase() == 'true') {
+        // Delete the presentation.
         console.log('Deleting', presentationName);
         await bsnPresentationCollection.deletePresentation(presentationName);
       } else {
@@ -139,4 +158,19 @@ async function doUploadExample() {
   }
 }
 
-doUploadExample();
+// Parse command line arguments.
+const usage = 'presentationName path/to/image [path/to/image2] [...]'
+const args : string[] = process.argv.slice(2);  // E.g. `['ts-node', 'createAndUploadImagesSign.ts']`
+
+if (args.length < 2) {
+  console.log("Usage: ", usage);
+  process.exit(1);
+} else {
+  // Make + upload the presentation.
+  var presentationName : string = args[0];
+  args.shift();
+  console.log("Presentation name: ", presentationName);
+  console.log("Presentation images: ", args);
+  doUploadExample(presentationName, args);
+  console.log('Done!');
+}
